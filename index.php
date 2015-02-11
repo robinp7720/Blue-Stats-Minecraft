@@ -1,0 +1,72 @@
+<?php
+/* Configs */
+include __DIR__."/configs/mysql.php";
+include __DIR__."/configs/player.php";
+include __DIR__."/configs/highscores.php";
+include __DIR__."/configs/blocknames.php";
+include __DIR__."/configs/faces.php";
+include __DIR__."/configs/all-players.php";
+include __DIR__."/configs/general.php";
+include __DIR__."/configs/server.php";
+
+/* Functions */
+include __DIR__."/functions/general.php";
+include __DIR__."/functions/player.php";
+include __DIR__."/functions/global_stats.php";
+include __DIR__."/functions/image.php";
+
+/* Classes */
+include __DIR__."/classes/query.php";
+include __DIR__."/classes/queryException.php";
+
+/* Themes */
+include __DIR__."/themes/theme_settings.php";
+
+/* Remove all path related items from theme name for security */
+$theme_settings = array(
+	"enabled_theme" => str_replace ( array(".","/","\\") , "" , $theme_settings["enabled_theme"])
+);
+$theme = array();
+
+include __DIR__."/themes/{$theme_settings["enabled_theme"]}/config.php";
+
+/* Connect to mysql */
+$mysqli = new mysqli($stats_mysql["host"],$stats_mysql["username"],$stats_mysql["password"],$stats_mysql["dbname"]);
+
+/* Set app path (This is to make including other folders and pages easier) */
+$app_path = __DIR__;
+
+/* Select page */
+if (!isset($_GET["page"])){
+	$page = "highscores";
+}else{
+	$page = $_GET["page"];
+}
+
+/* Init Server query */
+if($server_info["query_enabled"])
+	include $app_path."/include/init_query.php";
+
+/* HTTP Headers*/
+header("cache-control: private, max-age={$config["cache"]["max-age"]}");
+
+/* Html Header */
+include $app_path."/parts/head.php";
+
+/* Nav Bar */
+include __DIR__."/parts/nav.php";
+
+/* Include page */
+if ($page=="highscores"){
+	include $app_path."/pages/highscores.php";
+}elseif($page=="player"){
+	include $app_path."/pages/player.php";
+}elseif($page=="allplayers"){
+	include $app_path."/pages/all-players.php";
+}
+elseif($page=="pvpstats"){
+	include $app_path."/pages/pvp_stats.php";
+}
+
+/* Html Header */
+include $app_path."/parts/footer.php";

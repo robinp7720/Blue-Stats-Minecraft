@@ -1,0 +1,48 @@
+body{
+	background-color:white;
+}
+
+nav a.nav-item{
+	background-color:inherit;
+	color:white;
+}
+nav a.nav-logo{
+	background-color:#0D47A1;
+	color:#1d1d1d;
+}
+nav a.nav-item:hover{
+	background-color:#1565C0;
+	
+}
+nav{
+	background-color:#2196F3;
+}
+
+div.box, div.box-half{
+	background:white;
+	border:solid #FAFAFA 1px;
+	border-bottom:solid #F5F5F5 1px;
+	box-sizing: border-box;
+}
+
+a{
+	color:black;
+}
+
+div.container-head{
+	background-color:#2196F3;
+}
+.tag-online{
+	background-color:green;
+}
+.tag-offline{
+	background-color: red;
+}
+
+/* Data Tables */
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover{
+	background:white;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover{
+	background:#4584d3 !important;
+}
