@@ -12,15 +12,15 @@ Alternative Web Interface for the bukkit stats plugin my lolmewn
 # Mysql.php
   Edit the following lines to suit your needs:
   "host" => "localhost", Your MySql Host and port
-	"username" => "minecraft", Your MySql username
-	"password" => "password", Password for username
-	"dbname" => "minecraft", Database name
-	"table_prefix" => "Stats_" Table prefix
+  "username" => "minecraft", Your MySql username
+  "password" => "password", Password for username
+  "dbname" => "minecraft", Database name
+  "table_prefix" => "Stats_" Table prefix
 	
 # Server.php
   Edit the following lines to suit your needs:
   "ip" => "127.0.0.1", Minecraft server ip
-	"port" => "25565", Minecraft server port
-	"query_enabled" => true, Enable MC query?
-	"server_name" => "A Minecraft Server", Text to show in tab bar
+  "port" => "25565", Minecraft server port
+  "query_enabled" => true, Enable MC query?
+  "server_name" => "A Minecraft Server", Text to show in tab bar
   
