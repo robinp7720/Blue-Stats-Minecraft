@@ -18,10 +18,12 @@ $title = str_replace ('{STAT}',$stats_names[$highscores_item["stat"]],$title);
 	</div>
 	<table class="display noborder dataTable no-footer dtr-inline">
 		<thead>
-			<th class="highscore-place no-mobile">Place</th>
-			<th>Player</th>
-			<th class="no-mobile">Status</th>
-			<th><?=$stats_names[$highscores_item["stat"]]; ?></th>
+			<tr>
+				<th class="highscore-place no-mobile">Place</th>
+				<th>Player</th>
+				<th class="no-mobile">Status</th>
+				<th><?=$stats_names[$highscores_item["stat"]]; ?></th>
+			</tr>
 		</thead>
 		<tbody>
 		<?php foreach ($highscore as $item => $player) :?>

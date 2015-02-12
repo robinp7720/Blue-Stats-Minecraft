@@ -5,19 +5,23 @@
 		</div>
 		<table class="display" id="kills">
 			<thead>
-				<th>Killer</th>
-				<?php if($server_info["query_enabled"]){echo"<th>Status</th>";}?>
-				<th>World</th>
-				<th>Killed</th>
-				<th>Amount</th>
+				<tr>
+					<th>Killer</th>
+					<?php if($server_info["query_enabled"]){echo"<th>Status</th>";}?>
+					<th>World</th>
+					<th>Killed</th>
+					<th>Amount</th>
+				</tr>
 			</thead>
 			<tfoot>
-				<th>Killer</th>
-				<?php if($server_info["query_enabled"]){echo"<th>Status</th>";}?>
-				<th>World</th>
-				<th>Killed</th>
-				<th>Amount</th>
-			</foot>
+				<tr>
+					<th>Killer</th>
+					<?php if($server_info["query_enabled"]){echo"<th>Status</th>";}?>
+					<th>World</th>
+					<th>Killed</th>
+					<th>Amount</th>
+				</tr>
+			</tfoot>
 		</table>
 	</div>
 
