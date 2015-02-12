@@ -4,10 +4,12 @@
 	</div>
 	<table class="display" id="sorted2">
 		<thead>
-			<th>Block</th>
-			<th>Amount of times placed</th>
-			<th>Amount of times broken</th>		
-			<th>Item ID</th>
+			<tr>
+				<th>Block</th>
+				<th>Amount of times placed</th>
+				<th>Amount of times broken</th>		
+				<th>Item ID</th>
+			</tr>
 		</thead>
 		<tbody>
 			<?php

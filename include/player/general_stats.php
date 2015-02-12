@@ -4,10 +4,12 @@
 	</div>
 	<table class="display" id="sorted">
 		<thead>
-			<th>Stat</th>
-			<th>Value</th>
-			<th>Server Average</th>
-			<th>Server Total</th>
+			<tr>
+				<th>Stat</th>
+				<th>Value</th>
+				<th>Server Average</th>
+				<th>Server Total</th>
+			</tr>
 		</thead>
 		<tbody>
 			<?php foreach ($stats_tracked_player as $stat) :?>
