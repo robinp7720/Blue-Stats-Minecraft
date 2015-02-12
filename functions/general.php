@@ -146,3 +146,8 @@ function make_date($date){
 	$year = $date[0].$date[1].$date[2].$date[3];
 	return $year;
 }
+
+function makePlayerUrl($player_id,$site_base_url,$url_rewrite,$use_name){
+	if ($url_rewrite)
+		return $site_base_url.'/player/'.$player_id."/";
+}

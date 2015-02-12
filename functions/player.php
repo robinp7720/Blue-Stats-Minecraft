@@ -53,6 +53,17 @@ function getPlayersName($id,$mysqli,$prefix){
 		return htmlentities($output);
 	}
 }
+function getPlayerId($name,$mysqli,$prefix){
+	if ($stmt = $mysqli->prepare("SELECT player_id FROM `{$prefix}players` where name=?")) {
+		$stmt->bind_param("s", $name);
+		$stmt->execute();
+		/* bind result variables */
+		$stmt->bind_result($output);
+		/* fetch value */
+		$stmt->fetch();
+		return $output;
+	}
+}
 function blocksMinedBy($id,$mysqli,$prefix){
 	if ($stmt = $mysqli->prepare("SELECT * FROM `{$prefix}block` where player_id=?")) {
 		$stmt->bind_param("i", $id);
