@@ -3,6 +3,9 @@
 $config["cache"]["max-age"] = 0;
 $config["cache"]["ajax"]["max-age"] = 0;
 
+/* User player name instead of player id for urls */
+$config["url"]["player"]["useName"]=true;
+
 /* Site animations Set to false to have a faster user experience*/
 $global_animations = "false";
 

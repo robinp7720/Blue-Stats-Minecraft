@@ -1,6 +1,6 @@
 <?php
 /* Make sure input is a number */
-if (is_numeric($_GET["player"])&&!empty($player_name)){
+if (!empty($player_name)){
 	/* Player name and id is defined in parts/head.php */
 
 	/* Get player face */

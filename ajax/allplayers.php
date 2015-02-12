@@ -17,11 +17,13 @@ foreach ($players as $item => $player){
 	$image_url = player_face($player["name"],$config["faces"]["allplayers"]["size"],$config["faces"]["allplayers"]["url"]);
 
 	/* Get user label (Click able username and image) */
-	if ($enable_url_rewrite==false){
-		$player_label = '<a href="?page=player&player='.$player["player_id"].'"><img class="player-head-player_page" src="'.$image_url.'" alt="'.$player["name"].'"/> '.$player["name"].'</a>';
-	}else{
-		$player_label = '<a href="'.$site_base_url.'/player/'.$player["player_id"].'/"><img class="player-head-player_page" src="'.$image_url.'" alt="'.$player["name"].'"/> '.$player["name"].'</a>';
-	}
+	if ($config["url"]["player"]["useName"])
+		$player_url = urlencode($player["name"]);
+	else
+		$player_url = $player["player_id"];
+	
+	$player_label = '<a href="'.makePlayerUrl($player_url,$site_base_url,$enable_url_rewrite,$config["url"]["player"]["useName"]).'"><img class="player-head-player_page" src="'.$image_url.'" alt="'.$player["name"].'"/> '.$player["name"].'</a></td>';
+	
 
 	/* Get player status */
 	if (playerOnline($player["name"], $Online_Players)){
