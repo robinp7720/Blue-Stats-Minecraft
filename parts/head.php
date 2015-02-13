@@ -40,7 +40,6 @@
 				var link = $(this).attr('href');
 				var height = $(document).height();
 				if (link){
-					console.log("true");
 					$('.box, .box-half, .player-head-player_page').transition({ y: height+"px" },1000,function(){window.location = link;});
 				}
 			});
@@ -87,23 +86,31 @@
 	}
 	?>
 
-	<?php if (isset($theme["colour"])): ?>
-	<!-- Only for player pages -->
+	<?php if (isset($theme["name"])): ?>
 	<style>
 		nav{
-			background-color:rgb(<?=$theme["colour"]["nav"]["red"]?>,<?=$theme["colour"]["nav"]["green"]?>,<?=$theme["colour"]["nav"]["blue"]?>)
+			background-color:rgb(<?=$theme["nav"]["color"]["red"]?>,<?=$theme["nav"]["color"]["green"]?>,<?=$theme["nav"]["color"]["blue"]?>)
 		}
 		nav a.nav-item:hover{
-			background-color:rgb(<?=$theme["colour"]["nav"]["red"]+10?>,<?=$theme["colour"]["nav"]["green"]+10?>,<?=$theme["colour"]["nav"]["blue"]+10?>)
+			background-color:rgb(<?=$theme["nav"]["color"]["red"]+10?>,<?=$theme["nav"]["color"]["green"]+10?>,<?=$theme["nav"]["color"]["blue"]+10?>)
 		}
 		nav a.nav-logo{
-			background-color:rgb(<?=$theme["colour"]["nav"]["red"]-20?>,<?=$theme["colour"]["nav"]["green"]-20?>,<?=$theme["colour"]["nav"]["blue"]-20?>)
+			background-color:rgb(<?=$theme["nav"]["color"]["red"]-20?>,<?=$theme["nav"]["color"]["green"]-20?>,<?=$theme["nav"]["color"]["blue"]-20?>)
 		}
 		div.container-head{
-			background-color:rgb(<?=$theme["colour"]["nav"]["red"]?>,<?=$theme["colour"]["nav"]["green"]?>,<?=$theme["colour"]["nav"]["blue"]?>)
+			background-color:rgb(<?=$theme["headers"]["color"]["red"]?>,<?=$theme["headers"]["color"]["green"]?>,<?=$theme["headers"]["color"]["blue"]?>)
 		}
 		body{
-			background-color:rgb(<?=$theme["colour"]["background"]["red"]?>,<?=$theme["colour"]["background"]["green"]?>,<?=$theme["colour"]["background"]["blue"]?>)
+			background-color:rgb(<?=$theme["background"]["color"]["red"]?>,<?=$theme["background"]["color"]["green"]?>,<?=$theme["background"]["color"]["blue"]?>)
+		}
+		a.nav-item, a.nav-logo{
+			height:<?=$theme["nav"]["thickness"]?>;
+			line-height:<?=$theme["nav"]["thickness"]?>;
+		}
+		@media (max-width:800px) {
+			nav{
+				max-height:<?=$theme["nav"]["thickness"]+40?>px;
+			}
 		}
 	</style>
 	<?php endif ?>
