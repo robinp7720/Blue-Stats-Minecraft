@@ -11,14 +11,13 @@ if (!empty($pvp_stats)){
 
 		/* KILLER */
 		/* Get player link */
-		if ($enable_url_rewrite==false){
-			$killer_label = '<a href="?page=player&player='.$value["player_id"].'">';
-		}else{
-			$killer_label = '<a href="'.$site_base_url.'/player/'.$value["player_id"].'/">';
-		}
+		if ($config["url"]["player"]["useName"])
+			$player_url = urlencode($killer);
+		else
+			$player_url = $killer;
 
-		/* Add player image and name to label */
-		$killer_label .= '<img class="player-head-player_page" src="'.$image_killer_url.'"/> '.$killer.'</a>';
+		$killer_label = '<a href="'.makePlayerUrl($player_url,$site_base_url,$enable_url_rewrite,$config["url"]["player"]["useName"]).'"><img class="player-head-player_page" src="'.$image_killer_url.'" alt="'.$killer.'"/> '.$killer.'</a></td>';
+
 
 
 		if (isset($Online_Players)){
@@ -31,14 +30,12 @@ if (!empty($pvp_stats)){
 
 		/* KILLDED */
 		/* Get player link */
-		if ($enable_url_rewrite==false){
-			$killed_label = '<a href="?page=player&player='.$value["killed"].'">';
-		}else{
-			$killed_label = '<a href="'.$site_base_url.'/player/'.$value["killed"].'/">';
-		}
+		if ($config["url"]["player"]["useName"])
+			$player_url = urlencode($killed);
+		else
+			$player_url = $killed;
 
-		/* Add player image and name to label */
-		$killed_label .= '<img class="player-head-player_page" src="'.$image_killed_url.'"/> '.$killed.'</a>';
+		$killed_label = '<a href="'.makePlayerUrl($player_url,$site_base_url,$enable_url_rewrite,$config["url"]["player"]["useName"]).'"><img class="player-head-player_page" src="'.$image_killed_url.'" alt="'.$killed.'"/> '.$killed.'</a></td>';
 
 
 		if (isset($Online_Players)){
