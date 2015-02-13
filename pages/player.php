@@ -1,6 +1,6 @@
 <?php
 /* Make sure input is a number */
-if (is_numeric($_GET["player"])){
+if (!empty($player_name)){
 	/* Player name and id is defined in parts/head.php */
 
 	/* Get player face */
@@ -20,6 +20,10 @@ if (is_numeric($_GET["player"])){
 	include $app_path."/include/player/block_stats.php";
 
 	echo '</div>';
+}else{
+	?>
+	<div class="center" style="margin-top:5px;"><b>This user does not exist</b></div>
+	<?php
 }
 ?>
 

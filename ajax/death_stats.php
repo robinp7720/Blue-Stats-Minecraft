@@ -8,14 +8,13 @@ if (!empty($pvp_stats)){
 		$player_image_url = player_face($player_name,$config["faces"]["pvp"]["size"],$config["faces"]["pvp"]["url"]);
 
 		/* Get player link */
-		if ($enable_url_rewrite==false){
-			$player_label = '<a href="?page=player&player='.$value["player_id"].'">';
-		}else{
-			$player_label = '<a href="'.$site_base_url.'/player/'.$value["player_id"].'/">';
-		}
+		if ($config["url"]["player"]["useName"])
+			$player_url = urlencode($player_name);
+		else
+			$player_url = $player_name;
 
-		/* Add player image and name to label */
-		$player_label .= '<img class="player-head-player_page" src="'.$player_image_url.'"/> '.$player_name.'</a>';
+		$player_label = '<a href="'.makePlayerUrl($player_url,$site_base_url,$enable_url_rewrite,$config["url"]["player"]["useName"]).'"><img class="player-head-player_page" src="'.$player_image_url.'" alt="'.$player_name.'"/> '.$player_name.'</a></td>';
+
 
 
 		if (isset($Online_Players)){

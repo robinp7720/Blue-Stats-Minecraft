@@ -5,17 +5,21 @@
 		</div>
 		<table class="display" id="all-players">
 			<thead>
-				<th>Player</th>
-				<?php if($server_info["query_enabled"]){echo"<th>Status</th>";}?>
-				<th><?=$stats_names[$allPlayers_default_stat_displayed]; ?></th>
-				<th>Value</th>
+				<tr>
+					<th>Player</th>
+					<?php if($server_info["query_enabled"]){echo"<th>Status</th>";}?>
+					<th><?=$stats_names[$allPlayers_default_stat_displayed]; ?></th>
+					<th>Value</th>
+				</tr>
 			</thead>
 			<tfoot>
-				<th>Player</th>
-				<?php if($server_info["query_enabled"]){echo"<th>Status</th>";}?>
-				<th><?=$stats_names[$allPlayers_default_stat_displayed]; ?></th>
-				<th>Value</th>
-			</foot>
+				<tr>
+					<th>Player</th>
+					<?php if($server_info["query_enabled"]){echo"<th>Status</th>";}?>
+					<th><?=$stats_names[$allPlayers_default_stat_displayed]; ?></th>
+					<th>Value</th>
+				</tr>
+			</tfoot>
 		</table>
 	</div>
 </div>
