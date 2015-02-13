@@ -71,7 +71,6 @@ elseif($page=="pvpstats"){
 	include $app_path."/pages/pvp_stats.php";
 }
 $time_end = microtime(true);
-$execution_time = round(($time_end - $time_start));
-$execution_time = round($execution_time/60,4)*60;
+$execution_time = round($time_end - $time_start,5);
 /* Html Header */
 include $app_path."/parts/footer.php";
