@@ -4,9 +4,11 @@
 	</div>
 	<table class="display" id="sorted3">
 		<thead>
-			<th>Player Killed</th>
-			<th>Weapons used</th>
-			<th>Amount Killed</th>
+			<tr>
+				<th>Player Killed</th>
+				<th>Weapons used</th>
+				<th>Amount Killed</th>
+			</tr>
 		</thead>
 		<tbody>
 			<?php $pvp_stats = pvp_stats($player_id,$mysqli,$stats_mysql["table_prefix"]); ?>

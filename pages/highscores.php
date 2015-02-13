@@ -18,10 +18,12 @@ $title = str_replace ('{STAT}',$stats_names[$highscores_item["stat"]],$title);
 	</div>
 	<table class="display noborder dataTable no-footer dtr-inline">
 		<thead>
-			<th class="highscore-place no-mobile">Place</th>
-			<th>Player</th>
-			<th class="no-mobile">Status</th>
-			<th><?=$stats_names[$highscores_item["stat"]]; ?></th>
+			<tr>
+				<th class="highscore-place no-mobile">Place</th>
+				<th>Player</th>
+				<th class="no-mobile">Status</th>
+				<th><?=$stats_names[$highscores_item["stat"]]; ?></th>
+			</tr>
 		</thead>
 		<tbody>
 		<?php foreach ($highscore as $item => $player) :?>
@@ -38,12 +40,15 @@ $title = str_replace ('{STAT}',$stats_names[$highscores_item["stat"]],$title);
 		<tr>
 			<td class="highscore-place no-mobile"><?=$item+1; ?></td>
 			<td>
-				<?php /* If url rewrites have been disabled */ if ($enable_url_rewrite==false) :?>
-					<a href="?page=player&player=<?=$player["player_id"] ?>"><?='<img class="player-head-player_page" src="'.$image_url.'" alt="'.$player["name"].'"/> '.$player["name"]; ?></a></td>
-				<?php endif ?>
-				<?php /* If url rewrites have been enabled */ if ($enable_url_rewrite==true) :?>
-					<a href="<?= $site_base_url.'/player/'.$player["player_id"]."/" ?>"><?='<img class="player-head-player_page" src="'.$image_url.'" alt="'.$player["name"].'"/> '.$player["name"]; ?></a></td>
-				<?php endif ?>
+				<?php
+				if ($config["url"]["player"]["useName"])
+					$player_url = urlencode($player["name"]);
+				else
+					$player_url = $player["player_id"];
+				?>
+				<a href="<?= makePlayerUrl($player_url,$site_base_url,$enable_url_rewrite,$config["url"]["player"]["useName"]) ?>"><img class="player-head-player_page" src="<?=$image_url?>" alt="<?=$player["name"]?>"/> <?=$player["name"]?></a></td>
+				
+
 				<?php if (isset($Online_Players)): ?>
 				<td class="no-mobile">
 				<?php if (playerOnline($player["name"], $Online_Players)): ?>
