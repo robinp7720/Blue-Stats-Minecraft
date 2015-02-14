@@ -16,12 +16,13 @@ if (!empty($pvp_stats)){
 		$player_label = '<a href="'.makePlayerUrl($player_url,$site_base_url,$enable_url_rewrite,$config["url"]["player"]["useName"]).'"><img class="player-head-player_page" src="'.$player_image_url.'" alt="'.$player_name.'"/> '.$player_name.'</a></td>';
 
 
-
-		if (isset($Online_Players)){
-			if (playerOnline($player_name, $Online_Players)){
-				$status = '<a class="tag-online">Online</a>';
-			}else{
-				$status = '<a class="tag-offline">Offline</a>';
+		if ($server_info["query_enabled"]){
+			if (isset($Online_Players)){
+				if (playerOnline($player_name, $Online_Players)){
+					$status = '<a class="tag-online">Online</a>';
+				}else{
+					$status = '<a class="tag-offline">Offline</a>';
+				}
 			}
 		}
 
@@ -30,12 +31,21 @@ if (!empty($pvp_stats)){
 		$cause   = $value["cause"];
 		$amount = $value["amount"];
 
-		$output["data"][]=array(
-			$player_label,
-			$status,
-			$world,
-			$cause,
-			$amount
-		);
+		if ($server_info["query_enabled"]){
+			$output["data"][]=array(
+				$player_label,
+				$status,
+				$world,
+				$cause,
+				$amount
+			);
+		}else{
+			$output["data"][]=array(
+				$player_label,
+				$world,
+				$cause,
+				$amount
+			);
+		}
 	}
 };

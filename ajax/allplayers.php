@@ -24,20 +24,28 @@ foreach ($players as $item => $player){
 	
 	$player_label = '<a href="'.makePlayerUrl($player_url,$site_base_url,$enable_url_rewrite,$config["url"]["player"]["useName"]).'"><img class="player-head-player_page" src="'.$image_url.'" alt="'.$player["name"].'"/> '.$player["name"].'</a></td>';
 	
-
-	/* Get player status */
-	if (playerOnline($player["name"], $Online_Players)){
-		$status = '<a class="tag-online">Online</a>';
+	/* If mc query is enabled */
+	if ($server_info["query_enabled"]){
+		/* Get player status */
+		if (isset($Online_Players)){
+			if (playerOnline($player["name"], $Online_Players)){
+				$status = '<a class="tag-online">Online</a>';
+			}else{
+				$status = '<a class="tag-offline">Offline</a>';
+			}
+		}
+		$output["data"][]=array(
+			$player_label,
+			$status,
+			$stat,
+			$player[$allPlayers_default_stat_displayed]
+		);
 	}else{
-		$status = '<a class="tag-offline">Offline</a>';
+		$output["data"][]=array(
+			$player_label,
+			$stat,
+			$player[$allPlayers_default_stat_displayed]
+		);
 	}
-
-
-	$output["data"][]=array(
-		$player_label,
-		$status,
-		$stat,
-		$player[$allPlayers_default_stat_displayed]
-	);
 } 
 ?>
