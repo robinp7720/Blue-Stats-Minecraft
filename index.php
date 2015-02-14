@@ -25,6 +25,18 @@ include __DIR__."/classes/queryException.php";
 /* Themes */
 include __DIR__."/themes/theme_settings.php";
 
+/* Get block names */
+if (file_exists(__DIR__."/cache/items.json")&&$config["blocks"]["cache"]){
+	$blocks_names = json_decode(file_get_contents(__DIR__."/cache/items.json"),true);
+}else{
+	if ($config["blocks"]["cache"]){
+		$blocks_names = file_get_contents($config["blocks"]["url"]);
+		file_put_contents(__DIR__."/cache/items.json", $blocks_names);
+	}else{
+		$blocks_names = json_decode(file_get_contents($config["blocks"]["url"]),true);
+	}
+}
+
 /* Remove all path related items from theme name for security */
 $theme_settings = array(
 	"enabled_theme" => str_replace ( array(".","/","\\") , "" , $theme_settings["enabled_theme"])
