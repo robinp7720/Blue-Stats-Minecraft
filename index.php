@@ -25,6 +25,18 @@ include __DIR__."/classes/queryException.php";
 /* Themes */
 include __DIR__."/themes/theme_settings.php";
 
+/* Get block names */
+if (file_exists(__DIR__."/cache/items.json")&&$config["blocks"]["cache"]){
+	$blocks_names = json_decode(file_get_contents(__DIR__."/cache/items.json"),true);
+}else{
+	if ($config["blocks"]["cache"]){
+		$blocks_names = file_get_contents($config["blocks"]["url"]);
+		file_put_contents(__DIR__."/cache/items.json", $blocks_names);
+	}else{
+		$blocks_names = json_decode(file_get_contents($config["blocks"]["url"]),true);
+	}
+}
+
 /* Remove all path related items from theme name for security */
 $theme_settings = array(
 	"enabled_theme" => str_replace ( array(".","/","\\") , "" , $theme_settings["enabled_theme"])
@@ -71,7 +83,6 @@ elseif($page=="pvpstats"){
 	include $app_path."/pages/pvp_stats.php";
 }
 $time_end = microtime(true);
-$execution_time = round(($time_end - $time_start));
-$execution_time = round($execution_time/60,4)*60;
+$execution_time = round($time_end - $time_start,5);
 /* Html Header */
 include $app_path."/parts/footer.php";

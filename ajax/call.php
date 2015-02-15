@@ -1,4 +1,7 @@
 <?php
+/* Execution time */
+$time_start = microtime(true);
+
 /* Configs */
 include __DIR__."/../configs/mysql.php";
 include __DIR__."/../configs/player.php";
@@ -45,7 +48,9 @@ if ($function=="allplayers"){
 	include "death_stats.php";
 }
 
-
+$time_end = microtime(true);
+$execution_time = $time_end - $time_start;
+$output["time"]=$execution_time;
 /* Return output as json*/
 if (isset($output))
 	echo json_encode($output);

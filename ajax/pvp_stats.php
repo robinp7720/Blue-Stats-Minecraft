@@ -19,15 +19,15 @@ if (!empty($pvp_stats)){
 		$killer_label = '<a href="'.makePlayerUrl($player_url,$site_base_url,$enable_url_rewrite,$config["url"]["player"]["useName"]).'"><img class="player-head-player_page" src="'.$image_killer_url.'" alt="'.$killer.'"/> '.$killer.'</a></td>';
 
 
-
-		if (isset($Online_Players)){
-			if (playerOnline($killer, $Online_Players)){
-				$killer_status = '<a class="tag-online">Online</a>';
-			}else{
-				$killer_status = '<a class="tag-offline">Offline</a>';
+		if ($server_info["query_enabled"]){
+			if (isset($Online_Players)){
+				if (playerOnline($killer, $Online_Players)){
+					$killer_status = '<a class="tag-online">Online</a>';
+				}else{
+					$killer_status = '<a class="tag-offline">Offline</a>';
+				}
 			}
 		}
-
 		/* KILLDED */
 		/* Get player link */
 		if ($config["url"]["player"]["useName"])
@@ -37,26 +37,35 @@ if (!empty($pvp_stats)){
 
 		$killed_label = '<a href="'.makePlayerUrl($player_url,$site_base_url,$enable_url_rewrite,$config["url"]["player"]["useName"]).'"><img class="player-head-player_page" src="'.$image_killed_url.'" alt="'.$killed.'"/> '.$killed.'</a></td>';
 
-
-		if (isset($Online_Players)){
-			if (playerOnline($killed, $Online_Players)){
-				$killed_status = '<a class="tag-online">Online</a>';
-			}else{
-				$killed_status = '<a class="tag-offline">Offline</a>';
+		if ($server_info["query_enabled"]){
+			if (isset($Online_Players)){
+				if (playerOnline($killed, $Online_Players)){
+					$killed_status = '<a class="tag-online">Online</a>';
+				}else{
+					$killed_status = '<a class="tag-offline">Offline</a>';
+				}
 			}
 		}
 
 		/* Other stats */
 		$weapon = $value["weapon"];
 		$amount = $value["amount"];
-
-		$output["data"][]=array(
-			$killer_label,
-			$killer_status,
-			$killed_label,
-			$killed_status,
-			$weapon,
-			$amount
-		);
+		if ($server_info["query_enabled"]){
+			$output["data"][]=array(
+				$killer_label,
+				$killer_status,
+				$killed_label,
+				$killed_status,
+				$weapon,
+				$amount
+			);
+		}else{
+			$output["data"][]=array(
+				$killer_label,
+				$killed_label,
+				$weapon,
+				$amount
+			);
+		}
 	}
 };

@@ -21,7 +21,7 @@ $title = str_replace ('{STAT}',$stats_names[$highscores_item["stat"]],$title);
 			<tr>
 				<th class="highscore-place no-mobile">Place</th>
 				<th>Player</th>
-				<th class="no-mobile">Status</th>
+				<?php if ($server_info["query_enabled"]):?><th class="no-mobile">Status</th><?php endif; ?>
 				<th><?=$stats_names[$highscores_item["stat"]]; ?></th>
 			</tr>
 		</thead>

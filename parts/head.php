@@ -81,7 +81,8 @@
 
 		/* Get colour */
 		if ($youtube_like_page_theme){
-			$theme["colour"]["nav"] = get_main_colour($image_url);
+			$theme["nav"]["color"] = get_main_colour($image_url);
+			$theme["headers"]["color"] = $theme["nav"]["color"];
 		}
 	}
 	?>
