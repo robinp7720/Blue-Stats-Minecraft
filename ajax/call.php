@@ -22,6 +22,18 @@ include __DIR__."/../functions/image.php";
 include __DIR__."/../classes/query.php";
 include __DIR__."/../classes/queryException.php";
 
+/* Get block names */
+if (file_exists(__DIR__."/../cache/items.json")&&$config["blocks"]["cache"]){
+	$blocks_names = json_decode(file_get_contents(__DIR__."/../cache/items.json"),true);
+}else{
+	if ($config["blocks"]["cache"]){
+		$blocks_names = file_get_contents($config["blocks"]["url"]);
+		file_put_contents(__DIR__."/../cache/items.json", $blocks_names);
+	}else{
+		$blocks_names = json_decode(file_get_contents($config["blocks"]["url"]),true);
+	}
+}
+
 /* HTTP Headers*/
 header("cache-control: private, max-age={$config["cache"]["ajax"]["max-age"]}");
 

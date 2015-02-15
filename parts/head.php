@@ -6,22 +6,19 @@
 
 	<title>Blue Stats - <?=$server_info["server_name"]?></title>
 	
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script type="text/javascript" src="http://ricostacruz.com/jquery.transit/jquery.transit.min.js"></script>
 
 	<!-- Data Tabels -->
 	<script src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
-	<link href="//cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
-	<script src="//cdn.datatables.net/responsive/1.0.4/js/dataTables.responsive.js"></script>
-	<link href="//cdn.datatables.net/responsive/1.0.4/css/dataTables.responsive.css" rel="stylesheet" type="text/css">
-		
-	<!-- Load site css last to overwrite any other styles -->
-	<link href='css/main.css' rel='stylesheet' type='text/css'>
-	<link href='css/colors.css' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+	<link rel="stylesheet" href="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css">
 	
+
+
 	<!-- Initialize Data Tabels -->
 	<script>
 		$(document).ready(function() {
@@ -86,34 +83,5 @@
 		}
 	}
 	?>
-
-	<?php if (isset($theme["name"])): ?>
-	<style>
-		nav{
-			background-color:rgb(<?=$theme["nav"]["color"]["red"]?>,<?=$theme["nav"]["color"]["green"]?>,<?=$theme["nav"]["color"]["blue"]?>)
-		}
-		nav a.nav-item:hover{
-			background-color:rgb(<?=$theme["nav"]["color"]["red"]+10?>,<?=$theme["nav"]["color"]["green"]+10?>,<?=$theme["nav"]["color"]["blue"]+10?>)
-		}
-		nav a.nav-logo{
-			background-color:rgb(<?=$theme["nav"]["color"]["red"]-20?>,<?=$theme["nav"]["color"]["green"]-20?>,<?=$theme["nav"]["color"]["blue"]-20?>)
-		}
-		div.container-head{
-			background-color:rgb(<?=$theme["headers"]["color"]["red"]?>,<?=$theme["headers"]["color"]["green"]?>,<?=$theme["headers"]["color"]["blue"]?>)
-		}
-		body{
-			background-color:rgb(<?=$theme["background"]["color"]["red"]?>,<?=$theme["background"]["color"]["green"]?>,<?=$theme["background"]["color"]["blue"]?>)
-		}
-		a.nav-item, a.nav-logo{
-			height:<?=$theme["nav"]["thickness"]?>;
-			line-height:<?=$theme["nav"]["thickness"]?>;
-		}
-		@media (max-width:800px) {
-			nav{
-				max-height:<?=$theme["nav"]["thickness"]+40?>px;
-			}
-		}
-	</style>
-	<?php endif ?>
 </head>
 <body>

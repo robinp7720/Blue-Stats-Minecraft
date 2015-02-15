@@ -1,29 +1,25 @@
+<h2>Kills</h2>
+<table class="table table-striped table-bordered" id="kills">
+	<thead>
+		<tr>
+			<th>Killer</th>
+			<?php if($server_info["query_enabled"]){echo"<th>Status</th>";}?>
+			<th>World</th>
+			<th>Killed</th>
+			<th>Amount</th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<th>Killer</th>
+			<?php if($server_info["query_enabled"]){echo"<th>Status</th>";}?>
+			<th>World</th>
+			<th>Killed</th>
+			<th>Amount</th>
+		</tr>
+	</tfoot>
+</table>
 
-<div class="box-half">
-	<div class="container-head">
-		<a class="title">Kills</a>
-	</div>
-	<table class="display" id="kills">
-		<thead>
-			<tr>
-				<th>Killer</th>
-				<?php if($server_info["query_enabled"]){echo"<th>Status</th>";}?>
-				<th>World</th>
-				<th>Killed</th>
-				<th>Amount</th>
-			</tr>
-		</thead>
-		<tfoot>
-			<tr>
-				<th>Killer</th>
-				<?php if($server_info["query_enabled"]){echo"<th>Status</th>";}?>
-				<th>World</th>
-				<th>Killed</th>
-				<th>Amount</th>
-			</tr>
-		</tfoot>
-	</table>
-</div>
 
 <script type="text/javascript">
 	$(document).ready(function() {
