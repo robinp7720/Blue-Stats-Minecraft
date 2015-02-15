@@ -7,10 +7,11 @@
 	<title>Blue Stats - <?=$server_info["server_name"]?></title>
 	
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.2/flatly/bootstrap.min.css" rel="stylesheet">
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script type="text/javascript" src="http://ricostacruz.com/jquery.transit/jquery.transit.min.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 	<!-- Data Tabels -->
 	<script src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
@@ -43,19 +44,6 @@
 			<?php endif; ?>
 		} );
 	</script>
-	<?php if ($global_animations=="true") :?>
-	<style>
-		div.box, div.box-half{
-			-webkit-animation:slide-in 1s;
-			-moz-animation:slide-in 1s;
-			-ms-animation:slide-in 1s;
-			-o-animation:slide-in 1s;
-			animation:slide-in 1s;
-
-		}
-	</style>
-	<?php endif; ?>
-
 	<?php
 	/* If player page get color and name*/
 	if ($page=="player"){
@@ -80,8 +68,31 @@
 		if ($youtube_like_page_theme){
 			$theme["nav"]["color"] = get_main_colour($image_url);
 			$theme["headers"]["color"] = $theme["nav"]["color"];
+			$theme["pager"]["color"] = $theme["nav"]["color"];
 		}
+
 	}
 	?>
+	<style type="text/css">
+		.navbar{
+			background:rgb(<?=$theme["nav"]["color"]["red"]?>,<?=$theme["nav"]["color"]["green"]?>,<?=$theme["nav"]["color"]["blue"]?>);
+		}
+		.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.active>a:focus{
+			background:rgb(<?=$theme["nav"]["color"]["red"]+10?>,<?=$theme["nav"]["color"]["green"]+10?>,<?=$theme["nav"]["color"]["blue"]+10?>);
+		}
+
+		.pagination>.disabled>span, .pagination>.disabled>span:hover, .pagination>.disabled>span:focus, .pagination>.disabled>a, .pagination>.disabled>a:hover, .pagination>.disabled>a:focus{
+			background:rgb(<?=$theme["pager"]["color"]["red"]+10?>,<?=$theme["pager"]["color"]["green"]+10?>,<?=$theme["pager"]["color"]["blue"]+10?>);
+		}
+		.pagination>li>a, .pagination>li>span{
+			background:rgb(<?=$theme["pager"]["color"]["red"]-5?>,<?=$theme["pager"]["color"]["green"]-5?>,<?=$theme["pager"]["color"]["blue"]-5?>);
+		}
+		.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus{
+			background:rgb(<?=$theme["pager"]["color"]["red"]-20?>,<?=$theme["pager"]["color"]["green"]-20?>,<?=$theme["pager"]["color"]["blue"]-20?>);
+		}
+		.pagination>li>a:hover, .pagination>li>span:hover, .pagination>li>a:focus, .pagination>li>span:focus{
+			background:rgb(<?=$theme["pager"]["color"]["red"]-20?>,<?=$theme["pager"]["color"]["green"]-20?>,<?=$theme["pager"]["color"]["blue"]-20?>);
+		}
+	</style>
 </head>
 <body>
