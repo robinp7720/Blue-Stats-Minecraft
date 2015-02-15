@@ -31,10 +31,17 @@
 	        <?php else: ?>
 	        "ajax": '<?=$site_base_url?>/ajax/?func=allplayers',
 	        <?php endif; ?>
+	        <?php if ($server_info["query_enabled"]):?>
 	        "aoColumnDefs": [
 		      { "iDataSort": 3, "aTargets": [ 2 ] },
 		      { "bVisible": false, "aTargets": [ 3 ] }
 		    ]
+		    <?php else: ?>
+		    "aoColumnDefs": [
+		      { "iDataSort": 2, "aTargets": [ 1 ] },
+		      { "bVisible": false, "aTargets": [ 2 ] }
+		    ]
+		    <?php endif; ?>
 	    } );
 	} );	
 </script>
