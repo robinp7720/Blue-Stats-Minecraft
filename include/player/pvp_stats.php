@@ -1,8 +1,7 @@
-<div class="box">
-	<div class="container-head">
-		<a class="title">PvP Stats</a>
-	</div>
-	<table class="display" id="sorted3">
+
+		<h2>PvP Stats</h2>
+
+	<table class="table table-striped table-bordered" id="sorted3">
 		<thead>
 			<tr>
 				<th>Player Killed</th>
@@ -34,4 +33,3 @@
 			<?php endif; ?>
 		</tbody>
 	</table>
-</div>

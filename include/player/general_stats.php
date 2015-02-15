@@ -1,8 +1,5 @@
-<div class="box">
-	<div class="container-head">
-		<a class="title"><?= $player_name; ?></a>
-	</div>
-	<table class="display" id="sorted">
+
+	<table class="table table-striped table-bordered" id="sorted">
 		<thead>
 			<tr>
 				<th>Stat</th>
@@ -32,4 +29,4 @@ if ($stat == "playtime"){
 			<?php endforeach; ?>
 		</tbody>
 	</table>
-</div>
+

@@ -81,6 +81,8 @@ if ($page=="highscores"){
 }
 elseif($page=="pvpstats"){
 	include $app_path."/pages/pvp_stats.php";
+}elseif($page=="home"){
+	include $app_path."/pages/home.php";
 }
 $time_end = microtime(true);
 $execution_time = round($time_end - $time_start,5);
