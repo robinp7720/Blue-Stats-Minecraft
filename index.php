@@ -54,7 +54,7 @@ $app_path = __DIR__;
 
 /* Select page */
 if (!isset($_GET["page"])){
-	$page = "highscores";
+	$page = $config["site"]["home"];
 }else{
 	$page = $_GET["page"];
 }
@@ -84,6 +84,8 @@ elseif($page=="pvpstats"){
 	include $app_path."/pages/pvp_stats.php";
 }elseif($page=="home"){
 	include $app_path."/pages/home.php";
+}elseif($page=="blocks"){
+	include $app_path."/pages/block_stats.php";
 }
 $time_end = microtime(true);
 $execution_time = round($time_end - $time_start,5);

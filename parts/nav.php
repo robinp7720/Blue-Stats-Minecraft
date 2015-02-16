@@ -28,6 +28,7 @@ foreach ($nav_bar_url as $item)
 	        <li <?php if ($page=="highscores"):?>class="active"<?php endif; ?>><a href="?page=highscores">High Scores</a></li>
 	        <li <?php if ($page=="allplayers"):?>class="active"<?php endif; ?>><a href="?page=allplayers">All Players</a></li>
 	        <li <?php if ($page=="pvpstats"):?>class="active"<?php endif; ?>><a href="?page=pvpstats">PvP Stats</a></li>
+          <li <?php if ($page=="blocks"):?>class="active"<?php endif; ?>><a href="?page=blocks">Block Stats</a></li>
     	</ul>
 	<?php else: ?>
 	   <ul class="nav navbar-nav">
@@ -35,6 +36,7 @@ foreach ($nav_bar_url as $item)
         <li <?php if ($page=="highscores"):?>class="active"<?php endif; ?>><a href="<?= $site_base_url."/highscores/" ?>">High Scores</a></li>
         <li <?php if ($page=="allplayers"):?>class="active"<?php endif; ?>><a href="<?= $site_base_url."/allplayers/"?>">All Players</a></li>
         <li <?php if ($page=="pvpstats"):?>class="active"<?php endif; ?>><a href="<?= $site_base_url."/pvpstats/"?>">PvP Stats</a></li>
+        <li <?php if ($page=="blocks"):?>class="active"<?php endif; ?>><a href="<?= $site_base_url."/blocks/"?>">Block Stats</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
       	<?= $custom_nav_html ?>
