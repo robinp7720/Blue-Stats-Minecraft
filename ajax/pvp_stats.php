@@ -22,9 +22,9 @@ if (!empty($pvp_stats)){
 		if ($server_info["query_enabled"]){
 			if (isset($Online_Players)){
 				if (playerOnline($killer, $Online_Players)){
-					$killer_status = '<a class="tag-online">Online</a>';
+					$killer_status = '<span class="label label-success">Online</span';
 				}else{
-					$killer_status = '<a class="tag-offline">Offline</a>';
+					$killer_status = '<span class="label label-danger">Offline</span>';
 				}
 			}
 		}
@@ -40,9 +40,9 @@ if (!empty($pvp_stats)){
 		if ($server_info["query_enabled"]){
 			if (isset($Online_Players)){
 				if (playerOnline($killed, $Online_Players)){
-					$killed_status = '<a class="tag-online">Online</a>';
+					$killed_status = '<span class="label label-success">Online</span>';
 				}else{
-					$killed_status = '<a class="tag-offline">Offline</a>';
+					$killed_status = '<span class="label label-danger">Offline</span>';
 				}
 			}
 		}

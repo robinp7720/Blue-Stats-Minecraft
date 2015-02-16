@@ -13,7 +13,7 @@ $title = str_replace ('{STAT}',$stats_names[$highscores_item["stat"]],$title);
 ?>
 
 
-
+<div class="col-md-6">
 <h2><?=$title; ?></h3>
 
 	<table class="table table-striped table-bordered">
@@ -50,11 +50,11 @@ $title = str_replace ('{STAT}',$stats_names[$highscores_item["stat"]],$title);
 
 
 			<?php if (isset($Online_Players)): ?>
-			<td class="no-mobile">
+			<td>
 			<?php if (playerOnline($player["name"], $Online_Players)): ?>
-			<a class="tag-online">Online</a>
+			<span class="label label-success">Online</span>
 			<?php else: ?>
-			<a class="tag-offline">Offline</a>
+			<span class="label label-danger">Offline</span>
 			<?php endif; ?>
 			</td>
 			<?php endif; ?>
@@ -63,6 +63,7 @@ $title = str_replace ('{STAT}',$stats_names[$highscores_item["stat"]],$title);
 			<?php endforeach ?>
 		</tbody>
 	</table>
+	</div>
 
 <?php endforeach ?>
 </div>
