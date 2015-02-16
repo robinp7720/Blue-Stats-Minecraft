@@ -29,9 +29,9 @@ foreach ($players as $item => $player){
 		/* Get player status */
 		if (isset($Online_Players)){
 			if (playerOnline($player["name"], $Online_Players)){
-				$status = '<a class="tag-online">Online</a>';
+				$status = '<span class="label label-success">Online</span>';
 			}else{
-				$status = '<a class="tag-offline">Offline</a>';
+				$status = '<span class="label label-danger">Offline</span>';
 			}
 		}
 		$output["data"][]=array(
