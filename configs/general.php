@@ -5,9 +5,7 @@ $config["cache"]["ajax"]["max-age"] = 0;
 
 /* User player name instead of player id for urls */
 $config["url"]["player"]["useName"]=true;
-
-/* Site animations Set to false to have a faster user experience*/
-$global_animations = "false";
+$config["site"]["home"]="home";
 
 /* Enter in the stats site base url Eg: http://www.example.com/stats */
 $site_base_url = "http://games.mysunland.org/stats";

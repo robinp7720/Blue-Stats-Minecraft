@@ -30,7 +30,9 @@ $stats_tracked_player = array(
 	"shear",
 	"pvpstreak",
 	"pvptopstreak",
-	"trades"
+	"trades",
+	"lastjoin",
+	"lastleave"
 );
 
 /* Nicer name to use instead of the column name in the database */
