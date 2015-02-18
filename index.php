@@ -79,8 +79,7 @@ if ($page=="highscores"){
 	include $app_path."/pages/player.php";
 }elseif($page=="allplayers"){
 	include $app_path."/pages/all-players.php";
-}
-elseif($page=="pvpstats"){
+}elseif($page=="pvpstats"){
 	include $app_path."/pages/pvp_stats.php";
 }elseif($page=="home"){
 	include $app_path."/pages/home.php";
