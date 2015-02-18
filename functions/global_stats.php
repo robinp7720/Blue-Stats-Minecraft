@@ -32,3 +32,14 @@ function kill_global_stats($mysqli,$prefix){
 		if (!empty($output))return $output;
 	}
 }
+function globalBlockStats($mysqli,$prefix){
+	if ($stmt = $mysqli->prepare("SELECT `world`,sum(amount) as `amount`,`break`,`blockData`,`blockID` FROM `{$prefix}block` group by `blockID`, `break`")) {
+		$stmt->execute();
+		$result = $stmt->get_result();
+		while ($row = $result->fetch_assoc()) {
+			$output[]=$row;
+		}
+		$stmt->close();
+		if (!empty($output))return $output;
+	}
+}

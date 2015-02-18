@@ -1,33 +1,28 @@
 <div class="container">
-	<div class="box">
-		<div class="container-head">
-			<a class="title">All Players</a>
-		</div>
-		<table class="display" id="all-players">
-			<thead>
-				<tr>
-					<th>Player</th>
-					<?php if($server_info["query_enabled"]){echo"<th>Status</th>";}?>
-					<th><?=$stats_names[$allPlayers_default_stat_displayed]; ?></th>
-					<th>Value</th>
-				</tr>
-			</thead>
-			<tfoot>
-				<tr>
-					<th>Player</th>
-					<?php if($server_info["query_enabled"]){echo"<th>Status</th>";}?>
-					<th><?=$stats_names[$allPlayers_default_stat_displayed]; ?></th>
-					<th>Value</th>
-				</tr>
-			</tfoot>
-		</table>
-	</div>
+	<table class="table table-striped table-bordered" id="all-players">
+		<thead>
+			<tr>
+				<th>Player</th>
+				<?php if($server_info["query_enabled"]){echo"<th>Status</th>";}?>
+				<th><?=$stats_names[$allPlayers_default_stat_displayed]; ?></th>
+				<th>Value</th>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<th>Player</th>
+				<?php if($server_info["query_enabled"]){echo"<th>Status</th>";}?>
+				<th><?=$stats_names[$allPlayers_default_stat_displayed]; ?></th>
+				<th>Value</th>
+			</tr>
+		</tfoot>
+	</table>
 </div>
 <script type="text/javascript">
 	$(document).ready(function() {
 	    $('#all-players').dataTable( {
 	    	<?php /* If url rewrites have been disabled */ if ($enable_url_rewrite==false) :?>
-	        "ajax": './ajax/?func=allplayers',
+	        "ajax": './ajax/call.php?func=allplayers',
 	        <?php else: ?>
 	        "ajax": '<?=$site_base_url?>/ajax/?func=allplayers',
 	        <?php endif; ?>

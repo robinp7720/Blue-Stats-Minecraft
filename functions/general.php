@@ -150,4 +150,7 @@ function make_date($date){
 function makePlayerUrl($player_id,$site_base_url,$url_rewrite,$use_name){
 	if ($url_rewrite)
 		return $site_base_url.'/player/'.$player_id."/";
+	else
+		return '?page=player&player='.urlencode($player_id);
+
 }

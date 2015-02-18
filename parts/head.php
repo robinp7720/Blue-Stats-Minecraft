@@ -3,25 +3,22 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="<?=$server_info["server_name"]?> Server statistics">
+	<meta name="author" content="_OvErLoRd_">
 
 	<title>Blue Stats - <?=$server_info["server_name"]?></title>
 	
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.2/flatly/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css">
+
+	<link href='css/custom.css' rel='stylesheet' type='text/css'>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<script type="text/javascript" src="http://ricostacruz.com/jquery.transit/jquery.transit.min.js"></script>
-
-	<!-- Data Tabels -->
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 	<script src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
-	<link href="//cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
-	<script src="//cdn.datatables.net/responsive/1.0.4/js/dataTables.responsive.js"></script>
-	<link href="//cdn.datatables.net/responsive/1.0.4/css/dataTables.responsive.css" rel="stylesheet" type="text/css">
-		
-	<!-- Load site css last to overwrite any other styles -->
-	<link href='css/main.css' rel='stylesheet' type='text/css'>
-	<link href='css/colors.css' rel='stylesheet' type='text/css'>
-	
+	<script type="text/javascript" src="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+
 	<!-- Initialize Data Tabels -->
 	<script>
 		$(document).ready(function() {
@@ -34,31 +31,9 @@
 			$('#sorted3').dataTable({
 				responsive: true
 			});
-			<?php if ($global_animations=="true") : /* if animations are enabled enable js link animations */?>
-			$('a').click(function(){
-				event.preventDefault();
-				var link = $(this).attr('href');
-				var height = $(document).height();
-				if (link){
-					$('.box, .box-half, .player-head-player_page').transition({ y: height+"px" },1000,function(){window.location = link;});
-				}
-			});
-			<?php endif; ?>
+			$('[data-toggle="tooltip"]').tooltip()
 		} );
 	</script>
-	<?php if ($global_animations=="true") :?>
-	<style>
-		div.box, div.box-half{
-			-webkit-animation:slide-in 1s;
-			-moz-animation:slide-in 1s;
-			-ms-animation:slide-in 1s;
-			-o-animation:slide-in 1s;
-			animation:slide-in 1s;
-
-		}
-	</style>
-	<?php endif; ?>
-
 	<?php
 	/* If player page get color and name*/
 	if ($page=="player"){
@@ -83,37 +58,31 @@
 		if ($youtube_like_page_theme){
 			$theme["nav"]["color"] = get_main_colour($image_url);
 			$theme["headers"]["color"] = $theme["nav"]["color"];
+			$theme["pager"]["color"] = $theme["nav"]["color"];
 		}
+
 	}
 	?>
+	<style type="text/css">
+		.navbar{
+			background:rgb(<?=$theme["nav"]["color"]["red"]?>,<?=$theme["nav"]["color"]["green"]?>,<?=$theme["nav"]["color"]["blue"]?>);
+		}
+		.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.active>a:focus{
+			background:rgb(<?=$theme["nav"]["color"]["red"]+10?>,<?=$theme["nav"]["color"]["green"]+10?>,<?=$theme["nav"]["color"]["blue"]+10?>);
+		}
 
-	<?php if (isset($theme["name"])): ?>
-	<style>
-		nav{
-			background-color:rgb(<?=$theme["nav"]["color"]["red"]?>,<?=$theme["nav"]["color"]["green"]?>,<?=$theme["nav"]["color"]["blue"]?>)
+		.pagination>.disabled>span, .pagination>.disabled>span:hover, .pagination>.disabled>span:focus, .pagination>.disabled>a, .pagination>.disabled>a:hover, .pagination>.disabled>a:focus{
+			background:rgb(<?=$theme["pager"]["color"]["red"]+10?>,<?=$theme["pager"]["color"]["green"]+10?>,<?=$theme["pager"]["color"]["blue"]+10?>);
 		}
-		nav a.nav-item:hover{
-			background-color:rgb(<?=$theme["nav"]["color"]["red"]+10?>,<?=$theme["nav"]["color"]["green"]+10?>,<?=$theme["nav"]["color"]["blue"]+10?>)
+		.pagination>li>a, .pagination>li>span{
+			background:rgb(<?=$theme["pager"]["color"]["red"]-5?>,<?=$theme["pager"]["color"]["green"]-5?>,<?=$theme["pager"]["color"]["blue"]-5?>);
 		}
-		nav a.nav-logo{
-			background-color:rgb(<?=$theme["nav"]["color"]["red"]-20?>,<?=$theme["nav"]["color"]["green"]-20?>,<?=$theme["nav"]["color"]["blue"]-20?>)
+		.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus{
+			background:rgb(<?=$theme["pager"]["color"]["red"]-20?>,<?=$theme["pager"]["color"]["green"]-20?>,<?=$theme["pager"]["color"]["blue"]-20?>);
 		}
-		div.container-head{
-			background-color:rgb(<?=$theme["headers"]["color"]["red"]?>,<?=$theme["headers"]["color"]["green"]?>,<?=$theme["headers"]["color"]["blue"]?>)
-		}
-		body{
-			background-color:rgb(<?=$theme["background"]["color"]["red"]?>,<?=$theme["background"]["color"]["green"]?>,<?=$theme["background"]["color"]["blue"]?>)
-		}
-		a.nav-item, a.nav-logo{
-			height:<?=$theme["nav"]["thickness"]?>;
-			line-height:<?=$theme["nav"]["thickness"]?>;
-		}
-		@media (max-width:800px) {
-			nav{
-				max-height:<?=$theme["nav"]["thickness"]+40?>px;
-			}
+		.pagination>li>a:hover, .pagination>li>span:hover, .pagination>li>a:focus, .pagination>li>span:focus{
+			background:rgb(<?=$theme["pager"]["color"]["red"]-20?>,<?=$theme["pager"]["color"]["green"]-20?>,<?=$theme["pager"]["color"]["blue"]-20?>);
 		}
 	</style>
-	<?php endif ?>
 </head>
 <body>

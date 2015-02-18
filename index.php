@@ -11,6 +11,7 @@ include __DIR__."/configs/faces.php";
 include __DIR__."/configs/all-players.php";
 include __DIR__."/configs/general.php";
 include __DIR__."/configs/server.php";
+include __DIR__."/configs/home.php";
 
 /* Functions */
 include __DIR__."/functions/general.php";
@@ -53,7 +54,7 @@ $app_path = __DIR__;
 
 /* Select page */
 if (!isset($_GET["page"])){
-	$page = "highscores";
+	$page = $config["site"]["home"];
 }else{
 	$page = $_GET["page"];
 }
@@ -78,11 +79,15 @@ if ($page=="highscores"){
 	include $app_path."/pages/player.php";
 }elseif($page=="allplayers"){
 	include $app_path."/pages/all-players.php";
-}
-elseif($page=="pvpstats"){
+}elseif($page=="pvpstats"){
 	include $app_path."/pages/pvp_stats.php";
+}elseif($page=="home"){
+	include $app_path."/pages/home.php";
+}elseif($page=="blocks"){
+	include $app_path."/pages/block_stats.php";
 }
 $time_end = microtime(true);
 $execution_time = round($time_end - $time_start,5);
+
 /* Html Header */
 include $app_path."/parts/footer.php";

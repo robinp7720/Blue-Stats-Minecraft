@@ -1,8 +1,5 @@
-   <div class="box">
-	<div class="container-head">
-		<a class="title">Block Stats</a>
-	</div>
-	<table class="display" id="sorted2">
+<h2>Block Stats</h2>
+	<table class="table table-striped table-bordered" id="sorted2">
 		<thead>
 			<tr>
 				<th>Block</th>
@@ -82,4 +79,4 @@ echo $block_name ?>
 			<?php endforeach; ?>
 		</tbody>
 	</table>
-</div>
+
