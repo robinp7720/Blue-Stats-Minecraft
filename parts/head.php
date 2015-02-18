@@ -31,6 +31,7 @@
 			$('#sorted3').dataTable({
 				responsive: true
 			});
+			$('[data-toggle="tooltip"]').tooltip()
 		} );
 	</script>
 	<?php

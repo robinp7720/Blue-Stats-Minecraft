@@ -46,7 +46,8 @@
 		<hr>
 		<div class="online-player text-center">
 			<?php foreach($Online_Players as $player): ?>
-			<img src="<?=player_face($player,$config["faces"]["home"]["size"],$config["faces"]["home"]["url"]);?>" alt="">
+			<img src="<?=player_face($player,$config["faces"]["home"]["size"],$config["faces"]["home"]["url"]);?>" alt="" title="<?=$player?>" data-toggle="tooltip" data-placement="top">
 			<?php endforeach; ?>
 		</div>
+		<br>
 </div>
