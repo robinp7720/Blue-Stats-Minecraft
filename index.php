@@ -70,7 +70,7 @@ header("cache-control: private, max-age={$config["cache"]["max-age"]}");
 include $app_path."/parts/head.php";
 
 /* Nav Bar */
-include __DIR__."/parts/nav.php";
+include $app_path."/parts/nav.php";
 
 /* Include page */
 if ($page=="highscores"){

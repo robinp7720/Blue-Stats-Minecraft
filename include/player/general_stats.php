@@ -1,5 +1,5 @@
 
-	<table class="table table-striped table-bordered" id="sorted">
+	<table class="table table-striped table-bordered" id="generalstats">
 		<thead>
 			<tr>
 				<th>Stat</th>
@@ -46,4 +46,10 @@ if (isset($stats_names[$stat])){
 			<?php endforeach; ?>
 		</tbody>
 	</table>
-
+<script>
+	$(document).ready(function() {
+		$('#generalstats').dataTable({
+			responsive: true
+		});
+	} );
+</script>
