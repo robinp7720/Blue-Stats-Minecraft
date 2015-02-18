@@ -14,12 +14,12 @@ $title = str_replace ('{STAT}',$stats_names[$highscores_item["stat"]],$title);
 
 
 <div class="col-md-6">
-<h2><?=$title; ?></h3>
+<h2><?=$title; ?></h2>
 
 	<table class="table table-striped table-bordered">
 		<thead>
 			<tr>
-				<th class="highscore-place no-mobile">Place</th>
+				<th class="highscore-place">Place</th>
 				<th>Player</th>
 				<?php if ($server_info["query_enabled"]):?><th class="no-mobile">Status</th><?php endif; ?>
 				<th><?=$stats_names[$highscores_item["stat"]]; ?></th>
