@@ -1,3 +1,4 @@
+<div class="container">
 <?php
 /* Make sure input is a number */
 if (!empty($player_name)){
@@ -6,9 +7,7 @@ if (!empty($player_name)){
 	/* Get player face */
 	$image_url = player_face($player_name,$config["faces"]["player"]["size"],$config["faces"]["player"]["url"]);
 
-	echo '<div class="center"><img class="player-head-player_page" src="'.$image_url.'"/></div>';
-	
-	echo '<div class="container">';
+	echo '<h1>'.$player_name.'</h1><img class="center-block" src="'.$image_url.'"/>';
 
 	/* Include General Stats First */
 	include $app_path."/include/player/general_stats.php";
@@ -18,14 +17,13 @@ if (!empty($player_name)){
 
 	/* Include Block Stats Last */
 	include $app_path."/include/player/block_stats.php";
-
-	echo '</div>';
 }else{
 	?>
-	<div class="center" style="margin-top:5px;"><b>This user does not exist</b></div>
+	<b>This user does not exist</b>
 	<?php
 }
 ?>
+</div>
 
 
 

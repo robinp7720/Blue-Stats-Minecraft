@@ -10,7 +10,11 @@ $theme["headers"]["color"]=array(
 	"green" => 150,
 	"blue" => 243
 );
-$theme["nav"]["thickness"]="50px";/* px only */
+$theme["pager"]["color"]=array(
+	"red" => 33,
+	"green" => 150,
+	"blue" => 243
+);
 $theme["background"]["color"]=array(
 	"red" => 255,
 	"green" => 255,
