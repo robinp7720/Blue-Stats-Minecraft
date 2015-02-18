@@ -1,5 +1,6 @@
 <?php
-$highscores = array(
+/* High Scores to show */
+$config["highscores"]["highscores"] = array(
 	array(
 		"stat" => "joins",
 		"amount" => 10
@@ -33,5 +34,6 @@ $highscores = array(
 		"amount" => 10
 	),
 );
+
 /* Text to show above each high score table */
-$highscore_title="Top {AMOUNT} by {STAT}"; /* {AMOUNT} will be replaced with the amount of peoples shown and {STAT} is the stat name */
+$config["highscores"]["title"]="Top {AMOUNT} by {STAT}"; /* {AMOUNT} will be replaced with the amount of peoples shown and {STAT} is the stat name */
