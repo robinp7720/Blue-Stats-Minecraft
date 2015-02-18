@@ -67,7 +67,7 @@
 	$(document).ready(function() {
 	    $('#PvP').dataTable( {
 	    	<?php /* If url rewrites have been disabled */ if ($enable_url_rewrite==false) :?>
-	        "ajax": './ajax/?func=pvp',
+	        "ajax": './ajax/call.php?func=pvp',
 	        <?php else: ?>
 	        "ajax": '<?=$site_base_url?>/ajax/?func=pvp',
 	        <?php endif; ?>
@@ -75,14 +75,14 @@
 	    } );
 	    var deaths = $('#deaths').dataTable( {
 	    	<?php /* If url rewrites have been disabled */ if ($enable_url_rewrite==false) :?>
-	        "ajax": './ajax/?func=deaths',
+	        "ajax": './ajax/call.php?func=deaths',
 	        <?php else: ?>
 	        "ajax": '<?=$site_base_url?>/ajax/?func=deaths',
 	        <?php endif; ?>
 	    } );
 	    $('#kills').dataTable( {
 	    	<?php /* If url rewrites have been disabled */ if ($enable_url_rewrite==false) :?>
-	        "ajax": './ajax/?func=kills',
+	        "ajax": './ajax/call.php?func=kills',
 	        <?php else: ?>
 	        "ajax": '<?=$site_base_url?>/ajax/?func=kills',
 	        <?php endif; ?>

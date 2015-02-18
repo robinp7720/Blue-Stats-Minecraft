@@ -22,7 +22,7 @@
 	$(document).ready(function() {
 	    $('#all-players').dataTable( {
 	    	<?php /* If url rewrites have been disabled */ if ($enable_url_rewrite==false) :?>
-	        "ajax": './ajax/?func=allplayers',
+	        "ajax": './ajax/call.php?func=allplayers',
 	        <?php else: ?>
 	        "ajax": '<?=$site_base_url?>/ajax/?func=allplayers',
 	        <?php endif; ?>
