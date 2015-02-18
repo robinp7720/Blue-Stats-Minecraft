@@ -2,13 +2,13 @@
 <?php
 
 //$Global_players = getPlayers($mysqli,$stats_mysql["table_prefix"]);
-foreach ($highscores as $highscores_index => $highscores_item) :
+foreach ($config["highscores"]["highscores"] as $highscores_index => $highscores_item) :
 
 ?>
 <?php
 $highscore = get_highscore($mysqli,$stats_mysql["table_prefix"],$highscores_item["stat"],$highscores_item["amount"]);
 
-$title = str_replace ('{AMOUNT}',$highscores_item["amount"],$highscore_title);
+$title = str_replace ('{AMOUNT}',$highscores_item["amount"],$config["highscores"]["title"]);
 $title = str_replace ('{STAT}',$stats_names[$highscores_item["stat"]],$title);
 ?>
 
