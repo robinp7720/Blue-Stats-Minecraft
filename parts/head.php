@@ -19,18 +19,7 @@
 	<script src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 
-	<!-- Initialize Data Tabels -->
 	<script>
-		$(document).ready(function() {
-			$('#sorted').dataTable({
-				responsive: true
-			});
-			$('#sorted2').dataTable({
-				responsive: true
-			});
-			$('#sorted3').dataTable({
-				responsive: true
-			});
 			$('[data-toggle="tooltip"]').tooltip()
 		} );
 	</script>

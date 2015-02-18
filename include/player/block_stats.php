@@ -1,5 +1,5 @@
 <h2>Block Stats</h2>
-	<table class="table table-striped table-bordered" id="sorted2">
+	<table class="table table-striped table-bordered" id="blockstats">
 		<thead>
 			<tr>
 				<th>Block</th>
@@ -80,3 +80,10 @@ echo $block_name ?>
 		</tbody>
 	</table>
 
+<script>
+	$(document).ready(function() {
+		$('#blockstats').dataTable({
+			responsive: true
+		});
+	} );
+</script>

@@ -89,6 +89,31 @@ function pvp_stats($id,$mysqli,$prefix){
 	}
 }
 
+function death_stats($id,$mysqli,$prefix){
+	if ($stmt = $mysqli->prepare("SELECT * FROM `{$prefix}death` where player_id=?")) {
+		$stmt->bind_param("i", $id);
+		$stmt->execute();
+		$result = $stmt->get_result();
+		while ($row = $result->fetch_assoc()) {
+			$output[]=$row;
+		}
+		$stmt->close();
+		if (!empty($output))return $output;
+	}
+}
+function kill_stats($id,$mysqli,$prefix){
+	if ($stmt = $mysqli->prepare("SELECT * FROM `{$prefix}kill` where player_id=?")) {
+		$stmt->bind_param("i", $id);
+		$stmt->execute();
+		$result = $stmt->get_result();
+		while ($row = $result->fetch_assoc()) {
+			$output[]=$row;
+		}
+		$stmt->close();
+		if (!empty($output))return $output;
+	}
+}
+
 function player_face($name,$size,$url){
 	$image_player_url = str_replace ('{USERNAME}',$name,$url);
 	$image_player_url = str_replace ('{SIZE}',$size,$image_player_url);
