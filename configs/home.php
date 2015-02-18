@@ -7,5 +7,5 @@ $config["home"]["stats"]=array(
 	);
 $config["home"]["top"]["stats"]=array(
 		"playtime" => "Top Player",
-		"votes" => "Top Voter",
+		"votes" => "Top Lover",
 	);
