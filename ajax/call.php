@@ -58,11 +58,14 @@ if ($function=="allplayers"){
 	include "kill_stats.php";
 }elseif ($function=="deaths"){
 	include "death_stats.php";
+}elseif ($function=="playerKillsChart"){
+	include "playerKillsChart.php";
+}elseif ($function=="playerDeathsChart"){
+	include "playerDeathsChart.php";
 }
 
 $time_end = microtime(true);
 $execution_time = $time_end - $time_start;
-$output["time"]=$execution_time;
 /* Return output as json*/
 if (isset($output))
 	echo json_encode($output);

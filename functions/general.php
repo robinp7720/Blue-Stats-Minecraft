@@ -154,3 +154,8 @@ function makePlayerUrl($player_id,$site_base_url,$url_rewrite,$use_name){
 		return '?page=player&player='.urlencode($player_id);
 
 }
+function stringToColorCode($str) {
+  $code = dechex(crc32($str));
+  $code = substr($code, 0, 6);
+  return $code;
+}

@@ -18,12 +18,14 @@
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 	<script src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+	<script src="js/Chart.js"></script>
 
 	<script>
 		$(document).ready(function() {
 			$('[data-toggle="tooltip"]').tooltip()
 		} );
 	</script>
+	
 	<?php
 	/* If player page get color and name*/
 	if ($page=="player"){
