@@ -97,5 +97,18 @@
 			responsive: true
 		});
 	} );
+var username = "<?=$player_name?>"
+var playerId = <?=$player_id?>;
 </script>
-
+<div class="row">
+	<div class="col-md-6">
+		<h2>Kill Stats Graph</h2>
+		<canvas id="killsChart" width="400" height="400"></canvas>
+		<script type="text/javascript" src="js/player_kills.js"></script>
+	</div>
+	<div class="col-md-6">
+		<h2>Death Stats Graph</h2>
+		<canvas id="deathsChart" width="400" height="400"></canvas>
+		<script type="text/javascript" src="js/player_deaths.js"></script>
+	</div>
+</div>
