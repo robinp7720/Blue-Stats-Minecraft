@@ -1,7 +1,7 @@
 <div class="container">
 <?php
 /* Make sure input is a number */
-if (!empty($player_name)){
+if (!empty($player_name)&&isset($player_id)){
 	/* Player name and id is defined in parts/head.php */
 
 	/* Get player face */
@@ -41,7 +41,7 @@ if (!empty($player_name)){
 	include $app_path."/include/player/block_stats.php";
 }else{
 	?>
-	<b>This user does not exist</b>
+	<div class="alert alert-danger" role="alert">This user does not exist!</div>
 	<?php
 }
 ?>

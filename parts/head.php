@@ -45,12 +45,13 @@
 	
 		/* Get player face */
 		$image_url = player_face($player_name,1,$config["faces"]["head_colour"]["url"] );
-
-		/* Get colour */
-		if ($youtube_like_page_theme){
-			$theme["nav"]["color"] = get_main_colour($image_url);
-			$theme["headers"]["color"] = $theme["nav"]["color"];
-			$theme["pager"]["color"] = $theme["nav"]["color"];
+		if (!empty($player_name)&&isset($player_id)){
+			/* Get colour */
+			if ($youtube_like_page_theme){
+				$theme["nav"]["color"] = get_main_colour($image_url);
+				$theme["headers"]["color"] = $theme["nav"]["color"];
+				$theme["pager"]["color"] = $theme["nav"]["color"];
+			}
 		}
 
 	}
