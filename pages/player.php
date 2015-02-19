@@ -29,7 +29,7 @@ if (!empty($player_name)){
 <div class="page-header">
   <h1><?=$player_name?> <?php if ($amountOfUsernames>1):?><small>Formerly known as <?=$formerUsername["name"]?></small><?php endif;?></h1>
 </div>
-<img class="center-block" src="<?=$image_url?>"/>
+<img class="center-block" src="<?=$image_url?>" alt=""/>
 <?php
 	/* Include General Stats First */
 	include $app_path."/include/player/general_stats.php";
