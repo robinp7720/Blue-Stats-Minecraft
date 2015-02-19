@@ -20,6 +20,7 @@
 	<script type="text/javascript" src="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 
 	<script>
+		$(document).ready(function() {
 			$('[data-toggle="tooltip"]').tooltip()
 		} );
 	</script>
