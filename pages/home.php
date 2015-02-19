@@ -44,9 +44,20 @@
 		<?php endforeach; ?>
 		<?php if ($count!=1){echo '</div>';}?>
 		<hr>
-		<div class="online-player text-center">
-			<?php foreach($Online_Players as $player): ?>
-			<img src="<?=player_face($player,$config["faces"]["home"]["size"],$config["faces"]["home"]["url"]);?>" alt="" title="<?=$player?>" data-toggle="tooltip" data-placement="top">
+		<div class="text-center">
+			<?php foreach($Online_Players as $player):
+			$imageUrl = player_face($player,$config["faces"]["home"]["size"],$config["faces"]["home"]["url"]);
+
+			if ($config["url"]["player"]["useName"])
+				$player_url = urlencode($player);
+			else
+				$player_url = getPlayerId($player,$mysqli,$stats_mysql["table_prefix"]);
+			
+			$player_url = makePlayerUrl($player_url,$site_base_url,$enable_url_rewrite,$config["url"]["player"]["useName"]) 
+			?>
+			<a href="<?=$player_url?>">
+				<img src="<?=$imageUrl?>" alt="" title="<?=$player?>" data-toggle="tooltip" data-placement="top">
+			</a>
 			<?php endforeach; ?>
 		</div>
 		<br>
