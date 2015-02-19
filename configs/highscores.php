@@ -18,6 +18,14 @@ $config["highscores"]["highscores"] = array(
 		"amount" => 10
 	),
 	array(
+		"stat" => "wordssaid",
+		"amount" => 10
+	),
+	array(
+		"stat" => "commandsdone",
+		"amount" => 10
+	),
+	array(
 		"stat" => "trades",
 		"amount" => 10
 	),
