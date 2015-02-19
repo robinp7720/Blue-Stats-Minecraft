@@ -6,9 +6,31 @@ if (!empty($player_name)){
 
 	/* Get player face */
 	$image_url = player_face($player_name,$config["faces"]["player"]["size"],$config["faces"]["player"]["url"]);
+	$uuid = getPlayerUUID($player_id,$mysqli,$stats_mysql["table_prefix"]);
+	$uuid=str_replace('-', '', $uuid);
+	
+	// Get player usernames 
+	$ch = curl_init();
+    // set url 
+    curl_setopt($ch, CURLOPT_URL, "https://api.mojang.com/user/profiles/$uuid/names"); 
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    $output = curl_exec($ch); 
+    curl_close($ch); 
 
-	echo '<h1>'.$player_name.'</h1><img class="center-block" src="'.$image_url.'"/>';
+    $past_usernames = json_decode($output,true);
+    
+    $amountOfUsernames = count($past_usernames);
+    if ($amountOfUsernames>1){
+    	$formerUsername = $past_usernames[$amountOfUsernames-2];
+    }
 
+?>
+<div class="page-header">
+  <h1><?=$player_name?> <?php if ($amountOfUsernames>1):?><small>Formerly known as <?=$formerUsername["name"]?></small><?php endif;?></h1>
+</div>
+<img class="center-block" src="<?=$image_url?>"/>
+<?php
 	/* Include General Stats First */
 	include $app_path."/include/player/general_stats.php";
 
