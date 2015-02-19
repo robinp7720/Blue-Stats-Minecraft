@@ -64,9 +64,9 @@ if (empty($block_name)){
 /* If block icons are turned on add them to the html here */
 if ($block_players_display_icons==true){
 	if(file_exists($app_path."/images/blocks/".$value["id"]."-".$value["data"].'.png')){
-		echo '<img class="block-icon" src="'."images/blocks/".$value["id"]."-".$value["data"].'.png"/> ';
+		echo '<img class="block-icon" src="'."images/blocks/".$value["id"]."-".$value["data"].'.png" alt=""/> ';
 	}else{
-		echo '<img class="block-icon" src="'."images/blocks/".$value["id"].'-0.png"/> ';
+		echo '<img class="block-icon" src="'."images/blocks/".$value["id"].'-0.png" alt=""/> ';
 	}
 }
 

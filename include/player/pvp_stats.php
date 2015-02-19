@@ -20,10 +20,10 @@
 		<tr>
 			<td>
 				<?php /* If url rewrites have been disabled */ if ($enable_url_rewrite==false) :?>
-					<a href="?page=player&player=<?=$value["killed"] ?>"><?='<img class="player-head-player_page" src="'.$image_killed_url.'"/> '.$killed; ?></a>
+					<a href="?page=player&player=<?=$value["killed"] ?>"><?='<img class="player-head-player_page" src="'.$image_killed_url.'" alt=""/> '.$killed; ?></a>
 				<?php endif ?>
 				<?php /* If url rewrites have been enabled */ if ($enable_url_rewrite==true) :?>
-					<a href="<?= $site_base_url.'/player/'.$value["killed"]."/" ?>"><?='<img class="player-head-player_page" src="'.$image_killed_url.'"/> '.$killed; ?></a>
+					<a href="<?= $site_base_url.'/player/'.$value["killed"]."/" ?>"><?='<img class="player-head-player_page" src="'.$image_killed_url.'" alt=""/> '.$killed; ?></a>
 				<?php endif ?>
 			</td>
 			<td><?=$value["weapon"];?></td>
