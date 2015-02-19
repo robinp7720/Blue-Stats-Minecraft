@@ -101,7 +101,7 @@ function pvp_stats($id,$mysqli,$prefix){
 }
 
 function death_stats($id,$mysqli,$prefix){
-	if ($stmt = $mysqli->prepare("SELECT * FROM `{$prefix}death` where player_id=?")) {
+	if ($stmt = $mysqli->prepare("SELECT * FROM `{$prefix}death` where player_id=? group by `cause`")) {
 		$stmt->bind_param("i", $id);
 		$stmt->execute();
 		$result = $stmt->get_result();
@@ -113,7 +113,7 @@ function death_stats($id,$mysqli,$prefix){
 	}
 }
 function kill_stats($id,$mysqli,$prefix){
-	if ($stmt = $mysqli->prepare("SELECT * FROM `{$prefix}kill` where player_id=?")) {
+	if ($stmt = $mysqli->prepare("SELECT * FROM `{$prefix}kill` where player_id=? group by `type`")) {
 		$stmt->bind_param("i", $id);
 		$stmt->execute();
 		$result = $stmt->get_result();
