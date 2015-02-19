@@ -50,7 +50,18 @@ function getPlayersName($id,$mysqli,$prefix){
 		$stmt->bind_result($output);
 		/* fetch value */
 		$stmt->fetch();
-		return htmlentities($output);
+		return $output;
+	}
+}
+function getPlayerUUID($id,$mysqli,$prefix){
+	if ($stmt = $mysqli->prepare("SELECT UUID FROM `{$prefix}players` where player_id=?")) {
+		$stmt->bind_param("i", $id);
+		$stmt->execute();
+		/* bind result variables */
+		$stmt->bind_result($output);
+		/* fetch value */
+		$stmt->fetch();
+		return $output;
 	}
 }
 function getPlayerId($name,$mysqli,$prefix){
