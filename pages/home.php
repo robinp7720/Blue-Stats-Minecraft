@@ -15,7 +15,7 @@
 		<?php $count=1; ?>
 		<?php foreach ($config["home"]["stats"] as $stat):?>
 			<?php if ($count==1){echo '<div class="row">';} ?>
-			<div class="col-md-3 text-center">
+			<div class="col-sm-6 col-md-3 text-center">
 				<h2><?=$stats_names[$stat]; ?>:</h2>
 				<?php
 				if ($stat == "playtime"){
@@ -32,7 +32,7 @@
 		<?php $count=1; ?>
 		<?php foreach ($config["home"]["top"]["stats"] as $stat => $name):?>
 			<?php if ($count==1){echo '<div class="row">';} ?>
-			<div class="col-md-6 text-center">
+			<div class="col-sm-6 text-center">
 				<h2><?= $name ?>: <small>
 				<?php
 				echo get_highscore($mysqli,$stats_mysql["table_prefix"],$stat,1)[0]["name"];
