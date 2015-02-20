@@ -91,6 +91,8 @@
 		<?php endif; ?>
 	</tbody>
 </table>
+<script type="text/javascript" src="js/player_kills.js"></script>
+<script type="text/javascript" src="js/player_deaths.js"></script>
 <script>
 	$(document).ready(function() {
 		$('#killstats').dataTable({
@@ -99,16 +101,30 @@
 	} );
 var username = "<?=$player_name?>"
 var playerId = <?=$player_id?>;
+
+<?php /* If url rewrites have been disabled */ if ($enable_url_rewrite==false) :?>
+var killsurl = './ajax/call.php?func=playerKillsChart';
+<?php else: ?>
+var killsurl = '<?=$site_base_url?>/ajax/?func=playerKillsChart';
+<?php endif; ?>
+
+<?php /* If url rewrites have been disabled */ if ($enable_url_rewrite==false) :?>
+var deathsurl = './ajax/call.php?func=playerDeathsChart';
+<?php else: ?>
+var deathsurl = '<?=$site_base_url?>/ajax/?func=playerDeathsChart';
+<?php endif; ?>
+
+getDeathData(playerId,deathsurl);
+getKillData(playerId,killsurl);
 </script>
+
 <div class="row">
 	<div class="col-md-6">
 		<h2>Kill Stats Graph</h2>
 		<canvas id="killsChart" width="400" height="400"></canvas>
-		<script type="text/javascript" src="js/player_kills.js"></script>
 	</div>
 	<div class="col-md-6">
 		<h2>Death Stats Graph</h2>
 		<canvas id="deathsChart" width="400" height="400"></canvas>
-		<script type="text/javascript" src="js/player_deaths.js"></script>
 	</div>
 </div>

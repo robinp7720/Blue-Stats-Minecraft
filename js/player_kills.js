@@ -1,8 +1,8 @@
 
-function getKillData(id){
+function getKillData(id,url){
 	$.ajax({
 		// the URL for the request
-		url: "http://games.mysunland.org/stats/ajax/?func=playerKillsChart",
+		url: url,
 
 		// the data to send (will be converted to a query string)
 		data: {
@@ -37,6 +37,6 @@ function getKillData(id){
 		}
 	});
 }
-getKillData(playerId);
+
 console.log(username);
 console.log(playerId);

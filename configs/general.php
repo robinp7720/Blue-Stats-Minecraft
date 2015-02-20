@@ -8,7 +8,7 @@ $config["url"]["player"]["useName"]=true;
 $config["site"]["home"]="home";
 
 /* Enter in the stats site base url Eg: http://www.example.com/stats */
-$site_base_url = "http://games.mysunland.org/stats";
+$site_base_url = "http://stats.mysunland.org";
 $enable_url_rewrite = true;
 
 /* Material Design Date format Guide Lines */
