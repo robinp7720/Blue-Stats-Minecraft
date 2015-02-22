@@ -12,6 +12,7 @@ include __DIR__."/configs/all-players.php";
 include __DIR__."/configs/general.php";
 include __DIR__."/configs/server.php";
 include __DIR__."/configs/home.php";
+include __DIR__."/configs/local.php";
 
 /* Functions */
 include __DIR__."/functions/general.php";
