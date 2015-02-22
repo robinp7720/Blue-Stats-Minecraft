@@ -119,11 +119,11 @@ getKillData(playerId,killsurl);
 </script>
 
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-md-6 text-center">
 		<h2>Kill Stats Graph</h2>
 		<canvas id="killsChart" width="400" height="400"></canvas>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-6 text-center">
 		<h2>Death Stats Graph</h2>
 		<canvas id="deathsChart" width="400" height="400"></canvas>
 	</div>
