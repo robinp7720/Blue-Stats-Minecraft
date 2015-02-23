@@ -19,9 +19,9 @@ $title = str_replace ('{STAT}',$stats_names[$highscores_item["stat"]],$title);
 	<table class="table table-striped table-bordered">
 		<thead>
 			<tr>
-				<th class="highscore-place">Place</th>
-				<th>Player</th>
-				<?php if ($server_info["query_enabled"]):?><th class="no-mobile">Status</th><?php endif; ?>
+				<th><?=$localization["highscores"]["place"]?></th>
+				<th><?=$localization["highscores"]["player"]?></th>
+				<?php if ($server_info["query_enabled"]):?><th><?=$localization["highscores"]["status"]?></th><?php endif; ?>
 				<th><?=$stats_names[$highscores_item["stat"]]; ?></th>
 			</tr>
 		</thead>
