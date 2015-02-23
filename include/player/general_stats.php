@@ -1,4 +1,4 @@
-
+<section>
 	<table class="table table-striped table-bordered" id="generalstats">
 		<thead>
 			<tr>
@@ -53,3 +53,4 @@ if (isset($stats_names[$stat])){
 		});
 	} );
 </script>
+</section>

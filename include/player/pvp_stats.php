@@ -1,4 +1,4 @@
-
+<article>
 <h2>PvP Stats</h2>
 
 <table class="table table-striped table-bordered" id="pvpstats">
@@ -40,7 +40,9 @@
 		});
 	} );
 </script>
+</article>
 
+<article>
 <h2>Death Stats</h2>
 
 <table class="table table-striped table-bordered" id="deathstats">
@@ -69,7 +71,9 @@
 		});
 	} );
 </script>
+</article>
 
+<article>
 <h2>Kill Stats</h2>
 
 <table class="table table-striped table-bordered" id="killstats">
@@ -91,6 +95,7 @@
 		<?php endif; ?>
 	</tbody>
 </table>
+</article>
 <script type="text/javascript" src="js/player_kills.js"></script>
 <script type="text/javascript" src="js/player_deaths.js"></script>
 <script>
@@ -118,13 +123,13 @@ getDeathData(playerId,deathsurl);
 getKillData(playerId,killsurl);
 </script>
 
-<div class="row">
-	<div class="col-md-6 text-center">
+<article class="row">
+	<section class="col-md-6 text-center">
 		<h2>Kill Stats Graph</h2>
 		<canvas id="killsChart" width="400" height="400"></canvas>
-	</div>
-	<div class="col-md-6 text-center">
+	</section>
+	<section class="col-md-6 text-center">
 		<h2>Death Stats Graph</h2>
 		<canvas id="deathsChart" width="400" height="400"></canvas>
-	</div>
-</div>
+	</section>
+</article>

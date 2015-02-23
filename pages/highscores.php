@@ -13,7 +13,7 @@ $title = str_replace ('{STAT}',$stats_names[$highscores_item["stat"]],$title);
 ?>
 
 
-<div class="col-md-6">
+<section class="col-md-6">
 <h2><?=$title; ?></h2>
 
 	<table class="table table-striped table-bordered">
@@ -63,7 +63,8 @@ $title = str_replace ('{STAT}',$stats_names[$highscores_item["stat"]],$title);
 			<?php endforeach ?>
 		</tbody>
 	</table>
-	</div>
+	</section>
+
 
 <?php endforeach ?>
 </div>
