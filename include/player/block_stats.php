@@ -1,3 +1,5 @@
+<section>
+	
 <h2>Block Stats</h2>
 	<table class="table table-striped table-bordered" id="blockstats">
 		<thead>
@@ -87,3 +89,4 @@ echo $block_name ?>
 		});
 	} );
 </script>
+</section>
