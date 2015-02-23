@@ -27,6 +27,13 @@ include __DIR__."/classes/queryException.php";
 /* Themes */
 include __DIR__."/themes/theme_settings.php";
 
+/* Localization */
+//include __DIR__."/local/german.local.php";
+
+if (isset($localization["stats"]["names"])){
+	$stats_names = $localization["stats"]["names"];
+}
+
 /* Get block names */
 if (file_exists(__DIR__."/cache/items.json")&&$config["blocks"]["cache"]){
 	$blocks_names = json_decode(file_get_contents(__DIR__."/cache/items.json"),true);
