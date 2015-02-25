@@ -1,5 +1,6 @@
 # Blue-Stats
 Alternative Web Interface for the bukkit stats plugin my lolmewn
+Demo: http://stats.mysunland.org/
 
 How to install
 ==============
