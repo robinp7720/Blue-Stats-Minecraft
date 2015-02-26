@@ -1,3 +1,11 @@
+/* Because for some reason there's a border radius
+/ on a nav bar in bootstrap
+-------------------------------------------------- */
+.navbar{
+  border-radius: 0;
+}
+
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
