@@ -1,6 +1,15 @@
 <?php
+/* Enable debugging (Error reporting) */
+$debug=false;
+
+
 /* Track page execution time */
 $time_start = microtime(true);
+if ($debug){
+
+}else{
+	error_reporting(0);
+}
 
 /* Configs */
 include __DIR__."/configs/mysql.php";
