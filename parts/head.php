@@ -6,6 +6,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="<?=$server_info["server_name"]?> Server statistics">
 	<meta name="author" content="_OvErLoRd_">
+	
+	<meta name='HandheldFriendly' content='True'>
+	<meta name='subtitle' content='A good looking statistics'>
+	<meta name='coverage' content='Worldwide'>
+	<meta name='distribution' content='Global'>
+	<meta name='rating' content='General'>
+	
+	<meta http-equiv='Page-Enter' content='RevealTrans(Duration=2.0,Transition=2)'>
+	<meta http-equiv='Page-Exit' content='RevealTrans(Duration=3.0,Transition=12)'>
 
 	<title>Blue Stats - <?=$server_info["server_name"]?></title>
 	
@@ -56,7 +65,16 @@
 		}
 
 	}
+	$hex = HexfromRGB($theme["nav"]["color"]["red"], $theme["nav"]["color"]["green"], $theme["nav"]["color"]["blue"]);
 	?>
+
+	<meta name="theme-color" content="<?=HexfromRGB($theme["nav"]["color"]["red"], $theme["nav"]["color"]["green"], $theme["nav"]["color"]["blue"])?>">
+	
+	<meta name="application-name" content="<?=$server_info["server_name"]?> Server statistics" />
+	<meta name="msapplication-TileColor" content="<?=$hex?>" />
+	<meta name='msapplication-navbutton-color' content='<?=$hex?>'>
+
+
 	<style type="text/css">
 		.navbar{
 			background:rgb(<?=$theme["nav"]["color"]["red"]?>,<?=$theme["nav"]["color"]["green"]?>,<?=$theme["nav"]["color"]["blue"]?>);
