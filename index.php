@@ -1,43 +1,43 @@
 <?php
 /* Enable debugging (Error reporting) */
-$debug=false;
+$debug=true;
 
 
 /* Track page execution time */
 $time_start = microtime(true);
 if ($debug){
-
-}else{
 	error_reporting(0);
+}else{
+	error_reporting(-1);
 }
 
 /* Configs */
-include __DIR__."/configs/mysql.php";
-include __DIR__."/configs/player.php";
-include __DIR__."/configs/highscores.php";
-include __DIR__."/configs/blocknames.php";
-include __DIR__."/configs/faces.php";
-include __DIR__."/configs/all-players.php";
-include __DIR__."/configs/general.php";
-include __DIR__."/configs/server.php";
-include __DIR__."/configs/home.php";
-include __DIR__."/configs/local.php";
+require __DIR__."/configs/mysql.php";
+require __DIR__."/configs/player.php";
+require __DIR__."/configs/highscores.php";
+require __DIR__."/configs/blocknames.php";
+require __DIR__."/configs/faces.php";
+require __DIR__."/configs/all-players.php";
+require __DIR__."/configs/general.php";
+require __DIR__."/configs/server.php";
+require __DIR__."/configs/home.php";
+require __DIR__."/configs/local.php";
 
 /* Functions */
-include __DIR__."/functions/general.php";
-include __DIR__."/functions/player.php";
-include __DIR__."/functions/global_stats.php";
-include __DIR__."/functions/image.php";
+require __DIR__."/functions/general.php";
+require __DIR__."/functions/player.php";
+require __DIR__."/functions/global_stats.php";
+require __DIR__."/functions/image.php";
 
 /* Classes */
-include __DIR__."/classes/query.php";
-include __DIR__."/classes/queryException.php";
+require __DIR__."/classes/query.php";
+require __DIR__."/classes/queryException.php";
 
 /* Themes */
-include __DIR__."/themes/theme_settings.php";
+require __DIR__."/themes/theme_settings.php";
 
 /* Localization */
-//include __DIR__."/local/german.local.php";
+//require __DIR__."/local/german.local.php";
 
 if (isset($localization["stats"]["names"])){
 	$stats_names = $localization["stats"]["names"];
