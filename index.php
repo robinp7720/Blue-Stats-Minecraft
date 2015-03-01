@@ -6,9 +6,11 @@ $debug=true;
 /* Track page execution time */
 $time_start = microtime(true);
 if ($debug){
-	error_reporting(0);
+	ini_set('display_errors', 'On');
+	error_reporting(E_ALL);
 }else{
-	error_reporting(-1);
+	ini_set('display_errors', 'Off');
+	error_reporting(E_NONE);
 }
 
 /* Configs */
