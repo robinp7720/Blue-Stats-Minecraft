@@ -1,11 +1,11 @@
 <?php
-$config["home"]["stats"]=array(
+$config[0]["home"]["stats"]=array(
 		"playtime",
 		"joins",
 		"votes",
 		"trades"
 	);
-$config["home"]["top"]["stats"]=array(
+$config[0]["home"]["top"]["stats"]=array(
 		"playtime" => "Top Player",
 		"votes" => "Top Lover"
 	);

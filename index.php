@@ -1,10 +1,10 @@
 <?php
-/* Enable debugging (Error reporting) */
 $debug=true;
+$serverId=0;
 
 
-/* Track page execution time */
 $time_start = microtime(true);
+
 if ($debug){
 	ini_set('display_errors', 'On');
 	error_reporting(E_ALL);
@@ -46,14 +46,14 @@ if (isset($localization["stats"]["names"])){
 }
 
 /* Get block names */
-if (file_exists(__DIR__."/cache/items.json")&&$config["blocks"]["cache"]){
+if (file_exists(__DIR__."/cache/items.json")&&$config[$serverId]["blocks"]["cache"]){
 	$blocks_names = json_decode(file_get_contents(__DIR__."/cache/items.json"),true);
 }else{
 	if ($config["blocks"]["cache"]){
 		$blocks_names = file_get_contents($config["blocks"]["url"]);
 		file_put_contents(__DIR__."/cache/items.json", $blocks_names);
 	}else{
-		$blocks_names = json_decode(file_get_contents($config["blocks"]["url"]),true);
+		$blocks_names = json_decode(file_get_contents($config[$serverId]["blocks"]["url"]),true);
 	}
 }
 
@@ -66,24 +66,29 @@ $theme = array();
 include __DIR__."/themes/{$theme_settings["enabled_theme"]}/config.php";
 
 /* Connect to mysql */
-$mysqli = new mysqli($stats_mysql["host"],$stats_mysql["username"],$stats_mysql["password"],$stats_mysql["dbname"]);
+$mysqli = new mysqli(
+	$config[$serverId]["mysql"]["stats"]["host"],
+	$config[$serverId]["mysql"]["stats"]["username"],
+	$config[$serverId]["mysql"]["stats"]["password"],
+	$config[$serverId]["mysql"]["stats"]["dbname"]
+);
 
 /* Set app path (This is to make including other folders and pages easier) */
 $app_path = __DIR__;
 
 /* Select page */
 if (!isset($_GET["page"])){
-	$page = $config["site"]["home"];
+	$page = $config[$serverId]["site"]["home"];
 }else{
 	$page = $_GET["page"];
 }
 
 /* Init Server query */
-if($server_info["query_enabled"])
+if($config[0]["server"]["query_enabled"])
 	include $app_path."/include/init_query.php";
 
 /* HTTP Headers*/
-header("cache-control: private, max-age={$config["cache"]["max-age"]}");
+header("cache-control: private, max-age={$config[$serverId]["cache"]["max-age"]}");
 
 /* Html Header */
 include $app_path."/parts/head.php";

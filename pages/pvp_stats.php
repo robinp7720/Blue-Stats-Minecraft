@@ -4,17 +4,17 @@
 		<table class="table table-striped table-bordered" id="PvP">
 			<thead>
 				<th>Killer</th>
-				<?php if($server_info["query_enabled"]){echo"<th>Killer Status</th>";}?>
+				<?php if($config[$serverId]["server"]["query_enabled"]){echo"<th>Killer Status</th>";}?>
 				<th>Victim</th>
-				<?php if($server_info["query_enabled"]){echo"<th>Victim Status</th>";}?>
+				<?php if($config[$serverId]["server"]["query_enabled"]){echo"<th>Victim Status</th>";}?>
 				<th>Weapon</th>
 				<th>Amount</th>
 			</thead>
 			<tfoot>
 				<th>Killer</th>
-				<?php if($server_info["query_enabled"]){echo"<th>Killer Status</th>";}?>
+				<?php if($config[$serverId]["server"]["query_enabled"]){echo"<th>Killer Status</th>";}?>
 				<th>Victim</th>
-				<?php if($server_info["query_enabled"]){echo"<th>Victim Status</th>";}?>
+				<?php if($config[$serverId]["server"]["query_enabled"]){echo"<th>Victim Status</th>";}?>
 				<th>Weapon</th>
 				<th>Amount</th>
 			</foot>
@@ -27,7 +27,7 @@
 			<thead>
 				<tr>
 					<th>Victim</th>
-					<?php if($server_info["query_enabled"]){echo"<th>Status</th>";}?>
+					<?php if($config[$serverId]["server"]["query_enabled"]){echo"<th>Status</th>";}?>
 					<th>World</th>
 					<th>Cause</th>
 					<th>Amount</th>
@@ -36,7 +36,7 @@
 			<tfoot>
 				<tr>
 					<th>Victim</th>
-					<?php if($server_info["query_enabled"]){echo"<th>Status</th>";}?>
+					<?php if($config[$serverId]["server"]["query_enabled"]){echo"<th>Status</th>";}?>
 					<th>World</th>
 					<th>Cause</th>
 					<th>Amount</th>
@@ -49,7 +49,7 @@
 			<thead>
 				<tr>
 					<th>Killer</th>
-					<?php if($server_info["query_enabled"]){echo"<th>Status</th>";}?>
+					<?php if($config[$serverId]["server"]["query_enabled"]){echo"<th>Status</th>";}?>
 					<th>World</th>
 					<th>Killed</th>
 					<th>Amount</th>
@@ -58,7 +58,7 @@
 			<tfoot>
 				<tr>
 					<th>Killer</th>
-					<?php if($server_info["query_enabled"]){echo"<th>Status</th>";}?>
+					<?php if($config[$serverId]["server"]["query_enabled"]){echo"<th>Status</th>";}?>
 					<th>World</th>
 					<th>Killed</th>
 					<th>Amount</th>
@@ -70,25 +70,25 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 	    $('#PvP').dataTable( {
-	    	<?php /* If url rewrites have been disabled */ if ($enable_url_rewrite==false) :?>
+	    	<?php /* If url rewrites have been disabled */ if ($config[$serverId]["url"]["rewrite"]==false) :?>
 	        "ajax": './ajax/call.php?func=pvp',
 	        <?php else: ?>
-	        "ajax": '<?=$site_base_url?>/ajax/?func=pvp',
+	        "ajax": '<?=$config[$serverId]["url"]["base"]?>/ajax/?func=pvp',
 	        <?php endif; ?>
 	         responsive: true
 	    } );
 	    var deaths = $('#deaths').dataTable( {
-	    	<?php /* If url rewrites have been disabled */ if ($enable_url_rewrite==false) :?>
+	    	<?php /* If url rewrites have been disabled */ if ($config[$serverId]["url"]["rewrite"]==false) :?>
 	        "ajax": './ajax/call.php?func=deaths',
 	        <?php else: ?>
-	        "ajax": '<?=$site_base_url?>/ajax/?func=deaths',
+	        "ajax": '<?=$config[$serverId]["url"]["base"]?>/ajax/?func=deaths',
 	        <?php endif; ?>
 	    } );
 	    $('#kills').dataTable( {
-	    	<?php /* If url rewrites have been disabled */ if ($enable_url_rewrite==false) :?>
+	    	<?php /* If url rewrites have been disabled */ if ($config[$serverId]["url"]["rewrite"]==false) :?>
 	        "ajax": './ajax/call.php?func=kills',
 	        <?php else: ?>
-	        "ajax": '<?=$site_base_url?>/ajax/?func=kills',
+	        "ajax": '<?=$config[$serverId]["url"]["base"]?>/ajax/?func=kills',
 	        <?php endif; ?>
 	         responsive: true
 	    } );

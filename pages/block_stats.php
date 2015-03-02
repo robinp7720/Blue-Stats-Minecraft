@@ -11,7 +11,7 @@
 		<tbody>
 			<?php
 				/* Get all block stats from player */
-				$blocks_raw = globalBlockStats($mysqli,$stats_mysql["table_prefix"]);
+				$blocks_raw = globalBlockStats($mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]);
 				$blocks= array();
 
 				/* If no blocks have been placed, ignore this */
@@ -49,7 +49,7 @@
 				<td>
 				<?php 
 					/* If block icons are turned on add them to the html here */
-					if ($block_players_display_icons==true){
+					if ($config[$serverId]["blocks"]["displayIcons"]==true){
 						echo '<img class="block-icon" src="'."images/blocks/".$item.'-0.png"/> ';
 					}
 

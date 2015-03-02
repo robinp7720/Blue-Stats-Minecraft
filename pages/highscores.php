@@ -2,14 +2,14 @@
 <?php
 
 //$Global_players = getPlayers($mysqli,$stats_mysql["table_prefix"]);
-foreach ($config["highscores"]["highscores"] as $highscores_index => $highscores_item) :
+foreach ($config[$serverId]["highscores"]["highscores"] as $highscores_index => $highscores_item) :
 
 ?>
 <?php
-$highscore = get_highscore($mysqli,$stats_mysql["table_prefix"],$highscores_item["stat"],$highscores_item["amount"]);
+$highscore = get_highscore($mysqli,$config[0]["mysql"]["stats"]["table_prefix"],$highscores_item["stat"],$highscores_item["amount"]);
 
-$title = str_replace ('{AMOUNT}',$highscores_item["amount"],$config["highscores"]["title"]);
-$title = str_replace ('{STAT}',$stats_names[$highscores_item["stat"]],$title);
+$title = str_replace ('{AMOUNT}',$highscores_item["amount"],$config[$serverId]["highscores"]["title"]);
+$title = str_replace ('{STAT}',$config[$serverId]["stats"]["names"][$highscores_item["stat"]],$title);
 ?>
 
 
@@ -21,32 +21,32 @@ $title = str_replace ('{STAT}',$stats_names[$highscores_item["stat"]],$title);
 			<tr>
 				<th><?=$localization["highscores"]["place"]?></th>
 				<th><?=$localization["highscores"]["player"]?></th>
-				<?php if ($server_info["query_enabled"]):?><th><?=$localization["highscores"]["status"]?></th><?php endif; ?>
-				<th><?=$stats_names[$highscores_item["stat"]]; ?></th>
+				<?php if ($config[$serverId]["server"]["query_enabled"]):?><th><?=$localization["highscores"]["status"]?></th><?php endif; ?>
+				<th><?=$config[$serverId]["stats"]["names"][$highscores_item["stat"]]; ?></th>
 			</tr>
 		</thead>
 		<tbody>
 			<?php foreach ($highscore as $item => $player) :?>
 			<?php 
 			if ($highscores_item["stat"]=="playtime"){
-			$stat = secondsToTime($player[$highscores_item["stat"]],$play_time_contract);
+			$stat = secondsToTime($player[$highscores_item["stat"]]);
 			}else{
 			$stat= $player[$highscores_item["stat"]];
 			}
 			?>
 			<?php
-			$image_url = player_face($player["name"],$config["faces"]["highscores"]["size"],$config["faces"]["highscores"]["url"]);
+			$image_url = player_face($player["name"],$config[$serverId]["faces"]["highscores"]["size"],$config[$serverId]["faces"]["highscores"]["url"]);
 			?>
 			<tr>
 			<td class="highscore-place no-mobile"><?=$item+1; ?></td>
 			<td>
 			<?php
-			if ($config["url"]["player"]["useName"])
+			if ($config[$serverId]["url"]["player"]["useName"])
 			$player_url = urlencode($player["name"]);
 			else
 			$player_url = $player["player_id"];
 			?>
-			<a href="<?= makePlayerUrl($player_url,$site_base_url,$enable_url_rewrite,$config["url"]["player"]["useName"]) ?>"><img class="player-head-player_page" src="<?=$image_url?>" alt="<?=$player["name"]?>"/> <?=$player["name"]?></a></td>
+			<a href="<?= makePlayerUrl($player_url,$config[$serverId]["url"]["base"],$config[$serverId]["url"]["rewrite"],$config[$serverId]["url"]["player"]["useName"]) ?>"><img class="player-head-player_page" src="<?=$image_url?>" alt="<?=$player["name"]?>"/> <?=$player["name"]?></a></td>
 
 
 			<?php if (isset($Online_Players)): ?>
