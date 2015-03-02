@@ -60,7 +60,7 @@ function get_highscore($mysqli,$prefix,$stat,$limit){
 	}
 }
 
-function secondsToTime($seconds,$contract=false) {
+function secondsToTime($seconds,$contract=true) {
 	$dtF = new DateTime("@0");
 	$dtT = new DateTime("@$seconds");
 	if($contract){

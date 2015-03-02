@@ -5,8 +5,8 @@
 		/* Player name and id is defined in parts/head.php */
 
 		/* Get player face */
-		$image_url = player_face($player_name,$config["faces"]["player"]["size"],$config["faces"]["player"]["url"]);
-		$uuid = getPlayerUUID($player_id,$mysqli,$stats_mysql["table_prefix"]);
+		$image_url = player_face($player_name,$config[$serverId]["faces"]["player"]["size"],$config[$serverId]["faces"]["player"]["url"]);
+		$uuid = getPlayerUUID($player_id,$mysqli,$config[0]["mysql"]["stats"]["table_prefix"]);
 		$uuid=str_replace('-', '', $uuid);
 		
 		// Get player usernames 

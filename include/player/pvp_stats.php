@@ -10,21 +10,16 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php $pvp_stats = pvp_stats($player_id,$mysqli,$stats_mysql["table_prefix"]); ?>
+		<?php $pvp_stats = pvp_stats($player_id,$mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]); ?>
 		<?php if (!empty($pvp_stats)): ?>
 		<?php foreach ($pvp_stats as $id => $value) :?>
 		<?php
-			$killed = htmlentities(getPlayersName($value["killed"],$mysqli,$stats_mysql["table_prefix"]));
-			$image_killed_url = player_face($killed,$config["faces"]["pvp"]["size"],$config["faces"]["pvp"]["url"]);
+			$killed = htmlentities(getPlayersName($value["killed"],$mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]));
+			$image_killed_url = player_face($killed,$config[$serverId]["faces"]["pvp"]["size"],$config[$serverId]["faces"]["pvp"]["url"]);
 		?>
 		<tr>
 			<td>
-				<?php /* If url rewrites have been disabled */ if ($enable_url_rewrite==false) :?>
-					<a href="?page=player&player=<?=$value["killed"] ?>"><?='<img class="player-head-player_page" src="'.$image_killed_url.'" alt=""/> '.$killed; ?></a>
-				<?php endif ?>
-				<?php /* If url rewrites have been enabled */ if ($enable_url_rewrite==true) :?>
-					<a href="<?= $site_base_url.'/player/'.$value["killed"]."/" ?>"><?='<img class="player-head-player_page" src="'.$image_killed_url.'" alt=""/> '.$killed; ?></a>
-				<?php endif ?>
+				<a href="<?=makePlayerUrl($player_url,$config[$serverId]["url"]["base"],$config[$serverId]["url"]["rewrite"],$config[$serverId]["url"]["player"]["useName"]) ?>?>"><?='<img class="player-head-player_page" src="'.$image_killed_url.'" alt=""/> '.$killed; ?></a>
 			</td>
 			<td><?=$value["weapon"];?></td>
 			<td><?=$value["amount"];?></td>
@@ -53,7 +48,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php $death_stats = death_stats($player_id,$mysqli,$stats_mysql["table_prefix"]); ?>
+		<?php $death_stats = death_stats($player_id,$mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]); ?>
 		<?php if (!empty($death_stats)): ?>
 		<?php foreach ($death_stats as $id => $value) :?>
 		<tr>
@@ -84,7 +79,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php $kill_stats = kill_stats($player_id,$mysqli,$stats_mysql["table_prefix"]); ?>
+		<?php $kill_stats = kill_stats($player_id,$mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]); ?>
 		<?php if (!empty($kill_stats)): ?>
 		<?php foreach ($kill_stats as $id => $value) :?>
 		<tr>
@@ -107,16 +102,16 @@
 var username = "<?=$player_name?>"
 var playerId = <?=$player_id?>;
 
-<?php /* If url rewrites have been disabled */ if ($enable_url_rewrite==false) :?>
+<?php /* If url rewrites have been disabled */ if ($config[$serverId]["url"]["rewrite"]==false) :?>
 var killsurl = './ajax/call.php?func=playerKillsChart';
 <?php else: ?>
-var killsurl = '<?=$site_base_url?>/ajax/?func=playerKillsChart';
+var killsurl = '<?=$config[$serverId]["url"]["base"]?>/ajax/?func=playerKillsChart';
 <?php endif; ?>
 
-<?php /* If url rewrites have been disabled */ if ($enable_url_rewrite==false) :?>
+<?php /* If url rewrites have been disabled */ if ($config[$serverId]["url"]["rewrite"]==false) :?>
 var deathsurl = './ajax/call.php?func=playerDeathsChart';
 <?php else: ?>
-var deathsurl = '<?=$site_base_url?>/ajax/?func=playerDeathsChart';
+var deathsurl = '<?=$config[$serverId]["url"]["base"]?>/ajax/?func=playerDeathsChart';
 <?php endif; ?>
 
 getDeathData(playerId,deathsurl);

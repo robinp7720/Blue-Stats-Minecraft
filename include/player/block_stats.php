@@ -13,7 +13,7 @@
 		<tbody>
 			<?php
 /* Get all block stats from player */
-$blocks_raw = blocksMinedBy($player_id,$mysqli,$stats_mysql["table_prefix"]);
+$blocks_raw = blocksMinedBy($player_id,$mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]);
 /* If player as not placed any blocks, ignore this */
 if (!empty($blocks_raw)){
 	/* Loop through all blocks to make it usable. */
@@ -64,11 +64,11 @@ if (empty($block_name)){
 			<tr>
 				<td><?php 
 /* If block icons are turned on add them to the html here */
-if ($block_players_display_icons==true){
+if ($config[$serverId]["blocks"]["displayIcons"]==true){
 	if(file_exists($app_path."/images/blocks/".$value["id"]."-".$value["data"].'.png')){
-		echo '<img class="block-icon" src="'."images/blocks/".$value["id"]."-".$value["data"].'.png" alt=""/> ';
+		echo '<img class="block-icon" src="'."images/blocks/".$value["id"]."-".$value["data"].'.png" alt="'.$value["id"]."-".$value["data"].'"/> ';
 	}else{
-		echo '<img class="block-icon" src="'."images/blocks/".$value["id"].'-0.png" alt=""/> ';
+		echo '<img class="block-icon" src="'."images/blocks/".$value["id"].'-0.png" alt="'.$value["id"]."-".$value["data"].'"/> ';
 	}
 }
 

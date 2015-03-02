@@ -16,7 +16,7 @@
 	<meta http-equiv='Page-Enter' content='RevealTrans(Duration=2.0,Transition=2)'>
 	<meta http-equiv='Page-Exit' content='RevealTrans(Duration=3.0,Transition=12)'>
 
-	<title>Blue Stats - <?=$server_info["server_name"]?></title>
+	<title>Blue Stats - <?=$config[$serverId]["server"]["server_name"]?></title>
 	
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.2/flatly/bootstrap.min.css" rel="stylesheet">
@@ -41,8 +41,8 @@
 	if ($page=="player"){
 		/* Get player id and name */
 		if (!is_numeric($_GET["player"])){
-			if ($config["url"]["player"]["useName"]){
-				$player_id = getPlayerId($_GET["player"],$mysqli,$stats_mysql["table_prefix"]);
+			if ($config[$serverId]["url"]["player"]["useName"]){
+				$player_id = getPlayerId($_GET["player"],$mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]);
 				$player_name = htmlentities($_GET["player"]);
 			}else{
 				$player_id =  (int)$_GET["player"];
@@ -54,10 +54,10 @@
 		}
 	
 		/* Get player face */
-		$image_url = player_face($player_name,1,$config["faces"]["head_colour"]["url"] );
+		$image_url = player_face($player_name,1,$config[$serverId]["faces"]["head_colour"]["url"] );
 		if (!empty($player_name)&&isset($player_id)){
 			/* Get colour */
-			if ($youtube_like_page_theme){
+			if ($config[$serverId]["player"]["playerTheme"]){
 				$theme["nav"]["color"] = get_main_colour($image_url);
 				$theme["headers"]["color"] = $theme["nav"]["color"];
 				$theme["pager"]["color"] = $theme["nav"]["color"];
@@ -70,7 +70,7 @@
 
 	<meta name="theme-color" content="<?=HexfromRGB($theme["nav"]["color"]["red"], $theme["nav"]["color"]["green"], $theme["nav"]["color"]["blue"])?>">
 	
-	<meta name="application-name" content="<?=$server_info["server_name"]?> Server statistics" />
+	<meta name="application-name" content="<?=$config[$serverId]["server"]["server_name"]?> Server statistics" />
 	<meta name="msapplication-TileColor" content="<?=$hex?>" />
 	<meta name='msapplication-navbutton-color' content='<?=$hex?>'>
 

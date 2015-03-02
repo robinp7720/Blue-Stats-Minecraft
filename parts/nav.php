@@ -1,7 +1,7 @@
 <?php
 /* Create custom nav html */
 $custom_nav_html = "";
-foreach ($nav_bar_url as $item)
+foreach ($config[0]["nav"]["tabs"]["custom"] as $item)
 {
 	$custom_nav_html .= '<li><a href="'.$item["url"].'">'.$item["text"].'</a></li>';
 }
@@ -22,7 +22,7 @@ foreach ($nav_bar_url as $item)
       <a class="navbar-brand" href="#">Blue Stats</a>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	<?php /* If url rewrites have been disabled */ if ($enable_url_rewrite==false) :?>
+	<?php /* If url rewrites have been disabled */ if ($config[$serverId]["url"]["rewrite"]==false) :?>
 		<ul class="nav navbar-nav">
           <li <?php if ($page=="home"):?>class="active"<?php endif; ?>><a href="?page=home"><?=$localization["nav"]["home"]?></a></li>
 	        <li <?php if ($page=="highscores"):?>class="active"<?php endif; ?>><a href="?page=highscores"><?=$localization["nav"]["highscores"]?></a></li>
@@ -32,11 +32,11 @@ foreach ($nav_bar_url as $item)
     	</ul>
 	<?php else: ?>
 	   <ul class="nav navbar-nav">
-        <li <?php if ($page=="home"):?>class="active"<?php endif; ?>><a href="<?= $site_base_url."/home/" ?>"><?=$localization["nav"]["home"]?></a></li>
-        <li <?php if ($page=="highscores"):?>class="active"<?php endif; ?>><a href="<?= $site_base_url."/highscores/" ?>"><?=$localization["nav"]["highscores"]?></a></li>
-        <li <?php if ($page=="allplayers"):?>class="active"<?php endif; ?>><a href="<?= $site_base_url."/allplayers/"?>"><?=$localization["nav"]["allplayers"]?></a></li>
-        <li <?php if ($page=="pvpstats"):?>class="active"<?php endif; ?>><a href="<?= $site_base_url."/pvpstats/"?>"><?=$localization["nav"]["pvp"]?></a></li>
-        <li <?php if ($page=="blocks"):?>class="active"<?php endif; ?>><a href="<?= $site_base_url."/blocks/"?>"><?=$localization["nav"]["blocks"]?></a></li>
+        <li <?php if ($page=="home"):?>class="active"<?php endif; ?>><a href="<?= $config[$serverId]["url"]["base"]."/home/" ?>"><?=$localization["nav"]["home"]?></a></li>
+        <li <?php if ($page=="highscores"):?>class="active"<?php endif; ?>><a href="<?= $config[$serverId]["url"]["base"]."/highscores/" ?>"><?=$localization["nav"]["highscores"]?></a></li>
+        <li <?php if ($page=="allplayers"):?>class="active"<?php endif; ?>><a href="<?= $config[$serverId]["url"]["base"]."/allplayers/"?>"><?=$localization["nav"]["allplayers"]?></a></li>
+        <li <?php if ($page=="pvpstats"):?>class="active"<?php endif; ?>><a href="<?= $config[$serverId]["url"]["base"]."/pvpstats/"?>"><?=$localization["nav"]["pvp"]?></a></li>
+        <li <?php if ($page=="blocks"):?>class="active"<?php endif; ?>><a href="<?= $config[$serverId]["url"]["base"]."/blocks/"?>"><?=$localization["nav"]["blocks"]?></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
       	<?= $custom_nav_html ?>

@@ -9,18 +9,18 @@
 			</tr>
 		</thead>
 		<tbody>
-			<?php foreach ($stats_tracked_player as $stat) :?>
+			<?php foreach ($config[$serverId]["stats"]["id"] as $stat) :?>
 			<?php
-$player_stat = getStat($stat,$player_id,$mysqli,$stats_mysql["table_prefix"]);
+$player_stat = getStat($stat,$player_id,$mysqli,$config[0]["mysql"]["stats"]["table_prefix"]);
 
 if ($stat!="lastjoin"&&$stat!="lastleave"){
-	$server_total =  getStatTotal($stat,$mysqli,$stats_mysql["table_prefix"]);
+	$server_total =  getStatTotal($stat,$mysqli,$config[0]["mysql"]["stats"]["table_prefix"]);
 }else{
 	$server_total="";
 }
 
 if ($stat!="lastjoin"&&$stat!="lastleave"){
-	$server_average = round($server_total / getPlayerCount($mysqli,$stats_mysql["table_prefix"])[0]["count(*)"]);
+	$server_average = round($server_total / getPlayerCount($mysqli,$config[0]["mysql"]["stats"]["table_prefix"])[0]["count(*)"]);
 }else{
 	$server_average="";
 }
