@@ -29,36 +29,32 @@ $title = str_replace ('{STAT}',$config[$serverId]["stats"]["names"][$highscores_
 			<?php foreach ($highscore as $item => $player) :?>
 			<?php 
 			if ($highscores_item["stat"]=="playtime"){
-			$stat = secondsToTime($player[$highscores_item["stat"]]);
+				$stat = secondsToTime($player[$highscores_item["stat"]]);
 			}else{
-			$stat= $player[$highscores_item["stat"]];
+				$stat= $player[$highscores_item["stat"]];
 			}
 			?>
 			<?php
 			$image_url = player_face($player["name"],$config[$serverId]["faces"]["highscores"]["size"],$config[$serverId]["faces"]["highscores"]["url"]);
 			?>
 			<tr>
-			<td class="highscore-place no-mobile"><?=$item+1; ?></td>
-			<td>
-			<?php
-			if ($config[$serverId]["url"]["player"]["useName"])
-			$player_url = urlencode($player["name"]);
-			else
-			$player_url = $player["player_id"];
-			?>
-			<a href="<?= makePlayerUrl($player_url,$config[$serverId]["url"]["base"],$config[$serverId]["url"]["rewrite"],$config[$serverId]["url"]["player"]["useName"]) ?>"><img class="player-head-player_page" src="<?=$image_url?>" alt="<?=$player["name"]?>"/> <?=$player["name"]?></a></td>
-
-
-			<?php if (isset($Online_Players)): ?>
-			<td>
-			<?php if (playerOnline($player["name"], $Online_Players)): ?>
-			<span class="label label-success">Online</span>
-			<?php else: ?>
-			<span class="label label-danger">Offline</span>
-			<?php endif; ?>
-			</td>
-			<?php endif; ?>
-			<td><?=$stat; ?></td>
+				<td class="highscore-place"><?=$item+1; ?></td>
+				<td>
+					<a href="<?= $BlueStats->makePlayerUrl($player["player_id"])?>">
+						<img src="<?=$image_url?>" alt="<?=$player["name"]?>"/>
+						 <?=$player["name"]?>
+					</a>
+				</td>
+				<?php if (isset($Online_Players)): ?>
+				<td>
+					<?php if (playerOnline($player["name"], $Online_Players)): ?>
+					<span class="label label-success">Online</span>
+					<?php else: ?>
+					<span class="label label-danger">Offline</span>
+					<?php endif; ?>
+				</td>
+				<?php endif; ?>
+				<td><?=$stat; ?></td>
 			</tr>
 			<?php endforeach ?>
 		</tbody>
