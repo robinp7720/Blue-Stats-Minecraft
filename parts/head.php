@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="<?=$server_info["server_name"]?> Server statistics">
+	<meta name="description" content="<?=$server_info["server_name"]?> Server statistics Powered by BlueStats and BukkitStats by lolmewn and">
 	<meta name="author" content="_OvErLoRd_">
 	
 	<meta name='HandheldFriendly' content='True'>
@@ -38,7 +38,7 @@
 	
 	<?php
 	/* If player page get color and name*/
-	if ($page=="player"){
+	if ($page=="player"&&isset($_GET["player"])){
 		/* Get player id and name */
 		if (!is_numeric($_GET["player"])){
 			if ($config[$serverId]["url"]["player"]["useName"]){
@@ -50,7 +50,7 @@
 			}
 		}else{
 			$player_id = (int) $_GET["player"];
-			$player_name = htmlentities(getPlayersName($_GET["player"],$mysqli,$stats_mysql["table_prefix"]));
+			$player_name = htmlentities(getPlayersName($_GET["player"],$mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]));
 		}
 	
 		/* Get player face */

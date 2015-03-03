@@ -14,12 +14,13 @@
 		<?php if (!empty($pvp_stats)): ?>
 		<?php foreach ($pvp_stats as $id => $value) :?>
 		<?php
-			$killed = htmlentities(getPlayersName($value["killed"],$mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]));
+			$killed = getPlayersName($value["killed"],$mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]);
 			$image_killed_url = player_face($killed,$config[$serverId]["faces"]["pvp"]["size"],$config[$serverId]["faces"]["pvp"]["url"]);
 		?>
 		<tr>
 			<td>
-				<a href="<?=makePlayerUrl($player_url,$config[$serverId]["url"]["base"],$config[$serverId]["url"]["rewrite"],$config[$serverId]["url"]["player"]["useName"]) ?>?>"><?='<img class="player-head-player_page" src="'.$image_killed_url.'" alt=""/> '.$killed; ?></a>
+				<a href="<?=$BlueStats->makePlayerUrl($value["killed"])?>">
+				<?='<img class="player-head-player_page" src="'.$image_killed_url.'" alt=""/> '.$killed; ?></a>
 			</td>
 			<td><?=$value["weapon"];?></td>
 			<td><?=$value["amount"];?></td>
