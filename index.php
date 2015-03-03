@@ -2,8 +2,8 @@
 $debug=true;
 $serverId=0;
 
-
-$time_start = microtime(true);
+/* Set app path (This is to make including other folders and pages easier) */
+$app_path = __DIR__;
 
 if ($debug){
 	ini_set('display_errors', 'On');
@@ -34,28 +34,25 @@ require __DIR__."/functions/image.php";
 /* Classes */
 require __DIR__."/classes/query.php";
 require __DIR__."/classes/queryException.php";
+require __DIR__."/classes/main.class.php";
 
 /* Themes */
 require __DIR__."/themes/theme_settings.php";
 
-/* Localization */
-//require __DIR__."/local/german.local.php";
+$BlueStats = new BlueStats;
+$BlueStats->setup($config,$serverId);
+$BlueStats->setAppPath($app_path);
 
-if (isset($localization["stats"]["names"])){
-	$stats_names = $localization["stats"]["names"];
-}
+/* Setup Default pages */
+$BlueStats->addPage("home","home.php","Home","left");
+$BlueStats->addPage("highscores","highscores.php","High Scores","left");
+$BlueStats->addPage("allplayers","all-players.php","All Players","left");
+$BlueStats->addPage("pvpstats","pvp_stats.php","PvP Stats","left");
+$BlueStats->addPage("blocks","block_stats.php","Block Stats","left");
+$BlueStats->addPage("player","player.php","Player","left",true);
 
 /* Get block names */
-if (file_exists(__DIR__."/cache/items.json")&&$config[$serverId]["blocks"]["cache"]){
-	$blocks_names = json_decode(file_get_contents(__DIR__."/cache/items.json"),true);
-}else{
-	if ($config["blocks"]["cache"]){
-		$blocks_names = file_get_contents($config["blocks"]["url"]);
-		file_put_contents(__DIR__."/cache/items.json", $blocks_names);
-	}else{
-		$blocks_names = json_decode(file_get_contents($config[$serverId]["blocks"]["url"]),true);
-	}
-}
+$blocks_names = $BlueStats->getBlockNames();
 
 /* Remove all path related items from theme name for security */
 $theme_settings = array(
@@ -73,45 +70,27 @@ $mysqli = new mysqli(
 	$config[$serverId]["mysql"]["stats"]["dbname"]
 );
 
-/* Set app path (This is to make including other folders and pages easier) */
-$app_path = __DIR__;
+$BlueStats->loadMySQL($mysqli);
 
 /* Select page */
-if (!isset($_GET["page"])){
-	$page = $config[$serverId]["site"]["home"];
-}else{
-	$page = $_GET["page"];
-}
+$BlueStats->setCurrentPage($_GET["page"]);
+$page = $BlueStats->getCurrentPage();
 
 /* Init Server query */
-if($config[0]["server"]["query_enabled"])
+if($config[$serverId]["server"]["query_enabled"])
 	include $app_path."/include/init_query.php";
 
 /* HTTP Headers*/
 header("cache-control: private, max-age={$config[$serverId]["cache"]["max-age"]}");
 
 /* Html Header */
-include $app_path."/parts/head.php";
+include $BlueStats->loadPart("head");
 
 /* Nav Bar */
-include $app_path."/parts/nav.php";
+include $BlueStats->loadPart("nav");
 
 /* Include page */
-if ($page=="highscores"){
-	include $app_path."/pages/highscores.php";
-}elseif($page=="player"){
-	include $app_path."/pages/player.php";
-}elseif($page=="allplayers"){
-	include $app_path."/pages/all-players.php";
-}elseif($page=="pvpstats"){
-	include $app_path."/pages/pvp_stats.php";
-}elseif($page=="home"){
-	include $app_path."/pages/home.php";
-}elseif($page=="blocks"){
-	include $app_path."/pages/block_stats.php";
-}
-$time_end = microtime(true);
-$execution_time = round($time_end - $time_start,5);
+include $BlueStats->loadPage();
 
 /* Html Header */
-include $app_path."/parts/footer.php";
+include $BlueStats->loadPart("footer");
