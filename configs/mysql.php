@@ -1,8 +1,8 @@
 <?php
 $config[0]["mysql"]["stats"] = array(
-	"host" => "127.0.0.1",
+	"host" => "localhost",
 	"username" => "minecraft",
-	"password" => "DhimEMSaES",
+	"password" => "password",
 	"dbname" => "minecraft",
 	"table_prefix" => "Stats_"
 );
