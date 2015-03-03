@@ -73,7 +73,7 @@ $mysqli = new mysqli(
 $BlueStats->loadMySQL($mysqli);
 
 /* Select page */
-$BlueStats->setCurrentPage($_GET["page"]);
+$BlueStats->setCurrentPage((isset($_GET["page"]))? $_GET["page"] : "_HOME_");
 $page = $BlueStats->getCurrentPage();
 
 /* Init Server query */
