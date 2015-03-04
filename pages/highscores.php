@@ -1,4 +1,4 @@
-<div class="container">
+
 <?php
 
 //$Global_players = getPlayers($mysqli,$stats_mysql["table_prefix"]);
@@ -63,4 +63,3 @@ $title = str_replace ('{STAT}',$config[$serverId]["stats"]["names"][$highscores_
 
 
 <?php endforeach ?>
-</div>
