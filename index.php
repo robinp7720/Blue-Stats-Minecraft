@@ -35,6 +35,8 @@ require __DIR__."/functions/image.php";
 require __DIR__."/classes/query.php";
 require __DIR__."/classes/queryException.php";
 require __DIR__."/classes/main.class.php";
+require __DIR__."/classes/player.class.php";
+
 
 /* Themes */
 require __DIR__."/themes/theme_settings.php";
@@ -89,8 +91,12 @@ include $BlueStats->loadPart("head");
 /* Nav Bar */
 include $BlueStats->loadPart("nav");
 
+?><div class="container"><?php
+
 /* Include page */
 include $BlueStats->loadPage();
+
+?></div><?php
 
 /* Html Header */
 include $BlueStats->loadPart("footer");

@@ -87,9 +87,13 @@ class BlueStats {
 			$pagePath    = $pageDetails["file"];
 			return $this->appPath."/pages/".$pagePath;
 		}elseif($page=="_SELECTED_"){
-			$pageDetails = $pages[$this->getCurrentPage()];
-			$pagePath    = $pageDetails["file"];
-			return $this->appPath."/pages/".$pagePath;
+			if (isset($pages[$this->getCurrentPage()])){
+				$pageDetails = $pages[$this->getCurrentPage()];
+				$pagePath    = $pageDetails["file"];
+				return $this->appPath."/pages/".$pagePath;
+			}else{
+				return $this->appPath."/pages/error.php";
+			}
 		}else{
 			return $this->appPath."/pages/error.php";
 		}

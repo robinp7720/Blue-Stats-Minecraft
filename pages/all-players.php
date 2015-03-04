@@ -1,23 +1,23 @@
-<div class="container">
-	<table class="table table-striped table-bordered" id="all-players">
-		<thead>
-			<tr>
-				<th>Player</th>
-				<?php if($config[$serverId]["server"]["query_enabled"]){echo"<th>Status</th>";}?>
-				<th><?=$config[$serverId]["stats"]["names"][$config[$serverId]["allPlayers"]["defaultStat"]]; ?></th>
-				<th>Value</th>
-			</tr>
-		</thead>
-		<tfoot>
-			<tr>
-				<th>Player</th>
-				<?php if($config[$serverId]["server"]["query_enabled"]){echo"<th>Status</th>";}?>
-				<th><?=$config[$serverId]["stats"]["names"][$config[$serverId]["allPlayers"]["defaultStat"]]; ?></th>
-				<th>Value</th>
-			</tr>
-		</tfoot>
-	</table>
-</div>
+
+<table class="table table-striped table-bordered" id="all-players">
+	<thead>
+		<tr>
+			<th>Player</th>
+			<?php if($config[$serverId]["server"]["query_enabled"]){echo"<th>Status</th>";}?>
+			<th><?=$config[$serverId]["stats"]["names"][$config[$serverId]["allPlayers"]["defaultStat"]]; ?></th>
+			<th>Value</th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<th>Player</th>
+			<?php if($config[$serverId]["server"]["query_enabled"]){echo"<th>Status</th>";}?>
+			<th><?=$config[$serverId]["stats"]["names"][$config[$serverId]["allPlayers"]["defaultStat"]]; ?></th>
+			<th>Value</th>
+		</tr>
+	</tfoot>
+</table>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 	    $('#all-players').dataTable( {
