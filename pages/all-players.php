@@ -24,7 +24,7 @@
 	    	<?php /* If url rewrites have been disabled */ if ($config[$serverId]["url"]["rewrite"]==false) :?>
 	        "ajax": './ajax/call.php?func=allplayers',
 	        <?php else: ?>
-	        "ajax": '<?=$config[0]["url"]["base"]?>/ajax/?func=allplayers',
+	        "ajax": '<?=$config[$serverId]["url"]["base"]?>/ajax/?func=allplayers',
 	        <?php endif; ?>
 	        <?php if ($config[$serverId]["server"]["query_enabled"]):?>
 	        "aoColumnDefs": [

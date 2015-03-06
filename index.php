@@ -37,10 +37,7 @@ require __DIR__."/classes/queryException.php";
 require __DIR__."/classes/main.class.php";
 require __DIR__."/classes/player.class.php";
 
-
-/* Themes */
-require __DIR__."/themes/theme_settings.php";
-
+/* Setup BlueStats Core */
 $BlueStats = new BlueStats;
 $BlueStats->setup($config,$serverId);
 $BlueStats->setAppPath($app_path);
@@ -56,13 +53,8 @@ $BlueStats->addPage("player","player.php","Player","left",true);
 /* Get block names */
 $blocks_names = $BlueStats->getBlockNames();
 
-/* Remove all path related items from theme name for security */
-$theme_settings = array(
-	"enabled_theme" => str_replace ( array(".","/","\\") , "" , $theme_settings["enabled_theme"])
-);
-$theme = array();
-
-include __DIR__."/themes/{$theme_settings["enabled_theme"]}/config.php";
+/* Include theme */
+include __DIR__."/themes/{$BlueStats->getThemeId()}/config.php";
 
 /* Connect to mysql */
 $mysqli = new mysqli(
@@ -83,7 +75,7 @@ if($config[$serverId]["server"]["query_enabled"])
 	include $app_path."/include/init_query.php";
 
 /* HTTP Headers*/
-header("cache-control: private, max-age={$config[$serverId]["cache"]["max-age"]}");
+header("cache-control: private, max-age={$BlueStats->config["cache"]["max-age"]}");
 
 /* Html Header */
 include $BlueStats->loadPart("head");
