@@ -7,15 +7,23 @@ class BlueStats {
 	public $home = "";
 	public $serverId = 0;
 	public $page = "";
-	public $player = 0;
 
 	public function loadConfigs($config){
 		$this->config = $config;
 	}
+	
 	public function setup($configs,$serverId){
 		$this->serverId = $serverId;
 		$this->loadConfigs($configs[$serverId]);
 		$this->home = $configs[$serverId]["site"]["home"];
+	}
+	
+	public function getThemeId(){
+		/* Remove all path related items from theme name for security */
+		$themeId = $this->config["themes"]["id"];
+		$themeId = str_replace ( array(".","/","\\") , "" , $themeId);
+		
+		return $themeId;
 	}
 
 	public function loadMySQL($mysqli){
@@ -76,6 +84,7 @@ class BlueStats {
 	public function getPages(){
 		return $this->pages;
 	}
+	
 	public function getCurrentPage(){
 		return $this->page;
 	}
@@ -122,6 +131,7 @@ class BlueStats {
 		}
 		return $blocks_names;
 	}
+	
 	public function makeNavTabs(){
 		$nav = "";
 		if ($this->config["url"]["rewrite"]==false){
@@ -149,6 +159,7 @@ class BlueStats {
 		}
 		return $nav;
 	}
+	
 	public function makePlayerUrl($id){
 		if ($this->config["url"]["player"]["useName"]){
 			$display = getPlayersName($id,$this->mysqli,$this->config["mysql"]["stats"]["table_prefix"]);

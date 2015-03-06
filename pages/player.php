@@ -3,12 +3,8 @@ $player = new player;
 $player->loadBlueStats($BlueStats);
 $player->setPlayerId($player_id);
 
-/* Make sure input is a number */
-if (!empty($player_name)&&isset($player_id)){
+if ($player->playerSet){
 	/* Player name and id is defined in parts/head.php */
-
-	/* Get player face */
-	$image_url = $player->playerFaceUrl();
 	
 	// Get player usernames 
     $past_usernames = $player->getUserNames();
@@ -30,7 +26,7 @@ if (!empty($player_name)&&isset($player_id)){
 
 <div class="page-header">
   <h1>
-  	<?=$player_name?>
+  	<?=$player->playerName?>
   	 <?=$online?>
   	<?php if ($amountOfUsernames>1):?>
   	<small>
@@ -40,7 +36,7 @@ if (!empty($player_name)&&isset($player_id)){
   </h1>
 </div>
 
-<img class="center-block" src="<?=$image_url?>" alt=""/>
+<img class="center-block" src="<?=$player->playerFaceUrl();?>" alt=""/>
 
 <?php
 	/* Include General Stats First */

@@ -3,7 +3,8 @@ class player{
 	public $playerName = "";
 	public $playerId = 0;
 	public $playerUUID = "";
-
+	public $playerSet = false;
+	
 	private $BlueStats = "";
 	private $mysqli = "";
 	private $config = "";
@@ -14,6 +15,9 @@ class player{
 			$this->playerId = $id;
 			$this->playerName = $playerName;
 			$this->playerUUID = $this->getPlayerUUID($id);
+			$this->playerSet=true;
+		}else{
+			$this->playerSet=false;
 		}
 	}
 
@@ -23,6 +27,9 @@ class player{
 			$this->playerName = $name;
 			$this->playerId = $playerId;
 			$this->playerUUID = $this->getPlayerUUID($playerId);
+			$this->playerSet=true;
+		}else{
+			$this->playerSet=false;
 		}
 	}
 
