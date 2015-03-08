@@ -10,7 +10,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php $pvp_stats = pvp_stats($player_id,$mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]); ?>
+		<?php $pvp_stats = pvp_stats($player->playerId,$mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]); ?>
 		<?php if (!empty($pvp_stats)): ?>
 		<?php foreach ($pvp_stats as $id => $value) :?>
 		<?php
@@ -49,7 +49,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php $death_stats = death_stats($player_id,$mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]); ?>
+		<?php $death_stats = death_stats($player->playerId,$mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]); ?>
 		<?php if (!empty($death_stats)): ?>
 		<?php foreach ($death_stats as $id => $value) :?>
 		<tr>
@@ -80,7 +80,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php $kill_stats = kill_stats($player_id,$mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]); ?>
+		<?php $kill_stats = kill_stats($player->playerId,$mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]); ?>
 		<?php if (!empty($kill_stats)): ?>
 		<?php foreach ($kill_stats as $id => $value) :?>
 		<tr>
@@ -100,8 +100,8 @@
 			responsive: true
 		});
 	} );
-var username = "<?=$player_name?>"
-var playerId = <?=$player_id?>;
+var username = "<?=$player->playerName?>"
+var playerId = <?=$player->playerId?>;
 
 <?php /* If url rewrites have been disabled */ if ($config[$serverId]["url"]["rewrite"]==false) :?>
 var killsurl = './ajax/call.php?func=playerKillsChart';

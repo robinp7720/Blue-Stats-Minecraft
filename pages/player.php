@@ -2,57 +2,55 @@
 $player = new player;
 $player->loadBlueStats($BlueStats);
 $player->setPlayerId($player_id);
-
 if ($player->playerSet){
-	/* Player name and id is defined in parts/head.php */
-	
-	// Get player usernames 
-    $past_usernames = $player->getUserNames();
-    
-    $amountOfUsernames = count($past_usernames);
-    if ($amountOfUsernames>1){
-    	$formerUsername = $past_usernames[$amountOfUsernames-2];
-    }
-    $online="";
-	if (isset($Online_Players)){
-		if (playerOnline($player_name, $Online_Players)){
-			$online = '<span class="label label-success">Online</span>';
-		}else{
-			$online = '<span class="label label-danger">Offline</span>';
-		}
+	$page = "player";
+	$strRepl = array(
+		"serverName" => $BlueStats->config["server"]["server_name"],
+	);
+
+	$string = file_get_contents($BlueStats->appPath."/page-templates/$page.html");
+
+	/* Text */
+	foreach ($strRepl as $repl => $new){
+		$string = str_replace("{{ text:".$repl." }}", $new, $string);
 	}
 
-?>
+	/* Modules */
+	preg_match_all('/{{ module:([^ ]+) }}/', $string, $matches);
+	foreach ($matches[1] as $key => $filename) {
+	    //replace content:
+	    ob_start();
+	    include($BlueStats->appPath."/modules/$page/$filename.php");
+	    $contents = ob_get_contents();
+	    ob_end_clean();
+	    $string = str_replace($matches[0][$key], $contents, $string);
+	}
 
-<div class="page-header">
-  <h1>
-  	<?=$player->playerName?>
-  	 <?=$online?>
-  	<?php if ($amountOfUsernames>1):?>
-  	<small>
-  		Formerly known as <?=$formerUsername["name"]?>
-  	</small>
-  	<?php endif;?>
-  </h1>
-</div>
+	/* Global Modules */
+	preg_match_all('/{{ Gmodule:([^ ]+) }}/', $string, $matches);
+	foreach ($matches[1] as $key => $filename) {
+	    //replace content:
+	    ob_start();
+	    include($BlueStats->appPath."/modules/global/$filename.php");
+	    $contents = ob_get_contents();
+	    ob_end_clean();
+	    $string = str_replace($matches[0][$key], $contents, $string);
+	}
 
-<img class="center-block" src="<?=$player->playerFaceUrl();?>" alt=""/>
+	/* Urls */
+	preg_match_all('/{{ url:([^ ]+) }}/', $string, $matches);
+	foreach ($matches[1] as $key => $site) {
+		if ($config[$serverId]["url"]["rewrite"]==false){
+			$url = "?page=allplayers";
+		}else{
+			$url = $BlueStats->config["url"]["base"]."/allplayers/";
+		}
 
-<?php
-	/* Include General Stats First */
-	include $app_path."/include/player/general_stats.php";
+	    $string = str_replace($matches[0][$key], $url, $string);
+	}
 
-	/* Include pvp stats */
-	include $app_path."/include/player/pvp_stats.php";
+	echo $string;
 
-	/* Include Block Stats Last */
-	include $app_path."/include/player/block_stats.php";
 }else{
-	?>
-	<div class="alert alert-danger" role="alert">This user does not exist!</div>
-	<?php
+	echo '<div class="alert alert-danger" role="alert">This user does not exist!</div>';
 }
-?>
-
-
-
