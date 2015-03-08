@@ -33,8 +33,7 @@ $title = str_replace ('{STAT}',$config[$serverId]["stats"]["names"][$highscores_
 			}else{
 				$stat= $player[$highscores_item["stat"]];
 			}
-			?>
-			<?php
+
 			$image_url = player_face($player["name"],$config[$serverId]["faces"]["highscores"]["size"],$config[$serverId]["faces"]["highscores"]["url"]);
 			?>
 			<tr>

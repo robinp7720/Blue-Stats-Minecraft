@@ -9,9 +9,9 @@
 			</tr>
 		</thead>
 		<tbody>
-			<?php foreach ($config[$serverId]["stats"]["id"] as $stat) :?>
+			<?php foreach ($BlueStats->config["stats"]["id"] as $stat) :?>
 			<?php
-				$player_stat = getStat($stat,$player_id,$mysqli,$BlueStats->config["mysql"]["stats"]["table_prefix"]);
+				$player_stat = $player->getStat($stat);
 
 				if ($stat!="lastjoin"&&$stat!="lastleave"){
 					$server_total =  getStatTotal($stat,$mysqli,$BlueStats->config["mysql"]["stats"]["table_prefix"]);
@@ -20,7 +20,7 @@
 				}
 
 				if ($stat!="lastjoin"&&$stat!="lastleave"){
-					$server_average = round($server_total / getPlayerCount($mysqli,$config[0]["mysql"]["stats"]["table_prefix"])[0]["count(*)"]);
+					$server_average = round($server_total / getPlayerCount($mysqli,$BlueStats->config["mysql"]["stats"]["table_prefix"])[0]["count(*)"]);
 				}else{
 					$server_average="";
 				}

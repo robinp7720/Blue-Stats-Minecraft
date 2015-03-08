@@ -39,9 +39,12 @@ class player{
 		$this->config = $BlueStats->config;
 	}
 
-	public function playerFaceUrl(){
-		$size = $this->config["faces"][$this->BlueStats->page]["size"];
-		$url = $this->config["faces"][$this->BlueStats->page]["url"];
+	public function playerFaceUrl($page="_THIS"){
+		if ($page==="_THIS_"){
+			$page=$this->BlueStats->page;
+		}
+		$size = $this->config["faces"][$page]["size"];
+		$url = $this->config["faces"][$page]["url"];
 
 		$image_player_url = str_replace ('{USERNAME}',$this->playerName,$url);
 		$image_player_url = str_replace ('{SIZE}',$size,$image_player_url);
@@ -100,6 +103,39 @@ class player{
 	    $output = curl_exec($ch); 
 	    curl_close($ch); 
 	    return json_decode($output,true);
+	}
+	
+	public function getStat($stat){
+		$prefix = $this->BlueStats->config["mysql"]["stats"]["table_prefix"];
+		if ($stat=="lastleave"||$stat=="lastjoin"){
+			/* Get Latest date */
+			if ($stmt = $this->mysqli->prepare("SELECT {$stat} FROM `{$prefix}player` WHERE `player_id` = ? ORDER BY {$stat} DESC LIMIT 1")) {
+				$stmt->bind_param("i",$this->playerId);
+				$stmt->execute();
+
+				/* bind result variables */
+				 $stmt->bind_result($output);
+
+				/* fetch value */
+				 $stmt->fetch();
+
+				 return $output;
+			}	
+		}else{
+			/* Get total of all stats if not Last left or last joined */
+			if ($stmt = $this->mysqli->prepare("SELECT sum({$stat}) FROM `{$prefix}player` WHERE `player_id` = ?")) {
+				$stmt->bind_param("i",$this->playerId);
+				$stmt->execute();
+
+				/* bind result variables */
+				 $stmt->bind_result($output);
+
+				/* fetch value */
+				 $stmt->fetch();
+
+				 return $output;
+			}	
+		}
 	}
 
 }

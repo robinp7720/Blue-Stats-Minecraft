@@ -1,64 +1,47 @@
+<?php
+$page = "home";
+$strRepl = array(
+	"serverName" => $BlueStats->config["server"]["server_name"],
+);
 
-<div class="jumbotron">
-  <h1><?=$config[$serverId]["server"]["server_name"]; ?> Stats </h1>
-  <p>Powered by blue stats made by _OvErLoRd_</p>
-	
-	<?php /* If url rewrites have been disabled */ if ($config[$serverId]["url"]["rewrite"]==false) :?>
-	 <p><a class="btn btn-primary btn-lg" href="?page=allplayers" role="button">All Players</a></p>
-	<?php else: ?>
-	 <p><a class="btn btn-primary btn-lg" href="<?=$config[$serverId]["url"]["base"]."/allplayers/"?>" role="button">All Players</a></p>
-	<?php endif ?>
+$string = file_get_contents($BlueStats->appPath."/page-templates/$page.html");
 
+foreach ($strRepl as $repl => $new){
+	$string = str_replace("{{ text:".$repl." }}", $new, $string);
+}
 
+/* Modules */
+preg_match_all('/{{ module:([^ ]+) }}/', $string, $matches);
+foreach ($matches[1] as $key => $filename) {
+    //replace content:
+    ob_start();
+    include($BlueStats->appPath."/modules/$page/$filename.php");
+    $contents = ob_get_contents();
+    ob_end_clean();
+    $string = str_replace($matches[0][$key], $contents, $string);
+}
 
-</div>
-	<?php $count=1; ?>
-	<?php foreach ($config[$serverId]["home"]["stats"] as $stat):?>
-		<?php if ($count==1){echo '<div class="row">';} ?>
-		<div class="col-sm-6 col-md-3 text-center">
-			<h2><?=$config[0]["stats"]["names"][$stat]; ?>:</h2>
-			<?php
-			if ($stat == "playtime"){
-				echo secondsToTime(getStatTotal($stat,$mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]));
-			}else{
-				echo getStatTotal($stat,$mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]);
-			}
-			?>
-		</div>
-		<?php if ($count==4){echo '</div>';$count=0;} $count++; ?>
-	<?php endforeach; ?>
-	<?php if ($count!=1){echo '</div>';}?>
-	<hr/>
-	<?php $count=1; ?>
-	<?php foreach ($config[$serverId]["home"]["top"]["stats"] as $stat => $name):?>
-		<?php if ($count==1){echo '<div class="row">';} ?>
-		<div class="col-sm-6 text-center">
-			<h2><?= $name ?>: <small>
-			<?php
-			echo get_highscore($mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"],$stat,1)[0]["name"];
-			?>
-			</small>
-			</h2>
-		</div>
-		<?php if ($count==2){echo '</div>';$count=0;} $count++; ?>
-	<?php endforeach; ?>
-	<?php if ($count!=1){echo '</div>';}?>
-	<hr>
-	<div class="text-center">
-		<?php foreach($Online_Players as $player):
-		$imageUrl = player_face($player,$config[$serverId]["faces"]["home"]["size"],$config[$serverId]["faces"]["home"]["url"]);
+/* Global Modules */
+preg_match_all('/{{ Gmodule:([^ ]+) }}/', $string, $matches);
+foreach ($matches[1] as $key => $filename) {
+    //replace content:
+    ob_start();
+    include($BlueStats->appPath."/modules/global/$filename.php");
+    $contents = ob_get_contents();
+    ob_end_clean();
+    $string = str_replace($matches[0][$key], $contents, $string);
+}
 
-		if ($config[$serverId]["url"]["player"]["useName"])
-			$player_url = urlencode($player);
-		else
-			$player_url = getPlayerId($player,$mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]);
-		
-		$player_url = makePlayerUrl($player_url,$config[$serverId]["url"]["base"],$config[$serverId]["url"]["rewrite"],$config[$serverId]["url"]["player"]["useName"]) 
-		?>
-		<a href="<?=$player_url?>">
-			<img src="<?=$imageUrl?>" alt="" title="<?=$player?>" data-toggle="tooltip" data-placement="top">
-		</a>
-		<?php endforeach; ?>
-	</div>
-	<br>
+/* Urls */
+preg_match_all('/{{ url:([^ ]+) }}/', $string, $matches);
+foreach ($matches[1] as $key => $site) {
+	if ($config[$serverId]["url"]["rewrite"]==false){
+		$url = "?page=allplayers";
+	}else{
+		$url = $BlueStats->config["url"]["base"]."/allplayers/";
+	}
 
+    $string = str_replace($matches[0][$key], $url, $string);
+}
+
+echo $string;
