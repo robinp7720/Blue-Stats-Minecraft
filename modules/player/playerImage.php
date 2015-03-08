@@ -1,0 +1,1 @@
+<img class="center-block" src="<?=$player->playerFaceUrl("player");?>" alt=""/>
