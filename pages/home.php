@@ -38,7 +38,7 @@ foreach ($matches[1] as $key => $site) {
 	if ($config[$serverId]["url"]["rewrite"]==false){
 		$url = "?page=allplayers";
 	}else{
-		$url = $BlueStats->config["url"]["base"]."/allplayers/";
+		$url = $BlueStats->config["url"]["base"]."/$site/";
 	}
 
     $string = str_replace($matches[0][$key], $url, $string);

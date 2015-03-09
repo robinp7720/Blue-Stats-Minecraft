@@ -1,64 +1,47 @@
-
 <?php
+$page = "highscores";
+$strRepl = array(
+	"serverName" => $BlueStats->config["server"]["server_name"],
+);
 
-//$Global_players = getPlayers($mysqli,$stats_mysql["table_prefix"]);
-foreach ($config[$serverId]["highscores"]["highscores"] as $highscores_index => $highscores_item) :
+$string = file_get_contents($BlueStats->appPath."/page-templates/$page.html");
 
-?>
-<?php
-$highscore = get_highscore($mysqli,$config[0]["mysql"]["stats"]["table_prefix"],$highscores_item["stat"],$highscores_item["amount"]);
+foreach ($strRepl as $repl => $new){
+	$string = str_replace("{{ text:".$repl." }}", $new, $string);
+}
 
-$title = str_replace ('{AMOUNT}',$highscores_item["amount"],$config[$serverId]["highscores"]["title"]);
-$title = str_replace ('{STAT}',$config[$serverId]["stats"]["names"][$highscores_item["stat"]],$title);
-?>
+/* Modules */
+preg_match_all('/{{ module:([^ ]+) }}/', $string, $matches);
+foreach ($matches[1] as $key => $filename) {
+    //replace content:
+    ob_start();
+    include($BlueStats->appPath."/modules/$page/$filename.php");
+    $contents = ob_get_contents();
+    ob_end_clean();
+    $string = str_replace($matches[0][$key], $contents, $string);
+}
 
+/* Global Modules */
+preg_match_all('/{{ Gmodule:([^ ]+) }}/', $string, $matches);
+foreach ($matches[1] as $key => $filename) {
+    //replace content:
+    ob_start();
+    include($BlueStats->appPath."/modules/global/$filename.php");
+    $contents = ob_get_contents();
+    ob_end_clean();
+    $string = str_replace($matches[0][$key], $contents, $string);
+}
 
-<section class="col-md-6">
-<h2><?=$title; ?></h2>
+/* Urls */
+preg_match_all('/{{ url:([^ ]+) }}/', $string, $matches);
+foreach ($matches[1] as $key => $site) {
+	if ($config[$serverId]["url"]["rewrite"]==false){
+		$url = "?page=allplayers";
+	}else{
+		$url = $BlueStats->config["url"]["base"]."/$site/";
+	}
 
-	<table class="table table-striped table-bordered">
-		<thead>
-			<tr>
-				<th><?=$localization["highscores"]["place"]?></th>
-				<th><?=$localization["highscores"]["player"]?></th>
-				<?php if ($config[$serverId]["server"]["query_enabled"]):?><th><?=$localization["highscores"]["status"]?></th><?php endif; ?>
-				<th><?=$config[$serverId]["stats"]["names"][$highscores_item["stat"]]; ?></th>
-			</tr>
-		</thead>
-		<tbody>
-			<?php foreach ($highscore as $item => $player) :?>
-			<?php 
-			if ($highscores_item["stat"]=="playtime"){
-				$stat = secondsToTime($player[$highscores_item["stat"]]);
-			}else{
-				$stat= $player[$highscores_item["stat"]];
-			}
+    $string = str_replace($matches[0][$key], $url, $string);
+}
 
-			$image_url = player_face($player["name"],$config[$serverId]["faces"]["highscores"]["size"],$config[$serverId]["faces"]["highscores"]["url"]);
-			?>
-			<tr>
-				<td class="highscore-place"><?=$item+1; ?></td>
-				<td>
-					<a href="<?= $BlueStats->makePlayerUrl($player["player_id"])?>">
-						<img src="<?=$image_url?>" alt="<?=$player["name"]?>"/>
-						 <?=$player["name"]?>
-					</a>
-				</td>
-				<?php if (isset($Online_Players)): ?>
-				<td>
-					<?php if (playerOnline($player["name"], $Online_Players)): ?>
-					<span class="label label-success">Online</span>
-					<?php else: ?>
-					<span class="label label-danger">Offline</span>
-					<?php endif; ?>
-				</td>
-				<?php endif; ?>
-				<td><?=$stat; ?></td>
-			</tr>
-			<?php endforeach ?>
-		</tbody>
-	</table>
-	</section>
-
-
-<?php endforeach ?>
+echo $string;
