@@ -31,8 +31,8 @@
 					$server_average=secondsToTime($server_average);
 				}
 				$statTitle="";
-				if (isset($stats_names[$stat])){
-					$statTitle=$stats_names[$stat];
+				if (isset($BlueStats->config["stats"]["names"][$stat])){
+					$statTitle=$BlueStats->config["stats"]["names"][$stat];
 				}else{
 					$statTitle=$stat;
 				}
