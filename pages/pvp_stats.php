@@ -1,97 +1,47 @@
+<?php
+$page = "pvp";
+$strRepl = array(
+	"serverName" => $BlueStats->config["server"]["server_name"],
+);
 
-<article>
-	<h2>PvP Stats</h2>
-	<table class="table table-striped table-bordered" id="PvP">
-		<thead>
-			<th>Killer</th>
-			<?php if($config[$serverId]["server"]["query_enabled"]){echo"<th>Killer Status</th>";}?>
-			<th>Victim</th>
-			<?php if($config[$serverId]["server"]["query_enabled"]){echo"<th>Victim Status</th>";}?>
-			<th>Weapon</th>
-			<th>Amount</th>
-		</thead>
-		<tfoot>
-			<th>Killer</th>
-			<?php if($config[$serverId]["server"]["query_enabled"]){echo"<th>Killer Status</th>";}?>
-			<th>Victim</th>
-			<?php if($config[$serverId]["server"]["query_enabled"]){echo"<th>Victim Status</th>";}?>
-			<th>Weapon</th>
-			<th>Amount</th>
-		</foot>
-	</table>
-</article>
-		
-<article>
-	<h2>Deaths</h2>
-	<table class="table table-striped table-bordered"  id="deaths">
-		<thead>
-			<tr>
-				<th>Victim</th>
-				<?php if($config[$serverId]["server"]["query_enabled"]){echo"<th>Status</th>";}?>
-				<th>World</th>
-				<th>Cause</th>
-				<th>Amount</th>
-			</tr>
-		</thead>
-		<tfoot>
-			<tr>
-				<th>Victim</th>
-				<?php if($config[$serverId]["server"]["query_enabled"]){echo"<th>Status</th>";}?>
-				<th>World</th>
-				<th>Cause</th>
-				<th>Amount</th>
-			</tr>
-		</tfoot>
-	</table>
+$string = file_get_contents($BlueStats->appPath."/page-templates/$page.html");
 
-	<h2>Kills</h2>
-	<table class="table table-striped table-bordered" id="kills">
-		<thead>
-			<tr>
-				<th>Killer</th>
-				<?php if($config[$serverId]["server"]["query_enabled"]){echo"<th>Status</th>";}?>
-				<th>World</th>
-				<th>Killed</th>
-				<th>Amount</th>
-			</tr>
-		</thead>
-		<tfoot>
-			<tr>
-				<th>Killer</th>
-				<?php if($config[$serverId]["server"]["query_enabled"]){echo"<th>Status</th>";}?>
-				<th>World</th>
-				<th>Killed</th>
-				<th>Amount</th>
-			</tr>
-		</tfoot>
-	</table>
-</article>
+foreach ($strRepl as $repl => $new){
+	$string = str_replace("{{ text:".$repl." }}", $new, $string);
+}
 
-<script type="text/javascript">
-	$(document).ready(function() {
-	    $('#PvP').dataTable( {
-	    	<?php /* If url rewrites have been disabled */ if ($config[$serverId]["url"]["rewrite"]==false) :?>
-	        "ajax": './ajax/call.php?func=pvp',
-	        <?php else: ?>
-	        "ajax": '<?=$config[$serverId]["url"]["base"]?>/ajax/?func=pvp',
-	        <?php endif; ?>
-	         responsive: true
-	    } );
-	    var deaths = $('#deaths').dataTable( {
-	    	<?php /* If url rewrites have been disabled */ if ($config[$serverId]["url"]["rewrite"]==false) :?>
-	        "ajax": './ajax/call.php?func=deaths',
-	        <?php else: ?>
-	        "ajax": '<?=$config[$serverId]["url"]["base"]?>/ajax/?func=deaths',
-	        <?php endif; ?>
-	    } );
-	    $('#kills').dataTable( {
-	    	<?php /* If url rewrites have been disabled */ if ($config[$serverId]["url"]["rewrite"]==false) :?>
-	        "ajax": './ajax/call.php?func=kills',
-	        <?php else: ?>
-	        "ajax": '<?=$config[$serverId]["url"]["base"]?>/ajax/?func=kills',
-	        <?php endif; ?>
-	         responsive: true
-	    } );
-	} );		
-</script>
+/* Modules */
+preg_match_all('/{{ module:([^ ]+) }}/', $string, $matches);
+foreach ($matches[1] as $key => $filename) {
+    //replace content:
+    ob_start();
+    include($BlueStats->appPath."/modules/$page/$filename.php");
+    $contents = ob_get_contents();
+    ob_end_clean();
+    $string = str_replace($matches[0][$key], $contents, $string);
+}
 
+/* Global Modules */
+preg_match_all('/{{ Gmodule:([^ ]+) }}/', $string, $matches);
+foreach ($matches[1] as $key => $filename) {
+    //replace content:
+    ob_start();
+    include($BlueStats->appPath."/modules/global/$filename.php");
+    $contents = ob_get_contents();
+    ob_end_clean();
+    $string = str_replace($matches[0][$key], $contents, $string);
+}
+
+/* Urls */
+preg_match_all('/{{ url:([^ ]+) }}/', $string, $matches);
+foreach ($matches[1] as $key => $site) {
+	if ($config[$serverId]["url"]["rewrite"]==false){
+		$url = "?page=allplayers";
+	}else{
+		$url = $BlueStats->config["url"]["base"]."/$site/";
+	}
+
+    $string = str_replace($matches[0][$key], $url, $string);
+}
+
+echo $string;
