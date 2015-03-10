@@ -6,7 +6,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php $death_stats = death_stats($player->playerId,$mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]); ?>
+		<?php $death_stats = death_stats($player->playerId,$this->mysqli,$this->config["mysql"]["stats"]["table_prefix"]); ?>
 		<?php if (!empty($death_stats)): ?>
 		<?php foreach ($death_stats as $id => $value) :?>
 		<tr>
