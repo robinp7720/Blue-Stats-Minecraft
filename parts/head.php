@@ -39,23 +39,22 @@
 	<?php
 	/* If player page get color and name*/
 	if ($page=="player"&&isset($_GET["player"])){
+		/* Initialize new player */
+		$player = new player;
+		$player->loadBlueStats($BlueStats);
+
 		/* Get player id and name */
 		if (!is_numeric($_GET["player"])){
 			if ($config[$serverId]["url"]["player"]["useName"]){
-				$player_id = getPlayerId($_GET["player"],$mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]);
-				$player_name = htmlentities($_GET["player"]);
-			}else{
-				$player_id =  (int)$_GET["player"];
-				$player_name = htmlentities(getPlayersName($_GET["player"],$mysqli,$stats_mysql["table_prefix"]));
+				$player->setPlayerName($_GET["player"]);
 			}
 		}else{
-			$player_id = (int) $_GET["player"];
-			$player_name = htmlentities(getPlayersName($_GET["player"],$mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]));
+			$player->setPlayerName($_GET["player"]);
 		}
 	
 		/* Get player face */
-		$image_url = player_face($player_name,1,$config[$serverId]["faces"]["head_colour"]["url"] );
-		if (!empty($player_name)&&isset($player_id)){
+		$image_url = player_face($player->playerName,1,$config[$serverId]["faces"]["head_colour"]["url"] );
+		if ($player->playerSet){
 			/* Get colour */
 			if ($config[$serverId]["player"]["playerTheme"]){
 				$theme["nav"]["color"] = get_main_colour($image_url);
