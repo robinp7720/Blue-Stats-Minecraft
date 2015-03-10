@@ -20,4 +20,8 @@ $theme["background"]["color"]=array(
 	"green" => 255,
 	"blue" => 255
 );
+/* True = Full width False = not full width? */
+$theme["container"]["body"]["fluid"]=true;
+$theme["container"]["nav"]["fluid"]=true;
+
 $theme["creator"] = "robinp7720";

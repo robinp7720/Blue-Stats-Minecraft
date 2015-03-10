@@ -1,3 +1,6 @@
+<?php
+$blocks_names = $this->getBlockNames();
+?>
 <article>
 <h2>Block Stats</h2>
 <table class="table table-striped table-bordered" id="blockstats">
@@ -11,7 +14,7 @@
 	<tbody>
 		<?php
 			/* Get all block stats from player */
-			$blocks_raw = globalBlockStats($mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]);
+			$blocks_raw = globalBlockStats($this->mysqli,$this->config["mysql"]["stats"]["table_prefix"]);
 			$blocks= array();
 
 			/* If no blocks have been placed, ignore this */
@@ -49,7 +52,7 @@
 			<td>
 			<?php 
 				/* If block icons are turned on add them to the html here */
-				if ($config[$serverId]["blocks"]["displayIcons"]==true){
+				if ($this->config["blocks"]["displayIcons"]==true){
 					echo '<img class="block-icon" src="'."images/blocks/".$item.'-0.png"/> ';
 				}
 

@@ -4,7 +4,7 @@
 		<thead>
 			<tr>
 				<th>Victim</th>
-				<?php if($config[$serverId]["server"]["query_enabled"]){echo"<th>Status</th>";}?>
+				<?php if($this->config["server"]["query_enabled"]){echo"<th>Status</th>";}?>
 				<th>World</th>
 				<th>Cause</th>
 				<th>Amount</th>
@@ -13,7 +13,7 @@
 		<tfoot>
 			<tr>
 				<th>Victim</th>
-				<?php if($config[$serverId]["server"]["query_enabled"]){echo"<th>Status</th>";}?>
+				<?php if($this->config["server"]["query_enabled"]){echo"<th>Status</th>";}?>
 				<th>World</th>
 				<th>Cause</th>
 				<th>Amount</th>
@@ -24,10 +24,10 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#deaths').dataTable( {
-	    	<?php /* If url rewrites have been disabled */ if ($config[$serverId]["url"]["rewrite"]==false) :?>
+	    	<?php /* If url rewrites have been disabled */ if ($this->config["url"]["rewrite"]==false) :?>
 	        "ajax": './ajax/call.php?func=deaths',
 	        <?php else: ?>
-	        "ajax": '<?=$config[$serverId]["url"]["base"]?>/ajax/?func=deaths',
+	        "ajax": '<?=$this->config["url"]["base"]?>/ajax/?func=deaths',
 	        <?php endif; ?>
 	    } );
 	} );		

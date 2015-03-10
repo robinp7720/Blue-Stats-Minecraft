@@ -9,16 +9,16 @@
 var username = "<?=$player->playerName?>"
 var playerId = <?=$player->playerId?>;
 
-<?php /* If url rewrites have been disabled */ if ($config[$serverId]["url"]["rewrite"]==false) :?>
+<?php /* If url rewrites have been disabled */ if ($this->config["url"]["rewrite"]==false) :?>
 var killsurl = './ajax/call.php?func=playerKillsChart';
 <?php else: ?>
-var killsurl = '<?=$config[$serverId]["url"]["base"]?>/ajax/?func=playerKillsChart';
+var killsurl = '<?=$this->config["url"]["base"]?>/ajax/?func=playerKillsChart';
 <?php endif; ?>
 
-<?php /* If url rewrites have been disabled */ if ($config[$serverId]["url"]["rewrite"]==false) :?>
+<?php /* If url rewrites have been disabled */ if ($this->config["url"]["rewrite"]==false) :?>
 var deathsurl = './ajax/call.php?func=playerDeathsChart';
 <?php else: ?>
-var deathsurl = '<?=$config[$serverId]["url"]["base"]?>/ajax/?func=playerDeathsChart';
+var deathsurl = '<?=$this->config["url"]["base"]?>/ajax/?func=playerDeathsChart';
 <?php endif; ?>
 
 getDeathData(playerId,deathsurl);

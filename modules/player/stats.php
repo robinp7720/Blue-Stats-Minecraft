@@ -9,18 +9,18 @@
 			</tr>
 		</thead>
 		<tbody>
-			<?php foreach ($BlueStats->config["stats"]["id"] as $stat) :?>
+			<?php foreach ($this->config["stats"]["id"] as $stat) :?>
 			<?php
 				$player_stat = $player->getStat($stat);
 
 				if ($stat!="lastjoin"&&$stat!="lastleave"){
-					$server_total =  getStatTotal($stat,$mysqli,$BlueStats->config["mysql"]["stats"]["table_prefix"]);
+					$server_total =  getStatTotal($stat,$this->mysqli,$this->config["mysql"]["stats"]["table_prefix"]);
 				}else{
 					$server_total="";
 				}
 
 				if ($stat!="lastjoin"&&$stat!="lastleave"){
-					$server_average = round($server_total / getPlayerCount($mysqli,$BlueStats->config["mysql"]["stats"]["table_prefix"])[0]["count(*)"]);
+					$server_average = round($server_total / getPlayerCount($this->mysqli,$this->config["mysql"]["stats"]["table_prefix"])[0]["count(*)"]);
 				}else{
 					$server_average="";
 				}
@@ -31,8 +31,8 @@
 					$server_average=secondsToTime($server_average);
 				}
 				$statTitle="";
-				if (isset($BlueStats->config["stats"]["names"][$stat])){
-					$statTitle=$BlueStats->config["stats"]["names"][$stat];
+				if (isset($this->config["stats"]["names"][$stat])){
+					$statTitle=$this->config["stats"]["names"][$stat];
 				}else{
 					$statTitle=$stat;
 				}

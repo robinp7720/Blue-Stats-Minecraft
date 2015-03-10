@@ -33,6 +33,8 @@ require __DIR__."/functions/image.php";
 /* Classes */
 require __DIR__."/classes/query.php";
 require __DIR__."/classes/queryException.php";
+require __DIR__."/classes/ping.php";
+require __DIR__."/classes/pingException.php";
 require __DIR__."/classes/main.class.php";
 require __DIR__."/classes/player.class.php";
 
@@ -40,6 +42,8 @@ require __DIR__."/classes/player.class.php";
 $BlueStats = new BlueStats;
 $BlueStats->setup($config,$serverId);
 $BlueStats->setAppPath($app_path);
+$BlueStats->loadLocal($localization);
+
 
 /* Setup Default pages */
 $BlueStats->addPage("home","home.php","Home","left");
@@ -70,8 +74,11 @@ $BlueStats->setCurrentPage((isset($_GET["page"]))? $_GET["page"] : "_HOME_");
 $page = $BlueStats->getCurrentPage();
 
 /* Init Server query */
-if($config[$serverId]["server"]["query_enabled"])
+if($config[$serverId]["server"]["query_enabled"]){
 	include $app_path."/include/init_query.php";
+	$BlueStats->loadOnlinePlayers($Online_Players);
+}
+
 
 /* HTTP Headers*/
 header("cache-control: private, max-age={$BlueStats->config["cache"]["max-age"]}");
@@ -81,8 +88,12 @@ include $BlueStats->loadPart("head");
 
 /* Nav Bar */
 include $BlueStats->loadPart("nav");
+if ($theme["container"]["body"]["fluid"]){
+	echo '<div class="container-fluid">';
+}else{
+	echo '<div class="container">';
+}
 
-echo '<div class="container">';
 
 									/*--------------*/
 									/* Include page */
@@ -95,55 +106,33 @@ if ($page == "player"){
 	}
 }
 
-if (!$errorPage){
-
-
 $strRepl = array(
 	"serverName" => $BlueStats->config["server"]["server_name"],
+	"pageTitle" => $BlueStats->pageName()
 );
 
-$string = file_get_contents($BlueStats->appPath."/page-templates/$page.html");
-
-foreach ($strRepl as $repl => $new){
-	$string = str_replace("{{ text:".$repl." }}", $new, $string);
-}
-
-/* Modules */
-preg_match_all('/{{ module:([^ ]+) }}/', $string, $matches);
-foreach ($matches[1] as $key => $filename) {
-    //replace content:
-    ob_start();
-    include($BlueStats->appPath."/modules/$page/$filename.php");
-    $contents = ob_get_contents();
-    ob_end_clean();
-    $string = str_replace($matches[0][$key], $contents, $string);
-}
-
-/* Global Modules */
-preg_match_all('/{{ Gmodule:([^ ]+) }}/', $string, $matches);
-foreach ($matches[1] as $key => $filename) {
-    //replace content:
-    ob_start();
-    include($BlueStats->appPath."/modules/global/$filename.php");
-    $contents = ob_get_contents();
-    ob_end_clean();
-    $string = str_replace($matches[0][$key], $contents, $string);
-}
-
-/* Urls */
-preg_match_all('/{{ url:([^ ]+) }}/', $string, $matches);
-foreach ($matches[1] as $key => $site) {
-	if ($config[$serverId]["url"]["rewrite"]==false){
-		$url = "?page=allplayers";
-	}else{
-		$url = $BlueStats->config["url"]["base"]."/$site/";
+if (!$errorPage){
+	$pageContent = file_get_contents($BlueStats->appPath."/themes/{$BlueStats->getThemeId()}/theme.html");
+	
+	/* Global Modules */
+	preg_match_all('/{{ Gmodule:([^ ]+) }}/', $pageContent, $matches);
+	foreach ($matches[1] as $key => $filename) {
+	    //replace content:
+	    ob_start();
+	    include($BlueStats->appPath."/modules/global/$filename.php");
+	    $contents = ob_get_contents();
+	    ob_end_clean();
+	    $pageContent = str_replace($matches[0][$key], $contents, $pageContent);
 	}
 
-    $string = str_replace($matches[0][$key], $url, $string);
-}
+	foreach ($strRepl as $repl => $new){
+		$pageContent = str_replace("{{ text:".$repl." }}", $new, $pageContent);
+	}
 
-echo $string;
+	$pageContent = str_replace("{{ serverIcon }}", Str_Replace( "\n", "", $PingInfo[ 'favicon' ] ), $pageContent);
+	$pageContent = str_replace("{{ content }}", $BlueStats->loadPage(), $pageContent);
 
+	echo $pageContent;
 }
 
 								/* Page include end */

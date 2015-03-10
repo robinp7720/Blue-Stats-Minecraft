@@ -1,9 +1,9 @@
 <div class="row">
 <?php
-foreach ($BlueStats->config["highscores"]["highscores"] as $highscores_index => $highscores_item) :
-	$highscore = get_highscore($mysqli,$BlueStats->config["mysql"]["stats"]["table_prefix"],$highscores_item["stat"],$highscores_item["amount"]);
-	$title = str_replace ('{AMOUNT}',$highscores_item["amount"],$BlueStats->config["highscores"]["title"]);
-	$title = str_replace ('{STAT}',$BlueStats->config["stats"]["names"][$highscores_item["stat"]],$title);
+foreach ($this->config["highscores"]["highscores"] as $highscores_index => $highscores_item) :
+	$highscore = get_highscore($this->mysqli,$this->config["mysql"]["stats"]["table_prefix"],$highscores_item["stat"],$highscores_item["amount"]);
+	$title = str_replace ('{AMOUNT}',$highscores_item["amount"],$this->config["highscores"]["title"]);
+	$title = str_replace ('{STAT}',$this->config["stats"]["names"][$highscores_item["stat"]],$title);
 	?>
 
 
@@ -13,10 +13,10 @@ foreach ($BlueStats->config["highscores"]["highscores"] as $highscores_index => 
 		<table class="table table-striped table-bordered">
 			<thead>
 				<tr>
-					<th><?=$localization["highscores"]["place"]?></th>
-					<th><?=$localization["highscores"]["player"]?></th>
-					<?php if ($config[$serverId]["server"]["query_enabled"]):?><th><?=$localization["highscores"]["status"]?></th><?php endif; ?>
-					<th><?=$config[$serverId]["stats"]["names"][$highscores_item["stat"]]; ?></th>
+					<th><?=$this->localization["highscores"]["place"]?></th>
+					<th><?=$this->localization["highscores"]["player"]?></th>
+					<?php if ($this->config["server"]["query_enabled"]):?><th><?=$this->localization["highscores"]["status"]?></th><?php endif; ?>
+					<th><?=$this->config["stats"]["names"][$highscores_item["stat"]]; ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -28,19 +28,19 @@ foreach ($BlueStats->config["highscores"]["highscores"] as $highscores_index => 
 					$stat= $player[$highscores_item["stat"]];
 				}
 
-				$image_url = player_face($player["name"],$config[$serverId]["faces"]["highscores"]["size"],$config[$serverId]["faces"]["highscores"]["url"]);
+				$image_url = player_face($player["name"],$this->config["faces"]["highscores"]["size"],$this->config["faces"]["highscores"]["url"]);
 				?>
 				<tr>
 					<td class="highscore-place"><?=$item+1; ?></td>
 					<td>
-						<a href="<?= $BlueStats->makePlayerUrl($player["player_id"])?>">
+						<a href="<?= $this->makePlayerUrl($player["player_id"])?>">
 							<img src="<?=$image_url?>" alt="<?=$player["name"]?>"/>
 							 <?=$player["name"]?>
 						</a>
 					</td>
-					<?php if (isset($Online_Players)): ?>
+					<?php if (isset($this->onlinePlayers)): ?>
 					<td>
-						<?php if (playerOnline($player["name"], $Online_Players)): ?>
+						<?php if (playerOnline($player["name"], $this->onlinePlayers)): ?>
 						<span class="label label-success">Online</span>
 						<?php else: ?>
 						<span class="label label-danger">Offline</span>

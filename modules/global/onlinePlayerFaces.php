@@ -1,13 +1,14 @@
 <div class="text-center">
-	<?php foreach($Online_Players as $player):
-	$imageUrl = player_face($player,$config[$serverId]["faces"]["home"]["size"],$config[$serverId]["faces"]["home"]["url"]);
+	<?php 
+	foreach($this->onlinePlayers as $player):
+	$imageUrl = player_face($player,$this->config["faces"]["home"]["size"],$this->config["faces"]["home"]["url"]);
 
-	if ($config[$serverId]["url"]["player"]["useName"])
+	if ($this->config["url"]["player"]["useName"])
 		$player_url = urlencode($player);
 	else
-		$player_url = getPlayerId($player,$mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]);
+		$player_url = getPlayerId($player,$this->mysqli,$this->config["mysql"]["stats"]["table_prefix"]);
 	
-	$player_url = makePlayerUrl($player_url,$config[$serverId]["url"]["base"],$config[$serverId]["url"]["rewrite"],$config[$serverId]["url"]["player"]["useName"]) 
+	$player_url = makePlayerUrl($player_url,$this->config["url"]["base"],$this->config["url"]["rewrite"],$this->config["url"]["player"]["useName"]) 
 	?>
 	<a href="<?=$player_url?>">
 		<img src="<?=$imageUrl?>" alt="" title="<?=$player?>" data-toggle="tooltip" data-placement="top">

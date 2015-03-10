@@ -1,13 +1,13 @@
 	<?php $count=1; ?>
-	<?php foreach ($config[$serverId]["home"]["stats"] as $stat):?>
+	<?php foreach ($this->config["home"]["stats"] as $stat):?>
 		<?php if ($count==1){echo '<div class="row">';} ?>
 		<div class="col-sm-6 col-md-3 text-center">
-			<h2><?=$BlueStats->config["stats"]["names"][$stat]; ?>:</h2>
+			<h2><?=$this->config["stats"]["names"][$stat]; ?>:</h2>
 			<?php
 			if ($stat == "playtime"){
-				echo secondsToTime(getStatTotal($stat,$mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]));
+				echo secondsToTime(getStatTotal($stat,$this->mysqli,$this->config["mysql"]["stats"]["table_prefix"]));
 			}else{
-				echo getStatTotal($stat,$mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]);
+				echo getStatTotal($stat,$this->mysqli,$this->config["mysql"]["stats"]["table_prefix"]);
 			}
 			?>
 		</div>

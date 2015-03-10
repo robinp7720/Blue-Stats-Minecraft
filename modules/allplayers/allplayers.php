@@ -3,16 +3,16 @@
 	<thead>
 		<tr>
 			<th>Player</th>
-			<?php if($config[$serverId]["server"]["query_enabled"]){echo"<th>Status</th>";}?>
-			<th><?=$config[$serverId]["stats"]["names"][$config[$serverId]["allPlayers"]["defaultStat"]]; ?></th>
+			<?php if($this->config["server"]["query_enabled"]){echo"<th>Status</th>";}?>
+			<th><?=$this->config["stats"]["names"][$this->config["allPlayers"]["defaultStat"]]; ?></th>
 			<th>Value</th>
 		</tr>
 	</thead>
 	<tfoot>
 		<tr>
 			<th>Player</th>
-			<?php if($config[$serverId]["server"]["query_enabled"]){echo"<th>Status</th>";}?>
-			<th><?=$config[$serverId]["stats"]["names"][$config[$serverId]["allPlayers"]["defaultStat"]]; ?></th>
+			<?php if($this->config["server"]["query_enabled"]){echo"<th>Status</th>";}?>
+			<th><?=$this->config["stats"]["names"][$this->config["allPlayers"]["defaultStat"]]; ?></th>
 			<th>Value</th>
 		</tr>
 	</tfoot>
@@ -21,12 +21,12 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 	    $('#all-players').dataTable( {
-	    	<?php /* If url rewrites have been disabled */ if ($config[$serverId]["url"]["rewrite"]==false) :?>
+	    	<?php /* If url rewrites have been disabled */ if ($this->config["url"]["rewrite"]==false) :?>
 	        "ajax": './ajax/call.php?func=allplayers',
 	        <?php else: ?>
-	        "ajax": '<?=$config[$serverId]["url"]["base"]?>/ajax/?func=allplayers',
+	        "ajax": '<?=$this->config["url"]["base"]?>/ajax/?func=allplayers',
 	        <?php endif; ?>
-	        <?php if ($config[$serverId]["server"]["query_enabled"]):?>
+	        <?php if ($this->config["server"]["query_enabled"]):?>
 	        "aoColumnDefs": [
 		      { "iDataSort": 3, "aTargets": [ 2 ] },
 		      { "bVisible": false, "aTargets": [ 3 ] }
