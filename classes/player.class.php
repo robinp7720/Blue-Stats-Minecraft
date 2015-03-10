@@ -22,7 +22,7 @@ class player{
 	}
 
 	public function setPlayerName($name){
-		$playerId = $this->getPlayersId($name);
+		$playerId = $this->getPlayerId($name);
 		if (!empty($playerId)){
 			$this->playerName = $name;
 			$this->playerId = $playerId;
