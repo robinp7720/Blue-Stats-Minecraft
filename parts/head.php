@@ -56,7 +56,7 @@
 		$image_url = player_face($player->playerName,1,$config[$serverId]["faces"]["head_colour"]["url"] );
 		if ($player->playerSet){
 			/* Get colour */
-			if ($config[$serverId]["player"]["playerTheme"]){
+			if ($config[$serverId]["player"]["playerTheme"]&&$theme["nav"]["youtube"]){
 				$theme["nav"]["color"] = get_main_colour($image_url);
 				$theme["headers"]["color"] = $theme["nav"]["color"];
 				$theme["pager"]["color"] = $theme["nav"]["color"];
@@ -75,6 +75,9 @@
 
 
 	<style type="text/css">
+		body{
+			background-color:rgb(<?=$theme["background"]["color"]["red"]?>,<?=$theme["background"]["color"]["green"]?>,<?=$theme["background"]["color"]["blue"]?>) !important;
+		}
 		.navbar{
 			background:rgb(<?=$theme["nav"]["color"]["red"]?>,<?=$theme["nav"]["color"]["green"]?>,<?=$theme["nav"]["color"]["blue"]?>);
 		}

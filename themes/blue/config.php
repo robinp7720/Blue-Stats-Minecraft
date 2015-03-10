@@ -5,6 +5,7 @@ $theme["nav"]["color"]=array(
 	"green" => 150,
 	"blue" => 243
 );
+$theme["nav"]["youtube"]=true;
 $theme["headers"]["color"]=array(
 	"red" => 33,
 	"green" => 150,
@@ -21,7 +22,7 @@ $theme["background"]["color"]=array(
 	"blue" => 255
 );
 /* True = Full width False = not full width? */
-$theme["container"]["body"]["fluid"]=true;
-$theme["container"]["nav"]["fluid"]=true;
+$theme["container"]["body"]["fluid"]=false;
+$theme["container"]["nav"]["fluid"]=false;
 
 $theme["creator"] = "robinp7720";
