@@ -12,7 +12,7 @@ $config[0]["url"]["base"] = "http://stats.mysunland.org";
 $config[0]["url"]["rewrite"] = true;
 
 /* Theme settings */
-$config[0]["themes"]["id"]="blue";
+$config[0]["themes"]["id"]="blue-full";
 
 
 /* Custom navigation bar urls */
