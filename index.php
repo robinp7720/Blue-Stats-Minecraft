@@ -77,6 +77,7 @@ $page = $BlueStats->getCurrentPage();
 if($config[$serverId]["server"]["query_enabled"]){
 	include $app_path."/include/init_query.php";
 	$BlueStats->loadOnlinePlayers($Online_Players);
+	$BlueStats->loadPing($PingInfo);
 }
 
 
@@ -106,33 +107,8 @@ if ($page == "player"){
 	}
 }
 
-$strRepl = array(
-	"serverName" => $BlueStats->config["server"]["server_name"],
-	"pageTitle" => $BlueStats->pageName()
-);
-
 if (!$errorPage){
-	$pageContent = file_get_contents($BlueStats->appPath."/themes/{$BlueStats->getThemeId()}/theme.html");
-	
-	/* Global Modules */
-	preg_match_all('/{{ Gmodule:([^ ]+) }}/', $pageContent, $matches);
-	foreach ($matches[1] as $key => $filename) {
-	    //replace content:
-	    ob_start();
-	    include($BlueStats->appPath."/modules/global/$filename.php");
-	    $contents = ob_get_contents();
-	    ob_end_clean();
-	    $pageContent = str_replace($matches[0][$key], $contents, $pageContent);
-	}
-
-	foreach ($strRepl as $repl => $new){
-		$pageContent = str_replace("{{ text:".$repl." }}", $new, $pageContent);
-	}
-
-	$pageContent = str_replace("{{ serverIcon }}", Str_Replace( "\n", "", $PingInfo[ 'favicon' ] ), $pageContent);
-	$pageContent = str_replace("{{ content }}", $BlueStats->loadPage(), $pageContent);
-
-	echo $pageContent;
+	echo $BlueStats->loadPage();
 }
 
 								/* Page include end */

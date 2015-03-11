@@ -9,9 +9,14 @@ class BlueStats {
 	public $page = "";
 	public $onlinePlayers = array();
 	public $localization = array();
+	public $pingInfo = "";
 
 	public function pageName(){
 		return $this->pages[$this->getCurrentPage()]["name"];
+	}
+
+	public function loadPing($ping){
+		$this->pingInfo = $ping;
 	}
 
 	public function loadConfigs($config){
@@ -147,13 +152,42 @@ class BlueStats {
 		return $string;
 	}
 
+	private function createPage($page){
+		$strRepl = array(
+			"serverName" => $this->config["server"]["server_name"],
+			"pageTitle" => $this->pageName()
+		);
+		/* Build theme site */
+		$pageContent = file_get_contents($this->appPath."/themes/{$this->getThemeId()}/theme.html");
+		
+		/* Global Modules */
+		preg_match_all('/{{ Gmodule:([^ ]+) }}/', $pageContent, $matches);
+		foreach ($matches[1] as $key => $filename) {
+		    //replace content:
+		    ob_start();
+		    include($this->appPath."/modules/global/$filename.php");
+		    $contents = ob_get_contents();
+		    ob_end_clean();
+		    $pageContent = str_replace($matches[0][$key], $contents, $pageContent);
+		}
+
+		foreach ($strRepl as $repl => $new){
+			$pageContent = str_replace("{{ text:".$repl." }}", $new, $pageContent);
+		}
+
+		$pageContent = str_replace("{{ serverIcon }}", Str_Replace( "\n", "", $this->pingInfo[ 'favicon' ] ), $pageContent);
+		$pageContent = str_replace("{{ content }}", $this->getPageContents($page), $pageContent);
+
+		return $pageContent;
+	}
+
 	public function loadPage($page="_SELECTED_"){
 		$pages = $this->pages;
 		if (isset($pages[$page])){
-			return $this->getPageContents($page);
+			return $this->createPage($page);
 		}elseif($page=="_SELECTED_"){
 			if (isset($pages[$this->getCurrentPage()])){
-				return $this->getPageContents($this->getCurrentPage());
+				return $this->createPage($this->getCurrentPage());
 			}else{
 				return "";
 			}
