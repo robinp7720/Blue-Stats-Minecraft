@@ -1,3 +1,11 @@
+/* Because for some reason there's a border radius
+/ on a nav bar in bootstrap
+-------------------------------------------------- */
+.navbar{
+  border-radius: 0;
+}
+
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -6,22 +14,29 @@ html {
 }
 body {
   /* Margin bottom by footer height */
-  margin-bottom: 124px;
+  margin-bottom: 150px;
 }
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
-  height: 124px;
+  height: auto;
   background-color: #f5f5f5;
 }
 
-
-/* Custom page CSS
--------------------------------------------------- */
-/* Not required for template or sticky footer method. */
-
 footer .text-muted {
   margin: 20px 0;
+}
+
+@media (max-width: 1000px){
+  body{
+    margin-bottom: 200px;
+  }
+}
+
+@media (max-width: 768px){
+  body{
+    margin-bottom: 300px;
+  }
 }

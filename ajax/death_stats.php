@@ -1,22 +1,22 @@
 
 <?php
-$pvp_stats = death_global_stats($mysqli,$stats_mysql["table_prefix"]);
+$pvp_stats = death_global_stats($mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]);
 if (!empty($pvp_stats)){
 	foreach ($pvp_stats as $id => $value){
 		/* Get player names and player images */
-		$player_name = htmlentities(getPlayersName($value["player_id"],$mysqli,$stats_mysql["table_prefix"]));
-		$player_image_url = player_face($player_name,$config["faces"]["pvp"]["size"],$config["faces"]["pvp"]["url"]);
+		$player_name = htmlentities(getPlayersName($value["player_id"],$mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]));
+		$player_image_url = player_face($player_name,$config[$serverId]["faces"]["pvp"]["size"],$config[$serverId]["faces"]["pvp"]["url"]);
 
 		/* Get player link */
-		if ($config["url"]["player"]["useName"])
+		if ($config[$serverId]["url"]["player"]["useName"])
 			$player_url = urlencode($player_name);
 		else
 			$player_url = $player_name;
 
-		$player_label = '<a href="'.makePlayerUrl($player_url,$site_base_url,$enable_url_rewrite,$config["url"]["player"]["useName"]).'"><img class="player-head-player_page" src="'.$player_image_url.'" alt="'.$player_name.'"/> '.$player_name.'</a></td>';
+		$player_label = '<a href="'.makePlayerUrl($player_url,$config[$serverId]["url"]["base"],$config[$serverId]["url"]["rewrite"],$config[$serverId]["url"]["player"]["useName"]).'"><img class="player-head-player_page" src="'.$player_image_url.'" alt="'.$player_name.'"/> '.$player_name.'</a></td>';
 
 
-		if ($server_info["query_enabled"]){
+		if ($config[$serverId]["server"]["query_enabled"]){
 			if (isset($Online_Players)){
 				if (playerOnline($player_name, $Online_Players)){
 					$status = '<span class="label label-success">Online</span>';
@@ -31,7 +31,7 @@ if (!empty($pvp_stats)){
 		$cause   = $value["cause"];
 		$amount = $value["amount"];
 
-		if ($server_info["query_enabled"]){
+		if ($config[$serverId]["server"]["query_enabled"]){
 			$output["data"][]=array(
 				$player_label,
 				$status,

@@ -1,31 +1,37 @@
 <?php
+$displayStat = $config[$serverId]["allPlayers"]["defaultStat"];
+
 /* Get all players */
-$players = getPlayers($mysqli,$stats_mysql["table_prefix"],$allPlayers_default_stat_displayed,$allPlayers_min_value);
+$players = getPlayers(
+	$mysqli,
+	$config[$serverId]["mysql"]["stats"]["table_prefix"],
+	$displayStat,
+	$config[$serverId]["allPlayers"]["min"]);
 
 /* Loop Through each player */
 foreach ($players as $item => $player){
 	
 	/* If the stat is playtime make it readable */
-	if ($allPlayers_default_stat_displayed=="playtime"){
-		$stat = secondsToTime($player[$allPlayers_default_stat_displayed],$play_time_contract);
+	if ($displayStat=="playtime"){
+		$stat = secondsToTime($player[$displayStat]);
 	}else{
-		$stat = $player[$allPlayers_default_stat_displayed];
+		$stat = $player[$displayStat];
 	}
 	
 	
 	/* Get image url */
-	$image_url = player_face($player["name"],$config["faces"]["allplayers"]["size"],$config["faces"]["allplayers"]["url"]);
+	$image_url = player_face($player["name"],$config[$serverId]["faces"]["allplayers"]["size"],$config[$serverId]["faces"]["allplayers"]["url"]);
 
 	/* Get user label (Click able username and image) */
-	if ($config["url"]["player"]["useName"])
+	if ($config[$serverId]["url"]["player"]["useName"])
 		$player_url = urlencode($player["name"]);
 	else
 		$player_url = $player["player_id"];
 	
-	$player_label = '<a href="'.makePlayerUrl($player_url,$site_base_url,$enable_url_rewrite,$config["url"]["player"]["useName"]).'"><img class="player-head-player_page" src="'.$image_url.'" alt="'.$player["name"].'"/> '.$player["name"].'</a></td>';
+	$player_label = '<a href="'.makePlayerUrl($player_url,$config[$serverId]["url"]["base"],$config[$serverId]["url"]["rewrite"],$config[$serverId]["url"]["player"]["useName"]).'"><img class="player-head-player_page" src="'.$image_url.'" alt="'.$player["name"].'"/> '.$player["name"].'</a></td>';
 	
 	/* If mc query is enabled */
-	if ($server_info["query_enabled"]){
+	if ($config[$serverId]["server"]["query_enabled"]){
 		/* Get player status */
 		if (isset($Online_Players)){
 			if (playerOnline($player["name"], $Online_Players)){
@@ -38,13 +44,13 @@ foreach ($players as $item => $player){
 			$player_label,
 			$status,
 			$stat,
-			$player[$allPlayers_default_stat_displayed]
+			$player[$displayStat]
 		);
 	}else{
 		$output["data"][]=array(
 			$player_label,
 			$stat,
-			$player[$allPlayers_default_stat_displayed]
+			$player[$displayStat]
 		);
 	}
 } 

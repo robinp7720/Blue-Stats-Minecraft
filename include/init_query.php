@@ -2,18 +2,24 @@
 	
 use xPaw\MinecraftQuery;
 use xPaw\MinecraftQueryException;
-	/* Init server query */
-	$Query = new MinecraftQuery( );
+use xPaw\MinecraftPing;
+use xPaw\MinecraftPingException;
 
-	try
-	{
-		$Query->Connect( $server_info["ip"], $server_info["port"] );
-		$Info = $Query->GetInfo();
-		$Online_Players = $Query->GetPlayers();
-		if (empty($Online_Players))
-			$Online_Players = array();
-	}
-	catch( MinecraftQueryException $e )
-	{
-	    echo $e->getMessage( );
-	}
+/* Init server query */
+$Query = new MinecraftQuery( );
+
+try
+{
+	$Query->Connect( $BlueStats->config["server"]["ip"], $BlueStats->config["server"]["port"] );
+	$Info = $Query->GetInfo();
+	$Online_Players = $Query->GetPlayers();
+	if (empty($Online_Players))
+		$Online_Players = array();
+}
+catch( MinecraftQueryException $e )
+{
+    echo $e->getMessage( );
+}
+
+$Ping = new MinecraftPing($BlueStats->config["server"]["ip"], $BlueStats->config["server"]["port"], 10 );
+$PingInfo = $Ping->Query( );

@@ -50,7 +50,18 @@ function getPlayersName($id,$mysqli,$prefix){
 		$stmt->bind_result($output);
 		/* fetch value */
 		$stmt->fetch();
-		return htmlentities($output);
+		return $output;
+	}
+}
+function getPlayerUUID($id,$mysqli,$prefix){
+	if ($stmt = $mysqli->prepare("SELECT UUID FROM `{$prefix}players` where player_id=?")) {
+		$stmt->bind_param("i", $id);
+		$stmt->execute();
+		/* bind result variables */
+		$stmt->bind_result($output);
+		/* fetch value */
+		$stmt->fetch();
+		return $output;
 	}
 }
 function getPlayerId($name,$mysqli,$prefix){
@@ -78,6 +89,31 @@ function blocksMinedBy($id,$mysqli,$prefix){
 }
 function pvp_stats($id,$mysqli,$prefix){
 	if ($stmt = $mysqli->prepare("SELECT * FROM `{$prefix}pvp` where player_id=?")) {
+		$stmt->bind_param("i", $id);
+		$stmt->execute();
+		$result = $stmt->get_result();
+		while ($row = $result->fetch_assoc()) {
+			$output[]=$row;
+		}
+		$stmt->close();
+		if (!empty($output))return $output;
+	}
+}
+
+function death_stats($id,$mysqli,$prefix){
+	if ($stmt = $mysqli->prepare("SELECT * FROM `{$prefix}death` where player_id=? group by `cause`")) {
+		$stmt->bind_param("i", $id);
+		$stmt->execute();
+		$result = $stmt->get_result();
+		while ($row = $result->fetch_assoc()) {
+			$output[]=$row;
+		}
+		$stmt->close();
+		if (!empty($output))return $output;
+	}
+}
+function kill_stats($id,$mysqli,$prefix){
+	if ($stmt = $mysqli->prepare("SELECT * FROM `{$prefix}kill` where player_id=? group by `type`")) {
 		$stmt->bind_param("i", $id);
 		$stmt->execute();
 		$result = $stmt->get_result();
