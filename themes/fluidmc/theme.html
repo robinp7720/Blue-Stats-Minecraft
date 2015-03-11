@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-md-8">
 		<div class="panel panel-primary" style="border-color: #337ab7;">
-			<div class="panel-heading" style="background-color: #337ab7;border-color: #337ab7;">
+			<div class="panel-heading"  style="background-color: #337ab7;border-color: #337ab7;">
 				<h1 class="panel-title">{{ text:pageTitle }}</h1>
 			</div>
 			<div class="panel-body">
@@ -15,7 +15,15 @@
 				<h2 class="panel-title">{{ text:serverName }}</h2>
 			</div>
 			<div class="panel-body">
-				<img class="center-block" style="width:60%;border-radius:100%;" src="{{ serverIcon }}"/>
+				<div class="row">
+					<div class="col-xs-6 col-sm-4 col-md-12">
+						<img class="center-block" style="width:60%;border-radius:100%;" src="{{ serverIcon }}"/>
+					</div>
+					<div class="col-xs-6 col-sm-8 col-md-12">
+						<h2>Online Players:</h2>
+						{{ Gmodule:onlinePlayerFaces }}
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
