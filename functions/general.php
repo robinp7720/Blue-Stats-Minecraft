@@ -60,7 +60,7 @@ function get_highscore($mysqli,$prefix,$stat,$limit){
 	}
 }
 
-function secondsToTime($seconds,$contract=false) {
+function secondsToTime($seconds,$contract=true) {
 	$dtF = new DateTime("@0");
 	$dtT = new DateTime("@$seconds");
 	if($contract){
@@ -153,4 +153,9 @@ function makePlayerUrl($player_id,$site_base_url,$url_rewrite,$use_name){
 	else
 		return '?page=player&player='.urlencode($player_id);
 
+}
+function stringToColorCode($str) {
+  $code = dechex(crc32($str));
+  $code = substr($code, 0, 6);
+  return $code;
 }
