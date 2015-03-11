@@ -53,7 +53,7 @@
 		}
 	
 		/* Get player face */
-		$image_url = player_face($player->playerName,1,$config[$serverId]["faces"]["head_colour"]["url"] );
+		$image_url = player_face($player->playerName,1,$BlueStats->config["faces"]["head_colour"]["url"] );
 		if ($player->playerSet){
 			/* Get colour */
 			if ($config[$serverId]["player"]["playerTheme"]&&$theme["nav"]["youtube"]){
