@@ -1,9 +1,9 @@
 <?php
 /* Makes the contrast between player face and headers & nav bars much nicer */
-$youtube_like_page_theme=true;
+$config[0]["player"]["playerTheme"]=true;
 
 /* All stats to be shown on the player page */
-$stats_tracked_player = array(
+$config[0]["stats"]["id"] = array(
 	"playtime",
 	"joins",
 	"money",
@@ -36,7 +36,7 @@ $stats_tracked_player = array(
 );
 
 /* Nicer name to use instead of the column name in the database */
-$stats_names = array(
+$config[0]["stats"]["names"] = array(
 	"playtime" => "Play Time",
 	"joins" => "Joins",
 	"money" => "Richisity",
@@ -67,7 +67,3 @@ $stats_names = array(
 	"lastleave" => "Last Left",
 	"lastjoin" => "Last Joined"
 );
-
-/* Blocks settings */
-/* Block images are provided by minecraft-ids.grahamedgecombe.com */
-$block_players_display_icons=true;

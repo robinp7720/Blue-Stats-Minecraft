@@ -1,5 +1,5 @@
 <?php
-$stats_mysql = array(
+$config[0]["mysql"]["stats"] = array(
 	"host" => "localhost",
 	"username" => "minecraft",
 	"password" => "password",

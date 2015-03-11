@@ -1,5 +1,6 @@
 # Blue-Stats
 Alternative Web Interface for the bukkit stats plugin my lolmewn
+Demo: http://stats.mysunland.org/
 
 How to install
 ==============
@@ -33,4 +34,15 @@ Edit the following lines to suit your needs:
 "query_enabled" => true, Enable MC query?
 "server_name" => "A Minecraft Server", Text to show in tab bar
 ```
+
+Support
+==============
+If you need any help, found a bug or have an idea for this webappp, please create an issue for it. I will only support unmodified versions of this web app. This excudes of course, changing the config files.
+
+LICENSE
+==============
+This open source web app is released under
+Attribution-NonCommercial-ShareAlike 4.0 International license with the following notices.
+Removing, changing or obsucating the title text and footer text is a violation to this license. You may NOT change any link directing to this github repo or to the forums post for BlueStats on the bukkit forums. You may NOT remove, change or obsucate my name (_OvErLoRd_) on any part of this web app.
+
 

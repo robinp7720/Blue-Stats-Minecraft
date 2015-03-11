@@ -1,6 +1,6 @@
 <?php
 /* High Scores to show */
-$config["highscores"]["highscores"] = array(
+$config[0]["highscores"]["highscores"] = array(
 	array(
 		"stat" => "joins",
 		"amount" => 10
@@ -15,6 +15,14 @@ $config["highscores"]["highscores"] = array(
 	),
 	array(
 		"stat" => "votes",
+		"amount" => 10
+	),
+	array(
+		"stat" => "wordssaid",
+		"amount" => 10
+	),
+	array(
+		"stat" => "commandsdone",
 		"amount" => 10
 	),
 	array(
@@ -36,4 +44,4 @@ $config["highscores"]["highscores"] = array(
 );
 
 /* Text to show above each high score table */
-$config["highscores"]["title"]="Top {AMOUNT} by {STAT}"; /* {AMOUNT} will be replaced with the amount of peoples shown and {STAT} is the stat name */
+$config[0]["highscores"]["title"]="Top {AMOUNT} by {STAT}"; /* {AMOUNT} will be replaced with the amount of peoples shown and {STAT} is the stat name */
