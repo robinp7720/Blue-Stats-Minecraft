@@ -1,7 +1,7 @@
 <?php
 /* Create custom nav html */
 $custom_nav_html = "";
-foreach ($config[$serverId]["nav"]["tabs"]["custom"] as $item)
+foreach ($BlueStats->config["nav"]["tabs"]["custom"] as $item)
 {
 	$custom_nav_html .= '<li><a href="'.$item["url"].'">'.$item["text"].'</a></li>';
 }

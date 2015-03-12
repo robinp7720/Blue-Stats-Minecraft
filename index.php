@@ -92,7 +92,7 @@ if ($page=="player"&&isset($_GET["player"])){
 
 	/* Get player id and name */
 	if (!is_numeric($_GET["player"])){
-		if ($config[$serverId]["url"]["player"]["useName"]){
+		if ($BlueStats->config["url"]["player"]["useName"]){
 			$player->setPlayerName($_GET["player"]);
 		}
 	}else{
@@ -103,7 +103,7 @@ if ($page=="player"&&isset($_GET["player"])){
 	$image_url = player_face($player->playerName,1,$BlueStats->config["faces"]["head_colour"]["url"] );
 	if ($player->playerSet){
 		/* Get colour */
-		if ($config[$serverId]["player"]["playerTheme"]&&$theme["nav"]["youtube"]){
+		if ($BlueStats->config["player"]["playerTheme"]&&$theme["nav"]["youtube"]){
 			$theme["nav"]["color"] = get_main_colour($image_url);
 			$theme["headers"]["color"] = $theme["nav"]["color"];
 			$theme["pager"]["color"] = $theme["nav"]["color"];
