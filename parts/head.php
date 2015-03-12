@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="<?=$server_info["server_name"]?> Server statistics Powered by BlueStats and BukkitStats by lolmewn and">
+	<meta name="description" content="<?php if(isset($server_info["server_name"]))echo $server_info["server_name"]?> Server statistics Powered by BlueStats and BukkitStats by lolmewn and">
 	<meta name="author" content="_OvErLoRd_">
 	
 	<meta name='HandheldFriendly' content='True'>
@@ -41,10 +41,7 @@
 	?>
 
 	<meta name="theme-color" content="<?=HexfromRGB($theme["nav"]["color"]["red"], $theme["nav"]["color"]["green"], $theme["nav"]["color"]["blue"])?>">
-	
 	<meta name="application-name" content="<?=$config[$serverId]["server"]["server_name"]?> Server statistics" />
-	<meta name="msapplication-TileColor" content="<?=$hex?>" />
-	<meta name='msapplication-navbutton-color' content='<?=$hex?>'>
 
 
 	<style type="text/css">
