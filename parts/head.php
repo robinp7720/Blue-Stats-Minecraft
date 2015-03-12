@@ -16,7 +16,7 @@
 	<meta http-equiv='Page-Enter' content='RevealTrans(Duration=2.0,Transition=2)'>
 	<meta http-equiv='Page-Exit' content='RevealTrans(Duration=3.0,Transition=12)'>
 
-	<title><?=$config[$serverId]["server"]["server_name"]?> - BlueStats</title>
+	<title><?=$BlueStats->config["server"]["server_name"]?> - BlueStats</title>
 	
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.2/flatly/bootstrap.min.css" rel="stylesheet">
@@ -36,12 +36,8 @@
 		} );
 	</script>
 	
-	<?php
-
-	?>
-
 	<meta name="theme-color" content="<?=HexfromRGB($theme["nav"]["color"]["red"], $theme["nav"]["color"]["green"], $theme["nav"]["color"]["blue"])?>">
-	<meta name="application-name" content="<?=$config[$serverId]["server"]["server_name"]?> Server statistics" />
+	<meta name="application-name" content="<?=$BlueStats->config["server"]["server_name"]?> Server statistics" />
 
 
 	<style type="text/css">
