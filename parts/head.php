@@ -37,34 +37,7 @@
 	</script>
 	
 	<?php
-	/* If player page get color and name*/
-	if ($page=="player"&&isset($_GET["player"])){
-		/* Initialize new player */
-		$player = new player;
-		$player->loadBlueStats($BlueStats);
 
-		/* Get player id and name */
-		if (!is_numeric($_GET["player"])){
-			if ($config[$serverId]["url"]["player"]["useName"]){
-				$player->setPlayerName($_GET["player"]);
-			}
-		}else{
-			$player->setPlayerName($_GET["player"]);
-		}
-	
-		/* Get player face */
-		$image_url = player_face($player->playerName,1,$BlueStats->config["faces"]["head_colour"]["url"] );
-		if ($player->playerSet){
-			/* Get colour */
-			if ($config[$serverId]["player"]["playerTheme"]&&$theme["nav"]["youtube"]){
-				$theme["nav"]["color"] = get_main_colour($image_url);
-				$theme["headers"]["color"] = $theme["nav"]["color"];
-				$theme["pager"]["color"] = $theme["nav"]["color"];
-			}
-		}
-
-	}
-	$hex = HexfromRGB($theme["nav"]["color"]["red"], $theme["nav"]["color"]["green"], $theme["nav"]["color"]["blue"]);
 	?>
 
 	<meta name="theme-color" content="<?=HexfromRGB($theme["nav"]["color"]["red"], $theme["nav"]["color"]["green"], $theme["nav"]["color"]["blue"])?>">

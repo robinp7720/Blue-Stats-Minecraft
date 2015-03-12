@@ -80,6 +80,33 @@ if($config[$serverId]["server"]["query_enabled"]){
 	$BlueStats->loadPing($PingInfo);
 }
 
+/* If player page get color and name*/
+if ($page=="player"&&isset($_GET["player"])){
+	/* Initialize new player */
+	$player = new player;
+	$player->loadBlueStats($BlueStats);
+
+	/* Get player id and name */
+	if (!is_numeric($_GET["player"])){
+		if ($config[$serverId]["url"]["player"]["useName"]){
+			$player->setPlayerName($_GET["player"]);
+		}
+	}else{
+		$player->setPlayerName($_GET["player"]);
+	}
+
+	/* Get player face */
+	$image_url = player_face($player->playerName,1,$BlueStats->config["faces"]["head_colour"]["url"] );
+	if ($player->playerSet){
+		/* Get colour */
+		if ($config[$serverId]["player"]["playerTheme"]&&$theme["nav"]["youtube"]){
+			$theme["nav"]["color"] = get_main_colour($image_url);
+			$theme["headers"]["color"] = $theme["nav"]["color"];
+			$theme["pager"]["color"] = $theme["nav"]["color"];
+		}
+	}
+}
+
 
 /* HTTP Headers*/
 header("cache-control: private, max-age={$BlueStats->config["cache"]["max-age"]}");
@@ -89,30 +116,30 @@ include $BlueStats->loadPart("head");
 
 /* Nav Bar */
 include $BlueStats->loadPart("nav");
+
 if ($theme["container"]["body"]["fluid"]){
 	echo '<div class="container-fluid">';
 }else{
 	echo '<div class="container">';
 }
 
-
-									/*--------------*/
-									/* Include page */
-
 $errorPage = false;
 
 if ($page == "player"){
-	if (!$player->playerSet){
+	if (!isset($player)){
 		$errorPage = true;
+	}else{
+		if (!$player->playerSet){
+			$errorPage = true;
+		}
 	}
 }
 
 if (!$errorPage){
 	echo $BlueStats->loadPage();
+}else{
+	echo '<div class="alert alert-danger" role="alert">Error! This page does not exist!</div>';
 }
-
-								/* Page include end */
-								/*------------------*/
 
 echo '</div>';
 
