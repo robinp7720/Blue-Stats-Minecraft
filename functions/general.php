@@ -1,4 +1,30 @@
 <?php
+// error handler function
+function ErrorHandler($errno, $errstr, $errfile, $errline)
+{	
+	global $errors;
+    if (!(error_reporting() & $errno)) {
+        // This error code is not included in error_reporting
+        return;
+    }
+    switch ($errno) {
+    case E_USER_ERROR:
+        $errors[] = "<b>ERROR</b> [$errno] $errstr<br /> Fatal error on line $errline in file $errfile, PHP " . PHP_VERSION . " (" . PHP_OS . ")<br /> Aborting...";
+
+    case E_USER_WARNING:
+        $errors[] = "<b>WARNING</b> [$errno] $errstr. File:<b>$errfile</b> Line:$errline";
+
+    case E_USER_NOTICE:
+        $errors[] = "<b>NOTICE</b> [$errno] $errstr. File:<b>$errfile</b> Line:$errline";
+
+    default:
+        $errors[] = "<b>Unknown error:</b> [$errno] $errstr. File:<b>$errfile</b> Line:$errline";
+    }
+
+    /* Don't execute PHP internal error handler */
+    return true;
+}
+
 function getPlayers($mysqli,$prefix,$stat = "playtime",$min = 0){
 	$dates = array("lastleave","lastjoin");
 	if (in_array($stat, $dates)){
