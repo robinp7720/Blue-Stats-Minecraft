@@ -70,13 +70,12 @@ class BlueStats {
 		}
 	}
 
-	public function addPage($id,$file,$name,$rightOrLeft,$hidden=false){
-		if (isset($id)&&isset($file)&&isset($name)&&isset($rightOrLeft)){
-			if (!empty($id)&&!empty($file)&&!empty($name)&&!empty($rightOrLeft)){
+	public function addPage($id,$name,$rightOrLeft,$hidden=false){
+		if (isset($id)&&isset($name)&&isset($rightOrLeft)){
+			if (!empty($id)&&!empty($name)&&!empty($rightOrLeft)){
 				if ($rightOrLeft=="right"||$rightOrLeft=="left"){
 					if (!isset($this->pages[$id])){
 						$this->pages[$id]=array(
-							"file" => $file,
 							"name" => $name,
 							"side" => $rightOrLeft,
 							"hidden" => $hidden
@@ -175,7 +174,7 @@ class BlueStats {
 			$pageContent = str_replace("{{ text:".$repl." }}", $new, $pageContent);
 		}
 
-		$pageContent = str_replace("{{ serverIcon }}", Str_Replace( "\n", "", $this->pingInfo[ 'favicon' ] ), $pageContent);
+		if (isset($this->pingInfo[ 'favicon' ]))$pageContent = str_replace("{{ serverIcon }}", Str_Replace( "\n", "", $this->pingInfo[ 'favicon' ] ), $pageContent);
 		$pageContent = str_replace("{{ content }}", $this->getPageContents($page), $pageContent);
 
 		return $pageContent;

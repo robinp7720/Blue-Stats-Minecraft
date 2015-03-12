@@ -1,6 +1,8 @@
 <?php
+
 $debug=true;
 $serverId=0;
+$errors = array();
 
 /* Set app path (This is to make including other folders and pages easier) */
 $app_path = __DIR__;
@@ -38,6 +40,8 @@ require __DIR__."/classes/pingException.php";
 require __DIR__."/classes/main.class.php";
 require __DIR__."/classes/player.class.php";
 
+set_error_handler("ErrorHandler");
+
 /* Setup BlueStats Core */
 $BlueStats = new BlueStats;
 $BlueStats->setup($config,$serverId);
@@ -46,12 +50,12 @@ $BlueStats->loadLocal($localization);
 
 
 /* Setup Default pages */
-$BlueStats->addPage("home","home.php","Home","left");
-$BlueStats->addPage("highscores","highscores.php","High Scores","left");
-$BlueStats->addPage("allplayers","all-players.php","All Players","left");
-$BlueStats->addPage("pvp","pvp_stats.php","PvP Stats","left");
-$BlueStats->addPage("blocks","block_stats.php","Block Stats","left");
-$BlueStats->addPage("player","player.php","Player","left",true);
+$BlueStats->addPage("home","Home","left");
+$BlueStats->addPage("highscores","High Scores","left");
+$BlueStats->addPage("allplayers","All Players","left");
+$BlueStats->addPage("pvp","PvP Stats","left");
+$BlueStats->addPage("blocks","Block Stats","left");
+$BlueStats->addPage("player","Player","left",true);
 
 /* Get block names */
 $blocks_names = $BlueStats->getBlockNames();
@@ -61,10 +65,10 @@ include __DIR__."/themes/{$BlueStats->getThemeId()}/config.php";
 
 /* Connect to mysql */
 $mysqli = new mysqli(
-	$config[$serverId]["mysql"]["stats"]["host"],
-	$config[$serverId]["mysql"]["stats"]["username"],
-	$config[$serverId]["mysql"]["stats"]["password"],
-	$config[$serverId]["mysql"]["stats"]["dbname"]
+	$BlueStats->config["mysql"]["stats"]["host"],
+	$BlueStats->config["mysql"]["stats"]["username"],
+	$BlueStats->config["mysql"]["stats"]["password"],
+	$BlueStats->config["mysql"]["stats"]["dbname"]
 );
 
 $BlueStats->loadMySQL($mysqli);
@@ -74,10 +78,10 @@ $BlueStats->setCurrentPage((isset($_GET["page"]))? $_GET["page"] : "_HOME_");
 $page = $BlueStats->getCurrentPage();
 
 /* Init Server query */
-if($config[$serverId]["server"]["query_enabled"]){
+if($BlueStats->config["server"]["query_enabled"]){
 	include $app_path."/include/init_query.php";
-	$BlueStats->loadOnlinePlayers($Online_Players);
-	$BlueStats->loadPing($PingInfo);
+	if (isset($Online_Players))$BlueStats->loadOnlinePlayers($Online_Players);
+	if (isset($PingInfo))$BlueStats->loadPing($PingInfo);
 }
 
 /* If player page get color and name*/
@@ -139,6 +143,11 @@ if (!$errorPage){
 	echo $BlueStats->loadPage();
 }else{
 	echo '<div class="alert alert-danger" role="alert">Error! This page does not exist!</div>';
+}
+
+/* Errors */
+foreach ($errors as $error){
+	echo '<div class="alert alert-danger" role="alert">'.$error.'</div>';
 }
 
 echo '</div>';
