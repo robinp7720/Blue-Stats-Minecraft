@@ -1,4 +1,5 @@
 <?php
+header ('Access-Control-Allow-Origin: *');
 /* Execution time */
 $time_start = microtime(true);
 $serverId = 0;
@@ -75,6 +76,8 @@ if ($function=="allplayers"){
 	include "playerKillsChart.php";
 }elseif ($function=="playerDeathsChart"){
 	include "playerDeathsChart.php";
+}elseif ($function=="dump"){
+	include "dump.php";
 }
 
 $time_end = microtime(true);
