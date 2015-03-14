@@ -16,11 +16,15 @@ $theme["pager"]["color"]=array(
 	"green" => 150,
 	"blue" => 243
 );
+$theme["background"]["use-background-image"]=false;
+$theme["background"]["background-image"]="";
 $theme["background"]["color"]=array(
 	"red" => 255,
 	"green" => 255,
 	"blue" => 255
 );
+
+
 /* True = Full width False = not full width? */
 $theme["container"]["body"]["fluid"]=true;
 $theme["container"]["nav"]["fluid"]=true;

@@ -18,6 +18,7 @@ $theme["pager"]["color"]=array(
 	"green" => 150,
 	"blue" => 243
 );
+$theme["background"]["use-background-image"]=false;
 $theme["background"]["color"]=array(
 	"red" => 50,
 	"green" => 16,
