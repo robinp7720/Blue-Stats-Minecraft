@@ -1,6 +1,39 @@
-.noscrollbars::-webkit-scrollbar { 
-    display: none; 
+.table>thead{
+  background-color:white !important;
 }
+.table>tfoot{
+  background-color:white !important;
+}
+.table-striped>tbody>tr:nth-of-type(even){
+  background-color:white !important;
+}
+
+/*.noscrollbars::-webkit-scrollbar { 
+    width:2px;
+}*/
+
+.noscrollbars::-webkit-scrollbar-track-piece{
+  background-color:#fff;
+  -webkit-border-radius:0;
+}
+.noscrollbars::-webkit-scrollbar{
+  width:8px;
+  height:8px;
+}
+.noscrollbars::-webkit-scrollbar-thumb{
+  height:50px;
+  background-color:#999;
+  -webkit-border-radius:4px;
+  outline:2px solid #fff;
+  outline-offset:-2px;
+  border: 2px solid #fff;
+}
+.noscrollbars::-webkit-scrollbar-thumb:hover{
+  height:50px;
+  background-color:#9f9f9f;
+  -webkit-border-radius:4px;
+}
+
 .noscrollbars { -ms-overflow-style: none; }
 
 /* Because for some reason there's a border radius
