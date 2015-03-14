@@ -41,9 +41,19 @@
 
 
 	<style type="text/css">
+		<?php if (!$theme["background"]["use-background-image"]):?>
 		body{
 			background-color:rgb(<?=$theme["background"]["color"]["red"]?>,<?=$theme["background"]["color"]["green"]?>,<?=$theme["background"]["color"]["blue"]?>) !important;
 		}
+		<?php else: ?>
+		body{
+			background:url("<?=$theme["background"]["background-image"]?>") no-repeat center center fixed;
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+		}
+		<?php endif; ?>
 		.navbar{
 			background:rgb(<?=$theme["nav"]["color"]["red"]?>,<?=$theme["nav"]["color"]["green"]?>,<?=$theme["nav"]["color"]["blue"]?>);
 		}

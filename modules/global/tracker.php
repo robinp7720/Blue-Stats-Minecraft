@@ -91,7 +91,7 @@
 		}
 		getDiffernce();
 
-		setInterval(track, 10000);
+		setInterval(track, 5000);
 
 		function track( )
 		{
@@ -100,6 +100,6 @@
 		}
 		</script>
 
-		<div class="tracker noscrollbars" style="width:100%; height:300px; overflow:scroll;">
+		<div class="tracker noscrollbars" style="width:100%; height:30vh; overflow:scroll;">
 			
 		</div>

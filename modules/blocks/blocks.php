@@ -53,7 +53,7 @@ $blocks_names = $this->getBlockNames();
 			<?php 
 				/* If block icons are turned on add them to the html here */
 				if ($this->config["blocks"]["displayIcons"]==true){
-					echo '<img class="block-icon" src="'."images/blocks/".$item.'-0.png"/> ';
+					echo '<img class="block-icon" src="'."images/blocks/".$item.'-0.png" alt="Block image"/> ';
 				}
 
 				echo $block_name;
