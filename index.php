@@ -55,6 +55,7 @@ $BlueStats->addPage("highscores","High Scores","left");
 $BlueStats->addPage("allplayers","All Players","left");
 $BlueStats->addPage("pvp","PvP Stats","left");
 $BlueStats->addPage("blocks","Block Stats","left");
+$BlueStats->addPage("tracker","Live Tracker","left");
 $BlueStats->addPage("player","Player","left",true);
 
 /* Get block names */
