@@ -1,3 +1,4 @@
+<?php if ($this->page!="tracker"):?>
 <script>
 		<?php /* If url rewrites have been disabled */ if ($this->config["url"]["rewrite"]==false) :?>
 		var url = './ajax/call.php?func=dump';
@@ -91,7 +92,7 @@
 		}
 		getDiffernce();
 
-		setInterval(track, 5000);
+		var tracker = setInterval(track, 5000);
 
 		function track( )
 		{
@@ -103,3 +104,4 @@
 		<div class="tracker noscrollbars" style="width:100%; height:30vh; overflow:scroll;">
 			
 		</div>
+		<?php endif; ?>
