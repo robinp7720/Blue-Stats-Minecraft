@@ -1,71 +1,89 @@
-<?php
-$blocks_names = $this->getBlockNames();
-?>
-<article>
-<h2>Block Stats</h2>
-<table class="table table-striped table-bordered" id="blockstats">
-	<thead>
-		<tr>
-			<th>Block</th>
-			<th>Amount of times placed</th>
-			<th>Amount of times broken</th>
-		</tr>
-	</thead>
-	<tbody>
-		<?php
-			/* Get all block stats from player */
-			$blocks_raw = globalBlockStats($this->mysqli,$this->config["mysql"]["stats"]["table_prefix"]);
-			$blocks= array();
 
-			/* If no blocks have been placed, ignore this */
-			if (!empty($blocks_raw)){
-				/* Loop through all blocks to make it use-able. */
-				foreach ($blocks_raw as $item => $value){
-					if ($value["break"]==1){
-						/* Block Broken */
-						if (isset($blocks[$value["blockID"]]["broken"])){
-							$blocks[$value["blockID"]]["broken"]+=$value["amount"];
-						}else{
-							$blocks[$value["blockID"]]["broken"]=$value["amount"];
-						}
-						if (!isset($blocks[$value["blockID"]]["placed"])){
-							$blocks[$value["blockID"]]["placed"]=0;
-						}
-					}else{
-						/* block Placed */
-						if (isset($blocks[$value["blockID"]]["placed"])){
-							$blocks[$value["blockID"]]["placed"]+=$value["amount"];
-						}else{
-							$blocks[$value["blockID"]]["placed"]=$value["amount"];
-						}
-						if (!isset($blocks[$value["blockID"]]["broken"])){
-							$blocks[$value["blockID"]]["broken"]=0;
-						}
-					}
-				}
+<?php
+	$blocks_names = $this->getBlockNames();
+?>
+
+<h2>Block Stats</h2>
+	<table class="table table-striped table-bordered" id="blockstats">
+		<thead>
+			<tr>
+				<th>Block</th>
+				<th>Amount of times placed</th>
+				<th>Amount of times broken</th>		
+				<th>Item ID</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php
+/* Get all block stats from player */
+$blocks_raw = globalBlockStats($this->mysqli,$this->config["mysql"]["stats"]["table_prefix"]);
+/* If player as not placed any blocks, ignore this */
+if (!empty($blocks_raw)){
+	/* Loop through all blocks to make it usable. */
+	foreach ($blocks_raw as $item => $value){
+		/* Set Block ID and Block Data for later just in case */
+		$blocks[$value["blockID"].":".$value["blockData"]]["id"] = $value["blockID"];
+		$blocks[$value["blockID"].":".$value["blockData"]]["data"] = $value["blockData"];
+		if ($value["break"]==0){
+			/* If item is already in array aka if another world has been found in array */
+			if (!isset($blocks[$value["blockID"].":".$value["blockData"]]["placed"])){
+				$blocks[$value["blockID"].":".$value["blockData"]]["placed"] = $value["amount"];
+			}else{
+				$blocks[$value["blockID"].":".$value["blockData"]]["placed"] += $value["amount"];
 			}
 
-			foreach ($blocks as $item => $value) :
-				$block_name = strtolower(getMaterialFromId($item,0,$blocks_names)); 
+			if (!isset($blocks[$value["blockID"].":".$value["blockData"]]["break"])){
+				$blocks[$value["blockID"].":".$value["blockData"]]["break"]=0;
+			}
+		}else{
+			/* If item is already in array aka if another world has been found in array */
+			if (!isset($blocks[$value["blockID"].":".$value["blockData"]]["break"])){
+				/* Set item */
+				$blocks[$value["blockID"].":".$value["blockData"]]["break"] = $value["amount"];
+			}else{
+				$blocks[$value["blockID"].":".$value["blockData"]]["break"] += $value["amount"];
+			}
+
+			if (!isset($blocks[$value["blockID"].":".$value["blockData"]]["placed"])){
+				$blocks[$value["blockID"].":".$value["blockData"]]["placed"]=0;
+			}
+		}
+
+	}
+}else{
+	/* If no blocks mined/placed by player, declare and empty blocks variable */
+	$blocks = array();
+}
+
+
+			?>
+			<?php foreach ($blocks as $item => $value) :?>
+			<?php 
+$block_name = strtolower(getMaterialFromId($value["id"],$value["data"],$blocks_names )); 
+if (empty($block_name)){
+	$block_name = strtolower(getMaterialFromId($value["id"],0,$blocks_names )); 
+}
 			?>
 			<tr>
-			<td>
-			<?php 
-				/* If block icons are turned on add them to the html here */
-				if ($this->config["blocks"]["displayIcons"]==true){
-					echo '<img class="block-icon" src="'."images/blocks/".$item.'-0.png" alt="Block image"/> ';
-				}
+				<td><?php 
+/* If block icons are turned on add them to the html here */
+if ($this->config["blocks"]["displayIcons"]){
+	if(file_exists($this->appPath."/images/blocks/".$value["id"]."-".$value["data"].'.png')){
+		echo '<img class="block-icon" src="'."images/blocks/".$value["id"]."-".$value["data"].'.png"/> ';
+	}else{
+		echo '<img class="block-icon" src="'."images/blocks/".$value["id"].'-0.png"/> ';
+	}
+}
 
-				echo $block_name;
-			?>
-			</td>
-			<td><?=$value["placed"] ?></td>
-			<td><?=$value["broken"] ?></td>
-		</tr>
-		<?php endforeach; ?>
-	</tbody>
-</table>
-</article>
+echo $block_name ?>
+				</td>
+				<td><?=$value["placed"] ?></td>
+				<td><?=$value["break"] ?></td>
+				<td><?=$value["id"].":".$value["data"]; ?></td>
+			</tr>
+			<?php endforeach; ?>
+		</tbody>
+	</table>
 <script>
 	$(document).ready(function() {
 		$('#blockstats').dataTable({
