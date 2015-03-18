@@ -33,7 +33,7 @@ function kill_global_stats($mysqli,$prefix){
 	}
 }
 function globalBlockStats($mysqli,$prefix){
-	if ($stmt = $mysqli->prepare("SELECT `world`,sum(amount) as `amount`,`break`,`blockData`,`blockID` FROM `{$prefix}block` group by `blockID`, `break`")) {
+	if ($stmt = $mysqli->prepare("SELECT `world`,sum(amount) as `amount`,`break`,`blockData`,`blockID` FROM `{$prefix}block` group by `blockID`, `break`, `blockData`")) {
 		$stmt->execute();
 		$result = $stmt->get_result();
 		while ($row = $result->fetch_assoc()) {
