@@ -210,6 +210,9 @@ class BlueStats {
 				$blocks_names = json_decode(file_get_contents($this->appPath."/cache/items.json"),true);
 		}else{
 			if ($this->config["blocks"]["cache"]){
+				if (!file_exists($this->appPath."/cache/")){
+					mkdir($this->appPath."/cache/");
+				}
 				$blocks_names = file_get_contents($this->config["blocks"]["url"]);
 				file_put_contents($this->appPath."/cache/items.json", $blocks_names);
 			}else{
