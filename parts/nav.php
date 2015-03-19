@@ -24,7 +24,7 @@ foreach ($BlueStats->config["nav"]["tabs"]["custom"] as $item)
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Blue Stats</a>
+      <a class="navbar-brand" href="#"><?php if(isset($BlueStats->config["server"]["server_name"]))echo $BlueStats->config["server"]["server_name"]?> Stats</a>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
