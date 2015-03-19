@@ -13,7 +13,7 @@
 			        	<p class="text-muted">
 			        		Made possible by the all amazing &nbsp;<img src="http://dev.bukkit.org/thumbman/avatars/9/401/32x32/LifeWave.jpg.-m0.png" alt="Avatar of Lolmewn" style="height:16px;"> &nbsp; <b>lolmewn</b>!</br>
 			        		<br>
-			      			<b>lolmewnstats: </b><a href="https://github.com/robinp7720/Blue-Stats-Minecraft"> http://dev.bukkit.org/bukkit-plugins/lolmewnstats/</a><br>
+			      			<b>lolmewnstats: </b><a href="http://dev.bukkit.org/bukkit-plugins/lolmewnstats/"> http://dev.bukkit.org/bukkit-plugins/lolmewnstats/</a><br>
 			      		</p>
 			      	</div>
 		      	</div>
