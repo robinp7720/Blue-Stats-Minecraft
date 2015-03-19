@@ -4,11 +4,11 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="<?php if(isset($server_info["server_name"]))echo $server_info["server_name"]?> Server statistics Powered by BlueStats and BukkitStats by lolmewn and">
+	<meta name="description" content="<?php if(isset($BlueStats->config["server"]["server_name"]))echo $BlueStats->config["server"]["server_name"]?> Server statistics Powered by BlueStats and BukkitStats by lolmewn and">
 	<meta name="author" content="_OvErLoRd_">
 	
 	<meta name='HandheldFriendly' content='True'>
-	<meta name='subtitle' content='A good looking statistics'>
+	<meta name='subtitle' content='Good looking powerful server statistics'>
 	<meta name='coverage' content='Worldwide'>
 	<meta name='distribution' content='Global'>
 	<meta name='rating' content='General'>
@@ -16,7 +16,7 @@
 	<meta http-equiv='Page-Enter' content='RevealTrans(Duration=2.0,Transition=2)'>
 	<meta http-equiv='Page-Exit' content='RevealTrans(Duration=3.0,Transition=12)'>
 
-	<title><?=$BlueStats->config["server"]["server_name"]?> - BlueStats</title>
+	<title><?php if(isset($BlueStats->config["server"]["server_name"]))echo $BlueStats->config["server"]["server_name"]?> - BlueStats</title>
 	
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.2/flatly/bootstrap.min.css" rel="stylesheet">
