@@ -42,7 +42,7 @@ If you need any help, found a bug or have an idea for this webappp, please creat
 LICENSE
 ==============
 This open source web app is released under
-Attribution-NonCommercial-ShareAlike 4.0 International license with the following notices.
-Removing, changing or obsucating the title text and footer text is a violation to this license. You may NOT change any link directing to this github repo or to the forums post for BlueStats on the bukkit forums. You may NOT remove, change or obsucate my name (_OvErLoRd_) on any part of this web app.
+Attribution-NonCommercial-ShareAlike 4.0 International license with the following notices:
+You may not remove branding BlueStats, _OvErLoRd_, Lolmewn, and their respected links)
 
 
