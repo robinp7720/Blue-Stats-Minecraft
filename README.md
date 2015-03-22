@@ -43,6 +43,6 @@ LICENSE
 ==============
 This open source web app is released under
 Attribution-NonCommercial-ShareAlike 4.0 International license with the following notices:
-You may not remove branding BlueStats, _OvErLoRd_, Lolmewn, and their respected links)
+You may not remove branding (BlueStats, _OvErLoRd_, Lolmewn, and their respected links)
 
 
