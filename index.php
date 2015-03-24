@@ -120,12 +120,14 @@ header("cache-control: private, max-age={$BlueStats->config["cache"]["max-age"]}
 include $BlueStats->loadPart("head");
 
 /* Nav Bar */
-include $BlueStats->loadPart("nav");
-
-if ($theme["container"]["body"]["fluid"]){
-	echo '<div class="container-fluid">';
-}else{
-	echo '<div class="container">';
+if ($theme["nav"]["enable"])
+	include $BlueStats->loadPart("nav");
+if ($theme["container"]["body"]["container"]){
+	if ($theme["container"]["body"]["fluid"]){
+		echo '<div class="container-fluid">';
+	}else{
+		echo '<div class="container">';
+	}
 }
 
 $errorPage = false;
@@ -150,8 +152,8 @@ if (!$errorPage){
 foreach ($errors as $error){
 	echo '<div class="alert alert-danger" role="alert">'.$error.'</div>';
 }
-
-echo '</div>';
+if ($theme["container"]["body"]["container"])
+	echo '</div>';
 
 /* Html Header */
 include $BlueStats->loadPart("footer");

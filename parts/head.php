@@ -44,7 +44,7 @@
 	<style type="text/css">
 		<?php if (!$theme["background"]["use-background-image"]):?>
 		body{
-			background-color:rgb(<?=$theme["background"]["color"]["red"]?>,<?=$theme["background"]["color"]["green"]?>,<?=$theme["background"]["color"]["blue"]?>) !important;
+			background-color:rgb(<?=$theme["background"]["color"]["red"]?>,<?=$theme["background"]["color"]["green"]?>,<?=$theme["background"]["color"]["blue"]?>);
 		}
 		<?php else: ?>
 		body{
@@ -75,5 +75,13 @@
 			background:rgb(<?=$theme["pager"]["color"]["red"]-20?>,<?=$theme["pager"]["color"]["green"]-20?>,<?=$theme["pager"]["color"]["blue"]-20?>);
 		}
 	</style>
+
+	<?php
+	if (file_exists($BlueStats->appPath."/themes/{$BlueStats->getThemeId()}/style.css")){
+		echo "<style>";
+		echo file_get_contents($BlueStats->appPath."/themes/{$BlueStats->getThemeId()}/style.css");
+		echo "</style>";
+	}
+	?>
 </head>
 <body>
