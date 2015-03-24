@@ -170,6 +170,18 @@ class BlueStats {
 		    $pageContent = str_replace($matches[0][$key], $contents, $pageContent);
 		}
 
+		/* Urls */
+		preg_match_all('/{{ url:([^ ]+) }}/', $pageContent, $matches);
+		foreach ($matches[1] as $key => $site) {
+			if ($this->config["url"]["rewrite"]==false){
+				$url = "?page=allplayers";
+			}else{
+				$url = $this->config["url"]["base"]."/$site/";
+			}
+
+		    $pageContent = str_replace($matches[0][$key], $url, $pageContent);
+		}
+
 		foreach ($strRepl as $repl => $new){
 			$pageContent = str_replace("{{ text:".$repl." }}", $new, $pageContent);
 		}

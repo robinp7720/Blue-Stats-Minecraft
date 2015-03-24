@@ -1,5 +1,6 @@
 <?php
 $theme["name"] = "Fluid MC stats";
+$theme["nav"]["enable"]=true;
 $theme["nav"]["color"]=array(
 	"red" => 34,
 	"green" => 34,
@@ -26,6 +27,7 @@ $theme["background"]["color"]=array(
 );
 /* True = Full width False = not full width? */
 $theme["container"]["body"]["fluid"]=true;
+$theme["container"]["body"]["container"]=true;
 $theme["container"]["nav"]["fluid"]=true;
 
 $theme["creator"] = "robinp7720";
