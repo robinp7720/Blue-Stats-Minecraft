@@ -1,0 +1,63 @@
+
+<header>
+	<h1>{{ text:serverName }} <span>Server Statistics</span></h1>	
+</header>
+<br>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-10 col-md-offset-1">
+			<div class="row">
+				<div class=" col-md-3 hidden-print">
+					<nav class="dr-menu">
+						<div class="dr-trigger">
+							<span class="dr-icon dr-icon-menu"></span>
+							<a class="dr-label">Navigation</a>
+						</div>
+						<ul>
+							<li><a class="dr-icon dr-icon-bullhorn" href="{{ url:home }}">Home</a></li>
+							<li><a class="dr-icon dr-icon-bullhorn" href="{{ url:highscores }}">HighScores</a></li>
+							<li><a class="dr-icon dr-icon-user" href="{{ url:allplayers }}">All Players</a></li>
+							<li><a class="dr-icon dr-icon-bullhorn" href="{{ url:pvp }}">PvP</a></li>
+							<li><a class="dr-icon dr-icon-bullhorn" href="{{ url:blocks }}">Blocks</a></li>
+							<li><a class="dr-icon dr-icon-bullhorn" href="{{ url:tracker }}">Live Tracker</a></li>
+						</ul>
+						{{ Gmodule:onlinePlayerFaces }}
+					</nav>
+				</div>
+				<div class="col-md-8">
+					{{ content }}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script>
+	var YTMenu = (function() {
+
+	function init() {		
+		[].slice.call( document.querySelectorAll( '.dr-menu' ) ).forEach( function( el, i ) {
+
+			var trigger = el.querySelector( 'div.dr-trigger' ),
+				icon = trigger.querySelector( 'span.dr-icon-menu' ),
+				open = false;
+			trigger.addEventListener( 'click', function( event ) {
+				if( !open ) {
+					el.className += ' dr-menu-open';
+					open = true;
+				}
+			}, false );
+			icon.addEventListener( 'click', function( event ) {
+				if( open ) {
+					event.stopPropagation();
+					open = false;
+					el.className = el.className.replace(/\bdr-menu-open\b/,'');
+					return false;
+				}
+			}, false );
+		});
+	}
+	init();
+})();
+</script>

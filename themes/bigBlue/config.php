@@ -1,6 +1,6 @@
 <?php
-$theme["name"] = "default";
-$theme["nav"]["enable"]=true;
+$theme["name"] = "bigBlue";
+$theme["nav"]["enable"]=false;
 $theme["nav"]["color"]=array(
 	"red" => 33,
 	"green" => 150,
@@ -25,7 +25,7 @@ $theme["background"]["color"]=array(
 );
 /* True = Full width False = not full width? */
 $theme["container"]["body"]["fluid"]=false;
-$theme["container"]["body"]["container"]=true;
+$theme["container"]["body"]["container"]=false;
 $theme["container"]["nav"]["fluid"]=false;
 
 $theme["creator"] = "robinp7720";
