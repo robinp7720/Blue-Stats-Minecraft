@@ -1,3 +1,4 @@
+/* White Tables */
 .table>thead{
   background-color:white !important;
 }
@@ -8,9 +9,6 @@
   background-color:white !important;
 }
 
-/*.noscrollbars::-webkit-scrollbar { 
-    width:2px;
-}*/
 
 .noscrollbars::-webkit-scrollbar-track-piece{
   background-color:#fff;
