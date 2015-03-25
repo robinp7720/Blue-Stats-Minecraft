@@ -2,21 +2,15 @@
 
 body, html { 
   font-size: 100%; 
-  padding: 0; 
-  margin: 0;
 }
 body {
 	font-family: 'Lato', Calibri, Arial, sans-serif;
 	font-weight: 300;
 }
 a {
-	color: #0f0f0f;
-	text-decoration: none;
+	color: #2196F3;
+	text-decoration: none !important;
 }
-hr{
-	border-top: 1px solid #89AA11;
-}
-a:hover {	color: #111;}
 footer {
   background: rgba(0,0,0,0) !important;
 
@@ -27,13 +21,9 @@ footer {
 header {
 	width: 100%;
 	margin: 0 auto;
-	padding: 0 1.875em 3.125em 1.875em;
-}
-
- header {
 	padding: 2.875em 1.875em 2.875em;
 	text-align: center;
-	background: rgba(0,0,0,0.10);
+	background: #0D47A1;
 }
 header h1 {
 	font-size: 2.625em;
@@ -53,7 +43,7 @@ header span {
 	font-size: 1.3em;
 	line-height: 2.5;
 	font-weight: 400;
-	color: #fff;
+	color: #1976D2;
 	padding-top: 2em;
 }
 .dr-menu > div  {
@@ -74,7 +64,7 @@ header span {
 	        transition: all 0.2s ease;
 }
 .dr-menu.dr-menu-open > div .dr-icon {
-	color: #673;
+	color: black;
 	left: 100%;
 	-webkit-transform: translateX(-100%);
 	   -moz-transform: translateX(-100%);
@@ -94,7 +84,7 @@ header span {
 	padding-left: 3em;
 	position: relative;
 	display: block;
-	color: #673;
+	color: black;
 	font-size: 0.9em;
 	font-weight: 700;
 	letter-spacing: 1px;
@@ -118,17 +108,19 @@ header span {
 	position: relative;
 	z-index: 0;
 	pointer-events: none;
-	-webkit-transition: opacity 0s linear 205ms;
-	   -moz-transition: opacity 0s linear 205ms;
-	        transition: opacity 0s linear 205ms;
+	max-height:70px;
+	-webkit-transition: opacity 0s linear 205ms, max-height 0.2s;
+	   -moz-transition: opacity 0s linear 205ms, max-height 0.2s;
+	        transition: opacity 0s linear 205ms, max-height 0.2s;
 }
 .dr-menu.dr-menu-open ul {
 	opacity: 1;
 	z-index: 200;
+	max-height:400px;
 	pointer-events: auto;
-	-webkit-transition: opacity 0s linear 0s;
-	   -moz-transition: opacity 0s linear 0s;
-	        transition: opacity 0s linear 0s;
+	-webkit-transition: opacity 0s linear 0s, max-height 0.2s;
+	   -moz-transition: opacity 0s linear 0s, max-height 0.2s;
+	        transition: opacity 0s linear 0s, max-height 0.2s;
 }
 .dr-menu ul li {
 	display: block;
@@ -172,9 +164,9 @@ header span {
 .dr-menu ul li a {
 	display: inline-block;
 	padding: 0 20px;
-	color: #fff;
+	color: #1976D2;
 }
-.dr-menu ul li a:hover {color: #673;}
+.dr-menu ul li a:hover {color: #0D47A1;}
 .dr-icon:before, .dr-icon:after {
 	position: relative;
 	font-family: 'FontAwesome';
