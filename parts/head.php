@@ -55,7 +55,7 @@
 			background-size: cover;
 		}
 		<?php endif; ?>
-		.navbar{
+		.navbar, .nav-bar-colour{
 			background:rgb(<?=$theme["nav"]["color"]["red"]?>,<?=$theme["nav"]["color"]["green"]?>,<?=$theme["nav"]["color"]["blue"]?>);
 		}
 		.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.active>a:focus{
