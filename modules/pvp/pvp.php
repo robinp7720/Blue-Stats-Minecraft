@@ -1,24 +1,21 @@
-<article>
-	<h2>PvP Stats</h2>
-	<table class="table table-striped table-bordered" id="PvP">
-		<thead>
-			<th>Killer</th>
-			<?php if($this->config["server"]["query_enabled"]){echo"<th>Killer Status</th>";}?>
-			<th>Victim</th>
-			<?php if($this->config["server"]["query_enabled"]){echo"<th>Victim Status</th>";}?>
-			<th>Weapon</th>
-			<th>Amount</th>
-		</thead>
-		<tfoot>
-			<th>Killer</th>
-			<?php if($this->config["server"]["query_enabled"]){echo"<th>Killer Status</th>";}?>
-			<th>Victim</th>
-			<?php if($this->config["server"]["query_enabled"]){echo"<th>Victim Status</th>";}?>
-			<th>Weapon</th>
-			<th>Amount</th>
-		</foot>
-	</table>
-</article>
+<table class="table table-striped table-bordered" id="PvP">
+	<thead>
+		<th>Killer</th>
+		<?php if($this->config["server"]["query_enabled"]){echo"<th>Killer Status</th>";}?>
+		<th>Victim</th>
+		<?php if($this->config["server"]["query_enabled"]){echo"<th>Victim Status</th>";}?>
+		<th>Weapon</th>
+		<th>Amount</th>
+	</thead>
+	<tfoot>
+		<th>Killer</th>
+		<?php if($this->config["server"]["query_enabled"]){echo"<th>Killer Status</th>";}?>
+		<th>Victim</th>
+		<?php if($this->config["server"]["query_enabled"]){echo"<th>Victim Status</th>";}?>
+		<th>Weapon</th>
+		<th>Amount</th>
+	</foot>
+</table>
 <script type="text/javascript">
 	$(document).ready(function() {
 	    $('#PvP').dataTable( {
