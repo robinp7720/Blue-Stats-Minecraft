@@ -2,9 +2,9 @@
 $theme["name"] = "bigBlue";
 $theme["nav"]["enable"]=false;
 $theme["nav"]["color"]=array(
-	"red" => 33,
-	"green" => 150,
-	"blue" => 243
+	"red" => 13,
+	"green" => 71,
+	"blue" => 161
 );
 $theme["nav"]["youtube"]=true;
 $theme["headers"]["color"]=array(
