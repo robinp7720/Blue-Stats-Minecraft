@@ -19,7 +19,7 @@
 	<title><?php if(isset($BlueStats->config["server"]["server_name"]))echo $BlueStats->config["server"]["server_name"]?> - BlueStats</title>
 	
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.2/flatly/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css">
 
 	<link href='css/custom.css' rel='stylesheet' type='text/css'>
@@ -64,16 +64,32 @@
 		}
 
 		.pagination>.disabled>span, .pagination>.disabled>span:hover, .pagination>.disabled>span:focus, .pagination>.disabled>a, .pagination>.disabled>a:hover, .pagination>.disabled>a:focus{
-			background:rgb(<?=$theme["pager"]["color"]["red"]+10?>,<?=$theme["pager"]["color"]["green"]+10?>,<?=$theme["pager"]["color"]["blue"]+10?>);
+			background:rgb(
+				<?=$theme["pager"]["color"]["red"]+10?>,
+				<?=$theme["pager"]["color"]["green"]+10?>,
+				<?=$theme["pager"]["color"]["blue"]+10?>
+			);
 		}
 		.pagination>li>a, .pagination>li>span{
-			background:rgb(<?=$theme["pager"]["color"]["red"]-5?>,<?=$theme["pager"]["color"]["green"]-5?>,<?=$theme["pager"]["color"]["blue"]-5?>);
+			background:rgb(
+				<?=$theme["pager"]["color"]["red"]-5?>,
+				<?=$theme["pager"]["color"]["green"]-5?>,
+				<?=$theme["pager"]["color"]["blue"]-5?>
+			);
 		}
 		.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus{
-			background:rgb(<?=$theme["pager"]["color"]["red"]-20?>,<?=$theme["pager"]["color"]["green"]-20?>,<?=$theme["pager"]["color"]["blue"]-20?>);
+			background:rgb(
+				<?=$theme["pager"]["color"]["red"]-20?>,
+				<?=$theme["pager"]["color"]["green"]-20?>,
+				<?=$theme["pager"]["color"]["blue"]-20?>
+			);
 		}
 		.pagination>li>a:hover, .pagination>li>span:hover, .pagination>li>a:focus, .pagination>li>span:focus{
-			background:rgb(<?=$theme["pager"]["color"]["red"]-20?>,<?=$theme["pager"]["color"]["green"]-20?>,<?=$theme["pager"]["color"]["blue"]-20?>);
+			background:rgb(
+				<?=$theme["pager"]["color"]["red"]-20?>,
+				<?=$theme["pager"]["color"]["green"]-20?>,
+				<?=$theme["pager"]["color"]["blue"]-20?>
+			);
 		}
 	</style>
 
