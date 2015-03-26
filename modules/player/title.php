@@ -1,17 +1,4 @@
 <?php
-/* Initialize new player */
-$player = new player;
-$player->loadBlueStats($this);
-
-/* Get player id and name */
-if (!is_numeric($_GET["player"])){
-  if ($this->config["url"]["player"]["useName"]){
-    $player->setPlayerName($_GET["player"]);
-  }
-}else{
-  $player->setPlayerName($_GET["player"]);
-}
-  
 
 // Get player usernames 
 $past_usernames = $player->getUserNames();

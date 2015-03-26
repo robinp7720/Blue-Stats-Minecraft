@@ -104,11 +104,28 @@ class BlueStats {
 	}
 
 	private function getPageContents($page){
+		if ($page=="player"){
+			/* Initialize new player */
+			$player = new player;
+			$player->loadBlueStats($this);
+
+			/* Get player id and name */
+			if (!is_numeric($_GET["player"])){
+			  if ($this->config["url"]["player"]["useName"]){
+			    $player->setPlayerName($_GET["player"]);
+			  }
+			}else{
+			  $player->setPlayerName($_GET["player"]);
+			}
+		}
 		$strRepl = array(
 			"serverName" => $this->config["server"]["server_name"],
 		);
-
-		$string = file_get_contents($this->appPath."/page-templates/$page.html");
+		if (file_exists($this->appPath."/themes/{$this->getThemeId()}/templates/$page.html")){
+			$string = file_get_contents($this->appPath."/themes/{$this->getThemeId()}/templates/$page.html");
+		}else{
+			$string = file_get_contents($this->appPath."/page-templates/$page.html");
+		}
 
 		foreach ($strRepl as $repl => $new){
 			$string = str_replace("{{ text:".$repl." }}", $new, $string);
