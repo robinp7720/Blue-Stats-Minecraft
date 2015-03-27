@@ -2,7 +2,7 @@
 /* Makes the contrast between player face and headers & nav bars much nicer */
 $config[0]["player"]["playerTheme"]=true;
 
-/* All stats to be shown on the player page */
+/* All stats (Will be used everywhere) */
 $config[0]["stats"]["id"] = array(
 	"playtime",
 	"joins",

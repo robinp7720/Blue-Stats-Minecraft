@@ -1,5 +1,14 @@
 <?php
-$displayStat = $config[$serverId]["allPlayers"]["defaultStat"];
+
+if (isset($_GET["d"])){
+	if (in_array($_GET["d"],$config[$serverId]["stats"]["id"])){
+		$displayStat = $_GET["d"];
+	}else{
+		$displayStat = $BlueStats->config["allPlayers"]["defaultStat"];
+	}
+}else{
+	$displayStat = $BlueStats->config["allPlayers"]["defaultStat"];
+}
 
 /* Get all players */
 $players = getPlayers(
