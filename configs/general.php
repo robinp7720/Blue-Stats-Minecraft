@@ -12,6 +12,7 @@ $config[0]["url"]["base"] = "http://stats.mysunland.org";
 $config[0]["url"]["rewrite"] = true;
 
 $config[0]["ping"]["cache"]=true;
+$config[0]["ping"]["time"] = 500; /* In Milliseconds */
 
 /* Theme settings */
 $config[0]["themes"]["id"]="bigBlue";
