@@ -1,3 +1,5 @@
+
+
 /* Pagintation */
 
 .pagination {
@@ -130,11 +132,12 @@
 
 .noscrollbars { -ms-overflow-style: none; }
 
-/* Because for some reason there's a border radius
-/ on a nav bar in bootstrap
--------------------------------------------------- */
+/* Nav bar */
 .navbar{
   border-radius: 0;
+}
+.nav>li>a, .navbar-brand{
+  color:#fff;
 }
 
 
