@@ -10,7 +10,7 @@ if ($BlueStats->config["ping"]["cache"]){
 	if (file_exists($BlueStats->appPath."/cache/ping.json")){
 		$pingJson = file_get_contents($BlueStats->appPath."/cache/ping.json");
 		$ping = json_decode($pingJson,true);
-		if (time()>$ping["time"]+500){
+		if (time()>$ping["time"]+$BlueStats->config["ping"]["time"]){
 			$ping = ping();
 			$time = time();
 			$PingInfo = $ping["PingInfo"];
