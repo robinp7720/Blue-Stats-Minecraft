@@ -18,7 +18,6 @@ function getDeathData(id,url){
 		// code to run if the request succeeds;
 		// the response is passed to the function
 		success: function( json ) {
-			console.log(json);
 			var ctx = $("#deathsChart").get(0).getContext("2d");
 			var killStats = new Chart(ctx).Pie(json);
 		},
@@ -37,6 +36,3 @@ function getDeathData(id,url){
 		}
 	});
 }
-getDeathData(playerId,deathsurl);
-console.log(username);
-console.log(playerId);
