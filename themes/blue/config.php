@@ -1,5 +1,6 @@
 <?php
 $theme["name"] = "default";
+$theme["style"]["BlueStat-intelliStyles"]=true;
 $theme["nav"]["enable"]=true;
 $theme["nav"]["color"]=array(
 	"red" => 33,

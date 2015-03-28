@@ -1,5 +1,6 @@
 <?php
 $theme["name"] = "bigBlue";
+$theme["style"]["BlueStat-intelliStyles"]=true;
 $theme["nav"]["enable"]=false;
 $theme["nav"]["color"]=array(
 	"red" => 13,

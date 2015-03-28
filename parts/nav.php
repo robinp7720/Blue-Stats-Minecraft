@@ -8,7 +8,7 @@ foreach ($BlueStats->config["nav"]["tabs"]["custom"] as $item)
 ?>
 
 
-<nav class="navbar">
+<nav class="navbar navbar-default">
   <?php
   if ($theme["container"]["nav"]["fluid"]){
     echo '<div class="container-fluid">';

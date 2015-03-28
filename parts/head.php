@@ -41,7 +41,7 @@
 	<meta name="theme-color" content="<?=HexfromRGB($theme["nav"]["color"]["red"], $theme["nav"]["color"]["green"], $theme["nav"]["color"]["blue"])?>">
 	<meta name="application-name" content="<?=$BlueStats->config["server"]["server_name"]?> Server statistics" />
 
-
+	<?php if ($theme["style"]["BlueStat-intelliStyles"]):?>
 	<style type="text/css">
 		<?php if (!$theme["background"]["use-background-image"]):?>
 		body{
@@ -92,6 +92,7 @@
 			);
 		}
 	</style>
+	<?php endif; ?>
 
 	<?php
 	if (file_exists($BlueStats->appPath."/themes/{$BlueStats->getThemeId()}/style.css")){
