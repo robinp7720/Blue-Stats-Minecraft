@@ -1,11 +1,14 @@
 <?php
+if($this->config["player"]["nameHistory"]){
+  // Get player usernames 
+  $past_usernames = $player->getUserNames();
 
-// Get player usernames 
-$past_usernames = $player->getUserNames();
-
-$amountOfUsernames = count($past_usernames);
-if ($amountOfUsernames>1){
-	$formerUsername = $past_usernames[$amountOfUsernames-2];
+  $amountOfUsernames = count($past_usernames);
+  if ($amountOfUsernames>1){
+  	$formerUsername = $past_usernames[$amountOfUsernames-2];
+  }
+}else{
+  $amountOfUsernames=0;
 }
 $online="";
 if (isset($this->onlinePlayers)){
