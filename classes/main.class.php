@@ -140,6 +140,8 @@ class BlueStats {
 		    $contents = ob_get_contents();
 		    ob_end_clean();
 		    $string = str_replace($matches[0][$key], $contents, $string);
+		    $time = microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"];
+			$string .= "<script>console.log('$filename load time: {$time} Seconds')</script>";
 		}
 
 		/* Global Modules */
@@ -164,7 +166,6 @@ class BlueStats {
 
 		    $string = str_replace($matches[0][$key], $url, $string);
 		}
-
 		return $string;
 	}
 

@@ -40,6 +40,9 @@ require __DIR__."/classes/pingException.php";
 require __DIR__."/classes/main.class.php";
 require __DIR__."/classes/player.class.php";
 
+$time = microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"];
+echo "<script>console.log('Including configs,classes etc time: {$time} Seconds')</script>";
+
 set_error_handler("ErrorHandler");
 
 /* Setup BlueStats Core */
@@ -84,6 +87,8 @@ if($BlueStats->config["server"]["query_enabled"]){
 	if (isset($Online_Players))$BlueStats->loadOnlinePlayers($Online_Players);
 	if (isset($PingInfo))$BlueStats->loadPing($PingInfo);
 }
+$time = microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"];
+echo "<script>console.log('Ping setup time: {$time} Seconds')</script>";
 
 /* If player page get color and name*/
 if ($page=="player"&&isset($_GET["player"])){
@@ -111,6 +116,8 @@ if ($page=="player"&&isset($_GET["player"])){
 		}
 	}
 }
+$time = microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"];
+echo "<script>console.log('Page setup time: {$time} Seconds')</script>";
 
 
 /* HTTP Headers*/
@@ -154,6 +161,9 @@ foreach ($errors as $error){
 }
 if ($theme["container"]["body"]["container"])
 	echo '</div>';
+
+$time = microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"];
+echo "<script>console.log('Exectution time: {$time} Seconds')</script>";
 
 /* Html Header */
 include $BlueStats->loadPart("footer");
