@@ -2,6 +2,9 @@
 /* Makes the contrast between player face and headers & nav bars much nicer */
 $config[0]["player"]["playerTheme"]=true;
 
+
+$config[0]["player"]["nameHistory"]=false; /* Should be cached as this results in longer page loads*/
+
 /* All stats (Will be used everywhere) */
 $config[0]["stats"]["id"] = array(
 	"playtime",
