@@ -1,0 +1,22 @@
+<div class="row">
+	<div class="col-md-9" style="border-right:1px #EDEDED solid;">
+		{{ content }}
+	</div>
+	<div class="col-md-3">	
+		<h2>{{ text:serverName }}</h2>
+		<div class="row">
+			<div class="col-xs-6 col-sm-4 col-md-12">
+				<img class="center-block" style="width:60%;border-radius:100%;" src="{{ serverIcon }}"/>
+			</div>
+			<div class="col-xs-6 col-sm-8 col-md-12">
+				<h2>Online Players:</h2>
+				{{ Gmodule:onlinePlayerFaces }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				{{ Gmodule:tracker }}
+			</div>
+		</div>
+	</div>
+</div>
