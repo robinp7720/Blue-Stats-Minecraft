@@ -195,6 +195,9 @@ header span {
 	}
 	.main p {font-size: 130%;}
 }
+@media (max-width:960px) {
+
+}
 
 .fadein{
 -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
