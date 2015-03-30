@@ -1,7 +1,10 @@
+<?php
+$mysqli = $this->mysqli->get("BlueStats");
+?>
 <div class="row">
 <?php
 foreach ($this->config["highscores"]["highscores"] as $highscores_index => $highscores_item) :
-	$highscore = get_highscore($this->mysqli,$this->config["mysql"]["stats"]["table_prefix"],$highscores_item["stat"],$highscores_item["amount"]);
+	$highscore = get_highscore($mysqli,$this->config["mysql"]["stats"]["table_prefix"],$highscores_item["stat"],$highscores_item["amount"]);
 	$title = str_replace ('{AMOUNT}',$highscores_item["amount"],$this->config["highscores"]["title"]);
 	$title = str_replace ('{STAT}',$this->config["stats"]["names"][$highscores_item["stat"]],$title);
 	?>
@@ -13,9 +16,9 @@ foreach ($this->config["highscores"]["highscores"] as $highscores_index => $high
 		<table class="table table-striped table-bordered">
 			<thead>
 				<tr>
-					<th><?=$this->localization["highscores"]["place"]?></th>
-					<th><?=$this->localization["highscores"]["player"]?></th>
-					<?php if ($this->config["server"]["query_enabled"]):?><th><?=$this->localization["highscores"]["status"]?></th><?php endif; ?>
+					<th>Place</th>
+					<th>Player</th>
+					<?php if ($this->config["server"]["query_enabled"]):?><th>Status</th><?php endif; ?>
 					<th><?=$this->config["stats"]["names"][$highscores_item["stat"]]; ?></th>
 				</tr>
 			</thead>
@@ -33,9 +36,8 @@ foreach ($this->config["highscores"]["highscores"] as $highscores_index => $high
 				<tr>
 					<td class="highscore-place"><?=$item+1; ?></td>
 					<td>
-						<a href="<?= $this->makePlayerUrl($player["player_id"])?>">
-							<img src="<?=$image_url?>" alt="<?=$player["name"]?>"/>
-							 <?=$player["name"]?>
+						<a href="<?=$this->makePlayerUrl($player["player_id"])?>">
+							<img src="<?=$image_url?>" alt="<?=$player["name"]?>"/><?=$player["name"]?>
 						</a>
 					</td>
 					<?php if (isset($this->onlinePlayers)): ?>

@@ -1,5 +1,5 @@
-
 <?php
+	$mysqli = $this->mysqli->get("BlueStats");
 	$blocks_names = $this->getBlockNames();
 ?>
 
@@ -16,7 +16,7 @@
 		<tbody>
 			<?php
 /* Get all block stats from player */
-$blocks_raw = globalBlockStats($this->mysqli,$this->config["mysql"]["stats"]["table_prefix"]);
+$blocks_raw = globalBlockStats($mysqli,$this->config["mysql"]["stats"]["table_prefix"]);
 /* If player as not placed any blocks, ignore this */
 if (!empty($blocks_raw)){
 	/* Loop through all blocks to make it usable. */

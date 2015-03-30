@@ -1,4 +1,3 @@
-
 <form method="get">
 	<div class="input-group">
 		<select name="stat" class="form-control">
@@ -13,4 +12,3 @@
 		</span>
 	</div>
 </form>
-<br>

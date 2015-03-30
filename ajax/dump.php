@@ -1,4 +1,5 @@
 	<?php
+	$mysqli = $BlueStats->mysqli->get("BlueStats");
 	$columns = array("playtime","wordssaid");
 	$columns = $BlueStats->config["stats"]["id"];
 	$columnsEncoded = "";
