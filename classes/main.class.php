@@ -164,7 +164,11 @@ class BlueStats {
 				$PingInfo = $ping["PingInfo"];
 				$Online_Players = $ping["Online_Players"];
 			}
-			$this->onlinePlayers = $Online_Players;
+			if ($Online_Players==false){
+				$this->onlinePlayers = array();
+			}else{
+				$this->onlinePlayers = $Online_Players;
+			}
 		}
 
 	}
