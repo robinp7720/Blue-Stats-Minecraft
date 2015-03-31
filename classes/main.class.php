@@ -49,13 +49,36 @@ class BlueStats {
 			{
 			    $errors[] = $e->getMessage( );
 			    $PingInfo["players"]["sample"]=array();
-			    $Online_Players[]=$value["name"];
+			    $Online_Players[]=array();;
 			}
 			$output["PingInfo"] = $PingInfo;
-			$output["Online_Players"] = $Online_Players;
+
+			if (!$this->config["server"]["useQuery"])
+				$output["Online_Players"] = $Online_Players;
+
 			return $output;
 		}
 
+		function query($_this){
+		    $Query = new MinecraftQuery( );
+
+		    try
+		    {
+		        $Query->Connect($_this->config["server"]["ip"],$_this->config["server"]["QueryPort"]);
+
+		        $output["info"] = $Query->GetInfo( );
+		        $output["players"] = $Query->GetPlayers( );
+		    }
+		    catch( MinecraftQueryException $e )
+		    {
+		    	$output["info"]    = array();
+		    	$output["players"] = array();
+		    }
+
+			return $output;
+		}
+
+		/* Ping Cache */
 		if ($this->config["ping"]["cache"]){
 
 			if (file_exists($this->appPath."/cache/ping.json")){
@@ -67,20 +90,27 @@ class BlueStats {
 					$PingInfo = $ping["PingInfo"];
 					$Online_Players = $ping["Online_Players"];
 					$array["PingInfo"] = $PingInfo;
-					$array["Online_Players"] = $Online_Players;
+
+					if (!$this->config["server"]["useQuery"])
+						$array["Online_Players"] = $Online_Players;
+
 					$array["time"] = $time;
 					$jsonOut = json_encode($array);
 					file_put_contents($this->appPath."/cache/ping.json", $jsonOut);
 				}
 				$PingInfo = $ping["PingInfo"];
-				$Online_Players = $ping["Online_Players"];
+				if (!$this->config["server"]["useQuery"])
+					$Online_Players = $ping["Online_Players"];
 			}else{
 				$ping = ping($this);
 				$time = time();
 				$PingInfo = $ping["PingInfo"];
 				$Online_Players = $ping["Online_Players"];
 				$array["PingInfo"] = $PingInfo;
-				$array["Online_Players"] = $Online_Players;
+
+				if (!$this->config["server"]["useQuery"])
+					$array["Online_Players"] = $Online_Players;
+
 				$array["time"] = $time;
 				$jsonOut = json_encode($array);
 				file_put_contents($this->appPath."/cache/ping.json", $jsonOut);
@@ -88,10 +118,55 @@ class BlueStats {
 		}else{
 			$ping = ping($this);
 			$PingInfo = $ping["PingInfo"];
-			$Online_Players = $ping["Online_Players"];
+			if (!$this->config["server"]["useQuery"])
+				$Online_Players = $ping["Online_Players"];
 		}
-		$this->onlinePlayers = $Online_Players;
+		/* Ping and ping cache end */
+
 		$this->pingInfo = $PingInfo;
+		if (!$this->config["server"]["useQuery"]){
+			$this->onlinePlayers = $Online_Players;
+
+		}else{
+			/* MC query cache */
+			if ($this->config["query"]["cache"]){
+				if (file_exists($this->appPath."/cache/query.json")){
+					$queryJson = file_get_contents($this->appPath."/cache/query.json");
+					$query = json_decode($queryJson,true);
+					if (time()>$ping["time"]+$this->config["query"]["time"]){
+						$query = query($this);
+						$time = time();
+
+						$QueryInfo = $query["info"];
+						$Online_Players = $query["players"];
+
+						$array["time"] = $time;
+						$jsonOut = json_encode($query);
+						file_put_contents($this->appPath."/cache/query.json", $jsonOut);
+					}
+					$PingInfo = $query["info"];
+					$Online_Players = $query["players"];
+				}else{
+					$query= query($this);
+					$time = time();
+					$QueryInfo = $query["info"];
+					$Online_Players = $query["players"];
+
+					$array["QueryInfo"] = $QueryInfo;
+					$array["Online_Players"] = $Online_Players;
+
+					$array["time"] = $time;
+					$jsonOut = json_encode($array);
+					file_put_contents($this->appPath."/cache/query.json", $jsonOut);
+				}
+			}else{
+				$ping = query($this);
+				$PingInfo = $ping["PingInfo"];
+				$Online_Players = $ping["Online_Players"];
+			}
+			$this->onlinePlayers = $Online_Players;
+		}
+
 	}
 
 
