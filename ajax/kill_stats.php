@@ -1,5 +1,6 @@
 
 <?php
+$mysqli = $BlueStats->mysqli->get("BlueStats");
 $pvp_stats = kill_global_stats($mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]);
 if (!empty($pvp_stats)){
 	foreach ($pvp_stats as $id => $value){
@@ -16,8 +17,8 @@ if (!empty($pvp_stats)){
 		$player_label = '<a href="'.makePlayerUrl($player_url,$config[$serverId]["url"]["base"],$config[$serverId]["url"]["rewrite"],$config[$serverId]["url"]["player"]["useName"]).'"><img class="player-head-player_page" src="'.$player_image_url.'" alt="'.$player_name.'"/> '.$player_name.'</a></td>';
 
 		if ($config[$serverId]["server"]["query_enabled"]){
-			if (isset($Online_Players)){
-				if (playerOnline($player_name, $Online_Players)){
+			if (isset($BlueStats->onlinePlayers)){
+				if (playerOnline($player_name, $BlueStats->onlinePlayers)){
 					$status = '<span class="label label-success">Online</span>';
 				}else{
 					$status = '<span class="label label-danger">Offline</span>';

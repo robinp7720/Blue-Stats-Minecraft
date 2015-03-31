@@ -1,5 +1,6 @@
 
 <?php
+$mysqli = $BlueStats->mysqli->get("BlueStats");
 $pvp_stats = pvp_global_stats($mysqli,$config[$serverId]["mysql"]["stats"]["table_prefix"]);
 if (!empty($pvp_stats)){
 	foreach ($pvp_stats as $id => $value){
@@ -20,8 +21,8 @@ if (!empty($pvp_stats)){
 
 
 		if ($config[$serverId]["server"]["query_enabled"]){
-			if (isset($Online_Players)){
-				if (playerOnline($killer, $Online_Players)){
+			if (isset($BlueStats->onlinePlayers)){
+				if (playerOnline($killer, $BlueStats->onlinePlayers)){
 					$killer_status = '<span class="label label-success">Online</span';
 				}else{
 					$killer_status = '<span class="label label-danger">Offline</span>';
@@ -38,8 +39,8 @@ if (!empty($pvp_stats)){
 		$killed_label = '<a href="'.makePlayerUrl($player_url,$config[$serverId]["url"]["base"],$config[$serverId]["url"]["rewrite"],$config[$serverId]["url"]["player"]["useName"]).'"><img class="player-head-player_page" src="'.$image_killed_url.'" alt="'.$killed.'"/> '.$killed.'</a></td>';
 
 		if ($config[$serverId]["server"]["query_enabled"]){
-			if (isset($Online_Players)){
-				if (playerOnline($killed, $Online_Players)){
+			if (isset($BlueStats->onlinePlayers)){
+				if (playerOnline($killed, $BlueStats->onlinePlayers)){
 					$killed_status = '<span class="label label-success">Online</span>';
 				}else{
 					$killed_status = '<span class="label label-danger">Offline</span>';

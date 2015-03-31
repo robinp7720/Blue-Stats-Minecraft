@@ -1,4 +1,5 @@
 		<?php
+		$mysqli = $BlueStats->mysqli->get("BlueStats");
 		$output = array();
 		$player_id = (int) $_GET["id"]; 
 		$kill_stats = kill_stats(

@@ -37,20 +37,16 @@ require __DIR__."/classes/query.php";
 require __DIR__."/classes/queryException.php";
 require __DIR__."/classes/ping.php";
 require __DIR__."/classes/pingException.php";
+
 require __DIR__."/classes/main.class.php";
 require __DIR__."/classes/player.class.php";
-
-$time = microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"];
-echo "<script>console.log('Including configs,classes etc time: {$time} Seconds')</script>";
+require __DIR__."/classes/mysqli.class.php";
+require __DIR__."/classes/plugins.class.php";
 
 set_error_handler("ErrorHandler");
 
 /* Setup BlueStats Core */
-$BlueStats = new BlueStats;
-$BlueStats->setup($config,$serverId);
-$BlueStats->setAppPath($app_path);
-$BlueStats->loadLocal($localization);
-
+$BlueStats = new BlueStats($config,$serverId,$app_path);
 
 /* Setup Default pages */
 $BlueStats->addPage("home","Home","left");
@@ -61,40 +57,17 @@ $BlueStats->addPage("blocks","Block Stats","left");
 $BlueStats->addPage("tracker","Live Tracker","left");
 $BlueStats->addPage("player","Player","left",true);
 
-/* Get block names */
-$blocks_names = $BlueStats->getBlockNames();
-
 /* Include theme */
 include __DIR__."/themes/{$BlueStats->getThemeId()}/config.php";
-
-/* Connect to mysql */
-$mysqli = new mysqli(
-	$BlueStats->config["mysql"]["stats"]["host"],
-	$BlueStats->config["mysql"]["stats"]["username"],
-	$BlueStats->config["mysql"]["stats"]["password"],
-	$BlueStats->config["mysql"]["stats"]["dbname"]
-);
-
-$BlueStats->loadMySQL($mysqli);
 
 /* Select page */
 $BlueStats->setCurrentPage((isset($_GET["page"]))? $_GET["page"] : "_HOME_");
 $page = $BlueStats->getCurrentPage();
 
-/* Init Server query */
-if($BlueStats->config["server"]["query_enabled"]){
-	include $app_path."/include/init_query.php";
-	if (isset($Online_Players))$BlueStats->loadOnlinePlayers($Online_Players);
-	if (isset($PingInfo))$BlueStats->loadPing($PingInfo);
-}
-$time = microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"];
-echo "<script>console.log('Ping setup time: {$time} Seconds')</script>";
-
 /* If player page get color and name*/
 if ($page=="player"&&isset($_GET["player"])){
 	/* Initialize new player */
-	$player = new player;
-	$player->loadBlueStats($BlueStats);
+	$player = new player($BlueStats);
 
 	/* Get player id and name */
 	if (!is_numeric($_GET["player"])){
@@ -116,12 +89,6 @@ if ($page=="player"&&isset($_GET["player"])){
 		}
 	}
 }
-$time = microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"];
-echo "<script>console.log('Page setup time: {$time} Seconds')</script>";
-
-
-/* HTTP Headers*/
-header("cache-control: private, max-age={$BlueStats->config["cache"]["max-age"]}");
 
 /* Html Header */
 include $BlueStats->loadPart("head");
@@ -162,8 +129,6 @@ foreach ($errors as $error){
 if ($theme["container"]["body"]["container"])
 	echo '</div>';
 
-$time = microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"];
-echo "<script>console.log('Exectution time: {$time} Seconds')</script>";
 
 /* Html Header */
 include $BlueStats->loadPart("footer");

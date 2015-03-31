@@ -9,6 +9,13 @@ class player{
 	private $mysqli = "";
 	private $config = "";
 
+
+	function __construct($BlueStats){
+		$this->BlueStats = $BlueStats;
+		$this->mysqli =  $BlueStats->mysqli;
+		$this->config = $BlueStats->config;
+	}
+
 	public function setPlayerId($id){
 		$playerName = $this->getPlayerName($id);
 		if (!empty($playerName)){
@@ -31,12 +38,6 @@ class player{
 		}else{
 			$this->playerSet=false;
 		}
-	}
-
-	public function loadBlueStats($BlueStats){
-		$this->BlueStats = $BlueStats;
-		$this->mysqli =  $BlueStats->mysqli;
-		$this->config = $BlueStats->config;
 	}
 
 	public function playerFaceUrl($page="_THIS"){
@@ -67,7 +68,8 @@ class player{
 	}
 	public function getPlayerId($name){
 		$prefix = $this->BlueStats->config["mysql"]["stats"]["table_prefix"];
-		if ($stmt = $this->mysqli->prepare("SELECT player_id FROM `{$prefix}players` where name=?")) {
+		$mysqli = $this->mysqli->get("BlueStats");
+		if ($stmt = $mysqli->prepare("SELECT player_id FROM `{$prefix}players` where name=?")) {
 			$stmt->bind_param("s", $name);
 			$stmt->execute();
 			/* bind result variables */
@@ -81,7 +83,8 @@ class player{
 	}
 	public function getPlayerUUID($id){
 		$prefix = $this->BlueStats->config["mysql"]["stats"]["table_prefix"];
-		if ($stmt = $this->mysqli->prepare("SELECT UUID FROM `{$prefix}players` where player_id=?")) {
+		$mysqli = $this->mysqli->get("BlueStats");
+		if ($stmt = $mysqli->prepare("SELECT UUID FROM `{$prefix}players` where player_id=?")) {
 			$stmt->bind_param("i", $id);
 			$stmt->execute();
 			/* bind result variables */
@@ -107,9 +110,10 @@ class player{
 	
 	public function getStat($stat){
 		$prefix = $this->BlueStats->config["mysql"]["stats"]["table_prefix"];
+		$mysqli = $this->mysqli->get("BlueStats");
 		if ($stat=="lastleave"||$stat=="lastjoin"){
 			/* Get Latest date */
-			if ($stmt = $this->mysqli->prepare("SELECT {$stat} FROM `{$prefix}player` WHERE `player_id` = ? ORDER BY {$stat} DESC LIMIT 1")) {
+			if ($stmt = $mysqli->prepare("SELECT {$stat} FROM `{$prefix}player` WHERE `player_id` = ? ORDER BY {$stat} DESC LIMIT 1")) {
 				$stmt->bind_param("i",$this->playerId);
 				$stmt->execute();
 
@@ -123,7 +127,7 @@ class player{
 			}	
 		}else{
 			/* Get total of all stats if not Last left or last joined */
-			if ($stmt = $this->mysqli->prepare("SELECT sum({$stat}) FROM `{$prefix}player` WHERE `player_id` = ?")) {
+			if ($stmt = $mysqli->prepare("SELECT sum({$stat}) FROM `{$prefix}player` WHERE `player_id` = ?")) {
 				$stmt->bind_param("i",$this->playerId);
 				$stmt->execute();
 

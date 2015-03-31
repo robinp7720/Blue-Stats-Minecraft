@@ -1,9 +1,10 @@
 <?php
 class BlueStats {
+	public $mysqli; /* MySQL manager */
+
 	public $config  = array();
 	public $pages   = array();
 	public $appPath = "";
-	public $mysqli = "";
 	public $home = "";
 	public $serverId = 0;
 	public $page = "";
@@ -11,26 +12,173 @@ class BlueStats {
 	public $localization = array();
 	public $pingInfo = "";
 
+	function __construct($configs,$serverId,$appPath){
+		$this->serverId = $serverId;
+		$this->config = $configs[$serverId];
+		$this->home = $configs[$serverId]["site"]["home"];
+		$this->appPath = $appPath;
+
+		/* Connect to mysql */
+		$this->mysqli = new mysqlManager;
+		$this->mysqli->connect(
+			"BlueStats",
+			$this->config["mysql"]["stats"]["username"],
+			$this->config["mysql"]["stats"]["password"],
+			$this->config["mysql"]["stats"]["host"],
+			$this->config["mysql"]["stats"]["dbname"]
+		);
+
+		$this->getServerInfo();
+	}
+	private function getServerInfo(){
+
+		function ping($_this){
+			try
+			{
+				$Ping = new MinecraftPing($_this->config["server"]["ip"], $_this->config["server"]["port"], 10 );
+				$PingInfo = $Ping->Query( );
+				//echo "<pre>".print_r($PingInfo,2)."</pre>";
+				$Online_Players = array();
+				if (!isset($PingInfo["players"]["sample"]))
+					$PingInfo["players"]["sample"]=array();
+				foreach ($PingInfo["players"]["sample"] as $key=>$value){
+					$Online_Players[]=$value["name"];
+				}
+			}
+			catch( MinecraftPingException $e )
+			{
+			    $errors[] = $e->getMessage( );
+			    $PingInfo["players"]["sample"]=array();
+			    $Online_Players[]=array();;
+			}
+			$output["PingInfo"] = $PingInfo;
+
+			if (!$this->config["server"]["useQuery"])
+				$output["Online_Players"] = $Online_Players;
+
+			return $output;
+		}
+
+		function query($_this){
+		    $Query = new MinecraftQuery( );
+
+		    try
+		    {
+		        $Query->Connect($_this->config["server"]["ip"],$_this->config["server"]["QueryPort"]);
+
+		        $output["info"] = $Query->GetInfo( );
+		        $output["players"] = $Query->GetPlayers( );
+		    }
+		    catch( MinecraftQueryException $e )
+		    {
+		    	$output["info"]    = array();
+		    	$output["players"] = array();
+		    }
+
+			return $output;
+		}
+
+		/* Ping Cache */
+		if ($this->config["ping"]["cache"]){
+
+			if (file_exists($this->appPath."/cache/ping.json")){
+				$pingJson = file_get_contents($this->appPath."/cache/ping.json");
+				$ping = json_decode($pingJson,true);
+				if (time()>$ping["time"]+$this->config["ping"]["time"]){
+					$ping = ping($this);
+					$time = time();
+					$PingInfo = $ping["PingInfo"];
+					$Online_Players = $ping["Online_Players"];
+					$array["PingInfo"] = $PingInfo;
+
+					if (!$this->config["server"]["useQuery"])
+						$array["Online_Players"] = $Online_Players;
+
+					$array["time"] = $time;
+					$jsonOut = json_encode($array);
+					file_put_contents($this->appPath."/cache/ping.json", $jsonOut);
+				}
+				$PingInfo = $ping["PingInfo"];
+				if (!$this->config["server"]["useQuery"])
+					$Online_Players = $ping["Online_Players"];
+			}else{
+				$ping = ping($this);
+				$time = time();
+				$PingInfo = $ping["PingInfo"];
+				$Online_Players = $ping["Online_Players"];
+				$array["PingInfo"] = $PingInfo;
+
+				if (!$this->config["server"]["useQuery"])
+					$array["Online_Players"] = $Online_Players;
+
+				$array["time"] = $time;
+				$jsonOut = json_encode($array);
+				file_put_contents($this->appPath."/cache/ping.json", $jsonOut);
+			}
+		}else{
+			$ping = ping($this);
+			$PingInfo = $ping["PingInfo"];
+			if (!$this->config["server"]["useQuery"])
+				$Online_Players = $ping["Online_Players"];
+		}
+		/* Ping and ping cache end */
+
+		$this->pingInfo = $PingInfo;
+		if (!$this->config["server"]["useQuery"]){
+			$this->onlinePlayers = $Online_Players;
+
+		}else{
+			/* MC query cache */
+			if ($this->config["query"]["cache"]){
+				if (file_exists($this->appPath."/cache/query.json")){
+					$queryJson = file_get_contents($this->appPath."/cache/query.json");
+					$query = json_decode($queryJson,true);
+					if (time()>$ping["time"]+$this->config["query"]["time"]){
+						$query = query($this);
+						$time = time();
+
+						$QueryInfo = $query["info"];
+						$Online_Players = $query["players"];
+
+						$array["time"] = $time;
+						$jsonOut = json_encode($query);
+						file_put_contents($this->appPath."/cache/query.json", $jsonOut);
+					}
+					$PingInfo = $query["info"];
+					$Online_Players = $query["players"];
+				}else{
+					$query= query($this);
+					$time = time();
+					$QueryInfo = $query["info"];
+					$Online_Players = $query["players"];
+
+					$array["QueryInfo"] = $QueryInfo;
+					$array["Online_Players"] = $Online_Players;
+
+					$array["time"] = $time;
+					$jsonOut = json_encode($array);
+					file_put_contents($this->appPath."/cache/query.json", $jsonOut);
+				}
+			}else{
+				$ping = query($this);
+				$PingInfo = $ping["PingInfo"];
+				$Online_Players = $ping["Online_Players"];
+			}
+			if ($Online_Players==false){
+				$this->onlinePlayers = array();
+			}else{
+				$this->onlinePlayers = $Online_Players;
+			}
+		}
+
+	}
+
+
+
+
+
 	public function pageName(){
 		return $this->pages[$this->getCurrentPage()]["name"];
-	}
-
-	public function loadPing($ping){
-		$this->pingInfo = $ping;
-	}
-
-	public function loadConfigs($config){
-		$this->config = $config;
-	}
-
-	public function loadLocal($local){
-		$this->localization = $local;
-	}
-	
-	public function setup($configs,$serverId){
-		$this->serverId = $serverId;
-		$this->loadConfigs($configs[$serverId]);
-		$this->home = $configs[$serverId]["site"]["home"];
 	}
 	
 	public function getThemeId(){
@@ -41,20 +189,12 @@ class BlueStats {
 		return $themeId;
 	}
 
-	public function loadMySQL($mysqli){
-		$this->mysqli = $mysqli;
-	}
-
 	public function getHome(){
 		if (!empty($this->home)){
 			return $this->home;
 		}else{
 			return false;
 		}
-	}
-
-	public function setAppPath($path){
-		$this->appPath = $path;
 	}
 
 	public function setCurrentPage($page = "_HOME_"){
@@ -106,8 +246,7 @@ class BlueStats {
 	private function getPageContents($page){
 		if ($page=="player"){
 			/* Initialize new player */
-			$player = new player;
-			$player->loadBlueStats($this);
+			$player = new player($this);
 
 			/* Get player id and name */
 			if (!is_numeric($_GET["player"])){
@@ -281,8 +420,9 @@ class BlueStats {
 	}
 	
 	public function makePlayerUrl($id){
+		$mysqli = $this->mysqli->get("BlueStats");
 		if ($this->config["url"]["player"]["useName"]){
-			$display = getPlayersName($id,$this->mysqli,$this->config["mysql"]["stats"]["table_prefix"]);
+			$display = getPlayersName($id,$mysqli,$this->config["mysql"]["stats"]["table_prefix"]);
 		}else{
 			$display = $id;
 		}

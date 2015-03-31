@@ -1,5 +1,6 @@
-
-
+<?php
+$mysqli = $this->mysqli->get("BlueStats");
+?>
 <table class="table table-striped table-bordered" id="pvpstats">
 	<thead>
 		<tr>
@@ -9,11 +10,11 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php $pvp_stats = pvp_stats($player->playerId,$this->mysqli,$this->config["mysql"]["stats"]["table_prefix"]); ?>
+		<?php $pvp_stats = pvp_stats($player->playerId,$mysqli,$this->config["mysql"]["stats"]["table_prefix"]); ?>
 		<?php if (!empty($pvp_stats)): ?>
 		<?php foreach ($pvp_stats as $id => $value) :?>
 		<?php
-			$killed = getPlayersName($value["killed"],$this->mysqli,$this->config["mysql"]["stats"]["table_prefix"]);
+			$killed = getPlayersName($value["killed"],$mysqli,$this->config["mysql"]["stats"]["table_prefix"]);
 			$image_killed_url = player_face($killed,$this->config["faces"]["pvp"]["size"],$this->config["faces"]["pvp"]["url"]);
 		?>
 		<tr>

@@ -1,62 +1,43 @@
 <?php
-header ('Access-Control-Allow-Origin: *');
-/* Execution time */
-$time_start = microtime(true);
 $serverId = 0;
 
-$app_path = __DIR__;
+$app_path = __DIR__."/..";
 
 /* Configs */
-require __DIR__."/../configs/mysql.php";
-require __DIR__."/../configs/player.php";
-require __DIR__."/../configs/highscores.php";
-require __DIR__."/../configs/blocknames.php";
-require __DIR__."/../configs/faces.php";
-require __DIR__."/../configs/all-players.php";
-require __DIR__."/../configs/general.php";
-require __DIR__."/../configs/server.php";
-require __DIR__."/../configs/home.php";
-require __DIR__."/../configs/local.php";
+require $app_path."/configs/mysql.php";
+require $app_path."/configs/player.php";
+require $app_path."/configs/highscores.php";
+require $app_path."/configs/blocknames.php";
+require $app_path."/configs/faces.php";
+require $app_path."/configs/all-players.php";
+require $app_path."/configs/general.php";
+require $app_path."/configs/server.php";
+require $app_path."/configs/home.php";
+require $app_path."/configs/local.php";
 
 /* Functions */
-require __DIR__."/../functions/general.php";
-require __DIR__."/../functions/player.php";
-require __DIR__."/../functions/global_stats.php";
-require __DIR__."/../functions/image.php";
+require $app_path."/functions/general.php";
+require $app_path."/functions/player.php";
+require $app_path."/functions/global_stats.php";
+require $app_path."/functions/image.php";
 
 /* Classes */
-require __DIR__."/../classes/query.php";
-require __DIR__."/../classes/queryException.php";
-require __DIR__."/../classes/ping.php";
-require __DIR__."/../classes/pingException.php";
-require __DIR__."/../classes/main.class.php";
-require __DIR__."/../classes/player.class.php";
+require $app_path."/classes/query.php";
+require $app_path."/classes/queryException.php";
+require $app_path."/classes/ping.php";
+require $app_path."/classes/pingException.php";
+
+require $app_path."/classes/main.class.php";
+require $app_path."/classes/player.class.php";
+require $app_path."/classes/mysqli.class.php";
+require $app_path."/classes/plugins.class.php";
 
 /* Setup BlueStats Core */
-$BlueStats = new BlueStats;
-$BlueStats->setup($config,$serverId);
-$BlueStats->setAppPath($app_path."/../");
-$BlueStats->loadLocal($localization);
+$BlueStats = new BlueStats($config,$serverId,$app_path);
 
 /* Get block names */
 $blocks_names = $BlueStats->getBlockNames();
 
-/* HTTP Headers*/
-header("cache-control: private, max-age={$config[$serverId]["cache"]["ajax"]["max-age"]}");
-
-/* Connect to mysql */
-$mysqli = new mysqli(
-	$config[$serverId]["mysql"]["stats"]["host"],
-	$config[$serverId]["mysql"]["stats"]["username"],
-	$config[$serverId]["mysql"]["stats"]["password"],
-	$config[$serverId]["mysql"]["stats"]["dbname"]
-);
-
-$BlueStats->loadMySQL($mysqli);
-
-/* Init Server query */
-if($config[$serverId]["server"]["query_enabled"])
-	include __DIR__."/../include/init_query.php";
 
 /* Init output */
 $output = array();
@@ -80,8 +61,7 @@ if ($function=="allplayers"){
 	include "dump.php";
 }
 
-$time_end = microtime(true);
-$execution_time = $time_end - $time_start;
+
 /* Return output as json*/
 if (isset($output))
 	echo json_encode($output);

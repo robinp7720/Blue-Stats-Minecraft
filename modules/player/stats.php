@@ -1,3 +1,6 @@
+<?php
+$mysqli = $this->mysqli->get("BlueStats");
+?>
 <section>
 	<table class="table table-striped table-bordered" id="generalstats">
 		<thead>
@@ -5,7 +8,7 @@
 				<th>Stat</th>
 				<th>Value</th>
 				<th>Server Average</th>
-				<th>Server Total</th>
+				<!--<th>Server Total</th>-->
 			</tr>
 		</thead>
 		<tbody>
@@ -14,13 +17,13 @@
 				$player_stat = $player->getStat($stat);
 
 				if ($stat!="lastjoin"&&$stat!="lastleave"){
-					$server_total =  getStatTotal($stat,$this->mysqli,$this->config["mysql"]["stats"]["table_prefix"]);
+					$server_total =  getStatTotal($stat,$mysqli,$this->config["mysql"]["stats"]["table_prefix"]);
 				}else{
 					$server_total="";
 				}
 
 				if ($stat!="lastjoin"&&$stat!="lastleave"){
-					$server_average = round($server_total / getPlayerCount($this->mysqli,$this->config["mysql"]["stats"]["table_prefix"])[0]["count(*)"]);
+					$server_average = round($server_total / getPlayerCount($mysqli,$this->config["mysql"]["stats"]["table_prefix"])[0]["count(*)"]);
 				}else{
 					$server_average="";
 				}
@@ -41,7 +44,7 @@
 				<td><?=$statTitle; ?></td>
 				<td><?=$player_stat; ?></td>
 				<td><?=$server_average ?></td>
-				<td><?=$server_total ?></td>
+				<!--<td><?=$server_total ?></td>-->
 			</tr>
 			<?php endforeach; ?>
 		</tbody>

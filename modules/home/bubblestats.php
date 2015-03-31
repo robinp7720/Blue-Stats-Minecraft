@@ -1,4 +1,5 @@
 <?php
+$mysqli = $this->mysqli->get("BlueStats");
 $stats = array(
 	"playtime" => "clock-o",
 	"joins" => "sign-in",
@@ -33,13 +34,13 @@ $stats = array(
 <?php foreach ($stats as $statName => $iconName) : ?>
 	<?php $statTitle = $this->config["stats"]["names"][$statName];
 	if ($statName!="lastjoin"&&$statName!="lastleave"){
-		$server_total =  getStatTotal($statName,$this->mysqli,$this->config["mysql"]["stats"]["table_prefix"]);
+		$server_total =  getStatTotal($statName,$mysqli,$this->config["mysql"]["stats"]["table_prefix"]);
 	}else{
 		$server_total="";
 	}
 
 	if ($statName!="lastjoin"&&$statName!="lastleave"){
-		$server_average = round($server_total / getPlayerCount($this->mysqli,$this->config["mysql"]["stats"]["table_prefix"])[0]["count(*)"]);
+		$server_average = round($server_total / getPlayerCount($mysqli,$this->config["mysql"]["stats"]["table_prefix"])[0]["count(*)"]);
 	}else{
 		$server_average="";
 	}

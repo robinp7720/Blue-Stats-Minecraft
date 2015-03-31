@@ -1,5 +1,5 @@
 <?php
-
+$mysqli = $BlueStats->mysqli->get("BlueStats");
 if (isset($_GET["d"])){
 	if (in_array($_GET["d"],$config[$serverId]["stats"]["id"])){
 		$displayStat = $_GET["d"];
@@ -40,10 +40,10 @@ foreach ($players as $item => $player){
 	$player_label = '<a href="'.makePlayerUrl($player_url,$config[$serverId]["url"]["base"],$config[$serverId]["url"]["rewrite"],$config[$serverId]["url"]["player"]["useName"]).'"><img class="player-head-player_page" src="'.$image_url.'" alt="'.$player["name"].'"/> '.$player["name"].'</a></td>';
 	
 	/* If mc query is enabled */
-	if ($config[$serverId]["server"]["query_enabled"]){
+	if ($BlueStats->config["server"]["query_enabled"]){
 		/* Get player status */
-		if (isset($Online_Players)){
-			if (playerOnline($player["name"], $Online_Players)){
+		if (isset($BlueStats->onlinePlayers)){
+			if (playerOnline($player["name"], $BlueStats->onlinePlayers)){
 				$status = '<span class="label label-success">Online</span>';
 			}else{
 				$status = '<span class="label label-danger">Offline</span>';
