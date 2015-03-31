@@ -18,7 +18,7 @@ $config[0]["query"]["cache"]=true;
 $config[0]["query"]["time"] = 100; /* In Milliseconds */
 
 /* Theme settings */
-$config[0]["themes"]["id"]="green";
+$config[0]["themes"]["id"]="blue";
 
 
 /* Custom navigation bar urls */
