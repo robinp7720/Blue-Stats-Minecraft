@@ -1,5 +1,6 @@
 <?php
-
+require __DIR__."/include/security.php";
+header( 'Server:',true );
 $debug=true;
 $serverId=0;
 $errors = array();
