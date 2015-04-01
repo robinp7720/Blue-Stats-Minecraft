@@ -53,7 +53,7 @@ class BlueStats {
 			}
 			$output["PingInfo"] = $PingInfo;
 
-			if (!$this->config["server"]["useQuery"])
+			if (!$_this->config["server"]["useQuery"])
 				$output["Online_Players"] = $Online_Players;
 
 			return $output;
