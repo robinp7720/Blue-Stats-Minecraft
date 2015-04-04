@@ -17,8 +17,7 @@
 	<meta http-equiv='Page-Exit' content='RevealTrans(Duration=3.0,Transition=12)'>
 
 	<title><?php if(isset($BlueStats->config["server"]["server_name"]))echo $BlueStats->config["server"]["server_name"]?> - BlueStats</title>
-	
-	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.css">
 
@@ -59,7 +58,7 @@
 		.navbar, .nav-bar-colour{
 			background:rgb(<?=$theme["nav"]["color"]["red"]?>,<?=$theme["nav"]["color"]["green"]?>,<?=$theme["nav"]["color"]["blue"]?>);
 		}
-		.nav>li>a:focus, .nav>li>a:hover, .nav>li.active,.nav>li.active>a{
+		.nav>li.active,.nav>li.active>a{
 			background:rgb(<?=$theme["nav"]["color"]["red"]+10?>,<?=$theme["nav"]["color"]["green"]+10?>,<?=$theme["nav"]["color"]["blue"]+10?>) !important;
 		}
 
