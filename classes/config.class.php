@@ -7,8 +7,9 @@ class config{
 		$this->BlueStatsMYQLI = $mysqli;
 	}
 
-	public function configExist($option){
-		$plugin = $this->pluginName;
+	public function configExist($option,$plugin="this"){
+		if ($plugin=="this")
+			$plugin = $this->pluginName;
 		$mysqli = $this->BlueStatsMYQLI;
 		$serverId = $this->serverId;
 		$stmt =  $mysqli->stmt_init();	
@@ -36,8 +37,9 @@ class config{
 		}
 	}
 
-	public function set($option,$value){
-		$plugin = $this->pluginName;
+	public function set($option,$value,$plugin="this"){
+		if ($plugin=="this")
+			$plugin = $this->pluginName;
 		$mysqli = $this->BlueStatsMYQLI;
 		$stmt = $mysqli->stmt_init();
 
@@ -63,9 +65,10 @@ class config{
 		}
 	}
 
-	public function get($option){
+	public function get($option,$plugin="this"){
+		if ($plugin=="this")
+			$plugin = $this->pluginName;
 		$mysqli = $this->BlueStatsMYQLI;
-		$plugin = $this->pluginName;
 		$stmt =  $mysqli->stmt_init();
 
 		$query = "SELECT value FROM BlueStats_config WHERE `server_id`=? and `plugin`=? AND `option`=?";

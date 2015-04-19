@@ -14,6 +14,9 @@ require "$appPath/classes/bluestats.class.php";
 /* Configs */
 require "$appPath/config.php";
 
+/* Functions */
+require "$appPath/functions/utils.func.php";
+
 $mysqlMan = new mysqlMan;
 $mysqlMan->connect(
 	"BlueStats",
