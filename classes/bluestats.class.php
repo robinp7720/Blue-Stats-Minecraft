@@ -26,21 +26,26 @@ class BlueStats extends config{
 		if (file_exists($this->appPath."/themes/".$this->theme."/templates/$page.html")){
 			/* Load template file */
 			$string = file_get_contents($this->appPath."/themes/".$this->theme."/templates/$page.html");
+			$newstring = str_replace("{{ dieifnotid }}", "", $string);
+			if (($string==$newstring)||isset($_GET["id"])){
+				$string = $newstring;
+				/* Modules */
+				preg_match_all('/{{ ([^ ]+):([^ ]+) }}/', $string, $matches);
 
-			/* Modules */
-			preg_match_all('/{{ ([^ ]+):([^ ]+) }}/', $string, $matches);
+				foreach ($matches[0] as $key => $module) {
 
-			foreach ($matches[0] as $key => $module) {
+					/* Set plugin variable */
+					$plugin = $this->plugins[$matches[1][$key]];
 
-				/* Set plugin variable */
-				$plugin = $this->plugins[$matches[1][$key]];
-
-			    /* Replace key with module */
-			    ob_start();
-			    include($this->appPath."/plugins/".$matches[1][$key]."/modules/".$matches[2][$key].".php");
-			    $contents = ob_get_contents();
-			    ob_end_clean();
-			    $string = str_replace($module, $contents, $string);
+				    /* Replace key with module */
+				    ob_start();
+				    include($this->appPath."/plugins/".$matches[1][$key]."/modules/".$matches[2][$key].".php");
+				    $contents = ob_get_contents();
+				    ob_end_clean();
+				    $string = str_replace($module, $contents, $string);
+				}
+			}else{
+				$string =  "404 page not found";
 			}
 		}else{
 			$string = "404 page does not exist";

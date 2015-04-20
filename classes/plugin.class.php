@@ -1,6 +1,7 @@
 <?php
 class plugin extends config{
 	public $mysqli;
+	public $prefix = "";
 	function installed(){
 		$verfy = array();
 		$verfy["host"] = $this->configExist("MYSQL_host",$this->pluginName);
@@ -36,6 +37,21 @@ class plugin extends config{
 			);
 		}else{
 			$this->install();
+		}
+	}
+
+	public function getUserName($id){
+		$mysqli = $this->mysqli;
+		$stmt = $mysqli->stmt_init();
+
+		$query = "SELECT {$this->plugin["playerNameColum"]} FROM {$this->prefix}{$this->plugin["indexTable"]} WHERE {$this->plugin["idColumn"]} = ?";
+		if ($stmt->prepare($query)) {
+		   	$stmt->bind_param("s",$id);
+		    $stmt->execute();
+		    $stmt->bind_result($output);
+		    $stmt->fetch();
+		    $stmt->close();
+			return $output;
 		}
 	}
 }

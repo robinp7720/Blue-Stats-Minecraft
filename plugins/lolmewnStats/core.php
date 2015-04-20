@@ -3,10 +3,9 @@ class lolmewnStats extends plugin{
 	public $pluginName = "lolmewnStats";
 	public $plugin = array(
 		"idColumn"=>"uuid",
-		"playNameColum"=>"username",
+		"playerNameColum"=>"name",
 		"indexTable"=>"players",
 	);
-	public $prefix = "";
 	public $stats = array();
 
 	function __construct($mysqli){
@@ -83,7 +82,31 @@ class lolmewnStats extends plugin{
 		    $stmt->close();
 		    return $output;
 		}
+	}
+	public function getStat($stat,$player){
 
+		$stmt =  $this->mysqli->stmt_init();
+		if ($stat == "last_join"||$stat == "last_seen"){
+			$sql = "SELECT max(value) as value FROM {$this->prefix}{$stat} WHERE uuid=? GROUP BY uuid";
+		}else{
+			$sql = "SELECT sum(value) as value FROM {$this->prefix}{$stat} WHERE uuid=? GROUP BY uuid";
+		}
 
+		if ($stmt->prepare($sql)) {
+		    $stmt->bind_param("s", $player);
+		    $stmt->execute();
+		    $stmt->bind_result($output);
+		    $stmt->fetch();
+		    $stmt->close();
+		    if ($stat == "last_join"||$stat == "last_seen"){
+		    	$time = round(microtime(true) * 1000);
+		    	$output = $time - $output;
+		    	$output = $output / 1000;
+		    	$output = secondsToTime(round($output));
+		    }elseif($stat=="playtime"){
+		    	$output=secondsToTime($output);
+		    }
+		    return $output;
+		}
 	}
 }

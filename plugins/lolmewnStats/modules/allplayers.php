@@ -7,7 +7,7 @@ if (!config::configExist("stat","MODULE_allplayers_lolmewnStats")){
 	<thead>
 		<tr>
 			<th>Name</th>
-			<th><?=config::get("stat","MODULE_allplayers_lolmewnStats")?></th>
+			<th><?=$plugin->statName(config::get("stat","MODULE_allplayers_lolmewnStats"));?></th>
 			<th>Sortable</th>
 		</tr>
 	</thead>
@@ -24,7 +24,7 @@ if (!config::configExist("stat","MODULE_allplayers_lolmewnStats")){
 			echo "
 			<tr>
 				<td>
-					{$stat["name"]}
+					<a href=\"?page=player&id={$stat["uuid"]}\"><img src=\"https://minotar.net/helm/{$stat["name"]}/32.png\" alt=\"\"> {$stat["name"]}</a>
 				</td>
 				<td>
 					".$statDisplay."
