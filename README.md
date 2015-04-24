@@ -45,4 +45,6 @@ This open source web app is released under
 Attribution-NonCommercial-ShareAlike 4.0 International license with the following notices:
 You may not remove branding (BlueStats, _OvErLoRd_, Lolmewn, and their respected links)
 
+The global top stats layout is copied from here: http://bootdey.com/snippets/view/Dashboard-user-128 and is released under the MIT licanse
+
 
