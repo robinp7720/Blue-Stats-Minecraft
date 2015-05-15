@@ -429,7 +429,7 @@ class BlueStats {
 		if ($this->config["url"]["rewrite"]){
 			return $this->config["url"]["base"]."/player/".$display."/";
 		}else{
-			return "?player=".$display;
+			return "?page=player&player=".$display;
 		}
 	}
 	public function loadOnlinePlayers($Online_Players){
