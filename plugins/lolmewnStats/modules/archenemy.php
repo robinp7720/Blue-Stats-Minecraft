@@ -24,7 +24,6 @@ if ($stmt->prepare($sql)) {
     /* close statement */
     $stmt->close();
 }
-print_r($output);
 if (!empty($output)): ?>
 <div class="panel panel-default">
 	<img src="https://minotar.net/helm/arrowgirlplayzmc/<?=$output[0]["name"]?>.png" alt="" style="width:100%;">

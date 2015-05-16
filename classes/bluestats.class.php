@@ -17,9 +17,24 @@ class BlueStats extends config{
 		}
 		$this->theme = $this->get("theme");
 		$this->appPath = $appPath;
+		if (!isset($_GET["page"])){
+			$_GET["page"]="home";
+		}
 	}
 	public function loadPlugins( array $plugins){
 		$this->plugins = $plugins;
+	}
+	private function themeError($error){
+		return "There is an error with your theme: $error";
+	}
+
+	private function fileNotFoundError(){
+		http_response_code(404);
+		if (file_exists($this->appPath."/themes/".$this->theme."/404.html")){
+			return file_get_contents($this->appPath."/themes/".$this->theme."/404.html");
+		}else{
+			return $this->themeError("404.html not found");
+		}
 	}
 	private function loadTemplate(){
 		$page = str_replace(array('/','.'), '', $_GET["page"]);
@@ -45,10 +60,10 @@ class BlueStats extends config{
 				    $string = str_replace($module, $contents, $string);
 				}
 			}else{
-				$string =  "404 page not found";
+				$string = $this->fileNotFoundError();
 			}
 		}else{
-			$string = "404 page does not exist";
+			$string = $this->fileNotFoundError();
 		}
 		return $string;
 	}
@@ -75,7 +90,7 @@ class BlueStats extends config{
 			}
 			$string = str_replace("{{ content }}", $this->loadTemplate(), $string);
 		}else{
-			$string = "404 page does not exist";
+			$string = $this->themeError("global.html not found");;
 		}
 		return $string;
 	}

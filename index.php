@@ -1,8 +1,8 @@
 <?php
-error_reporting(E_ALL);
+error_reporting(-1);
 $appPath = __DIR__;
 
-$loadablePlugins = array("lolmewnStats");
+$loadablePlugins = array("lolmewnStats","mcmmo");
 $plugins = array();
 
 /* Classes */
@@ -41,6 +41,3 @@ $BlueStats->loadPlugins($plugins);
 
 /* Themes Inclusion */
 echo $BlueStats->loadPage("home");
-
-/* Test module */
-//include "$appPath/plugins/lolmewnStats/modules/test.php";

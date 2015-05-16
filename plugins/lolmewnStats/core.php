@@ -1,10 +1,12 @@
 <?php
-class lolmewnStats extends plugin{
+class lolmewnStats extends MySQLplugin{
 	public $pluginName = "lolmewnStats";
 	public $plugin = array(
 		"idColumn"=>"uuid",
 		"playerNameColum"=>"name",
+		"UUIDcolumn"=>"uuid",
 		"indexTable"=>"players",
+		"UUIDisID"=>true,
 	);
 	public $stats = array();
 
@@ -99,10 +101,15 @@ class lolmewnStats extends plugin{
 		    $stmt->fetch();
 		    $stmt->close();
 		    if ($stat == "last_join"||$stat == "last_seen"){
-		    	$time = round(microtime(true) * 1000);
-		    	$output = $time - $output;
-		    	$output = $output / 1000;
-		    	$output = secondsToTime(round($output));
+		    	if (!empty($output)){
+		    		if ($stat == "last_join")
+			    		$time = time() - ($output/1000) / $this->getStat("joins",$player);
+			    	else
+			    		$time = time() - ($output/1000) / $this->getStat("joins",$player);
+			    	$output = secondsToTime(round($time))." ago";
+			    }else{
+			    	$output="Never";
+			    }
 		    }elseif($stat=="playtime"){
 		    	$output=secondsToTime($output);
 		    }

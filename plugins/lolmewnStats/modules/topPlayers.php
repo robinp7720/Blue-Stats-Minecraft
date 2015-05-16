@@ -52,7 +52,7 @@ if ($stat=="playtime"){
 	$display = $data[0]["value"];
 }
 ?>
-<div class="col-md-3">
+<div class="col-md-3 col-sm-4 col-xs-6">
 	<div class="panel panel-default">
 		<img src="https://minotar.net/helm/<?=$data[0]["name"]?>/300.png" alt="" style="width:100%;">
 		<div class="panel-body">

@@ -8,10 +8,14 @@ $stats = json_decode(config::get("stats","lolmewnStats"),true);
 	</thead>
 	<tbody>
 		<?php foreach ($stats as $id => $stat): ?>
+		<?php
+		$statVal = $plugin->getStat($id,$_GET["id"]);
+		if (!empty($statVal)):?>
 		<tr>
 			<td><?=$stat?></td>
-			<td><?=$plugin->getStat($id,$_GET["id"])?></td>
+			<td><?=$statVal?></td>
 		</tr>
+		<?php endif; ?>
 		<?php endforeach; ?>
 	</tbody>
 </table>

@@ -1,14 +1,14 @@
 <?php
-class plugin extends config{
+class MySQLplugin extends config{
 	public $mysqli;
 	public $prefix = "";
 	function installed(){
 		$verfy = array();
-		$verfy["host"] = $this->configExist("MYSQL_host",$this->pluginName);
-		$verfy["username"] = $this->configExist("MYSQL_host",$this->pluginName);
-		$verfy["password"] = $this->configExist("MYSQL_host",$this->pluginName);
-		$verfy["prefix"] = $this->configExist("MYSQL_host",$this->pluginName);
-		$verfy["database"] = $this->configExist("MYSQL_database",$this->pluginName);
+		$verfy["host"] = $this->configExist("MYSQL_host");
+		$verfy["username"] = $this->configExist("MYSQL_host");
+		$verfy["password"] = $this->configExist("MYSQL_host");
+		$verfy["prefix"] = $this->configExist("MYSQL_host");
+		$verfy["database"] = $this->configExist("MYSQL_database");
 		if ($verfy["host"]==true && $verfy["username"]==true && $verfy["password"]==true && $verfy["prefix"]==true && $verfy["database"]==true){
 			return true;
 		}else{
@@ -40,18 +40,56 @@ class plugin extends config{
 		}
 	}
 
-	public function getUserName($id){
+	public function getId($uuid){
+		if ($this->plugin["UUIDisID"]){
+			$id=$uuid;
+		}else{
+			$mysqli = $this->mysqli;
+			$stmt = $mysqli->stmt_init();
+			$query = "SELECT {$this->plugin["idColumnInIndex"]} FROM {$this->prefix}{$this->plugin["indexTable"]} WHERE {$this->plugin["UUIDcolumn"]} = ?";
+			if ($stmt->prepare($query)) {
+			   	$stmt->bind_param("s",$uuid);
+			    $stmt->execute();
+			    $stmt->bind_result($id);
+			    $stmt->fetch();
+			    $stmt->close();
+			}
+		}
+		return $id;
+	}
+
+	public function getUserName($uuid){
 		$mysqli = $this->mysqli;
 		$stmt = $mysqli->stmt_init();
-
+		$id = $this->getId($uuid);
 		$query = "SELECT {$this->plugin["playerNameColum"]} FROM {$this->prefix}{$this->plugin["indexTable"]} WHERE {$this->plugin["idColumn"]} = ?";
 		if ($stmt->prepare($query)) {
 		   	$stmt->bind_param("s",$id);
-		    $stmt->execute();
+		    $result = $stmt->execute();
 		    $stmt->bind_result($output);
 		    $stmt->fetch();
 		    $stmt->close();
 			return $output;
+		}
+	}
+
+	public function getStat($column,$uuid){
+
+		$stmt =  $this->mysqli->stmt_init();
+
+		$sql = "SELECT * FROM {$this->prefix}{$column} WHERE {$this->plugin["idColumn"]}=? GROUP BY {$this->plugin["idColumn"]}";
+		$id = $this->getId($uuid);
+		if ($stmt->prepare($sql)) {
+		    $stmt->bind_param("i", $id);
+		    $stmt->execute();
+		    $result = $stmt->get_result();
+		    $output=array();
+			while ($row = $result->fetch_array(MYSQLI_ASSOC)){
+				$output[]=$row;
+			}
+		    $stmt->close();
+
+		    return $output;
 		}
 	}
 }
