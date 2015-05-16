@@ -5,7 +5,8 @@ if($this->config["player"]["nameHistory"]){
 
   $amountOfUsernames = count($past_usernames);
   if ($amountOfUsernames>1){
-  	$formerUsername = $past_usernames[$amountOfUsernames-2];
+  	if (isset($past_usernames[$amountOfUsernames-2]))
+  		$formerUsername = $past_usernames[$amountOfUsernames-2];
   }
 }else{
   $amountOfUsernames=0;
