@@ -4,9 +4,12 @@ if($this->config["player"]["nameHistory"]){
   $past_usernames = $player->getUserNames();
 
   $amountOfUsernames = count($past_usernames);
+  $showFormer = false;
   if ($amountOfUsernames>1){
-  	if (isset($past_usernames[$amountOfUsernames-2]))
+  	if (isset($past_usernames[$amountOfUsernames-2])){
   		$formerUsername = $past_usernames[$amountOfUsernames-2];
+  		$showFormer = true;
+  	}
   }
 }else{
   $amountOfUsernames=0;
@@ -24,7 +27,7 @@ if (isset($this->onlinePlayers)){
   <h1>
   	<?=$player->playerName?>
   	 <?=$online?>
-  	<?php if ($amountOfUsernames>1):?>
+  	<?php if ($showFormer):?>
   	<small>
   		Formerly known as <?=$formerUsername["name"]?>
   	</small>
