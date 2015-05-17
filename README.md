@@ -37,7 +37,7 @@ Edit the following lines to suit your needs:
 
 Support
 ==============
-If you need any help, found a bug or have an idea for this webappp, please create an issue for it. I will only support unmodified versions of this web app. This excudes of course, changing the config files.
+If you need any help, found a bug or have an idea for this web app, please create an issue for it. I will only support unmodified versions of this web app. This excludes of course, changing the config files.
 
 LICENSE
 ==============
@@ -45,6 +45,6 @@ This open source web app is released under
 Attribution-NonCommercial-ShareAlike 4.0 International license with the following notices:
 You may not remove branding (BlueStats, _OvErLoRd_, Lolmewn, and their respected links)
 
-The global top stats layout is copied from here: http://bootdey.com/snippets/view/Dashboard-user-128 and is released under the MIT licanse
+The global top stats layout is copied from here: http://bootdey.com/snippets/view/Dashboard-user-128 and is released under the MIT license
 
 
