@@ -11,4 +11,3 @@ Loggin with minecraft (Maybe)
 Graphs api     
 Graphs     
 Server query and ping     
-ID based player instead of uuid based player (Makes it easier to use more then one plugin on per player stats)     
