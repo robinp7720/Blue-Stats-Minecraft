@@ -1,0 +1,1 @@
+<?=$plugin->getUserName($_GET["id"])?>
