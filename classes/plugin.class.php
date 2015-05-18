@@ -1,5 +1,10 @@
 <?php
-class MySQLplugin extends config{
+class plugin extends config{
+	function __construct($mysqli) {
+		parent::__construct($mysqli);
+	}
+}
+class MySQLplugin extends plugin{
 	public $mysqli;
 	public $prefix = "";
 	function installed(){
