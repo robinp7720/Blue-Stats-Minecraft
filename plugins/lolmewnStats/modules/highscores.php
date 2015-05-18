@@ -19,7 +19,7 @@ $limit = config::get("limit","MODULE_highscores_lolmewnStats");
 	<div class="col-md-6">
 		<div class="panel panel-primary">
 			  <div class="panel-heading">
-			    <h2 class="panel-title">Top <?=$limit?> by <b><?=$plugin->statName($statName)?></b></h3>
+			    <h2 class="panel-title">Top <?=$limit?> by <b><?=$plugin->statName($statName)?></b></h2>
 			  </div>
 			<div class="panel-body">
 				<table class="table">
@@ -41,7 +41,7 @@ $limit = config::get("limit","MODULE_highscores_lolmewnStats");
 							echo "
 							<tr>
 								<td>
-									<a href=\"?page=player&id={$stat["uuid"]}\"><img src=\"https://minotar.net/helm/{$stat["name"]}/32.png\" alt=\"\"> {$stat["name"]}</a>
+									<a href=\"?page=player&amp;id={$stat["uuid"]}\"><img src=\"https://minotar.net/helm/{$stat["name"]}/32.png\" alt=\"\"> {$stat["name"]}</a>
 								</td>
 								<td>
 									".$statDisplay."

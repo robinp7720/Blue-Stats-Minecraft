@@ -24,7 +24,7 @@ if (!config::configExist("stat","MODULE_allplayers_lolmewnStats")){
 			echo "
 			<tr>
 				<td>
-					<a href=\"?page=player&id={$stat["uuid"]}\"><img src=\"https://minotar.net/helm/{$stat["name"]}/32.png\" alt=\"\"> {$stat["name"]}</a>
+					<a href=\"?page=player&amp;id={$stat["uuid"]}\"><img src=\"https://minotar.net/helm/{$stat["name"]}/32.png\" alt=\"\"> {$stat["name"]}</a>
 				</td>
 				<td>
 					".$statDisplay."
