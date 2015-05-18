@@ -4,7 +4,7 @@ class BlueStats extends config{
 	public $pluginName = "BlueStats";
 	public $appPath = "";
 
-	private $page = "";
+	private $page = "home";
 	private $theme;
 	private $plugins;
 
@@ -17,9 +17,8 @@ class BlueStats extends config{
 		}
 		$this->theme = $this->get("theme");
 		$this->appPath = $appPath;
-		if (!isset($_GET["page"])){
-			$_GET["page"]="home";
-		}
+		if (isset($_GET["page"]))
+			$this->page=$_GET["page"];
 	}
 	public function loadPlugins( array $plugins){
 		$this->plugins = $plugins;
@@ -36,8 +35,8 @@ class BlueStats extends config{
 			return $this->themeError("404.html not found");
 		}
 	}
-	private function loadTemplate(){
-		$page = str_replace(array('/','.'), '', $_GET["page"]);
+	private function loadPageTemplate(){
+		$page = str_replace(array('/','.'), '', $this->page);
 		if (file_exists($this->appPath."/themes/".$this->theme."/templates/$page.html")){
 			/* Load template file */
 			$string = file_get_contents($this->appPath."/themes/".$this->theme."/templates/$page.html");
@@ -50,11 +49,19 @@ class BlueStats extends config{
 				foreach ($matches[0] as $key => $module) {
 
 					/* Set plugin variable */
-					$plugin = $this->plugins[$matches[1][$key]];
+					if (isset($this->plugins[$matches[1][$key]]))
+						$plugin = $this->plugins[$matches[1][$key]];
 
 				    /* Replace key with module */
 				    ob_start();
-				    include($this->appPath."/plugins/".$matches[1][$key]."/modules/".$matches[2][$key].".php");
+				    if (file_exists($this->appPath."/plugins/".$matches[1][$key]."/modules/".$matches[2][$key].".php")){
+				    	include($this->appPath."/plugins/".$matches[1][$key]."/modules/".$matches[2][$key].".php");
+				    }elseif(file_exists($this->appPath."/themes/{$this->theme}/modules/{$matches[1][$key]}/{$matches[2][$key]}.php")){
+				    	include($this->appPath."/themes/{$this->theme}/modules/{$matches[1][$key]}/{$matches[2][$key]}.php");
+				    }else{
+
+				    }
+				    
 				    $contents = ob_get_contents();
 				    ob_end_clean();
 				    $string = str_replace($module, $contents, $string);
@@ -68,7 +75,7 @@ class BlueStats extends config{
 		return $string;
 	}
 	public function loadPage(){
-		$page = str_replace(array('/','.'), '', $_GET["page"]);
+		$page = str_replace(array('/','.'), '', $this->page);
 		if (file_exists($this->appPath."/themes/".$this->theme."/global.html")){
 			/* Load template file */
 			$string = file_get_contents($this->appPath."/themes/".$this->theme."/global.html");
@@ -83,12 +90,18 @@ class BlueStats extends config{
 
 			    /* Replace key with module */
 			    ob_start();
-			    include($this->appPath."/plugins/".$matches[1][$key]."/modules/".$matches[2][$key].".php");
+		    	if (file_exists($this->appPath."/plugins/".$matches[1][$key]."/modules/".$matches[2][$key].".php")){
+			    	include($this->appPath."/plugins/".$matches[1][$key]."/modules/".$matches[2][$key].".php");
+			    }elseif(file_exists($this->appPath."/themes/{$this->theme}/modules/{$matches[1][$key]}/{$matches[2][$key]}.php")){
+			    	include($this->appPath."/themes/{$this->theme}/modules/{$matches[1][$key]}/{$matches[2][$key]}.php");
+			    }else{
+
+			    }
 			    $contents = ob_get_contents();
 			    ob_end_clean();
 			    $string = str_replace($module, $contents, $string);
 			}
-			$string = str_replace("{{ content }}", $this->loadTemplate(), $string);
+			$string = str_replace("{{ content }}", $this->loadPageTemplate(), $string);
 		}else{
 			$string = $this->themeError("global.html not found");;
 		}
