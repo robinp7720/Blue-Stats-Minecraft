@@ -10,5 +10,5 @@ Admin interface
 Loggin with minecraft (Maybe)     
 Graphs api     
 Graphs     
-Server query and ping 
-Page cachine - All pages should be cached and be used instead of generating a new page everytime. This will boost the page load times to under 50ms
+Server query and ping     
+Page caching - All pages should be cached and be used instead of generating a new page everytime. This will boost the page load times to under 50ms
