@@ -2,9 +2,6 @@
 error_reporting(-1);
 $appPath = __DIR__;
 
-$loadablePlugins = array("lolmewnStats","mcmmo");
-$plugins = array();
-
 /* Classes */
 require "$appPath/classes/config.class.php";
 require "$appPath/classes/mysql.class.php";
@@ -27,6 +24,9 @@ $mysqlMan->connect(
 );
 
 $BlueStats = new BlueStats($mysqlMan->get("BlueStats"),$appPath);
+
+$loadablePlugins = json_decode($BlueStats->getPluginList(),true);
+$plugins = array();
 
 /* Load all plugins */
 foreach ($loadablePlugins as $plugin){
