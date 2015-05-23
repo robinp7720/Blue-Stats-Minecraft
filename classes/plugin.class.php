@@ -97,4 +97,38 @@ class MySQLplugin extends plugin{
 		    return $output;
 		}
 	}
+	public function getStats($column){
+
+		$stmt =  $this->mysqli->stmt_init();
+
+		$sql = "SELECT * FROM {$this->prefix}{$column} WHERE {$this->plugin["idColumn"]} IS NOT NULL GROUP BY {$this->plugin["idColumn"]}";
+		if ($stmt->prepare($sql)) {
+		    $stmt->execute();
+		    $result = $stmt->get_result();
+		    $output=array();
+			while ($row = $result->fetch_array(MYSQLI_ASSOC)){
+				$output[]=$row;
+			}
+		    $stmt->close();
+
+		    return $output;
+		}
+	}
+	public function getUsers(){
+
+		$stmt =  $this->mysqli->stmt_init();
+
+		$sql = "SELECT * FROM {$this->prefix}{$this->plugin["indexTable"]} WHERE {$this->plugin["UUIDcolumn"]} IS NOT NULL GROUP BY {$this->plugin["UUIDcolumn"]}";
+		if ($stmt->prepare($sql)) {
+		    $stmt->execute();
+		    $result = $stmt->get_result();
+		    $output=array();
+			while ($row = $result->fetch_array(MYSQLI_ASSOC)){
+				$output[]=$row;
+			}
+		    $stmt->close();
+
+		    return $output;
+		}
+	}
 }
