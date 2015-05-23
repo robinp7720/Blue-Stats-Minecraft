@@ -1,5 +1,6 @@
 <?php
 function secondsToTime($seconds,$contract=true) {
+	if (!empty($seconds)){
 	$dtF = new DateTime("@0");
 	$dtT = new DateTime("@$seconds");
 	if($contract){
@@ -52,4 +53,5 @@ function secondsToTime($seconds,$contract=true) {
 			return $seconds." seconds";
 		}
 	}
+}
 }
