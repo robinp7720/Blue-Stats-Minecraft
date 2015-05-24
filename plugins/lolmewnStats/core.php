@@ -39,7 +39,7 @@ class lolmewnStats extends MySQLplugin{
 				"move" => "Blocks Traversed",
 				"omnomnom" => "Food Eaten",
 				"playtime" => "Play Time",
-				"pvp" => "PvP Deaths",
+				"pvp" => "PvP Kills",
 				"shears" => "Times striped a sheep",
 				"teleports" => "Teleports",
 				"times_changed_world" => "Worlds Changed",
@@ -58,11 +58,17 @@ class lolmewnStats extends MySQLplugin{
 		return $this->stats[$stat];
 	}
 
-	public function getStats($stat,$limit=0){
+	public function getAllPlayerStats($stat,$limit=0){
 
 		$stmt =  $this->mysqli->stmt_init();
 
-		$sql = "SELECT *, sum(value) as value FROM {$this->prefix}{$stat} INNER JOIN `{$this->prefix}players` on {$this->prefix}{$stat}.UUID = {$this->prefix}players.UUID GROUP BY {$this->prefix}{$stat}.UUID ORDER BY value Desc";
+		if ($stat == "last_join"||$stat == "last_seen"){
+			$sql = "SELECT *, min(value) as value FROM {$this->prefix}{$stat} INNER JOIN `{$this->prefix}players` on {$this->prefix}{$stat}.UUID = {$this->prefix}players.UUID GROUP BY {$this->prefix}{$stat}.UUID ORDER BY value Desc";
+		}else{
+			$sql = "SELECT *, sum(value) as value FROM {$this->prefix}{$stat} INNER JOIN `{$this->prefix}players` on {$this->prefix}{$stat}.UUID = {$this->prefix}players.UUID GROUP BY {$this->prefix}{$stat}.UUID ORDER BY value Desc";
+		}
+
+		
 		if (!$limit==0){
 			$sql = $sql." LIMIT $limit";
 		}
@@ -89,7 +95,7 @@ class lolmewnStats extends MySQLplugin{
 
 		$stmt =  $this->mysqli->stmt_init();
 		if ($stat == "last_join"||$stat == "last_seen"){
-			$sql = "SELECT max(value) as value FROM {$this->prefix}{$stat} WHERE uuid=? GROUP BY uuid";
+			$sql = "SELECT min(value) as value FROM {$this->prefix}{$stat} WHERE uuid=? GROUP BY uuid";
 		}else{
 			$sql = "SELECT sum(value) as value FROM {$this->prefix}{$stat} WHERE uuid=? GROUP BY uuid";
 		}
@@ -100,12 +106,12 @@ class lolmewnStats extends MySQLplugin{
 		    $stmt->bind_result($output);
 		    $stmt->fetch();
 		    $stmt->close();
-		    if ($stat == "last_join"||$stat == "last_seen"){
+		    if ($stat == "last_join"||$stat == "last_seen"){ 
 		    	if (!empty($output)){
 		    		if ($stat == "last_join")
-			    		$time = time() - ($output/1000) / $this->getStat("joins",$player);
+			    		$time = time() - ($output/1000);
 			    	else
-			    		$time = time() - ($output/1000) / $this->getStat("joins",$player);
+			    		$time = time() - ($output/1000);
 			    	$output = secondsToTime(round($time))." ago";
 			    }else{
 			    	$output="Never";
