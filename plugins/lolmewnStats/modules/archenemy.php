@@ -25,8 +25,9 @@ if ($stmt->prepare($sql)) {
     $stmt->close();
 }
 if (!empty($output)): ?>
+
 <div class="panel panel-default">
-	<img src="https://minotar.net/helm/arrowgirlplayzmc/<?=$output[0]["name"]?>.png" alt="" style="width:100%;">
+	<img src="https://minotar.net/helm/<?=$output[0]["name"]?>.png" alt="" style="width:100%;">
 	<div class="panel-body">
 		<h3 style="margin-top:0;padding:0;"><?=$output[0]["name"]?></h3>
 		<h6 style="margin-top:0;padding:0;" class="text-muted"><?=$plugin->getUserName($_GET["id"])?>'s Arch Enemy</h6>
