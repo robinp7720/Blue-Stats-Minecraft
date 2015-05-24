@@ -45,7 +45,7 @@ $stats = json_decode(config::get("stats","MODULE_topPlayers_lolmewnStats"),true)
 <div class="row">
 <?php foreach ($stats as $stat): ?>
 <?php 
-$data = $plugin->getStats($stat,1); 
+$data = $plugin->getAllPlayerStats($stat,1); 
 if ($stat=="playtime"){
 	$display = secondsToTime($data[0]["value"]);
 }else{

@@ -31,7 +31,7 @@ $limit = config::get("limit","MODULE_highscores_lolmewnStats");
 					</thead>
 					<tbody>
 						<?php
-						foreach ($plugin->getStats($statName,$limit) as $stat){
+						foreach ($plugin->getAllPlayerStats($statName,$limit) as $stat){
 							if ($statName=="playtime"){
 								$statDisplay = secondsToTime($stat["value"],$contract=true);
 							}else{

@@ -14,11 +14,22 @@ if (!config::configExist("stat","MODULE_allplayers_lolmewnStats")){
 	<tbody>
 		<?php
 		$statName = config::get("stat","MODULE_allplayers_lolmewnStats");
-		foreach ($plugin->getStats($statName) as $stat){
+		foreach ($plugin->getAllPlayerStats($statName) as $stat){
+			$sorted = $stat["value"];
 			if ($statName=="playtime"){
 				$statDisplay = secondsToTime($stat["value"],$contract=true);
 			}else{
-				$statDisplay = $stat["value"];
+				if ($statName == "last_join"||$statName == "last_seen"){ 
+					if (!empty($stat["value"])){
+						$time = time() - ($stat["value"]/1000);
+						$statDisplay  = secondsToTime(round($time))." ago";
+						$sorted = $time;
+					}else{
+						$statDisplay ="Never";
+					}
+				}else{
+					$statDisplay = $stat["value"];
+				}
 			}
 			
 			echo "
@@ -30,7 +41,7 @@ if (!config::configExist("stat","MODULE_allplayers_lolmewnStats")){
 					".$statDisplay."
 				</td>
 				<td>
-					{$stat["value"]}
+					{$sorted}
 				</td>
 			</tr>";
 		}
