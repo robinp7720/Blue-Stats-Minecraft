@@ -16,8 +16,8 @@ class lolmewnStats extends MySQLplugin{
 			$this->setUp();
 	}
 	function setUp(){
-		if (!$this->configExist("stats")){
-			$this->set("stats",json_encode(array(
+		if (!$this->config->configExist("stats")){
+			$this->config->set("stats",json_encode(array(
 				"arrows" => "Arrows Shot",
 				"beds_entered" => "Beds Entered",
 				"blocks_broken" => "Blocks Broken",
@@ -51,7 +51,7 @@ class lolmewnStats extends MySQLplugin{
 				"xp_gained" => "Xp Gained",
 			)));
 		}
-		$this->stats = json_decode($this->get("stats"),true);
+		$this->stats = json_decode($this->config->get("stats"),true);
 	}
 
 	public function statName($stat){
@@ -60,7 +60,7 @@ class lolmewnStats extends MySQLplugin{
 
 	public function getAllPlayerStats($stat,$limit=0){
 
-		$stmt =  $this->mysqli->stmt_init();
+		$stmt = $this->mysqli->stmt_init();
 
 		if ($stat == "last_join"||$stat == "last_seen"){
 			$sql = "SELECT *, min(value) as value FROM {$this->prefix}{$stat} INNER JOIN `{$this->prefix}players` on {$this->prefix}{$stat}.UUID = {$this->prefix}players.UUID GROUP BY {$this->prefix}{$stat}.UUID ORDER BY value Desc";
