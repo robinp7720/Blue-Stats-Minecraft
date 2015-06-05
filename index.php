@@ -1,5 +1,7 @@
 <?php
-error_reporting(-1);
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+
 $appPath = __DIR__;
 
 /* Classes */
@@ -7,6 +9,7 @@ require "$appPath/classes/config.class.php";
 require "$appPath/classes/mysql.class.php";
 require "$appPath/classes/plugin.class.php";
 require "$appPath/classes/bluestats.class.php";
+require "$appPath/classes/modules.class.php";
 
 /* Configs */
 require "$appPath/config.php";

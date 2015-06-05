@@ -1,19 +1,19 @@
 <?php
-if (!config::configExist("stat","MODULE_allplayers_lolmewnStats")){
-	config::set("stat","playtime","MODULE_allplayers_lolmewnStats");
+if (!$config->configExist("stat","MODULE_allplayers_lolmewnStats")){
+	$config->set("stat","playtime","MODULE_allplayers_lolmewnStats");
 }
 ?>
 <table class="table" id="allPlayers">
 	<thead>
 		<tr>
 			<th>Name</th>
-			<th><?=$plugin->statName(config::get("stat","MODULE_allplayers_lolmewnStats"));?></th>
+			<th><?=$plugin->statName($config->get("stat","MODULE_allplayers_lolmewnStats"));?></th>
 			<th>Sortable</th>
 		</tr>
 	</thead>
 	<tbody>
 		<?php
-		$statName = config::get("stat","MODULE_allplayers_lolmewnStats");
+		$statName = $config->get("stat","MODULE_allplayers_lolmewnStats");
 		foreach ($plugin->getAllPlayerStats($statName) as $stat){
 			$sorted = $stat["value"];
 			if ($statName=="playtime"){

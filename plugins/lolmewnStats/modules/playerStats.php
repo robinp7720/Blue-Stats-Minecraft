@@ -1,5 +1,5 @@
 <?php
-$stats = json_decode(config::get("stats","lolmewnStats"),true);
+$stats = json_decode($config->get("stats","lolmewnStats"),true);
 ?>
 <table class="table">
 	<thead>

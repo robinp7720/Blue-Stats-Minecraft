@@ -33,14 +33,14 @@ $defaultText = array(
 	"xp_gained" => "Gained {VALUE} XP",
 );
 
-if (!config::configExist("english","MODULE_topPlayers_lolmewnStats")){
-	config::set("english",json_encode($defaultText),"MODULE_topPlayers_lolmewnStats");
+if (!$config->configExist("english")){
+	$config->set("english",json_encode($defaultText));
 }
-if (!config::configExist("stats","MODULE_topPlayers_lolmewnStats")){
-	config::set("stats",json_encode(array("playtime","joins","move","votes")),"MODULE_topPlayers_lolmewnStats");
+if (!$config->configExist("stats")){
+	$config->set("stats",json_encode(array("playtime","joins","move","votes")));
 }
-$english = json_decode(config::get("english","MODULE_topPlayers_lolmewnStats"),true);
-$stats = json_decode(config::get("stats","MODULE_topPlayers_lolmewnStats"),true);
+$english = json_decode($config->get("english"),true);
+$stats = json_decode($config->get("stats"),true);
 ?>
 <div class="row">
 <?php foreach ($stats as $stat): ?>
