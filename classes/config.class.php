@@ -2,9 +2,11 @@
 class config{
 	public $serverId = 1;
 	private $BlueStatsMYQLI;
+	private $pluginName;
 
-	function __construct($mysqli){
+	function __construct($mysqli,$plugin){
 		$this->BlueStatsMYQLI = $mysqli;
+		$this->pluginName = $plugin;
 	}
 
 	public function configExist($option,$plugin="this"){
