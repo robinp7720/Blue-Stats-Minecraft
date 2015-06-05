@@ -1,19 +1,24 @@
 <?php
-class plugin extends config{
+class plugin{
+	protected $config;
 	function __construct($mysqli) {
-		parent::__construct($mysqli);
+		$this->BlueStatsMYQLI = $mysqli;
+		$this->config = new config($mysqli,$this->pluginName);
 	}
 }
 class MySQLplugin extends plugin{
 	public $mysqli;
 	public $prefix = "";
+
+	protected $installed = "";
+
 	function installed(){
 		$verfy = array();
-		$verfy["host"] = $this->configExist("MYSQL_host");
-		$verfy["username"] = $this->configExist("MYSQL_host");
-		$verfy["password"] = $this->configExist("MYSQL_host");
-		$verfy["prefix"] = $this->configExist("MYSQL_host");
-		$verfy["database"] = $this->configExist("MYSQL_database");
+		$verfy["host"] = $this->config->configExist("MYSQL_host");
+		$verfy["username"] = $this->config->configExist("MYSQL_host");
+		$verfy["password"] = $this->config->configExist("MYSQL_host");
+		$verfy["prefix"] = $this->config->configExist("MYSQL_host");
+		$verfy["database"] = $this->config->configExist("MYSQL_database");
 		if ($verfy["host"]==true && $verfy["username"]==true && $verfy["password"]==true && $verfy["prefix"]==true && $verfy["database"]==true){
 			return true;
 		}else{
@@ -22,23 +27,23 @@ class MySQLplugin extends plugin{
 	}
 
 	function install(){
-		$this->set("MYSQL_host","127.0.0.1");
-		$this->set("MYSQL_username","minecraft");
-		$this->set("MYSQL_password","password");
-		$this->set("MYSQL_prefix","");
-		$this->set("MYSQL_database","minecraft");
+		$this->config->set("MYSQL_host","127.0.0.1");
+		$this->config->set("MYSQL_username","minecraft");
+		$this->config->set("MYSQL_password","password");
+		$this->config->set("MYSQL_prefix","");
+		$this->config->set("MYSQL_database","minecraft");
 	}
 
 	function __construct($mysqli) {
 		parent::__construct($mysqli);
-		$installed = $this->installed();
-		if ($installed){
-			$this->prefix = $this->get("MYSQL_prefix");
+		$this->installed = $this->installed();
+		if ($this->installed){
+			$this->prefix = $this->config->get("MYSQL_prefix");
 			$this->mysqli = new mysqli(
-				$this->get("MYSQL_host"),
-				$this->get("MYSQL_username"),
-				$this->get("MYSQL_password"),
-				$this->get("MYSQL_database")
+				$this->config->get("MYSQL_host"),
+				$this->config->get("MYSQL_username"),
+				$this->config->get("MYSQL_password"),
+				$this->config->get("MYSQL_database")
 			);
 		}else{
 			$this->install();
@@ -129,6 +134,33 @@ class MySQLplugin extends plugin{
 		    $stmt->close();
 
 		    return $output;
+		}
+	}
+
+	public function saveStat($uuid,$stat,$value){
+		$plugin = $this->pluginName;
+		$mysqli = $this->BlueStatsMYQLI;
+		$stmt = $mysqli->stmt_init();
+
+		/* Update or Insert new config? */
+		if ($this->statValExist($stat))
+			$query = "UPDATE BlueStats_stats SET `value`=? WHERE `server_id`=? and `plugin`=? AND `stat_name`=?";
+		else
+			$query = "INSERT INTO BlueStats_stats (`server_id`, `stat_name`, `plugin`, `value`) VALUES (?, ?, ?, ?)";
+
+		if ($stmt->prepare($query)) {
+
+		    /* bind parameters for markers */
+		    if ($this->configExist($option))
+		    	$stmt->bind_param("siss",$value,$this->serverId,$plugin,$stat);
+		    else
+		   		$stmt->bind_param("isss",$this->serverId,$stat,$plugin,$value);
+
+		    /* execute query */
+		    $stmt->execute();
+
+		    /* close statement */
+		    $stmt->close();
 		}
 	}
 }

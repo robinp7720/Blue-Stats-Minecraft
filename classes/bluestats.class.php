@@ -1,5 +1,5 @@
 <?php
-class BlueStats extends config{
+class BlueStats{
 	public $version = "Beta 3.0";
 	public $pluginName = "BlueStats";
 	public $appPath = "";
@@ -8,26 +8,28 @@ class BlueStats extends config{
 	private $theme;
 	private $plugins;
 
-	function __construct($mysqli,$appPath){
-		parent::__construct($mysqli);
-		if ($this->configExist("theme")){
+	private $config;
+	private $mysqli;
 
-		}else{
-			$this->set("theme","default");
+	function __construct($mysqli,$appPath){
+		$this->mysqli = $mysqli;
+		$this->config = new config($mysqli,$this->pluginName);
+		if (!$this->config->configExist("theme")){
+			$this->config->set("theme","default");
 		}
-		$this->theme = $this->get("theme");
+		$this->theme = $this->config->get("theme");
 		$this->appPath = $appPath;
 		if (isset($_GET["page"]))
 			$this->page=$_GET["page"];
 	}
 
 	public function getPluginList(){
-		if ($this->configExist("plugins")){
+		if ($this->config->configExist("plugins")){
 
 		}else{
-			$this->set("plugins",json_encode(array()));
+			$this->config->set("plugins",json_encode(array()));
 		}
-		return $this->get("plugins");
+		return $this->config->get("plugins");
 	}
 
 	public function loadPlugins( array $plugins){
@@ -55,23 +57,15 @@ class BlueStats extends config{
 			/* Modules */
 			preg_match_all('/{{ ([^ ]+):([^ ]+) }}/', $string, $matches);
 
-			foreach ($matches[0] as $key => $module) {
+			foreach ($matches[0] as $key => $replaceStr) {
 
 				/* Set plugin variable */
 				$plugin = $this->plugins[$matches[1][$key]];
 
-			    /* Replace key with module */
-			    ob_start();
-		    	if (file_exists($this->appPath."/plugins/".$matches[1][$key]."/modules/".$matches[2][$key].".php")){
-			    	include($this->appPath."/plugins/".$matches[1][$key]."/modules/".$matches[2][$key].".php");
-			    }elseif(file_exists($this->appPath."/themes/{$this->theme}/modules/{$matches[1][$key]}/{$matches[2][$key]}.php")){
-			    	include($this->appPath."/themes/{$this->theme}/modules/{$matches[1][$key]}/{$matches[2][$key]}.php");
-			    }else{
+				$module = new module($this->mysqli,$matches[1][$key],$matches[2][$key],$plugin,$this->theme,$this->appPath);
+			    $output = $module->render();
 
-			    }
-			    $contents = ob_get_contents();
-			    ob_end_clean();
-			    $string = str_replace($module, $contents, $string);
+			    $string = str_replace($replaceStr, $output, $string);
 			}
 			$string = str_replace("{{ content }}", $this->loadPageTemplate(), $string);
 		}else{
@@ -91,27 +85,15 @@ class BlueStats extends config{
 				/* Modules */
 				preg_match_all('/{{ ([^ ]+):([^ ]+) }}/', $string, $matches);
 
-				foreach ($matches[0] as $key => $module) {
+				foreach ($matches[0] as $key => $replaceStr) {
 
 					/* Set plugin variable */
-					if (isset($this->plugins[$matches[1][$key]])){
-						$plugin = $this->plugins[$matches[1][$key]];
-					    /* Replace key with module */
-					    ob_start();
-					    if (file_exists($this->appPath."/plugins/".$matches[1][$key]."/modules/".$matches[2][$key].".php")){
-					    	include($this->appPath."/plugins/".$matches[1][$key]."/modules/".$matches[2][$key].".php");
-					    }elseif(file_exists($this->appPath."/themes/{$this->theme}/modules/{$matches[1][$key]}/{$matches[2][$key]}.php")){
-					    	include($this->appPath."/themes/{$this->theme}/modules/{$matches[1][$key]}/{$matches[2][$key]}.php");
-					    }else{
+					$plugin = $this->plugins[$matches[1][$key]];
 
-					    }
-					    $contents = ob_get_contents();
-					    ob_end_clean();
-				    }else{
-				    	//$contents = "Plugin: {$matches[1][$key]} does not exist";
-				    	$contents="";
-				    }
-				    $string = str_replace($module, $contents, $string);
+					$module = new module($this->mysqli,$matches[1][$key],$matches[2][$key],$plugin,$this->theme,$this->appPath);
+					$output = $module->render();
+
+				    $string = str_replace($replaceStr,$output, $string);
 				}
 			}else{
 				$string = $this->fileNotFoundError();
