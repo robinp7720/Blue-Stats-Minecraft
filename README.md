@@ -4,11 +4,11 @@ Blue Stats 3 uses a mysql backend to save and load configuartions, caches and ot
 
 With making this webapp, I have kept customizability, ease of use and power in mind. This tool is extremely easy to install and get going.
 
-Missing features
+Planned features
 =====================
-Admin interface     
-Loggin with minecraft (Maybe)     
-Graphs api     
-Graphs     
-Server query and ping     
-Page caching - All pages should be cached and be used instead of generating a new page everytime. This will boost the page load times to under 50ms
+- [ ] Admin interface     
+- [ ] Login with minecraft (Maybe)     
+- [ ] Graphs api     
+- [ ] Graphs     
+- [ ] Server query and ping     
+- [ ] Page caching - All pages should be cached and be used instead of generating a new page everytime. This will boost the page load times to under 50ms
