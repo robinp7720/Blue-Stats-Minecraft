@@ -34,29 +34,33 @@ $defaultText = array(
 );
 
 if (!$config->configExist("english")){
-	$config->set("english",json_encode($defaultText));
+	$config->set("english",$defaultText);
 }
 if (!$config->configExist("stats")){
-	$config->set("stats",json_encode(array("playtime","joins","move","votes")));
+	$config->set("stats",array("playtime","joins","move","votes"));
 }
-$english = json_decode($config->get("english"),true);
-$stats = json_decode($config->get("stats"),true);
+$english = $config->get("english");
+$stats = $config->get("stats");
 ?>
 <div class="row">
 <?php foreach ($stats as $stat): ?>
 <?php 
-$data = $plugin->getAllPlayerStats($stat,1); 
-if ($stat=="playtime"){
-	$display = secondsToTime($data[0]["value"]);
+$data = $plugin->getAllPlayerStats($stat,1);
+if (isset($data[0]["value"])){
+	if ($stat=="playtime"){
+		$display = secondsToTime($data[0]["value"]);
+	}else{
+		$display = $data[0]["value"];
+	}
 }else{
-	$display = $data[0]["value"];
+	$display = "0";
 }
 ?>
 <div class="col-md-3 col-sm-4 col-xs-6">
 	<div class="panel panel-default">
-		<img src="https://minotar.net/helm/<?=$data[0]["name"]?>/300.png" alt="" style="width:100%;">
+		<img src="https://minotar.net/helm/<?=isset($data[0]["name"])? $data[0]["name"] : "char"?>/300.png" alt="" style="width:100%;">
 		<div class="panel-body">
-			<h3 style="margin-top:0;padding:0;"><?=$data[0]["name"]?></h3>
+			<h3 style="margin-top:0;padding:0;"><?=isset($data[0]["name"])? $data[0]["name"] : "Nobody"?></h3>
 			<h6 style="margin-top:0;padding:0;" class="text-muted"><?=str_replace("{VALUE}", $display, $english[$stat])?></h6>
 		</div>
 	</div>

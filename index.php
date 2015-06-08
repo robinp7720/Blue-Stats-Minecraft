@@ -28,7 +28,7 @@ $mysqlMan->connect(
 
 $BlueStats = new BlueStats($mysqlMan->get("BlueStats"),$appPath);
 
-$loadablePlugins = json_decode($BlueStats->getPluginList(),true);
+$loadablePlugins = $BlueStats->getPluginList();
 $plugins = array();
 
 /* Load all plugins */
@@ -42,5 +42,16 @@ foreach ($loadablePlugins as $plugin){
 }
 $BlueStats->loadPlugins($plugins);
 
-/* Themes Inclusion */
-echo $BlueStats->loadPage("home");
+$content = $BlueStats->loadPage();
+
+$credits = '
+<!-----------------------------------------
+Copyright Robin Decker 2015
+BlueStats 3 is released under the Apache 2 license.
+Removal of this copyright notice is an infringement of the license.
+
+Developed by _OvErLoRd_ (robinp7720) and MySunland
+-------------------------------------------->
+';
+
+echo $credits.$content;

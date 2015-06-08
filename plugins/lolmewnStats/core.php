@@ -17,7 +17,7 @@ class lolmewnStats extends MySQLplugin{
 	}
 	function setUp(){
 		if (!$this->config->configExist("stats")){
-			$this->config->set("stats",json_encode(array(
+			$this->config->set("stats",array(
 				"arrows" => "Arrows Shot",
 				"beds_entered" => "Beds Entered",
 				"blocks_broken" => "Blocks Broken",
@@ -49,13 +49,16 @@ class lolmewnStats extends MySQLplugin{
 				"votes" => "Votes",
 				"words_said" => "Words Said",
 				"xp_gained" => "Xp Gained",
-			)));
+			));
 		}
-		$this->stats = json_decode($this->config->get("stats"),true);
+		$this->stats = $this->config->get("stats");
 	}
 
 	public function statName($stat){
-		return $this->stats[$stat];
+		if (isset($this->stats[$stat]))
+			return $this->stats[$stat];
+		else
+			return $stat;
 	}
 
 	public function getAllPlayerStats($stat,$limit=0){

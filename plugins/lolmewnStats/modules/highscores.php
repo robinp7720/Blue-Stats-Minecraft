@@ -1,21 +1,21 @@
 <?php
-if (!$config->configExist("stats","MODULE_highscores_lolmewnStats")){
-	$config->set("stats",json_encode(array("playtime","joins")),"MODULE_highscores_lolmewnStats");
+if (!$config->configExist("stats")){
+	$config->set("stats",array("playtime","joins"));
 }
-if (!$config->configExist("show_name_head","MODULE_highscores_lolmewnStats")){
-	$config->set("show_name_head","true","MODULE_highscores_lolmewnStats");
+if (!$config->configExist("show_name_head")){
+	$config->set("show_name_head","true");
 }
-if (!$config->configExist("limit","MODULE_highscores_lolmewnStats")){
-	$config->set("limit","10","MODULE_highscores_lolmewnStats");
+if (!$config->configExist("limit")){
+	$config->set("limit","10");
 }
 ?>
 
 <?php
-$showPlayerTitle = $config->get("show_name_head","MODULE_highscores_lolmewnStats");
-$limit = $config->get("limit","MODULE_highscores_lolmewnStats");
+$showPlayerTitle = $config->get("show_name_head");
+$limit = $config->get("limit");
 ?>
 <div class="row">
-	<?php foreach (json_decode($config->get("stats","MODULE_highscores_lolmewnStats"),true) as $statName):?>
+	<?php foreach ($config->get("stats") as $statName):?>
 	<div class="col-md-6">
 		<div class="panel panel-primary">
 			  <div class="panel-heading">

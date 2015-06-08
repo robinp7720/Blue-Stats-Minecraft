@@ -40,6 +40,7 @@ class config{
 	}
 
 	public function set($option,$value,$plugin="this"){
+		$value = json_encode($value);
 		if ($plugin=="this")
 			$plugin = $this->pluginName;
 		$mysqli = $this->BlueStatsMYQLI;
@@ -52,7 +53,6 @@ class config{
 			$query = "INSERT INTO BlueStats_config (`server_id`, `option`, `plugin`, `value`) VALUES (?, ?, ?, ?)";
 
 		if ($stmt->prepare($query)) {
-
 		    /* bind parameters for markers */
 		    if ($this->configExist($option))
 		    	$stmt->bind_param("siss",$value,$this->serverId,$plugin,$option);
@@ -91,7 +91,7 @@ class config{
 
 		    /* close statement */
 		    $stmt->close();
-		    return $output;
+		    return json_decode($output,true);
 		}
 
 	}

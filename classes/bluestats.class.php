@@ -27,7 +27,7 @@ class BlueStats{
 		if ($this->config->configExist("plugins")){
 
 		}else{
-			$this->config->set("plugins",json_encode(array()));
+			$this->config->set("plugins",array("lolmewnStats"));
 		}
 		return $this->config->get("plugins");
 	}
@@ -60,12 +60,14 @@ class BlueStats{
 			foreach ($matches[0] as $key => $replaceStr) {
 
 				/* Set plugin variable */
-				$plugin = $this->plugins[$matches[1][$key]];
+				if (isset($this->plugins[$matches[1][$key]])){
+					$plugin = $this->plugins[$matches[1][$key]];
 
-				$module = new module($this->mysqli,$matches[1][$key],$matches[2][$key],$plugin,$this->theme,$this->appPath);
-			    $output = $module->render();
+					$module = new module($this->mysqli,$matches[1][$key],$matches[2][$key],$plugin,$this->theme,$this->appPath);
+				    $output = $module->render();
 
-			    $string = str_replace($replaceStr, $output, $string);
+				    $string = str_replace($replaceStr, $output, $string);
+				}
 			}
 			$string = str_replace("{{ content }}", $this->loadPageTemplate(), $string);
 		}else{
@@ -88,12 +90,14 @@ class BlueStats{
 				foreach ($matches[0] as $key => $replaceStr) {
 
 					/* Set plugin variable */
-					$plugin = $this->plugins[$matches[1][$key]];
+					if (isset($this->plugins[$matches[1][$key]])){
+						$plugin = $this->plugins[$matches[1][$key]];
 
-					$module = new module($this->mysqli,$matches[1][$key],$matches[2][$key],$plugin,$this->theme,$this->appPath);
-					$output = $module->render();
+						$module = new module($this->mysqli,$matches[1][$key],$matches[2][$key],$plugin,$this->theme,$this->appPath);
+						$output = $module->render();
 
-				    $string = str_replace($replaceStr,$output, $string);
+					    $string = str_replace($replaceStr,$output, $string);
+					}
 				}
 			}else{
 				$string = $this->fileNotFoundError();
