@@ -1,3 +1,20 @@
+<html>
+	<head>
+		<title>BlueStats 3 Install</title>
+		<!-- Latest compiled and minified CSS & JS -->
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/paper/bootstrap.min.css">
+		<style>
+			.input-group{
+				margin-bottom:10px;
+			}
+			.label{
+				font-size:14px;
+				margin:5px;
+				margin-left:0;
+			}
+		</style>
+	</head>
+	<body class="container">
 <?php
 if (isset($_POST["bs-host"])&&isset($_POST["bs-username"])&&isset($_POST["bs-password"])&&isset($_POST["bs-db"])){
 	/* Connect to MySQL */
@@ -77,9 +94,17 @@ if (isset($_POST["bs-host"])&&isset($_POST["bs-username"])&&isset($_POST["bs-pas
 		"host"     => "'.$_POST["bs-host"].'"
 	);';
 
-	file_put_contents("../config.php",$config);
-	echo "BlueStats has been installed!";
+	if (!file_put_contents("../config.php",$config)){
+		$config = htmlspecialchars($config);
+		echo "Please create a config.php file in the root directory of BlueStats with the following contents: <pre>$config</pre>";
+
+	}else{
+		echo "BlueStats has been installed!";
+	}
+	echo '<a href="../admin">Admin Panel</a>';
 }else{
 	echo "Please enter all fields";
 }
 ?>
+</body>
+</html>

@@ -1,3 +1,4 @@
+<!DOCTYPE HTML>
 <html>
 	<head>
 		<title>BlueStats 3 Install</title>
@@ -7,11 +8,42 @@
 			.input-group{
 				margin-bottom:10px;
 			}
+			.label{
+				font-size:14px;
+				margin:5px;
+				margin-left:0;
+				float:left;
+				display:block;
+			}
+			.requirements{
+				overflow:hidden;
+			}
 		</style>
 	</head>
 	<body>
 		<div class="container">
 			<h1>BlueStats 3 Install</h1>
+			<div class="requirements">
+			<?php
+			if (version_compare(PHP_VERSION, '5.0.0', '>=')) {
+			    echo '<span class="label label-success">Current PHP version: ' . PHP_VERSION,'</span>';
+			}else{
+				echo '<span class="label label-danger">Minimum php version required: 5.0 You have: ' . PHP_VERSION,'</span>';
+			}
+			if (is_writable('.')){
+				echo '<span class="label label-success">PHP has permission to write config.php</span>';
+			}else{
+				echo '<span class="label label-danger">Config.php must be created manually</span>';
+			}
+			if (extension_loaded('mysqlnd')){
+				echo '<span class="label label-success">mysqlnd is installed</span>';
+			}else{
+				echo '<span class="label label-success">mysqlnd is required</span>';
+			}
+			?>
+			<br>
+			<br>
+			</div>
 			<form action="install.php" method="POST">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
