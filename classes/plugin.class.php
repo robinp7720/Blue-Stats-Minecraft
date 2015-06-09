@@ -15,9 +15,9 @@ class MySQLplugin extends plugin{
 	function installed(){
 		$verfy = array();
 		$verfy["host"] = $this->config->configExist("MYSQL_host");
-		$verfy["username"] = $this->config->configExist("MYSQL_host");
-		$verfy["password"] = $this->config->configExist("MYSQL_host");
-		$verfy["prefix"] = $this->config->configExist("MYSQL_host");
+		$verfy["username"] = $this->config->configExist("MYSQL_username");
+		$verfy["password"] = $this->config->configExist("MYSQL_password");
+		$verfy["prefix"] = $this->config->configExist("MYSQL_prefix");
 		$verfy["database"] = $this->config->configExist("MYSQL_database");
 		if ($verfy["host"]==true && $verfy["username"]==true && $verfy["password"]==true && $verfy["prefix"]==true && $verfy["database"]==true){
 			return true;
