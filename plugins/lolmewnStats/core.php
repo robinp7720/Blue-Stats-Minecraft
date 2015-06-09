@@ -111,9 +111,6 @@ class lolmewnStats extends MySQLplugin{
 		    $stmt->close();
 		    if ($stat == "last_join"||$stat == "last_seen"){ 
 		    	if (!empty($output)){
-		    		if ($stat == "last_join")
-			    		$time = time() - ($output/1000);
-			    	else
 			    		$time = time() - ($output/1000);
 			    	$output = secondsToTime(round($time))." ago";
 			    }else{
