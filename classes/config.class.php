@@ -47,7 +47,7 @@ class config{
 		$stmt = $mysqli->stmt_init();
 
 		/* Update or Insert new config? */
-		if ($this->configExist($option))
+		if ($this->configExist($option,$plugin))
 			$query = "UPDATE BlueStats_config SET `value`=? WHERE `server_id`=? and `plugin`=? AND `option`=?";
 		else
 			$query = "INSERT INTO BlueStats_config (`server_id`, `option`, `plugin`, `value`) VALUES (?, ?, ?, ?)";
@@ -61,7 +61,6 @@ class config{
 
 		    /* execute query */
 		    $stmt->execute();
-
 		    /* close statement */
 		    $stmt->close();
 		}
