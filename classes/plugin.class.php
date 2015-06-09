@@ -102,7 +102,7 @@ class MySQLplugin extends plugin{
 		    return $output;
 		}
 	}
-	public function getStats($column){
+	public function getAllPlayerStats($column){
 
 		$stmt =  $this->mysqli->stmt_init();
 
