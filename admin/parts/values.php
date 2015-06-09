@@ -18,7 +18,7 @@ if ($stmt->prepare("SELECT * FROM BlueStats_config where plugin = ?")) {
       <tr>
         <td><?=$row["option"]?></td>
         <form action="?update&plugin=<?=htmlspecialchars($row["plugin"])?>" method="post">
-        <td><input name="value" type="text" value="<?=htmlspecialchars($row["value"])?>" style="width:100%;max-width:100%;"></td>
+        <td><input name="value" type="text" class="form-control" value="<?=htmlspecialchars($row["value"])?>" style="width:100%;max-width:100%;"></td>
         <input type="hidden" name="option" value="<?=htmlspecialchars($row["option"])?>">
         <input type="hidden" name="plugin" value="<?=htmlspecialchars($row["plugin"])?>">
 
