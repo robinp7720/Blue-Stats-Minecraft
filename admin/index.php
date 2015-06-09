@@ -45,7 +45,7 @@ if (!$config->configExist("password")){
 	$config->set("password","admin");
 }
 
-if ((@$_POST["username"]!=$config->get("username")||@$_POST["password"]!=$config->get("password"))&&$_SESSION["auth"]===false){
+if ((@$_POST["username"]!=$config->get("username")||@$_POST["password"]!=$config->get("password"))&&(@$_SESSION["auth"]===false||!isset($_SESSION["auth"]))){
 	include "parts/login.php";
 	die();
 }else{
