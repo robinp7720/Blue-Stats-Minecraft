@@ -72,7 +72,7 @@ class lolmewnStats extends MySQLplugin{
 		}
 
 		
-		if (!$limit==0){
+		if ($limit!=0){
 			$sql = $sql." LIMIT $limit";
 		}
 
@@ -119,6 +119,72 @@ class lolmewnStats extends MySQLplugin{
 		    }elseif($stat=="playtime"){
 		    	$output=secondsToTime($output);
 		    }
+		    return $output;
+		}
+	}
+
+	public function getStats($stat,$player,$limit=0,$extra=""){
+
+		$stmt = $this->mysqli->stmt_init();
+
+		$sql = "SELECT * FROM {$this->prefix}{$stat} WHERE uuid = ?";
+		
+		if ($limit!=0){
+			$sql = $sql.' ' . $extra. " LIMIT $limit";
+		}else{
+			$sql = $sql.' '.$extra;
+		}
+		if ($stmt->prepare($sql)) {
+			$stmt->bind_param("s", $player);
+		    /* execute query */
+		    $stmt->execute();
+
+		    $output = array();
+
+		    /* fetch value */
+		    $res = $stmt->get_result();
+		    while ($row = $res->fetch_assoc()){
+		    	$output[] = $row;
+		    }
+
+		    /* close statement */
+		    $stmt->close();
+		    return $output;
+		}
+	}
+
+	public function getPlayerBlock($player){
+
+		$stmt = $this->mysqli->stmt_init();
+
+		$sql = "SELECT *,
+					{$this->prefix}blocks_broken.name as name, 
+					{$this->prefix}blocks_broken.value as 'broken', 
+					{$this->prefix}blocks_placed.value as 'placed' 
+				FROM {$this->prefix}blocks_broken
+				INNER JOIN `{$this->prefix}blocks_placed` on 
+					{$this->prefix}blocks_broken.uuid = {$this->prefix}blocks_placed.uuid 
+					and {$this->prefix}blocks_broken.name = {$this->prefix}blocks_placed.name
+					and {$this->prefix}blocks_broken.world = {$this->prefix}blocks_placed.world
+				WHERE {$this->prefix}blocks_broken.uuid = ?
+				GROUP BY {$this->prefix}blocks_broken.name, {$this->prefix}blocks_broken.world";
+		
+
+		if ($stmt->prepare($sql)) {
+			$stmt->bind_param("s", $player);
+		    /* execute query */
+		    $stmt->execute();
+
+		    $output = array();
+
+		    /* fetch value */
+		    $res = $stmt->get_result();
+		    while ($row = $res->fetch_assoc()){
+		    	$output[] = $row;
+		    }
+
+		    /* close statement */
+		    $stmt->close();
 		    return $output;
 		}
 	}
