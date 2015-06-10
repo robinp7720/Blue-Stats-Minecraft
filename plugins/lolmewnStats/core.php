@@ -91,7 +91,9 @@ class lolmewnStats extends MySQLplugin{
 
 		    /* close statement */
 		    $stmt->close();
-		    return $output;
+		    return $output ?: array();
+		}else{
+			return array();
 		}
 	}
 	public function getStat($stat,$player){
