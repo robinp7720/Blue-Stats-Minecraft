@@ -29,11 +29,18 @@ if (isset($_GET["logout"])){
 if (isset($_GET["update"])&&$_SESSION["auth"]===true){
 	if (isset($_POST["value"])&&isset($_POST["option"])&&isset($_POST["plugin"])){
 		$Updateconfig = new config($mysqli,htmlspecialchars_decode($_POST["plugin"]));
-		$Updateconfig->set(
-			htmlspecialchars_decode($_POST["option"]),
-			json_decode(htmlspecialchars_decode($_POST["value"]))
-		);
-		$message="Config Updated!";
+		if ($_POST["type"]==="string"||$_POST["type"]=="NULL"){
+			$Updateconfig->set(
+				htmlspecialchars_decode($_POST["option"]),
+				htmlspecialchars_decode($_POST["value"])
+			);
+		}else{
+			$Updateconfig->set(
+				htmlspecialchars_decode($_POST["option"]),
+				json_decode(htmlspecialchars_decode($_POST["value"]))
+			);
+		}
+		$message="<b>{$_POST["option"]}</b> updated!";
 	}
 }
 
