@@ -9,6 +9,15 @@ class config{
 		$this->pluginName = $plugin;
 	}
 
+	public function setDefault($option,$value,$plugin = "this"){
+		if ($plugin=="this")
+			$plugin = $this->pluginName;
+
+		if (!$this->configExist($option,$plugin)){
+			$this->set($option,$value,$plugin);
+		}
+	}
+
 	public function configExist($option,$plugin="this"){
 		if ($plugin=="this")
 			$plugin = $this->pluginName;
