@@ -26,7 +26,7 @@ if (isset($_GET["logout"])){
 	$_SESSION["auth"] = false;
 }
 
-if (isset($_GET["update"])){
+if (isset($_GET["update"])&&$_SESSION["auth"]===true){
 	if (isset($_POST["value"])&&isset($_POST["option"])&&isset($_POST["plugin"])){
 		$Updateconfig = new config($mysqli,htmlspecialchars_decode($_POST["plugin"]));
 		$Updateconfig->set(
