@@ -10,6 +10,7 @@ require "$appPath/classes/mysql.class.php";
 require "$appPath/classes/plugin.class.php";
 require "$appPath/classes/bluestats.class.php";
 require "$appPath/classes/modules.class.php";
+require "$appPath/classes/cache.class.php";
 
 /* Configs */
 require "$appPath/config.php";
@@ -25,43 +26,49 @@ $mysqlMan->connect(
 	$config["mysql"]["host"],
 	$config["mysql"]["dbname"]
 );
+$cache = new cache($mysqlMan->get("BlueStats"),$appPath);
 
-$BlueStats = new BlueStats($mysqlMan->get("BlueStats"),$appPath);
+if ($cache->reCache($_SERVER["REQUEST_URI"])){
+	$BlueStats = new BlueStats($mysqlMan->get("BlueStats"),$appPath);
 
-$loadablePlugins = $BlueStats->getPluginList();
-$plugins = array();
+	$loadablePlugins = $BlueStats->getPluginList();
+	$plugins = array();
 
-/* Load all plugins */
-foreach ($loadablePlugins as $plugin){
+	/* Load all plugins */
+	foreach ($loadablePlugins as $plugin){
 
-	/* Load in core plugin class*/
-	include "$appPath/plugins/$plugin/core.php";
+		/* Load in core plugin class*/
+		include "$appPath/plugins/$plugin/core.php";
 
-	/* Load in plugin init script */
-	include "$appPath/plugins/$plugin/init.php";
+		/* Load in plugin init script */
+		include "$appPath/plugins/$plugin/init.php";
+	}
+	$BlueStats->loadPlugins($plugins);
+
+	$content = $BlueStats->loadPage();
+	$copyrightMeta = '
+	<link rel="schema.dc" href="http://purl.org/dc/elements/1.1/">
+	<meta name="dcterms.rightsHolder" content="Robin Decker, MySunland">
+	<meta name="dcterms.rights" content="Released under apache 2.0 license">
+	<meta name="dcterms.dateCopyrighted" content="2015">
+	<meta name="dc.license" content="apache 2.0">
+	<meta name="web_author" content="Robin Decker">
+	<meta name="author" content="Robin Decker">
+	';
+	$content = str_replace("<head>","<head>".$copyrightMeta, $content);
+
+	$credits = '
+	<!--
+	Copyright Robin Decker 2015
+	BlueStats 3 is released under the Apache 2 license.
+	Removal of this copyright notice is an infringement of the license.
+
+	Developed by _OvErLoRd_ (robinp7720) and MySunland
+	-->
+	';
+
+	echo $credits.trim($content);
+	$cache->cache($credits.trim($content),$_SERVER["REQUEST_URI"]);
+}else{
+	echo $cache->getCache($_SERVER["REQUEST_URI"]);
 }
-$BlueStats->loadPlugins($plugins);
-
-$content = $BlueStats->loadPage();
-$copyrightMeta = '
-<link rel="schema.dc" href="http://purl.org/dc/elements/1.1/">
-<meta name="dcterms.rightsHolder" content="Robin Decker, MySunland">
-<meta name="dcterms.rights" content="Released under apache 2.0 license">
-<meta name="dcterms.dateCopyrighted" content="2015">
-<meta name="dc.license" content="apache 2.0">
-<meta name="web_author" content="Robin Decker">
-<meta name="author" content="Robin Decker">
-';
-$content = str_replace("<head>","<head>".$copyrightMeta, $content);
-
-$credits = '
-<!--
-Copyright Robin Decker 2015
-BlueStats 3 is released under the Apache 2 license.
-Removal of this copyright notice is an infringement of the license.
-
-Developed by _OvErLoRd_ (robinp7720) and MySunland
--->
-';
-
-echo $credits.$content;
