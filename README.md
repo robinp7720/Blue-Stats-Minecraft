@@ -6,7 +6,7 @@ With making this webapp, I have kept customizability, ease of use and power in m
 
 Planned features
 =====================
-- [ ] Admin interface     
+- [x] Admin interface     
 - [ ] Login with minecraft (Maybe)     
 - [ ] Graphs api     
 - [ ] Graphs     
