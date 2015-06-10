@@ -4,6 +4,8 @@ Blue Stats 3 uses a mysql backend to save and load configuartions, caches and ot
 
 With making this webapp, I have kept customizability, ease of use and power in mind. This tool is extremely easy to install and get going.
 
+More information can be found on the forums post here: https://bukkit.org/threads/blue-stats-the-most-advanced-statistics-web-interface.334006/
+
 Planned features
 =====================
 - [x] Admin interface     
