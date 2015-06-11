@@ -8,6 +8,11 @@ More information can be found on the forums post here: https://bukkit.org/thread
 
 A live demo can be found here: http://stats.mysunland.org/
 
+Find help on installing BlueStats here: https://github.com/robinp7720/Blue-Stats-Minecraft/wiki
+
+## Troubleshooting
+Please refer to this wiki article to help with troubleshooting: https://github.com/robinp7720/Blue-Stats-Minecraft/wiki/Troubleshooting
+
 Planned features
 =====================
 - [x] Admin interface     
