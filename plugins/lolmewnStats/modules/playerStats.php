@@ -1,7 +1,7 @@
 <?php
 $stats = $config->get("stats","lolmewnStats");
 ?>
-<table class="table">
+<table class="table" id="allplayers">
 	<thead>
 		<th>Stat</th>
 		<th>Value</th>
@@ -19,3 +19,8 @@ $stats = $config->get("stats","lolmewnStats");
 		<?php endforeach; ?>
 	</tbody>
 </table>
+<script>
+	$(document).ready(function() {
+	    $('#allplayers').DataTable();
+	} );
+</script>
