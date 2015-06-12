@@ -3,9 +3,9 @@ class BlueStats{
 	public $version = "Beta 3.0";
 	public $pluginName = "BlueStats";
 	public $appPath = "";
+	public $theme;
 
 	private $page = "home";
-	private $theme;
 	private $plugins;
 
 	private $config;
@@ -49,6 +49,7 @@ class BlueStats{
 	}
 
 	public function loadPage(){
+		//echo "<pre>".print_r($this->plugins,2)."</pre>";
 		$page = str_replace(array('/','.'), '', $this->page);
 		if (file_exists($this->appPath."/themes/".$this->theme."/global.html")){
 			/* Load template file */
@@ -67,6 +68,9 @@ class BlueStats{
 				    $output = $module->render();
 
 				    $string = str_replace($replaceStr, $output, $string);
+				}else{
+					$output = "Plugin not found: {$matches[1][$key]}";
+					$string = str_replace($replaceStr, $output, $string);
 				}
 			}
 			$string = str_replace("{{ content }}", $this->loadPageTemplate(), $string);
@@ -97,6 +101,8 @@ class BlueStats{
 						$output = $module->render();
 
 					    $string = str_replace($replaceStr,$output, $string);
+					}else{
+						$string = "Plugin not found: {$matches[1][$key]}";
 					}
 				}
 			}else{
