@@ -26,7 +26,7 @@ class cache{
 		if (file_exists($this->appPath."/cache/$file_name")){
 			$file = file_get_contents($this->appPath."/cache/$file_name");
 			$cache = json_decode($file,true);
-			if ($cache["time"]>time()+$this->config->get("expiry-time")){
+			if ($cache["time"]<time()-$this->config->get("expiry-time")){
 				return true;
 			}else{
 				return false;
