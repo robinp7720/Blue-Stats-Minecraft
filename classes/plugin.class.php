@@ -4,6 +4,10 @@ class plugin{
 	function __construct($mysqli) {
 		$this->BlueStatsMYQLI = $mysqli;
 		$this->config = new config($mysqli,$this->pluginName);
+		if (method_exists($this,"onLoad")){
+			$this->onLoad();
+		}else{
+		}
 	}
 }
 class MySQLplugin extends plugin{
