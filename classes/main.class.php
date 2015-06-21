@@ -298,7 +298,7 @@ class BlueStats {
 		preg_match_all('/{{ url:([^ ]+) }}/', $string, $matches);
 		foreach ($matches[1] as $key => $site) {
 			if ($this->config["url"]["rewrite"]==false){
-				$url = "?page=allplayers";
+				$url = "?page=$site";
 			}else{
 				$url = $this->config["url"]["base"]."/$site/";
 			}
@@ -331,7 +331,7 @@ class BlueStats {
 		preg_match_all('/{{ url:([^ ]+) }}/', $pageContent, $matches);
 		foreach ($matches[1] as $key => $site) {
 			if ($this->config["url"]["rewrite"]==false){
-				$url = "?page=allplayers";
+				$url = "?page=$site";
 			}else{
 				$url = $this->config["url"]["base"]."/$site/";
 			}
