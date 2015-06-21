@@ -1,5 +1,7 @@
 <?php
 
+namespace xPaw;
+
 class MinecraftQuery
 {
 	/*
@@ -125,7 +127,7 @@ class MinecraftQuery
 			}
 			else if( $Last != false )
 			{
-				$Info[ $Last ] = $Value;
+				$Info[ $Last ] = mb_convert_encoding( $Value, 'UTF-8' );
 			}
 		}
 
@@ -154,7 +156,11 @@ class MinecraftQuery
 
 		$this->Info = $Info;
 
-		if( $Players )
+		if( empty( $Players ) )
+		{
+			$this->Players = null;
+		}
+		else
 		{
 			$this->Players = Explode( "\x00", $Players );
 		}
