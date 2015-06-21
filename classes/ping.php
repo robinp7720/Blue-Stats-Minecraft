@@ -1,5 +1,7 @@
 <?php
 
+namespace xPaw;
+
 class MinecraftPing
 {
 	/*
