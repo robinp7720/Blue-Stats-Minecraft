@@ -130,7 +130,7 @@ function secondsToTime($seconds,$contract=true) {
 		}
 	}else{
 		if ($seconds>=86400){
-			return $dtF->diff($dtT)->format('%ad:%hh:%mm:%ss');
+			return $dtF->diff($dtT)->format('%ad:%hh:%im:%ss');
 		}elseif ($seconds>=3600){
 			return $dtF->diff($dtT)->format('%hh:%im:%ss');
 		}elseif ($seconds>=60){
