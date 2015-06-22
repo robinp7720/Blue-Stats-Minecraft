@@ -1,7 +1,5 @@
 <?php
 
-namespace xPaw;
-
 class MinecraftQuery
 {
 	/*
