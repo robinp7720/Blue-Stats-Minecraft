@@ -31,10 +31,22 @@ class view{
 		}else{
 			$filePath = $this->viewPath."templates/{$this->page}.html";
 		}
-
+		$continue = true;
 		if (file_exists($filePath)){
 			/* Load template file */
 			$string = file_get_contents($filePath);
+
+			if (strpos($string,'{{ dieifnotid }}') !== false && !isset($_GET["id"]))
+				$continue = false;
+
+			$string = str_replace('{{ dieifnotid }}', '', $string);
+		}else{
+			$continue = false;
+		}
+
+
+
+		if ($continue){
 
 			/* Modules */
 			preg_match_all('/{{ ([^ ]+):([^ ]+) }}/', $string, $matches);
