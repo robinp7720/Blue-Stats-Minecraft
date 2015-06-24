@@ -1,4 +1,4 @@
-<?php if (@$_GET["page"]=="player"):?>
+<?php if (@$_GET["page"]=="player"&&isset($_GET["player"])):?>
 <?php
 function get_main_colour($source_file){
         $im = ImageCreateFrompng($source_file);
