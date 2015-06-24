@@ -11,6 +11,8 @@ require "$appPath/classes/plugin.class.php";
 require "$appPath/classes/bluestats.class.php";
 require "$appPath/classes/modules.class.php";
 require "$appPath/classes/cache.class.php";
+require "$appPath/classes/error.class.php";
+require "$appPath/classes/view.class.php";
 
 /* Configs */
 require "$appPath/config.php";
@@ -28,7 +30,7 @@ $mysqlMan->connect(
 );
 $cache = new cache($mysqlMan->get("BlueStats"),$appPath);
 
-if ($cache->reCache($_SERVER["REQUEST_URI"])){
+if ($cache->reCache($_SERVER["REQUEST_URI"])||isset($_GET["recache"])){
 	$BlueStats = new BlueStats($mysqlMan->get("BlueStats"),$appPath);
 	if (file_exists('themes/'.$BlueStats->theme.'/style.css')){
 		file_put_contents("style.css", file_get_contents('themes/'.$BlueStats->theme.'/style.css'));
