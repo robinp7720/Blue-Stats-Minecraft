@@ -25,7 +25,7 @@
 			<h1>BlueStats 3 Install</h1>
 			<div class="requirements">
 			<?php
-			if (version_compare(PHP_VERSION, '5.0.0', '>=')) {
+			if (version_compare(PHP_VERSION, '5.2.0', '>=')) {
 			    echo '<span class="label label-success">Current PHP version: ' . PHP_VERSION,'</span>';
 			}else{
 				echo '<span class="label label-danger">Minimum php version required: 5.0 You have: ' . PHP_VERSION,'</span>';
