@@ -60,7 +60,7 @@ if (isset($data[0]["value"])){
 	<div class="panel panel-default">
 		<img src="https://minotar.net/helm/<?=isset($data[0]["name"])? $data[0]["name"] : "char"?>/300.png" alt="" style="width:100%;">
 		<div class="panel-body">
-			<h3 style="margin-top:0;padding:0;"><?=isset($data[0]["name"])? $data[0]["name"] : "Nobody"?></h3>
+			<h3 style="margin-top:0;padding:0;"><a href="?page=player&id=<?=isset($data[0]["name"])? $data[0]["uuid"] : ""?>"><?=isset($data[0]["name"])? $data[0]["name"] : "Nobody"?></a></h3>
 			<h6 style="margin-top:0;padding:0;" class="text-muted"><?=str_replace("{VALUE}", $display, $english[$stat])?></h6>
 		</div>
 	</div>
