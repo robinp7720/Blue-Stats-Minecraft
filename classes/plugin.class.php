@@ -39,11 +39,11 @@ class MySQLplugin extends plugin
     {
         parent::__construct($mysqli);
 
-        $this->config->setDefault("MYSQLI_host","localhost");
-        $this->config->setDefault("MYSQLI_username","minecraft");
-        $this->config->setDefault("MYSQLI_password","password");
-        $this->config->setDefault("MYSQLI_database","minecraft");
-        $this->config->setDefault("MYSQLI_prefix",$this->plugin["defaultPrefix"]);
+        $this->config->setDefault("MYSQL_host","localhost");
+        $this->config->setDefault("MYSQL_username","minecraft");
+        $this->config->setDefault("MYSQL_password","password");
+        $this->config->setDefault("MYSQL_database","minecraft");
+        $this->config->setDefault("MYSQL_prefix",$this->plugin["defaultPrefix"]);
 
         $this->prefix = $this->config->get("MYSQL_prefix");
         $this->mysqli = new mysqli(
