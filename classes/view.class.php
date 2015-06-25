@@ -3,9 +3,9 @@
 class view
 {
     private $bluestats;
-    private $theme;
-    private $viewPath;
-    private $appPath;
+    private $theme = "";
+    private $viewPath = "";
+    private $appPath = "";
 
     private $page;
 
@@ -33,8 +33,16 @@ class view
             /* Load template file */
             $string = file_get_contents($filePath);
 
-            if (strpos($string, '{{ dieifnotid }}') !== false && !isset($_GET["id"]))
-                $continue = false;
+            if (strpos($string, '{{ dieifnotid }}') !== false){
+                if (!isset($this->bluestats->request["get"]["id"])){
+                    $continue = false;
+                }else{
+                    $player = new player($this->bluestats,$this->bluestats->request["get"]["id"]);
+                    if (!$player->exist){
+                        $continue = false;
+                    }
+                }
+            }
 
             $string = str_replace('{{ dieifnotid }}', '', $string);
         } else {
@@ -44,6 +52,9 @@ class view
 
         if ($continue) {
 
+            if (isset($player)){
+                $string = str_replace('{{ playername }}',$player->name,$string);
+            }
             /* Modules with args */
             preg_match_all('/{{ ([^ ]+):([^ ]+):([^ ]+) }}/', $string, $matches);
 

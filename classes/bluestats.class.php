@@ -5,11 +5,12 @@ class BlueStats
     public $version = "Beta 3.0";
     public $pluginName = "BlueStats";
     public $appPath = "";
-    public $theme;
+    public $theme = "default";
     public $page = "home";
-    public $plugins;
+    public $plugins = [];
     public $config;
     public $mysqli;
+    public $base_plugin;
 
     public $request = [];
 
@@ -50,6 +51,7 @@ class BlueStats
     public function loadPlugins(array $plugins)
     {
         $this->plugins = $plugins;
+        $this->base_plugin = $this->plugins[$this->config->get("base_plugin")];
     }
 
     public function loadPage()
