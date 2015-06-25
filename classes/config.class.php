@@ -6,12 +6,21 @@ class config
     private $BlueStatsMYQLI;
     private $pluginName;
 
+    /**
+     * @param $mysqli
+     * @param $plugin
+     */
     function __construct($mysqli, $plugin)
     {
         $this->BlueStatsMYQLI = $mysqli;
         $this->pluginName = $plugin;
     }
 
+    /**
+     * @param string $option
+     * @param string $value
+     * @param string $plugin
+     */
     public function setDefault($option, $value, $plugin = "this")
     {
         if ($plugin == "this")
@@ -22,6 +31,11 @@ class config
         }
     }
 
+    /**
+     * @param string $option
+     * @param string $plugin
+     * @return bool
+     */
     public function configExist($option, $plugin = "this")
     {
         if ($plugin == "this")
@@ -53,6 +67,13 @@ class config
         }
     }
 
+
+    /**
+     * @param string $option
+     * @param string $value
+     * @param string $plugin
+     * @return bool
+     */
     public function set($option, $value, $plugin = "this")
     {
         $value = json_encode($value);
@@ -78,9 +99,16 @@ class config
             $stmt->execute();
             /* close statement */
             $stmt->close();
+            return true;
         }
+        return false;
     }
 
+    /**
+     * @param $option
+     * @param string $plugin
+     * @return bool|mixed
+     */
     public function get($option, $plugin = "this")
     {
         if ($plugin == "this")
