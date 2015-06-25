@@ -20,5 +20,5 @@ Planned features
 - [ ] Login with minecraft (Maybe)     
 - [ ] Graphs api     
 - [ ] Graphs     
-- [ ] Server query and ping     
+- [x] Server query and ping     
 - [x] Page caching
