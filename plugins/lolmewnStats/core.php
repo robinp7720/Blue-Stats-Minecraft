@@ -9,6 +9,7 @@ class lolmewnStats extends MySQLplugin
         "UUIDcolumn" => "uuid",
         "indexTable" => "players",
         "UUIDisID" => true,
+        "defaultPrefix" => "Stats_"
     );
     public $stats = array();
 

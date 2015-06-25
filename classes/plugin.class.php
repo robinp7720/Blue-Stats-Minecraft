@@ -20,47 +20,23 @@ class MySQLplugin extends plugin
     public $mysqli;
     public $prefix = "";
 
-    protected $installed = "";
-
     function __construct($mysqli)
     {
         parent::__construct($mysqli);
-        $this->installed = $this->installed();
-        if ($this->installed) {
-            $this->prefix = $this->config->get("MYSQL_prefix");
-            $this->mysqli = new mysqli(
-                $this->config->get("MYSQL_host"),
-                $this->config->get("MYSQL_username"),
-                $this->config->get("MYSQL_password"),
-                $this->config->get("MYSQL_database")
-            );
-        } else {
-            $this->install();
-        }
-    }
 
-    function installed()
-    {
-        $verfy = array();
-        $verfy["host"] = $this->config->configExist("MYSQL_host");
-        $verfy["username"] = $this->config->configExist("MYSQL_username");
-        $verfy["password"] = $this->config->configExist("MYSQL_password");
-        $verfy["prefix"] = $this->config->configExist("MYSQL_prefix");
-        $verfy["database"] = $this->config->configExist("MYSQL_database");
-        if ($verfy["host"] == true && $verfy["username"] == true && $verfy["password"] == true && $verfy["prefix"] == true && $verfy["database"] == true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+        $this->config->setDefault("MYSQLI_host","localhost");
+        $this->config->setDefault("MYSQLI_username","minecraft");
+        $this->config->setDefault("MYSQLI_password","password");
+        $this->config->setDefault("MYSQLI_database","minecraft");
+        $this->config->setDefault("MYSQLI_prefix",$this->server["defaultPrefix"]);
 
-    function install()
-    {
-        $this->config->set("MYSQL_host", "127.0.0.1");
-        $this->config->set("MYSQL_username", "minecraft");
-        $this->config->set("MYSQL_password", "password");
-        $this->config->set("MYSQL_prefix", "");
-        $this->config->set("MYSQL_database", "minecraft");
+        $this->prefix = $this->config->get("MYSQL_prefix");
+        $this->mysqli = new mysqli(
+            $this->config->get("MYSQL_host"),
+            $this->config->get("MYSQL_username"),
+            $this->config->get("MYSQL_password"),
+            $this->config->get("MYSQL_database")
+        );
     }
 
     public function getUserName($uuid)

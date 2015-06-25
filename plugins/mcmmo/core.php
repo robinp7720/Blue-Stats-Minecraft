@@ -10,6 +10,7 @@ class mcmmo extends MySQLplugin
         "UUIDcolumn" => "uuid",
         "indexTable" => "users",
         "UUIDisID" => false,
+        "defaultPrefix" => "mcmmo_"
     );
 
     function __construct($mysqli)
