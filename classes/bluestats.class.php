@@ -11,7 +11,7 @@ class BlueStats
     public $config;
     public $mysqli;
 
-    private $request = [];
+    public $request = [];
 
     function __construct($mysqli, $appPath)
     {
@@ -27,7 +27,7 @@ class BlueStats
         $this->config->setDefault("homepage", "home");
 
         $this->theme = $this->config->get("theme");
-        $this->page = isset($this->request("get")["page"])? $this->request("get")["page"] : $this->config->get("homepage");
+        $this->page = isset($this->request["get"]["page"])? $this->request["get"]["page"] : $this->config->get("homepage");
 
         $this->appPath = $appPath;
     }
@@ -40,11 +40,6 @@ class BlueStats
         foreach ($_POST as $key => $value) {
             $this->request["post"][$key]=urldecode($value);
         }
-    }
-
-    public function request($type)
-    {
-        return $this->request[$type];
     }
 
     public function getPluginList()
