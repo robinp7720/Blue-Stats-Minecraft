@@ -11,27 +11,44 @@ class BlueStats
     public $config;
     public $mysqli;
 
+    private $request = [];
+
     function __construct($mysqli, $appPath)
     {
+        $this->setUpGlobals();
         $this->mysqli = $mysqli;
 
         $this->config = new config($mysqli, $this->pluginName);
+        $this->config->setDefault("plugins", array("lolmewnStats", "query", "themeText"));
         $this->config->setDefault("server-name", "A Minecraft Server");
         $this->config->setDefault("theme", "default");
         $this->config->setDefault("base_plugin", "lolmewnStats");
         $this->config->setDefault("view_path", "$appPath/themes/{THEME}/");
+        $this->config->setDefault("homepage", "home");
 
         $this->theme = $this->config->get("theme");
+        $this->page = isset($this->request("get")["page"])? $this->request("get")["page"] : $this->config->get("homepage");
 
         $this->appPath = $appPath;
+    }
 
-        if (isset($_GET["page"]))
-            $this->page = $_GET["page"];
+    private function setUpGlobals()
+    {
+        foreach ($_GET as $key => $value) {
+            $this->request["get"][$key]=urldecode($value);
+        }
+        foreach ($_POST as $key => $value) {
+            $this->request["post"][$key]=urldecode($value);
+        }
+    }
+
+    public function request($type)
+    {
+        return $this->request[$type];
     }
 
     public function getPluginList()
     {
-        $this->config->setDefault("plugins", array("lolmewnStats", "query", "themeText"));
         return $this->config->get("plugins");
     }
 
