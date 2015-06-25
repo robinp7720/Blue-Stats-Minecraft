@@ -1,106 +1,113 @@
 <?php
-class config{
-	public $serverId = 1;
-	private $BlueStatsMYQLI;
-	private $pluginName;
 
-	function __construct($mysqli,$plugin){
-		$this->BlueStatsMYQLI = $mysqli;
-		$this->pluginName = $plugin;
-	}
+class config
+{
+    public $serverId = 1;
+    private $BlueStatsMYQLI;
+    private $pluginName;
 
-	public function setDefault($option,$value,$plugin = "this"){
-		if ($plugin=="this")
-			$plugin = $this->pluginName;
+    function __construct($mysqli, $plugin)
+    {
+        $this->BlueStatsMYQLI = $mysqli;
+        $this->pluginName = $plugin;
+    }
 
-		if (!$this->configExist($option,$plugin)){
-			$this->set($option,$value,$plugin);
-		}
-	}
+    public function setDefault($option, $value, $plugin = "this")
+    {
+        if ($plugin == "this")
+            $plugin = $this->pluginName;
 
-	public function configExist($option,$plugin="this"){
-		if ($plugin=="this")
-			$plugin = $this->pluginName;
-		$mysqli = $this->BlueStatsMYQLI;
-		$serverId = $this->serverId;
-		$stmt =  $mysqli->stmt_init();	
-		if ($stmt->prepare("SELECT count(*) FROM BlueStats_config WHERE `server_id`=? AND `option`=? AND `plugin`=?")) {
+        if (!$this->configExist($option, $plugin)) {
+            $this->set($option, $value, $plugin);
+        }
+    }
 
-		    /* bind parameters for markers */
-		    $stmt->bind_param("iss", $serverId,$option,$plugin);
+    public function configExist($option, $plugin = "this")
+    {
+        if ($plugin == "this")
+            $plugin = $this->pluginName;
+        $mysqli = $this->BlueStatsMYQLI;
+        $serverId = $this->serverId;
+        $stmt = $mysqli->stmt_init();
+        if ($stmt->prepare("SELECT count(*) FROM BlueStats_config WHERE `server_id`=? AND `option`=? AND `plugin`=?")) {
 
-		    /* execute query */
-		    $stmt->execute();
+            /* bind parameters for markers */
+            $stmt->bind_param("iss", $serverId, $option, $plugin);
 
-		    /* bind result variables */
-		    $stmt->bind_result($count);
+            /* execute query */
+            $stmt->execute();
 
-		    /* fetch value */
-		    $stmt->fetch();
+            /* bind result variables */
+            $stmt->bind_result($count);
 
-		    /* close statement */
-		    $stmt->close();
-		}
-		if ($count>0){
-			return true;
-		}else{
-			return false;
-		}
-	}
+            /* fetch value */
+            $stmt->fetch();
 
-	public function set($option,$value,$plugin="this"){
-		$value = json_encode($value);
-		if ($plugin=="this")
-			$plugin = $this->pluginName;
-		$mysqli = $this->BlueStatsMYQLI;
-		$stmt = $mysqli->stmt_init();
+            /* close statement */
+            $stmt->close();
+        }
+        if ($count > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-		/* Update or Insert new config? */
-		if ($this->configExist($option,$plugin))
-			$query = "UPDATE BlueStats_config SET `value`=? WHERE `server_id`=? and `plugin`=? AND `option`=?";
-		else
-			$query = "INSERT INTO BlueStats_config (`server_id`, `option`, `plugin`, `value`) VALUES (?, ?, ?, ?)";
+    public function set($option, $value, $plugin = "this")
+    {
+        $value = json_encode($value);
+        if ($plugin == "this")
+            $plugin = $this->pluginName;
+        $mysqli = $this->BlueStatsMYQLI;
+        $stmt = $mysqli->stmt_init();
 
-		if ($stmt->prepare($query)) {
-		    /* bind parameters for markers */
-		    if ($this->configExist($option))
-		    	$stmt->bind_param("siss",$value,$this->serverId,$plugin,$option);
-		    else
-		   		$stmt->bind_param("isss",$this->serverId,$option,$plugin,$value);
+        /* Update or Insert new config? */
+        if ($this->configExist($option, $plugin))
+            $query = "UPDATE BlueStats_config SET `value`=? WHERE `server_id`=? and `plugin`=? AND `option`=?";
+        else
+            $query = "INSERT INTO BlueStats_config (`server_id`, `option`, `plugin`, `value`) VALUES (?, ?, ?, ?)";
 
-		    /* execute query */
-		    $stmt->execute();
-		    /* close statement */
-		    $stmt->close();
-		}
-	}
+        if ($stmt->prepare($query)) {
+            /* bind parameters for markers */
+            if ($this->configExist($option))
+                $stmt->bind_param("siss", $value, $this->serverId, $plugin, $option);
+            else
+                $stmt->bind_param("isss", $this->serverId, $option, $plugin, $value);
 
-	public function get($option,$plugin="this"){
-		if ($plugin=="this")
-			$plugin = $this->pluginName;
-		$mysqli = $this->BlueStatsMYQLI;
-		$stmt =  $mysqli->stmt_init();
+            /* execute query */
+            $stmt->execute();
+            /* close statement */
+            $stmt->close();
+        }
+    }
 
-		$query = "SELECT value FROM BlueStats_config WHERE `server_id`=? and `plugin`=? AND `option`=?";
+    public function get($option, $plugin = "this")
+    {
+        if ($plugin == "this")
+            $plugin = $this->pluginName;
+        $mysqli = $this->BlueStatsMYQLI;
+        $stmt = $mysqli->stmt_init();
 
-		if ($stmt->prepare($query)) {
+        $query = "SELECT value FROM BlueStats_config WHERE `server_id`=? and `plugin`=? AND `option`=?";
 
-		    /* bind parameters for markers */
-		    $stmt->bind_param("iss", $this->serverId,$plugin,$option);
+        if ($stmt->prepare($query)) {
 
-		    /* execute query */
-		    $stmt->execute();
+            /* bind parameters for markers */
+            $stmt->bind_param("iss", $this->serverId, $plugin, $option);
 
-		    /* bind result variables */
-		    $stmt->bind_result($output);
+            /* execute query */
+            $stmt->execute();
 
-		    /* fetch value */
-		    $stmt->fetch();
+            /* bind result variables */
+            $stmt->bind_result($output);
 
-		    /* close statement */
-		    $stmt->close();
-		    return json_decode($output,true);
-		}
+            /* fetch value */
+            $stmt->fetch();
 
-	}
+            /* close statement */
+            $stmt->close();
+            return json_decode($output, true);
+        }
+        return false;
+    }
 }

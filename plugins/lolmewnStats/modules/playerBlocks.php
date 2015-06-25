@@ -1,34 +1,34 @@
 <table class="table table-hover" id="blocks">
-	<thead>
-		<tr>
-			<th>Block</th>
-			<th>World</th>
-			<th>Amount Broken</th>
-			<th>Amount Placed</th>
-		</tr>
-	</thead>
-	<tbody>
-		<?php foreach($plugin->getPlayerBlock($_GET["id"]) as $id => $value): ?>
-			<tr>
-				<td>
-					<!--<img src="http://blocks.fishbans.com/" alt="">-->
-					<?=ucfirst(strtolower(str_replace("_", " ", $value["name"])))?>
-				</td>
-				<td>
-					<?=$value["world"]?>
-				</td>
-				<td>
-					<?=$value["broken"]?>
-				</td>
-				<td>
-					<?=$value["placed"]?>
-				</td>
-			</tr>
-		<?php endforeach; ?>
-	</tbody>
+    <thead>
+    <tr>
+        <th>Block</th>
+        <th>World</th>
+        <th>Amount Broken</th>
+        <th>Amount Placed</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($plugin->getPlayerBlock($_GET["id"]) as $id => $value): ?>
+        <tr>
+            <td>
+                <!--<img src="http://blocks.fishbans.com/" alt="">-->
+                <?= ucfirst(strtolower(str_replace("_", " ", $value["name"]))) ?>
+            </td>
+            <td>
+                <?= $value["world"] ?>
+            </td>
+            <td>
+                <?= $value["broken"] ?>
+            </td>
+            <td>
+                <?= $value["placed"] ?>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
 </table>
 <script>
-	$(document).ready(function() {
-	    $('#blocks').DataTable();
-	} );
+    $(document).ready(function () {
+        $('#blocks').DataTable();
+    });
 </script>

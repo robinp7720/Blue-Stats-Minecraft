@@ -1,49 +1,55 @@
 <?php
-class module{
-	private $pluginName;
-	private $moduleName;
-	private $plugin;
-	private $theme;
-	private $appPath;
 
-	private $config;
-	private $args = [];
+class module
+{
+    private $pluginName;
+    private $moduleName;
+    private $plugin;
+    private $theme;
+    private $appPath;
 
-	public function __Construct($mysqli,$pluginN,$moduleN,$plugin,$theme,$appPath,$args = "")
-	{
-		$this->plugin = $plugin;
-		$this->pluginName = $pluginN;
-		$this->moduleName = $moduleN;
-		$this->theme = $theme;
-		$this->appPath = $appPath;
+    private $config;
+    private $args = [];
 
-		$this->args[0] = $args;
+    public function __Construct($mysqli, $pluginN, $moduleN, $plugin, $theme, $appPath, $args = "")
+    {
+        $this->plugin = $plugin;
+        $this->pluginName = $pluginN;
+        $this->moduleName = $moduleN;
+        $this->theme = $theme;
+        $this->appPath = $appPath;
 
-		$this->config = new config($mysqli,"MODULE__".$this->pluginName."___".$this->moduleName);
-	}
+        $this->args[0] = $args;
 
-	public function render()
-	{
-		$plugin = $this->plugin;
-		$pluginN = $this->pluginName;
-		$moduleN = $this->moduleName;
+        $this->config = new config($mysqli, "MODULE__" . $this->pluginName . "___" . $this->moduleName);
+    }
 
-		$config = $this->config;
-		$args = $this->args;
+    public function render()
+    {
+        /** @noinspection PhpUnusedLocalVariableInspection */
+        $plugin = $this->plugin;
+        $pluginN = $this->pluginName;
+        $moduleN = $this->moduleName;
 
-		/* Replace key with module */
-		ob_start();
-		if (file_exists($this->appPath."/plugins/{$pluginN}/modules/".$moduleN.".php")){
-			include($this->appPath."/plugins/{$pluginN}/modules/".$moduleN.".php");
-		}elseif(file_exists($this->appPath."/themes/{$this->theme}/modules/{$pluginN}/{$moduleN}.php")){
-			include($this->appPath."/themes/{$this->theme}/modules/{$pluginN}/{$moduleN}.php");
-		}else{
+        /** @noinspection PhpUnusedLocalVariableInspection */
+        $config = $this->config;
+        /** @noinspection PhpUnusedLocalVariableInspection */
+        $args = $this->args;
 
-		}
-		$contents = ob_get_contents();
-		ob_end_clean();
+        /* Replace key with module */
+        ob_start();
+        if (file_exists($this->appPath . "/plugins/{$pluginN}/modules/" . $moduleN . ".php")) {
+            include($this->appPath . "/plugins/{$pluginN}/modules/" . $moduleN . ".php");
+        } elseif (file_exists($this->appPath . "/themes/{$this->theme}/modules/{$pluginN}/{$moduleN}.php")) {
+            /** @noinspection PhpIncludeInspection */
+            include($this->appPath . "/themes/{$this->theme}/modules/{$pluginN}/{$moduleN}.php");
+        } else {
 
-		return $contents;
-	}
+        }
+        $contents = ob_get_contents();
+        ob_end_clean();
+
+        return $contents;
+    }
 
 }
