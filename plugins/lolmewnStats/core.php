@@ -13,50 +13,41 @@ class lolmewnStats extends MySQLplugin
     );
     public $stats = array();
 
-    function __construct($mysqli)
+    public function onLoad()
     {
-        parent::__construct($mysqli);
-        if ($this->installed())
-            $this->setUp();
-    }
-
-    function setUp()
-    {
-        if (!$this->config->configExist("stats")) {
-            $this->config->set("stats", array(
-                "arrows" => "Arrows Shot",
-                "beds_entered" => "Beds Entered",
-                "blocks_broken" => "Blocks Broken",
-                "blocks_placed" => "Blocks Placed",
-                "buckets_emptied" => "Buckets Emptied",
-                "buckets_filled" => "Buckets Filled",
-                "commands_done" => "Commands Done",
-                "damage_taken" => "Damage Taken",
-                "death" => "Times Died",
-                "eggs_thrown" => "Eggs Thrown",
-                "fish_caught" => "Fish Caught",
-                "items_crafted" => "Items Crafted",
-                "items_dropped" => "Items Dropped",
-                "items_picked_up" => "Items Picked Up",
-                "joins" => "Joins",
-                "kill" => "Kills",
-                "last_join" => "Last Joined",
-                "last_seen" => "Last Seen",
-                "move" => "Blocks Traversed",
-                "omnomnom" => "Food Eaten",
-                "playtime" => "Play Time",
-                "pvp" => "PvP Kills",
-                "shears" => "Times striped a sheep",
-                "teleports" => "Teleports",
-                "times_changed_world" => "Worlds Changed",
-                "times_kicked" => "Times Kicked",
-                "tools_broken" => "Tools Broken",
-                "trades" => "Trades",
-                "votes" => "Votes",
-                "words_said" => "Words Said",
-                "xp_gained" => "Xp Gained",
-            ));
-        }
+        $this->config->setDefault("stats", array(
+            "arrows" => "Arrows Shot",
+            "beds_entered" => "Beds Entered",
+            "blocks_broken" => "Blocks Broken",
+            "blocks_placed" => "Blocks Placed",
+            "buckets_emptied" => "Buckets Emptied",
+            "buckets_filled" => "Buckets Filled",
+            "commands_done" => "Commands Done",
+            "damage_taken" => "Damage Taken",
+            "death" => "Times Died",
+            "eggs_thrown" => "Eggs Thrown",
+            "fish_caught" => "Fish Caught",
+            "items_crafted" => "Items Crafted",
+            "items_dropped" => "Items Dropped",
+            "items_picked_up" => "Items Picked Up",
+            "joins" => "Joins",
+            "kill" => "Kills",
+            "last_join" => "Last Joined",
+            "last_seen" => "Last Seen",
+            "move" => "Blocks Traversed",
+            "omnomnom" => "Food Eaten",
+            "playtime" => "Play Time",
+            "pvp" => "PvP Kills",
+            "shears" => "Times striped a sheep",
+            "teleports" => "Teleports",
+            "times_changed_world" => "Worlds Changed",
+            "times_kicked" => "Times Kicked",
+            "tools_broken" => "Tools Broken",
+            "trades" => "Trades",
+            "votes" => "Votes",
+            "words_said" => "Words Said",
+            "xp_gained" => "Xp Gained",
+        ));
         $this->stats = $this->config->get("stats");
     }
 
