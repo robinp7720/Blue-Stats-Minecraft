@@ -54,6 +54,7 @@ class view
 
             if (isset($player)){
                 $string = str_replace('{{ playername }}',$player->name,$string);
+                $string = str_replace('{{ playeruuid }}',$player->uuid,$string);
             }
             /* Modules with args */
             preg_match_all('/{{ ([^ ]+):([^ ]+):([^ ]+) }}/', $string, $matches);
