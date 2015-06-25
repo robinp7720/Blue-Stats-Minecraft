@@ -48,6 +48,28 @@ class view{
 
 		if ($continue){
 
+			/* Modules with args */
+			preg_match_all('/{{ ([^ ]+):([^ ]+):([^ ]+) }}/', $string, $matches);
+
+			foreach ($matches[0] as $key => $replaceStr) {
+
+				/* Plugin Exist? */
+				if (isset($this->bluestats->plugins[$matches[1][$key]])){
+					/* Set plugin */
+					$plugin = $this->bluestats->plugins[$matches[1][$key]];
+
+					/* New module */
+					$module = new module($this->bluestats->mysqli,$matches[1][$key],$matches[2][$key],$plugin,$this->theme,$this->appPath,$matches[3][$key]);
+					/* Render the module */
+				    $output = $module->render();
+
+				    $string = str_replace($replaceStr, $output, $string);
+				}else{
+					$output = "Plugin not found: {$matches[1][$key]}";
+					$string = str_replace($replaceStr, $output, $string);
+				}
+			}
+
 			/* Modules */
 			preg_match_all('/{{ ([^ ]+):([^ ]+) }}/', $string, $matches);
 

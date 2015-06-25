@@ -101,7 +101,8 @@ if (isset($_POST["bs-host"])&&isset($_POST["bs-username"])&&isset($_POST["bs-pas
 	}else{
 		echo "BlueStats has been installed!";
 	}
-	echo '<a href="../admin">Admin Panel</a>';
+	echo '<a href="../admin">Admin Panel</a><br>';
+	echo '<a href="../?page=home">BlueStats</a>';
 }else{
 	echo "Please enter all fields";
 }

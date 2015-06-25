@@ -7,14 +7,17 @@ class module{
 	private $appPath;
 
 	private $config;
+	private $args = [];
 
-	public function __Construct($mysqli,$pluginN,$moduleN,$plugin,$theme,$appPath)
+	public function __Construct($mysqli,$pluginN,$moduleN,$plugin,$theme,$appPath,$args = "")
 	{
 		$this->plugin = $plugin;
 		$this->pluginName = $pluginN;
 		$this->moduleName = $moduleN;
 		$this->theme = $theme;
 		$this->appPath = $appPath;
+
+		$this->args[0] = $args;
 
 		$this->config = new config($mysqli,"MODULE__".$this->pluginName."___".$this->moduleName);
 	}
@@ -26,6 +29,7 @@ class module{
 		$moduleN = $this->moduleName;
 
 		$config = $this->config;
+		$args = $this->args;
 
 		/* Replace key with module */
 		ob_start();

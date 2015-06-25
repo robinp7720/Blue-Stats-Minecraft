@@ -13,9 +13,11 @@ class BlueStats{
 		$this->mysqli = $mysqli;
 
 		$this->config = new config($mysqli,$this->pluginName);
+		$this->config->setDefault("server-name","A Minecraft Server");
 		$this->config->setDefault("theme","default");
 		$this->config->setDefault("base_plugin","lolmewnStats");
 		$this->config->setDefault("view_path","$appPath/themes/{THEME}/");
+		
 		$this->theme = $this->config->get("theme");
 
 		$this->appPath = $appPath;
@@ -25,17 +27,13 @@ class BlueStats{
 	}
 
 	public function getPluginList(){
-		$this->config->setDefault("plugins",array("lolmewnStats"));
+		$this->config->setDefault("plugins",array("lolmewnStats","query","themeText"));
 		return $this->config->get("plugins");
 	}
 
 	public function loadPlugins( array $plugins){
 		$this->plugins = $plugins;
 	}
-	private function error($code){
-		$error = new error($code);
-	}
-
 
 	public function loadPage(){
 		$view = new view($this,$this->config->get("view_path"),$this->appPath);

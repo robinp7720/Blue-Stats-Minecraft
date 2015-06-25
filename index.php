@@ -50,16 +50,6 @@ if ($cache->reCache($_SERVER["REQUEST_URI"])||isset($_GET["recache"])){
 	$BlueStats->loadPlugins($plugins);
 
 	$content = $BlueStats->loadPage();
-	$copyrightMeta = '
-	<link rel="schema.dc" href="http://purl.org/dc/elements/1.1/">
-	<meta name="dcterms.rightsHolder" content="Robin Decker, MySunland">
-	<meta name="dcterms.rights" content="Released under apache 2.0 license">
-	<meta name="dcterms.dateCopyrighted" content="2015">
-	<meta name="dc.license" content="apache 2.0">
-	<meta name="web_author" content="Robin Decker">
-	<meta name="author" content="Robin Decker">
-	';
-	$content = str_replace("<head>","<head>".$copyrightMeta, $content);
 
 	$credits = '
 	<!--
@@ -70,6 +60,17 @@ if ($cache->reCache($_SERVER["REQUEST_URI"])||isset($_GET["recache"])){
 	Developed by _OvErLoRd_ (robinp7720) and MySunland
 	-->
 	';
+	
+	$copyrightMeta = '
+	<link rel="schema.dc" href="http://purl.org/dc/elements/1.1/">
+	<meta name="dcterms.rightsHolder" content="Robin Decker, MySunland">
+	<meta name="dcterms.rights" content="Released under apache 2.0 license">
+	<meta name="dcterms.dateCopyrighted" content="2015">
+	<meta name="dc.license" content="apache 2.0">
+	<meta name="web_author" content="Robin Decker">
+	<meta name="author" content="Robin Decker">
+	';
+	$content = str_replace("<head>","<head>".$copyrightMeta, $content);
 
 	echo $credits.trim($content);
 	$cache->cache($credits.trim($content),$_SERVER["REQUEST_URI"]);

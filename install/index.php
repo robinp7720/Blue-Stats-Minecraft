@@ -28,7 +28,7 @@
 			if (version_compare(PHP_VERSION, '5.2.0', '>=')) {
 			    echo '<span class="label label-success">Current PHP version: ' . PHP_VERSION,'</span>';
 			}else{
-				echo '<span class="label label-danger">Minimum php version required: 5.0 You have: ' . PHP_VERSION,'</span>';
+				echo '<span class="label label-danger">Minimum php version required: 5.2 You have: ' . PHP_VERSION,'</span>';
 			}
 			if (is_writable('.')){
 				echo '<span class="label label-success">PHP has permission to write config.php</span>';

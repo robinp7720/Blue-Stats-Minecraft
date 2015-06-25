@@ -28,6 +28,5 @@ class onlinePlayers extends plugin{
 	public function onlinePlayers()
 	{
 		return $this->onlinePlayers?:[];
-		print_r($this->info);
 	}
 }
