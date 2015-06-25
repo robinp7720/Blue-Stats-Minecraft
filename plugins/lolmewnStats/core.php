@@ -5,13 +5,17 @@ class lolmewnStats extends MySQLplugin
     public $pluginName = "lolmewnStats";
     public $plugin = array(
         "idColumn" => "uuid",
-        "playerNameColum" => "name",
+        "playerNameColumn" => "name",
         "UUIDcolumn" => "uuid",
         "indexTable" => "players",
         "UUIDisID" => true,
+        "singleTable" => false,
+        "valueColumn" => "value",
+        "tables" => [],
         "defaultPrefix" => "Stats_"
     );
-    public $stats = array();
+
+    public $stats = [];
 
     public function onLoad()
     {

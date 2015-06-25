@@ -13,6 +13,7 @@ require "$appPath/classes/modules.class.php";
 require "$appPath/classes/cache.class.php";
 require "$appPath/classes/error.class.php";
 require "$appPath/classes/view.class.php";
+require "$appPath/classes/player.class.php";
 
 /* Configs */
 require "$appPath/config.php";

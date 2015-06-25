@@ -3,6 +3,7 @@
 class plugin
 {
     protected $config;
+    public $mcPlugin = false;
 
     function __construct($mysqli)
     {
@@ -20,7 +21,21 @@ class MySQLplugin extends plugin
     public $mysqli;
     public $prefix = "";
 
-    function __construct($mysqli)
+    public $mcPlugin = true;
+    public $pluginName = "Unnamed plugin";
+    public $plugin = array(
+        "idColumn" => "row_id",
+        "playerNameColum" => "name",
+        "UUIDcolumn" => "uuid",
+        "indexTable" => "players",
+        "UUIDisID" => false,
+        "valueColumn" => "value",
+        "defaultPrefix" => ""
+    );
+
+    public $stats = [];
+
+    public function __construct($mysqli)
     {
         parent::__construct($mysqli);
 
@@ -43,10 +58,9 @@ class MySQLplugin extends plugin
     {
         $mysqli = $this->mysqli;
         $stmt = $mysqli->stmt_init();
-        $id = $this->getId($uuid);
-        $query = "SELECT {$this->plugin["playerNameColum"]} FROM {$this->prefix}{$this->plugin["indexTable"]} WHERE {$this->plugin["idColumn"]} = ?";
+        $query = "SELECT {$this->plugin["playerNameColumn"]} FROM {$this->prefix}{$this->plugin["indexTable"]} WHERE {$this->plugin["UUIDcolumn"]} = ?";
         if ($stmt->prepare($query)) {
-            $stmt->bind_param("s", $id);
+            $stmt->bind_param("s", $uuid);
             $stmt->execute();
             $stmt->bind_result($output);
             $stmt->fetch();

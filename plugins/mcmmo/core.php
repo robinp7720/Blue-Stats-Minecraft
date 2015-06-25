@@ -6,12 +6,17 @@ class mcmmo extends MySQLplugin
     public $plugin = array(
         "idColumn" => "user_id",
         "idColumnInIndex" => "id",
-        "playerNameColum" => "user",
+        "playerNameColumn" => "user",
         "UUIDcolumn" => "uuid",
         "indexTable" => "users",
         "UUIDisID" => false,
+        "singleTable" => true,
+        "valueColumn" => "value",
+        "tables" => ["skills", "experience"],
         "defaultPrefix" => "mcmmo_"
     );
+
+    public $stats = [];
 
     function __construct($mysqli)
     {
