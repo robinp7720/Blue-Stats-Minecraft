@@ -22,6 +22,7 @@ class MySQLplugin extends plugin
     public $prefix = "";
 
     public $mcPlugin = true;
+    public $display_in_playerstats = true;
     public $pluginName = "Unnamed plugin";
     public $plugin = array(
         "idColumn" => "row_id",
@@ -45,6 +46,8 @@ class MySQLplugin extends plugin
         $this->config->setDefault("MYSQL_database", "minecraft");
         $this->config->setDefault("MYSQL_prefix", $this->plugin["defaultPrefix"]);
 
+        $this->config->setDefault("include_in_player_stats", "true");
+
         $this->prefix = $this->config->get("MYSQL_prefix");
         $this->mysqli = new mysqli(
             $this->config->get("MYSQL_host"),
@@ -52,6 +55,8 @@ class MySQLplugin extends plugin
             $this->config->get("MYSQL_password"),
             $this->config->get("MYSQL_database")
         );
+
+        $this->display_in_playerstats =  $this->config->get("include_in_player_stats");
     }
 
     public function getUserName($uuid)
