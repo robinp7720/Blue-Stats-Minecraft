@@ -44,45 +44,14 @@ if (isset($_POST["bs-host"]) && isset($_POST["bs-username"]) && isset($_POST["bs
 	  `value` text NOT NULL
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1');
 
-    /* Create players table */
-    $mysqli->query('CREATE TABLE IF NOT EXISTS `BlueStats_players` (
-	`row_id` int(11) NOT NULL,
-	  `server_id` int(11) NOT NULL,
-	  `uuid` varchar(128) NOT NULL,
-	  `name` varchar(128) NOT NULL,
-	  `plugin` varchar(64) NOT NULL
-	) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1');
-
-    /* Create server info table */
-    $mysqli->query('CREATE TABLE IF NOT EXISTS `BlueStats_server` (
-	`row_id` int(11) NOT NULL,
-	  `server_id` int(11) NOT NULL,
-	  `option` varchar(64) NOT NULL,
-	  `value` varchar(64) NOT NULL
-	) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1');
-
     /* Table indexes */
     /* Config */
     $mysqli->query('ALTER TABLE `BlueStats_config`
 	 ADD PRIMARY KEY (`row_id`)');
 
-    /* Players */
-    $mysqli->query('ALTER TABLE `BlueStats_players`
-	 ADD PRIMARY KEY (`row_id`)');
-
-    /* server info */
-    $mysqli->query('ALTER TABLE `BlueStats_server`
-	 ADD PRIMARY KEY (`row_id`)');
-
     /* Auto Increment */
     $mysqli->query('ALTER TABLE `BlueStats_config`
 	MODIFY `row_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1');
-
-    $mysqli->query('ALTER TABLE `BlueStats_players`
-	MODIFY `row_id` int(11) NOT NULL AUTO_INCREMENT');
-
-    $mysqli->query('ALTER TABLE `BlueStats_server`
-	MODIFY `row_id` int(11) NOT NULL AUTO_INCREMENT');
 
     /* Make config file */
     $config =
