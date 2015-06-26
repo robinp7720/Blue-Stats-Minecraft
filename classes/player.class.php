@@ -33,7 +33,7 @@ class player
         $output = "";
         foreach ($this->getMysqlPlugins() as $plugin) {
             if ($plugin->plugin["singleTable"]) {
-                $output .= '<h1>'.$plugin->pluginName.'</h1>';
+                $output .= '<h2>'.ucfirst($plugin->pluginName).'</h2>';
                 foreach ($plugin->plugin["tables"] as $table) {
                     $stat = [];
                     $stat = $plugin->getStat($table, $this->uuid);
@@ -71,17 +71,23 @@ class player
         return $mysqlPlugins;
     }
 
-    public function render($name, $stats,$h1=false)
+    public function render($name, $stats,$h2=false)
     {
-        if (!$h1)
-            $output = '<h2>' . ucfirst($name) . '</h2><table class="table"><thead></thead><tbody>';
+        $tableid = uniqid();
+        if (!$h2)
+            $output = '<h3>' . ucfirst($name) . '</h3><table class="table" id="'.$tableid.'"><thead><tr><th>Stat</th><td>Value</td></tr></thead><tbody>';
         else
-            $output = '<h1>' . ucfirst($name) . '</h1><table class="table"><thead></thead><tbody>';
+            $output = '<h2>' . ucfirst($name) . '</h2><table class="table" id="'.$tableid.'"><thead><tr><th>Stat</th><td>Value</td></tr></thead><tbody>';
 
         foreach ($stats[0] as $key => $val) {
-            $output .= '<tr><th>' . ucfirst($key) . '</th><td>' . $val . '</td></tr>';
+            $output .= '<tr><th>' . ucfirst(str_replace(array("-","_")," ",$key)) . '</th><td>' . $val . '</td></tr>';
         }
         $output .= '</tbody></table>';
+        $output .= "<script>
+    $(document).ready(function () {
+        $('#$tableid').DataTable();
+    });
+</script>";
         return $output;
     }
 }
