@@ -2,8 +2,8 @@
 
 class plugin
 {
-    protected $config;
     public $mcPlugin = false;
+    protected $config;
 
     function __construct($mysqli)
     {
@@ -29,21 +29,21 @@ class MySQLplugin extends plugin
         "UUIDcolumn" => "uuid",
         "indexTable" => "players",
         "UUIDisID" => false,
+        "singleTable" => true,
         "valueColumn" => "value",
+        "tables" => ["skills", "experience"],
         "defaultPrefix" => ""
     );
-
-    public $stats = [];
 
     public function __construct($mysqli)
     {
         parent::__construct($mysqli);
 
-        $this->config->setDefault("MYSQL_host","localhost");
-        $this->config->setDefault("MYSQL_username","minecraft");
-        $this->config->setDefault("MYSQL_password","password");
-        $this->config->setDefault("MYSQL_database","minecraft");
-        $this->config->setDefault("MYSQL_prefix",$this->plugin["defaultPrefix"]);
+        $this->config->setDefault("MYSQL_host", "localhost");
+        $this->config->setDefault("MYSQL_username", "minecraft");
+        $this->config->setDefault("MYSQL_password", "password");
+        $this->config->setDefault("MYSQL_database", "minecraft");
+        $this->config->setDefault("MYSQL_prefix", $this->plugin["defaultPrefix"]);
 
         $this->prefix = $this->config->get("MYSQL_prefix");
         $this->mysqli = new mysqli(
@@ -70,6 +70,28 @@ class MySQLplugin extends plugin
         return false;
     }
 
+    public function getStat($table, $uuid)
+    {
+
+        $stmt = $this->mysqli->stmt_init();
+
+        $sql = "SELECT * FROM {$this->prefix}{$table} WHERE {$this->plugin["idColumn"]}=? GROUP BY {$this->plugin["idColumn"]}";
+        $id = $this->getId($uuid);
+        if ($stmt->prepare($sql)) {
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $output = array();
+            while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+                $output[] = $row;
+            }
+            $stmt->close();
+
+            return $output;
+        }
+        return false;
+    }
+
     public function getId($uuid)
     {
         if ($this->plugin["UUIDisID"]) {
@@ -87,28 +109,6 @@ class MySQLplugin extends plugin
             }
         }
         return $id;
-    }
-
-    public function getStat($column, $uuid)
-    {
-
-        $stmt = $this->mysqli->stmt_init();
-
-        $sql = "SELECT * FROM {$this->prefix}{$column} WHERE {$this->plugin["idColumn"]}=? GROUP BY {$this->plugin["idColumn"]}";
-        $id = $this->getId($uuid);
-        if ($stmt->prepare($sql)) {
-            $stmt->bind_param("i", $id);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $output = array();
-            while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-                $output[] = $row;
-            }
-            $stmt->close();
-
-            return $output;
-        }
-        return false;
     }
 
     public function getAllPlayerStats($column)

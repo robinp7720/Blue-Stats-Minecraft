@@ -15,8 +15,6 @@ class lolmewnStats extends MySQLplugin
         "defaultPrefix" => "Stats_"
     );
 
-    public $stats = [];
-
     public function onLoad()
     {
         $this->config->setDefault("stats", array(
@@ -53,6 +51,10 @@ class lolmewnStats extends MySQLplugin
             "xp_gained" => "Xp Gained",
         ));
         $this->stats = $this->config->get("stats");
+        foreach ($this->stats as $key => $value) {
+            array_push($this->plugin["tables"],$key);
+        }
+
     }
 
     public function statName($stat)

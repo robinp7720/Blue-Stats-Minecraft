@@ -33,12 +33,12 @@ class view
             /* Load template file */
             $string = file_get_contents($filePath);
 
-            if (strpos($string, '{{ dieifnotid }}') !== false){
-                if (!isset($this->bluestats->request["get"]["id"])){
+            if (strpos($string, '{{ dieifnotid }}') !== false) {
+                if (!isset($this->bluestats->request["get"]["id"])) {
                     $continue = false;
-                }else{
-                    $player = new player($this->bluestats,$this->bluestats->request["get"]["id"]);
-                    if (!$player->exist){
+                } else {
+                    $player = new player($this->bluestats, $this->bluestats->request["get"]["id"]);
+                    if (!$player->exist) {
                         $continue = false;
                     }
                 }
@@ -52,9 +52,12 @@ class view
 
         if ($continue) {
 
-            if (isset($player)){
-                $string = str_replace('{{ playername }}',$player->name,$string);
-                $string = str_replace('{{ playeruuid }}',$player->uuid,$string);
+            if (isset($player)) {
+                $string = str_replace('{{ playername }}', $player->name, $string);
+                $string = str_replace('{{ playeruuid }}', $player->uuid, $string);
+                if (strpos($string, '{{ playerstats }}') !== false) {
+                    $string = str_replace('{{ playerstats }}', $player->getAllStats(), $string);
+                }
             }
             /* Modules with args */
             preg_match_all('/{{ ([^ ]+):([^ ]+):([^ ]+) }}/', $string, $matches);
@@ -111,7 +114,7 @@ class view
 
     public function error($code)
     {
-
+        /* TODO: Error pages */
     }
 
 }

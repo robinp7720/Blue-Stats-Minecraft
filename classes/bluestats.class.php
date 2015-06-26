@@ -28,7 +28,7 @@ class BlueStats
         $this->config->setDefault("homepage", "home");
 
         $this->theme = $this->config->get("theme");
-        $this->page = isset($this->request["get"]["page"])? $this->request["get"]["page"] : $this->config->get("homepage");
+        $this->page = isset($this->request["get"]["page"]) ? $this->request["get"]["page"] : $this->config->get("homepage");
 
         $this->appPath = $appPath;
     }
@@ -36,10 +36,10 @@ class BlueStats
     private function setUpGlobals()
     {
         foreach ($_GET as $key => $value) {
-            $this->request["get"][$key]=urldecode($value);
+            $this->request["get"][$key] = urldecode($value);
         }
         foreach ($_POST as $key => $value) {
-            $this->request["post"][$key]=urldecode($value);
+            $this->request["post"][$key] = urldecode($value);
         }
     }
 

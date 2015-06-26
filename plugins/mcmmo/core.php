@@ -15,12 +15,4 @@ class mcmmo extends MySQLplugin
         "tables" => ["skills", "experience"],
         "defaultPrefix" => "mcmmo_"
     );
-
-    public $stats = [];
-
-    function __construct($mysqli)
-    {
-        parent::__construct($mysqli);
-    }
-
 }
