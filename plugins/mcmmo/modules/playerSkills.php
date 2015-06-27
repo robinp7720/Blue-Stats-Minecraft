@@ -1,5 +1,5 @@
 <?php
-$stats = $plugin->getStat("skills", $_GET["id"]);
+$stats = $plugin->getStat("skills", $player->uuid);
 /* Get headers */
 $headers = array();
 unset($stats[0]["user_id"]);

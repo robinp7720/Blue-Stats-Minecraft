@@ -10,7 +10,7 @@ class player
     private $base_plugin;
     private $bluestats;
 
-    public function __Construct($bluestats, $uuid)
+    public function __Construct($bluestats, $player)
     {
         $this->mysqli = $bluestats->mysqli;
         $this->bluestats = $bluestats;
@@ -18,17 +18,24 @@ class player
         $this->config = new config($this->mysqli, "Player");
 
         $this->base_plugin = $this->bluestats->base_plugin;
-        $this->name = $this->base_plugin->getUserName($uuid);
+        $this->name = $this->base_plugin->getUserName($player);
         if (!empty($this->name)) {
-            $this->uuid = $uuid;
+            $this->uuid = $player;
             $this->exist = true;
-            $this->getAllStats();
         } else {
-            $this->name = "";
+            $this->uuid = $this->base_plugin->getUUID($player);
+            if (!empty($this->uuid)) {
+                $this->name = $player;
+                $this->exist = true;
+            } else {
+                $this->name = NULL;
+                $this->uuid = NULL;
+                $this->exist = false;
+            }
         }
     }
 
-    public function getAllStats()
+    public function renderPlayerAllStats()
     {
         $output = "";
         foreach ($this->getMysqlPlugins() as $plugin) {

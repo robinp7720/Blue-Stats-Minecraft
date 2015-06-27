@@ -9,7 +9,7 @@ GROUP BY {$plugin->prefix}pvp.UUID
 ORDER BY value Desc Limit 1";
 
 if ($stmt->prepare($sql)) {
-    $stmt->bind_param("s", $_GET["id"]);
+    $stmt->bind_param("s", $player->uuid);
     /* execute query */
     $stmt->execute();
 

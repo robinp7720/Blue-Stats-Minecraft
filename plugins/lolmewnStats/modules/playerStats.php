@@ -9,7 +9,7 @@ $stats = $config->get("stats", "lolmewnStats");
     <tbody>
     <?php foreach ($stats as $id => $stat): ?>
         <?php
-        $statVal = $plugin->getStat($id, $_GET["id"]);
+        $statVal = $plugin->getStat($id, $player->uuid);
         if (!empty($statVal)):?>
             <tr>
                 <td><?= $stat ?></td>

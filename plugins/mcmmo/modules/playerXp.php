@@ -1,5 +1,5 @@
 <?php
-$stats = $plugin->getStat("experience", $_GET["id"]);
+$stats = $plugin->getStat("experience", $player->uuid);
 
 unset($stats[0]["user_id"]);
 

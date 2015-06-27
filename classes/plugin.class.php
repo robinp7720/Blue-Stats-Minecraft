@@ -75,6 +75,22 @@ class MySQLplugin extends plugin
         return false;
     }
 
+    public function getUUID($username)
+    {
+        $mysqli = $this->mysqli;
+        $stmt = $mysqli->stmt_init();
+        $query = "SELECT {$this->plugin["UUIDcolumn"]} FROM {$this->prefix}{$this->plugin["indexTable"]} WHERE {$this->plugin["playerNameColumn"]} = ?";
+        if ($stmt->prepare($query)) {
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+            $stmt->bind_result($output);
+            $stmt->fetch();
+            $stmt->close();
+            return $output;
+        }
+        return false;
+    }
+
     public function getStat($table, $uuid)
     {
 

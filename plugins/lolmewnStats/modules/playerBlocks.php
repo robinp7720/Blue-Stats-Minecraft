@@ -8,7 +8,7 @@
     </tr>
     </thead>
     <tbody>
-    <?php foreach ($plugin->getPlayerBlock($_GET["id"]) as $id => $value): ?>
+    <?php foreach ($plugin->getPlayerBlock($player->uuid) as $id => $value): ?>
         <tr>
             <td>
                 <!--<img src="http://blocks.fishbans.com/" alt="">-->

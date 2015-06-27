@@ -8,10 +8,12 @@ class module
     private $theme;
     private $appPath;
 
+    private $player;
+
     private $config;
     private $args = [];
 
-    public function __Construct($mysqli, $pluginN, $moduleN, $plugin, $theme, $appPath, $args = "")
+    public function __Construct($mysqli, $pluginN, $moduleN, $plugin, $theme, $appPath, $args = "", $player)
     {
         $this->plugin = $plugin;
         $this->pluginName = $pluginN;
@@ -20,12 +22,17 @@ class module
         $this->appPath = $appPath;
 
         $this->args[0] = $args;
+        if (isset($player)) {
+            $this->player = $player;
+        }
+
 
         $this->config = new config($mysqli, "MODULE__" . $this->pluginName . "___" . $this->moduleName);
     }
 
     public function render()
     {
+        $player = $this->player;
         /** @noinspection PhpUnusedLocalVariableInspection */
         $plugin = $this->plugin;
         $pluginN = $this->pluginName;

@@ -56,7 +56,7 @@ class view
                 $string = str_replace('{{ playername }}', $player->name, $string);
                 $string = str_replace('{{ playeruuid }}', $player->uuid, $string);
                 if (strpos($string, '{{ playerstats }}') !== false) {
-                    $string = str_replace('{{ playerstats }}', $player->getAllStats(), $string);
+                    $string = str_replace('{{ playerstats }}', $player->renderPlayerAllStats(), $string);
                 }
             }
             /* Modules with args */
@@ -70,7 +70,7 @@ class view
                     $plugin = $this->bluestats->plugins[$matches[1][$key]];
 
                     /* New module */
-                    $module = new module($this->bluestats->mysqli, $matches[1][$key], $matches[2][$key], $plugin, $this->theme, $this->appPath, $matches[3][$key]);
+                    $module = new module($this->bluestats->mysqli, $matches[1][$key], $matches[2][$key], $plugin, $this->theme, $this->appPath, $matches[3][$key], isset($player) ? $player : NULL);
                     /* Render the module */
                     $output = $module->render();
 
@@ -92,7 +92,7 @@ class view
                     $plugin = $this->bluestats->plugins[$matches[1][$key]];
 
                     /* New module */
-                    $module = new module($this->bluestats->mysqli, $matches[1][$key], $matches[2][$key], $plugin, $this->theme, $this->appPath);
+                    $module = new module($this->bluestats->mysqli, $matches[1][$key], $matches[2][$key], $plugin, $this->theme, $this->appPath, NULL, isset($player) ? $player : NULL);
                     /* Render the module */
                     $output = $module->render();
 
