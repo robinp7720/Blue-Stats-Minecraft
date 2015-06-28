@@ -71,7 +71,7 @@ class player
     {
         $mysqlPlugins = [];
         foreach ($this->bluestats->plugins as $plugin) {
-            if ($plugin->mcPlugin&&$plugin->display_in_playerstats==="true") {
+            if ($plugin->mcPlugin && $plugin->display_in_playerstats === "true") {
                 $mysqlPlugins[] = $plugin;
             }
         }

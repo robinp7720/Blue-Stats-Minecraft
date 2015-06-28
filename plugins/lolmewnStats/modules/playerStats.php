@@ -1,7 +1,7 @@
 <?php
 $stats = $config->get("stats", "lolmewnStats");
 ?>
-<table class="table" id="allplayers">
+<table class="table" id="stats">
     <thead>
     <th>Stat</th>
     <th>Value</th>
@@ -21,6 +21,6 @@ $stats = $config->get("stats", "lolmewnStats");
 </table>
 <script>
     $(document).ready(function () {
-        $('#allplayers').DataTable();
+        $('#stats').DataTable();
     });
 </script>

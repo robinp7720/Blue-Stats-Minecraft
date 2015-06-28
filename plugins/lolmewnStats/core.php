@@ -52,7 +52,7 @@ class lolmewnStats extends MySQLplugin
         ));
         $this->stats = $this->config->get("stats");
         foreach ($this->stats as $key => $value) {
-            array_push($this->plugin["tables"],$key);
+            array_push($this->plugin["tables"], $key);
         }
 
     }

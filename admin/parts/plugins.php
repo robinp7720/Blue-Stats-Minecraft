@@ -9,7 +9,7 @@
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
             ?>
             <a href="?plugin=<?= urlencode($row["plugin"]) ?>"
-               class="list-group-item <?php if ($_GET["plugin"] === $row["plugin"]) echo 'active'?>">
+               class="list-group-item <?php if ($_GET["plugin"] === $row["plugin"]) echo 'active' ?>">
                 <?= $row["plugin"] ?>
             </a>
         <?php
@@ -29,7 +29,7 @@
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
             ?>
             <a href="?plugin=<?= urlencode($row["plugin"]) ?>"
-               class="list-group-item <?php if ($_GET["plugin"] === $row["plugin"]) echo 'active'?>">
+               class="list-group-item <?php if ($_GET["plugin"] === $row["plugin"]) echo 'active' ?>">
                 <?= substr($row["plugin"], 8) ?>
             </a>
         <?php

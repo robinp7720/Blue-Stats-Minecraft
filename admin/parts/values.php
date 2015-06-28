@@ -31,7 +31,7 @@
                         <?php else: ?>
                             <input name="value" type="text" class="form-control" value="<?= htmlspecialchars($value) ?>"
                                    style="width:100%;max-width:100%;">
-                        <?php endif;?>
+                        <?php endif; ?>
                     </td>
                     <input type="hidden" name="option" value="<?= htmlspecialchars($row["option"]) ?>">
                     <input type="hidden" name="plugin" value="<?= htmlspecialchars($row["plugin"]) ?>">

@@ -56,7 +56,7 @@ class MySQLplugin extends plugin
             $this->config->get("MYSQL_database")
         );
 
-        $this->display_in_playerstats =  $this->config->get("include_in_player_stats");
+        $this->display_in_playerstats = $this->config->get("include_in_player_stats");
     }
 
     public function getUserName($uuid)
