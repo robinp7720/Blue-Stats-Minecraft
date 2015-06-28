@@ -21,6 +21,9 @@ class cache
     public function cache($content, $name)
     {
         if ($this->config->get("enabled") == "true") {
+            if (!file_exists("cache/")) {
+                mkdir("cache");
+            }
             $file_name = md5($name) . '.html';
             $time = time();
 
