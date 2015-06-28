@@ -81,9 +81,9 @@ class MySQLplugin extends plugin
         $stmt = $this->mysqli->stmt_init();
 
         $sql = "SELECT * FROM {$this->prefix}{$table} WHERE {$this->plugin["idColumn"]}=? GROUP BY {$this->plugin["idColumn"]}";
-        $id = $this->getId($uuid);
+        $player_id = $this->getId($uuid);
         if ($stmt->prepare($sql)) {
-            $stmt->bind_param("i", $id);
+            $stmt->bind_param("i", $player_id);
             $stmt->execute();
             $result = $stmt->get_result();
             $output = array();
