@@ -100,7 +100,7 @@ class MySQLplugin extends plugin
     public function getId($uuid)
     {
         if ($this->plugin["UUIDisID"]) {
-            $id = $uuid;
+            return $uuid;
         } else {
             $mysqli = $this->mysqli;
             $stmt = $mysqli->stmt_init();
@@ -111,9 +111,10 @@ class MySQLplugin extends plugin
                 $stmt->bind_result($id);
                 $stmt->fetch();
                 $stmt->close();
+                return $id;
             }
         }
-        return $id;
+        return false;
     }
 
     public function getAllPlayerStats($column)
