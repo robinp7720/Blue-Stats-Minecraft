@@ -12,7 +12,7 @@ class cache
 
         $this->config = new config($mysqli, "cache");
         $this->config->setDefault("expiry-time", 36000);
-        $this->config->setDefault("enabled", "true");
+        $this->config->setDefault("enabled", "false");
         $this->config->setDefault("cache-directory", $this->appPath . "/cache/");
 
         $this->cache_dir = $this->config->get("cache-directory");

@@ -1,8 +1,9 @@
 <?php
 require "minecraftQuery.php";
-class onlinePlayers extends plugin
+
+class query extends plugin
 {
-    public $pluginName = "onlineQuery";
+    public $pluginName = "query";
     public $Query;
     public $info;
 

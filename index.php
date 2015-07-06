@@ -48,6 +48,14 @@ if ($cache->reCache($_SERVER["REQUEST_URI"]) || isset($_GET["recache"])) {
         include "$appPath/plugins/$plugin/core.php";
 
         $plugins[$plugin] = new $plugin($mysqlMan->get("BlueStats"));
+        if (isset($plugins[$plugin]->firstInstall)) {
+            if ($plugins[$plugin]->firstInstall === true) {
+                unset($plugins[$plugin]);
+            }
+        }
+        if (method_exists($plugins[$plugin], "onLoad")) {
+            $plugins[$plugin]->onLoad();
+        }
     }
     $BlueStats->loadPlugins($plugins);
 

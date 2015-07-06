@@ -28,6 +28,9 @@ class config
 
         if (!$this->configExist($option, $plugin)) {
             $this->set($option, $value, $plugin);
+            return true;
+        } else {
+            return false;
         }
     }
 

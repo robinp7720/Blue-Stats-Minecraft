@@ -8,6 +8,8 @@ class MySQLplugin extends plugin
     public $mcPlugin = true;
     public $display_in_playerstats = true;
     public $pluginName = "Unnamed plugin";
+    public $firstInstall = false;
+
     public $plugin = array(
         "idColumn" => "row_id",
         "playerNameColum" => "name",
@@ -23,22 +25,32 @@ class MySQLplugin extends plugin
     public function __construct($mysqli)
     {
         parent::__construct($mysqli);
-
-        $this->config->setDefault("MYSQL_host", "localhost");
-        $this->config->setDefault("MYSQL_username", "minecraft");
-        $this->config->setDefault("MYSQL_password", "password");
-        $this->config->setDefault("MYSQL_database", "minecraft");
-        $this->config->setDefault("MYSQL_prefix", $this->plugin["defaultPrefix"]);
+        if (
+            $this->config->setDefault("MYSQL_host", "localhost") &&
+            $this->config->setDefault("MYSQL_username", "minecraft") &&
+            $this->config->setDefault("MYSQL_password", "password") &&
+            $this->config->setDefault("MYSQL_database", "minecraft") &&
+            $this->config->setDefault("MYSQL_prefix", $this->plugin["defaultPrefix"])
+        ) {
+            $this->firstInstall = true;
+        } else {
+            $this->firstInstall = false;
+        }
 
         $this->config->setDefault("include_in_player_stats", "true");
 
         $this->prefix = $this->config->get("MYSQL_prefix");
-        $this->mysqli = new mysqli(
-            $this->config->get("MYSQL_host"),
-            $this->config->get("MYSQL_username"),
-            $this->config->get("MYSQL_password"),
-            $this->config->get("MYSQL_database")
-        );
+        try {
+            $this->mysqli = new mysqli(
+                $this->config->get("MYSQL_host"),
+                $this->config->get("MYSQL_username"),
+                $this->config->get("MYSQL_password"),
+                $this->config->get("MYSQL_database")
+            );
+        } catch (Exception $e) {
+            echo $this->pluginName . " could not connect to mysql database.";
+            echo "<br> Error: $e<br><br>";
+        }
 
         $this->display_in_playerstats = $this->config->get("include_in_player_stats");
     }

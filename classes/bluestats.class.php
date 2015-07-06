@@ -51,7 +51,12 @@ class BlueStats
     public function loadPlugins(array $plugins)
     {
         $this->plugins = $plugins;
-        $this->base_plugin = $this->plugins[$this->config->get("base_plugin")];
+        if (isset($this->plugins[$this->config->get("base_plugin")])) {
+            $this->base_plugin = $this->plugins[$this->config->get("base_plugin")];
+        } else {
+            echo "Base plugin does not exist: " . $this->config->get("base_plugin");
+            echo "<br>Please install this plugin or change the base plugin";
+        }
     }
 
     public function loadPage()
