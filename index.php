@@ -47,8 +47,7 @@ if ($cache->reCache($_SERVER["REQUEST_URI"]) || isset($_GET["recache"])) {
         /** @noinspection PhpIncludeInspection */
         include "$appPath/plugins/$plugin/core.php";
 
-        /* Load in plugin init script */
-        include "$appPath/plugins/$plugin/init.php";
+        $plugins[$plugin] = new $plugin($mysqlMan->get("BlueStats"));
     }
     $BlueStats->loadPlugins($plugins);
 
