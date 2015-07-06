@@ -1,7 +1,11 @@
-<h2 style="margin-top:0;">Plugins</h2>
+<h2>Plugins</h2>
 <div class="list-group">
     <?php
-    $plugin = $_GET["plugin"];
+    if (isset($_GET["plugin"])) {
+        $plugin = $_GET["plugin"];
+    } else {
+        $plugin = "";
+    }
     $pattern = "/__([^ ]+)___/";
     preg_match($pattern, $plugin, $matches, PREG_OFFSET_CAPTURE, 3);
     if (isset($matches[1][0])) {
@@ -24,16 +28,10 @@
     }
     ?>
 </div>
-<h2>Modules</h2>
+<h3>Modules</h3>
 <div class="list-group">
     <?php
-    $plugin = $_GET["plugin"];
-    $pattern = "/__([^ ]+)___/";
-    preg_match($pattern, $plugin, $matches, PREG_OFFSET_CAPTURE, 3);
-    if (isset($matches[1][0])) {
-        $plugin = $matches[1][0];
-    }
-    //echo "<pre>".print_r($matches,2)."</pre>";
+
     $stmt = $mysqli->stmt_init();
     if ($stmt->prepare("SELECT plugin FROM BlueStats_config WHERE plugin like ? GROUP BY plugin")) {
         $search = "MODULE__" . $plugin . "___%";
