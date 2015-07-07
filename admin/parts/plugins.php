@@ -28,6 +28,7 @@
     }
     ?>
 </div>
+<?php if (!empty($plugin)): ?>
 <h3>Modules</h3>
 <div class="list-group">
     <?php
@@ -51,3 +52,4 @@
     }
     ?>
 </div>
+<?php endif ?>
