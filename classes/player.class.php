@@ -87,7 +87,7 @@ class player
             $output = '<h2>' . ucfirst($name) . '</h2><table class="table" id="' . $tableid . '"><thead><tr><th>Stat</th><td>Value</td></tr></thead><tbody>';
 
         foreach ($stats[0] as $key => $val) {
-            $output .= '<tr><th>' . ucfirst(str_replace(array("-", "_"), " ", $key)) . '</th><td>' . $val . '</td></tr>';
+            $output .= '<tr><td>' . ucfirst(str_replace(array("-", "_"), " ", $key)) . '</td><td>' . $val . '</td></tr>';
         }
         $output .= '</tbody></table>';
         $output .= "<script>
