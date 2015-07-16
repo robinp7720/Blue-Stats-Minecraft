@@ -8,7 +8,7 @@ $imageSrc = $config->get("image-src");
     foreach ($plugin->onlinePlayers() as $player):
 
         ?>
-        <a href="">
+        <a href="?page=player&id=<?= $player ?>">
             <img src="<?= str_replace("{NAME}", $player, $imageSrc) ?>" alt="<?= $player ?>" title="<?= $player ?>"
                  data-toggle="tooltip" data-placement="top">
         </a>
