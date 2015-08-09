@@ -56,6 +56,29 @@ if (isset($_GET["id"])):
     $image_url = str_replace("{NAME}", $_GET["id"], $config->get("image-src"));
 
     $theme["nav"]["color"] = get_main_colour($image_url);
+    /* If to dark */
+    if ($theme['nav']['color']['red'] < 10) {
+        $theme['nav']['color']['red'] += 10;
+    }
+    if ($theme['nav']['color']['green'] < 10) {
+        $theme['nav']['color']['green'] += 10;
+    }
+    if ($theme['nav']['color']['blue'] < 10) {
+        $theme['nav']['color']['blue'] += 10;
+    }
+
+    /* If to light */
+    if ($theme['nav']['color']['red'] > 240) {
+        $theme['nav']['color']['red'] -= 10;
+    }
+    if ($theme['nav']['color']['green'] > 240) {
+        $theme['nav']['color']['green'] -= 10;
+    }
+    if ($theme['nav']['color']['blue'] > 240) {
+        $theme['nav']['color']['blue'] -= 10;
+    }
+
+
     $theme["headers"]["color"] = $theme["nav"]["color"];
     $theme["pager"]["color"] = $theme["nav"]["color"];
     ?>
