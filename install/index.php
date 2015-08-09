@@ -1,94 +1,107 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>BlueStats 3 Install</title>
-    <!-- Latest compiled and minified CSS & JS -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/paper/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+
     <style>
-        .input-group {
-            margin-bottom: 10px;
+        body {
+            background: #eee;
         }
 
-        .label {
-            font-size: 14px;
-            margin: 5px 5px 5px 0;
-            float: left;
+        .install {
+            font-family: 'Open Sans', sans-serif;
+            width: 100%;
+            line-height: 30px;
+            height: auto;
+            border-radius: 3px;
+            background: white;
+            padding: 5px 0;
+            margin-top: 20px;
+            -webkit-box-shadow: 0 0 20px 0 #3B3B3B;
+            box-shadow: 0 0 20px 0 #3B3B3B;
+        }
+
+        .light {
+            font-weight: 300;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .install-steps {
+            height: 50px;
+            width: 100%;
+            margin-top: 20px;
+            padding: 0;
+
+        }
+
+        .install-steps .step {
+            width: 25%;
             display: block;
+            float: left;
+            background: #fff;
+            height: 100%;
+            line-height: 50px;
+            text-align: center;
+            border-bottom: #ddd 2px solid;
         }
 
-        .requirements {
-            overflow: hidden;
+        .install-steps .step.active {
+            width: 25%;
+            display: block;
+            float: left;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            border: #ddd 2px solid;
+            border-bottom: none;
+        }
+
+        .install-container {
+            margin-top: 5px;
+            padding: 10px;
+            font-size: 1.2em;
+        }
+
+        .text-warning {
+            color: #E74C3C;
+        }
+
+        .col-md-6 {
+            padding: 5px 15px;
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>BlueStats 3 Install</h1>
+    <div class="install">
+        <h1 class="light text-center"><span class="bold">BlueStats</span> Installer</h1>
 
-    <div class="requirements">
-        <?php
-        if (version_compare(PHP_VERSION, '5.2.0', '>=')) {
-            echo '<span class="label label-success">Current PHP version: ' . PHP_VERSION, '</span>';
-        } else {
-            echo '<span class="label label-danger">Minimum php version required: 5.2 You have: ' . PHP_VERSION, '</span>';
-        }
-        if (is_writable('.')) {
-            echo '<span class="label label-success">PHP has permission to write config.php</span>';
-        } else {
-            echo '<span class="label label-danger">Config.php must be created manually</span>';
-        }
-        if (extension_loaded('mysqlnd')) {
-            echo '<span class="label label-success">mysqlnd is installed</span>';
-        } else {
-            echo '<span class="label label-success">mysqlnd is required</span>';
-        }
-        ?>
-        <br>
-        <br>
-    </div>
-    <form action="install.php" method="POST">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                    BlueStats database Settings (Not lolmewn stats database settings)
-                </h3>
+        <div class="install-steps">
+            <div class="step <?php if ($_GET["step"] == 1 || !isset($_GET["step"])) echo "active"; ?>">Requirements
             </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            <span class="input-group-addon">Host</span>
-                            <input type="text" class="form-control" placeholder="Host" name="bs-host" value="127.0.0.1">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            <span class="input-group-addon">Username</span>
-                            <input type="text" class="form-control" placeholder="Username" name="bs-username"
-                                   value="minecraft">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            <span class="input-group-addon">Password</span>
-                            <input type="password" class="form-control" placeholder="Password" name="bs-password">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            <span class="input-group-addon">Database</span>
-                            <input type="text" class="form-control" placeholder="DataBase" name="bs-db"
-                                   value="BlueStats">
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="step <?php if ($_GET["step"] == 2) echo "active"; ?>">Configuration</div>
+            <div class="step <?php if ($_GET["step"] == 3) echo "active"; ?>">Config Check</div>
+            <div class="step <?php if ($_GET["step"] == 4) echo "active"; ?>">Install</div>
         </div>
-
-        <button type="submit" class="btn btn-success btn-lg pull-right">Install</button>
-    </form>
+        <div class="install-container">
+            <?php
+            if ($_GET["step"] == 1 || !isset($_GET["step"]))
+                include 'views/step1.php';
+            if ($_GET["step"] == 2)
+                include 'views/step2.php';
+            if ($_GET["step"] == 3)
+                include 'views/step3.php';
+            if ($_GET["step"] == 4)
+                include 'views/step4.php';
+            ?>
+        </div>
+    </div>
 </div>
 </body>
 </html>
