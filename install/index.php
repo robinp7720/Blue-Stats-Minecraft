@@ -3,7 +3,6 @@
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
 
@@ -24,7 +23,9 @@
             -webkit-box-shadow: 0 0 20px 0 #3B3B3B;
             box-shadow: 0 0 20px 0 #3B3B3B;
         }
-
+        .input-group{
+            margin: 2px 0;
+        }
         .light {
             font-weight: 300;
         }
@@ -59,6 +60,19 @@
             border-top-left-radius: 5px;
             border-top-right-radius: 5px;
             border: #ddd 2px solid;
+            border-bottom: none;
+        }
+
+        .install-steps .step:first-of-type.active {
+            border-top-left-radius: 0;
+            border-top-right-radius: 5px;
+            border-left: none;
+            border-bottom: none;
+        }
+        .install-steps .step:last-of-type.active {
+            border-top-left-radius: 5px;
+            border-top-right-radius: 0;
+            border-right: none;
             border-bottom: none;
         }
 
