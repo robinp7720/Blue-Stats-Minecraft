@@ -24,7 +24,7 @@ class cache
             if (!file_exists($this->cache_dir)) {
                 mkdir($this->cache_dir);
             }
-            $file_name = md5($name) . '.html';
+            $file_name = md5($name) . '.json';
             $time = time();
 
             $toSave = array("time" => $time, "content" => $content);
@@ -36,7 +36,7 @@ class cache
     public function reCache($name)
     {
         if ($this->config->get("enabled") == "true") {
-            $file_name = md5($name) . '.html';
+            $file_name = md5($name) . '.json';
             if (file_exists($this->cache_dir . $file_name)) {
                 $file = file_get_contents($this->cache_dir . $file_name);
                 $cache = json_decode($file, true);
@@ -55,7 +55,7 @@ class cache
 
     public function getCache($name)
     {
-        $file_name = md5($name) . '.html';
+        $file_name = md5($name) . '.json';
         return json_decode(file_get_contents($this->cache_dir . $file_name), true)["content"];
     }
 }
