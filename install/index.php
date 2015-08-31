@@ -103,7 +103,7 @@
             <div class="step <?php if ($_GET["step"] == 3) echo "active"; ?>">Config Check</div>
             <div class="step <?php if ($_GET["step"] == 4) echo "active"; ?>">Install</div>
         </div>
-        <div class="install-container">
+        <div class="install-container" style="overflow: hidden">
             <?php
             if ($_GET["step"] == 1 || !isset($_GET["step"]))
                 include 'views/step1.php';

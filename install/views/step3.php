@@ -68,4 +68,11 @@ if (isset($_POST["mcmmo-enable"])&&$_POST["mcmmo-enable"]=="on") {
         $success = false;
     }
 }
+
 $_SESSION = $_POST;
+
+if ($success) {
+    echo '<a class="btn btn-success pull-right" href="?step=4">Install</a>';
+}else{
+    echo '<a class="btn btn-danger pull-left"  href="?step=2">Back</a>';
+}
