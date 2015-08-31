@@ -20,6 +20,7 @@ class config
      * @param string $option
      * @param string $value
      * @param string $plugin
+     * @return bool
      */
     public function setDefault($option, $value, $plugin = "this")
     {
