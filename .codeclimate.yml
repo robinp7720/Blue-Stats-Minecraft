@@ -1,7 +1,0 @@
-engines:
-  csslint:
-    enabled: true
-  phpcodesniffer:
-    enabled: true
-  fixme:
-    enabled: true
