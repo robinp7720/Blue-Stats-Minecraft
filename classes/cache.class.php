@@ -35,7 +35,7 @@ class cache
 
     public function reCache($name)
     {
-        if ($this->config->get("enabled") == "true") {
+        if ($this->config->get("enabled") == "true" && !isset($_GET["recache"])) {
             $file_name = md5($name) . '.json';
             if (file_exists($this->cache_dir . $file_name)) {
                 $file = file_get_contents($this->cache_dir . $file_name);

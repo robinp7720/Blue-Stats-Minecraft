@@ -32,7 +32,12 @@ $mysqlMan->connect(
 );
 $cache = new cache($mysqlMan->get("BlueStats"), $appPath);
 
-if ($cache->reCache($_SERVER["REQUEST_URI"]) || isset($_GET["recache"])) {
+$uri = $_SERVER["REQUEST_URI"];
+$uri = str_replace("?recache&","?",$uri);
+$uri = str_replace("&recache","",$uri);
+$uri = str_replace("?recache","",$uri);
+
+if ($cache->reCache($uri)) {
     $BlueStats = new BlueStats($mysqlMan->get("BlueStats"), $appPath);
     if (file_exists('themes/' . $BlueStats->theme . '/style.css')) {
         file_put_contents("style.css", file_get_contents('themes/' . $BlueStats->theme . '/style.css'));
@@ -86,7 +91,7 @@ if ($cache->reCache($_SERVER["REQUEST_URI"]) || isset($_GET["recache"])) {
     $content = str_replace("<head>", "<head>" . $copyrightMeta, $content);
 
     echo $credits . trim($content);
-    $cache->cache($credits . trim($content), $_SERVER["REQUEST_URI"]);
+    $cache->cache($credits . trim($content), $uri);
 } else {
     echo $cache->getCache($_SERVER["REQUEST_URI"]);
 }
