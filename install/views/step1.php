@@ -31,6 +31,16 @@ if (is_writable('../')) {
 ?>
 
 <br>
+Can write to assets folder
+<?php
+if (is_writable('../assets/')) {
+    echo '<i class="fa fa-check text-success"></i>';
+} else {
+    echo '<i class="fa fa-times text-warning"></i> (Themes will not work as expected)';
+}
+?>
+
+<br>
 Can write to cache folder
 <?php
 if (is_writable('../cache/')) {
