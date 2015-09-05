@@ -16,11 +16,10 @@ require "$appPath/classes/view.class.php";
 require "$appPath/classes/player.class.php";
 require "$appPath/classes/mysqlPlugin.class.php";
 
-/* Configs */
-require "$appPath/config.php";
-
 /* Functions */
 require "$appPath/functions/utils.func.php";
+
+$config = json_decode(file_get_contents("config.json"),true);
 
 $mysqlMan = new mysqlMan;
 $mysqlMan->connect(
@@ -32,6 +31,7 @@ $mysqlMan->connect(
 );
 $cache = new cache($mysqlMan->get("BlueStats"), $appPath);
 
+// Replace remove ?recache from url
 $uri = $_SERVER["REQUEST_URI"];
 $uri = str_replace("?recache&","?",$uri);
 $uri = str_replace("&recache","",$uri);

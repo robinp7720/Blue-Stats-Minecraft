@@ -1,7 +1,8 @@
 <?php
+session_start();
 error_reporting(E_ALL);
 require "../classes/config.class.php";
-session_start();
+
 
 echo "<pre>".print_r($_SESSION,2)."</pre>";
 
@@ -42,18 +43,18 @@ $mysqli->query('ALTER TABLE `BlueStats_config`
 	MODIFY `row_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1');
 
 /* Make config file */
-$configFile =
-'<?php
-$config["mysql"]=array(
-	"username" => "' . $_SESSION["bs-username"] . '",
-	"password" => "' . $_SESSION["bs-password"] . '",
-	"dbname"   => "' . $_SESSION["bs-db"] . '",
-	"host"     => "' . $_SESSION["bs-host"] . '"
-);';
+$configFile = json_encode(array(
+	"mysql" => array(
+		"username" => $_SESSION["bs-username"],
+		"password" => $_SESSION["bs-password"],
+		"dbname"   => $_SESSION["bs-db"],
+		"host"     => $_SESSION["bs-host"]
+	)
+));
 
-if (!file_put_contents("../config.php", $configFile)) {
+if (!file_put_contents("../config.json", $configFile)) {
 	$configFile = htmlspecialchars($configFile);
-    echo 'Please create a config.php file in the root directory of BlueStats with the following contents: <pre>'.$configFile.'</pre>';
+    echo 'Please create a config.json file in the root directory of BlueStats with the following contents: <pre>'.$configFile.'</pre>';
 
 } else {
     echo 'BlueStats config file has been created<br>';
