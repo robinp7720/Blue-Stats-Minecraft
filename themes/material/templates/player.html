@@ -11,7 +11,11 @@
         <br><br>
         {{ lolmewnStats:archenemy }}
     </div>
-    <div class="col-md-9">{{ lolmewnStats:playerStats }}</div>
+    <div class="col-md-9">
+        {{ lolmewnStats:playerStats }}
+        <h3>Player name history:</h3>
+        {{ nameHistory:playernames }}
+    </div>
 </div>
 <h2>Block Stats</h2>
 {{ lolmewnStats:playerBlocks }}
