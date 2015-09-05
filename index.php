@@ -39,9 +39,7 @@ $uri = str_replace("?recache","",$uri);
 
 if ($cache->reCache($uri)) {
     $BlueStats = new BlueStats($mysqlMan->get("BlueStats"), $appPath);
-    if (file_exists('themes/' . $BlueStats->theme . '/style.css')) {
-        file_put_contents("style.css", file_get_contents('themes/' . $BlueStats->theme . '/style.css'));
-    }
+
     $loadablePlugins = $BlueStats->getPluginList();
     $plugins = array();
 
