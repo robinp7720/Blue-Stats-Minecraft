@@ -3,13 +3,14 @@ error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
 session_start();
-if (!file_exists("../config.php"))
+if (!file_exists("../config.json"))
     die("Please go to /install first");
 
 /** @noinspection PhpIncludeInspection */
-require "../config.php";
 require "../classes/config.class.php";
 require "../classes/mysql.class.php";
+
+$config = json_decode(file_get_contents("../config.json"),true);
 
 $mysqlMan = new mysqlMan;
 $mysqlMan->connect(
