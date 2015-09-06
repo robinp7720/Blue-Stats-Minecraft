@@ -6,7 +6,7 @@ foreach ($plugin->getNames($player->uuid) as $name){
     if (isset($name["changedToAt"])){
         $timeago = (time()*1000) - $name["changedToAt"];
         $timeago = secondsToTime($timeago/1000);
-        echo "<td>{$timeago} ago</td>";
+        echo "<td>Changed {$timeago} ago</td>";
     }else{
         echo "<td>Original</td>";
     }
