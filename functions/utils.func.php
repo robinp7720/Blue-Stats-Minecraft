@@ -107,7 +107,7 @@ function secondsToTime($seconds, $contract = true)
             }else if($weeks> 0){
                 return $thours.", ".$tdays." and ".$tweeks;
             }else if($days > 0){
-                return $thours." and ".$days;
+                return $thours." and ".$tdays;
             }else if ($hours > 0){
                 return $tmins." and ".$thours;
             }else if($mins > 0){
