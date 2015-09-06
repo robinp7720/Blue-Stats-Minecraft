@@ -66,9 +66,9 @@ function secondsToTime($seconds, $contract = true)
             /* Text weeks */
             if (round($weeks)>0){
                 if (round($weeks)>1){
-                    $tweeks = floor($weeks) . " weeks";
+                    $tweeks = round($weeks) . " weeks";
                 }else{
-                    $tweeks = ceil($weeks) . " week";
+                    $tweeks = round($weeks) . " week";
                 }
             }else{
                 $tweeks = "";
