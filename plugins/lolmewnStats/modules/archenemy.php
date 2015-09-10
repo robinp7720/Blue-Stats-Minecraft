@@ -35,7 +35,7 @@ if (!empty($output)):
         <img src="https://minotar.net/helm/<?= $linkId ?>.png" alt="" style="width:100%;">
 
         <div class="panel-body">
-            <h3><a href="?page=player&id=<?= $linkId ?>"><?= $output[0]["name"] ?></a></h3>
+            <h3><a href="<?= $url->player($linkId) ?>"><?= $output[0]["name"] ?></a></h3>
             <h6 class="text-muted"><?= $player->name ?>'s Arch
                 Enemy</h6>
         </div>
