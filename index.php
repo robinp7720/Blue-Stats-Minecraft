@@ -15,6 +15,7 @@ require "$appPath/classes/error.class.php";
 require "$appPath/classes/view.class.php";
 require "$appPath/classes/player.class.php";
 require "$appPath/classes/mysqlPlugin.class.php";
+require "$appPath/classes/url.class.php";
 
 /* Functions */
 require "$appPath/functions/utils.func.php";

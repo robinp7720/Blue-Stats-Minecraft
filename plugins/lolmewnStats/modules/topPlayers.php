@@ -55,6 +55,13 @@ $stats = $config->get("stats");
         } else {
             $display = "0";
         }
+
+        if ($url->useUUID) {
+            $linkId = isset($data[0]["uuid"]) ? $data[0]["uuid"] : "";
+        } else {
+            $linkId = isset($data[0]["name"]) ? $data[0]["name"] : "";
+        }
+
         ?>
         <div class="col-md-3 col-sm-4 col-xs-6">
             <div class="panel panel-default">
@@ -63,7 +70,7 @@ $stats = $config->get("stats");
 
                 <div class="panel-body">
                     <h3 style="margin-top:0;padding:0;"><a
-                            href="?page=player&id=<?= isset($data[0]["name"]) ? $data[0]["uuid"] : "" ?>"><?= isset($data[0]["name"]) ? $data[0]["name"] : "Nobody" ?></a>
+                            href="<?= $url->player($linkId) ?>"><?= isset($data[0]["name"]) ? $data[0]["name"] : "Nobody" ?></a>
                     </h3>
                     <h6 style="margin-top:0;padding:0;"
                         class="text-muted"><?= str_replace("{VALUE}", $display, $english[$stat]) ?></h6>

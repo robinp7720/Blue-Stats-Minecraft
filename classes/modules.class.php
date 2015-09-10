@@ -13,13 +13,17 @@ class module
     private $config;
     private $args = [];
 
-    public function __Construct($mysqli, $pluginN, $moduleN, $plugin, $theme, $appPath, $args = "", $player)
+    private $url;
+
+    public function __Construct($mysqli, $pluginN, $moduleN, $plugin, $theme, $appPath, $url, $args = "", $player)
     {
         $this->plugin = $plugin;
         $this->pluginName = $pluginN;
         $this->moduleName = $moduleN;
         $this->theme = $theme;
         $this->appPath = $appPath;
+
+        $this->url = $url;
 
         $this->args[0] = $args;
         if (isset($player)) {
@@ -33,6 +37,8 @@ class module
     public function render()
     {
         $player = $this->player;
+        $url = $this->url;
+
         /** @noinspection PhpUnusedLocalVariableInspection */
         $plugin = $this->plugin;
         $pluginN = $this->pluginName;

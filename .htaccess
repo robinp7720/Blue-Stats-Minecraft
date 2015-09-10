@@ -1,0 +1,5 @@
+RewriteEngine On
+
+RewriteRule ^([^/]*)/$ /?page=$1 [L]
+RewriteRule ^([^/]*)/([^/]*)/$ /?page=$1&id=$2 [L]
+

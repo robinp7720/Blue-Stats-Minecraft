@@ -31,11 +31,15 @@ if (!$config->configExist("stat")) {
                 $statDisplay = $stat["value"];
             }
         }
-
+        if ($url->useUUID) {
+            $linkId = $stat["uuid"];
+        } else {
+            $linkId = $stat["name"];
+        }
         echo "
 			<tr>
 				<td>
-					<a href=\"?page=player&amp;id={$stat["uuid"]}\"><img src=\"https://minotar.net/helm/{$stat["name"]}/32.png\" alt=\"\"> {$stat["name"]}</a>
+					<a href=\"" . $url->player($linkId) . "\"><img src=\"https://minotar.net/helm/{$stat["name"]}/32.png\" alt=\"\"> {$stat["name"]}</a>
 				</td>
 				<td>
 					" . $statDisplay . "

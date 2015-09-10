@@ -9,6 +9,8 @@ class view
 
     private $page;
 
+    private $url;
+
     public function __Construct($bluestats, $viewPath, $appPath)
     {
         $this->bluestats = $bluestats;
@@ -18,6 +20,8 @@ class view
         $this->appPath = $appPath;
 
         $this->page = str_replace(array('/', '.'), '', $this->bluestats->page);
+
+        $this->url = new url($bluestats->mysqli);
     }
 
     public function render($type = "GLOBAL")
@@ -59,6 +63,14 @@ class view
                     $string = str_replace('{{ playerstats }}', $player->renderPlayerAllStats(), $string);
                 }
             }
+
+            /* URLS */
+            preg_match_all('/{{ url:([^ ]+) }}/', $string, $matches);
+
+            foreach ($matches[0] as $key => $replaceStr) {
+                $string = str_replace($replaceStr, $this->url->page($matches[1][$key]), $string);
+            }
+
             /* Modules with args */
             preg_match_all('/{{ ([^ ]+):([^ ]+):([^ ]+) }}/', $string, $matches);
 
@@ -70,7 +82,7 @@ class view
                     $plugin = $this->bluestats->plugins[$matches[1][$key]];
 
                     /* New module */
-                    $module = new module($this->bluestats->mysqli, $matches[1][$key], $matches[2][$key], $plugin, $this->theme, $this->appPath, $matches[3][$key], isset($player) ? $player : NULL);
+                    $module = new module($this->bluestats->mysqli, $matches[1][$key], $matches[2][$key], $plugin, $this->theme, $this->appPath, $this->url, $matches[3][$key], isset($player) ? $player : NULL);
                     /* Render the module */
                     $output = $module->render();
 
@@ -92,7 +104,7 @@ class view
                     $plugin = $this->bluestats->plugins[$matches[1][$key]];
 
                     /* New module */
-                    $module = new module($this->bluestats->mysqli, $matches[1][$key], $matches[2][$key], $plugin, $this->theme, $this->appPath, NULL, isset($player) ? $player : NULL);
+                    $module = new module($this->bluestats->mysqli, $matches[1][$key], $matches[2][$key], $plugin, $this->theme, $this->appPath, $this->url, NULL, isset($player) ? $player : NULL);
                     /* Render the module */
                     $output = $module->render();
 
