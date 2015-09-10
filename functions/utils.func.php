@@ -27,7 +27,7 @@ function secondsToTime($seconds, $contract = true)
                     $tseconds = $seconds . " second";
                 }
             }else{
-                $tseconds = "";
+                $tseconds = "0 seconds";
             }
 
             /* Text mins */
@@ -38,7 +38,7 @@ function secondsToTime($seconds, $contract = true)
                     $tmins = $mins . " min";
                 }
             }else{
-                $tmins = "";
+                $tmins = "0 mins";
             }
 
             /* Text hours */
@@ -49,7 +49,7 @@ function secondsToTime($seconds, $contract = true)
                     $thours = $hours . " hours";
                 }
             }else{
-                $thours = "";
+                $thours = "0 hours";
             }
 
             /* Text days */
@@ -60,7 +60,7 @@ function secondsToTime($seconds, $contract = true)
                     $tdays = $days . " day";
                 }
             }else{
-                $tdays = "";
+                $tdays = "0 days";
             }
 
             /* Text weeks */
@@ -71,7 +71,7 @@ function secondsToTime($seconds, $contract = true)
                     $tweeks = round($weeks) . " week";
                 }
             }else{
-                $tweeks = "";
+                $tweeks = " 0 weeks";
             }
 
             /* Text months */
@@ -82,7 +82,7 @@ function secondsToTime($seconds, $contract = true)
                     $tmonths = $months . " month";
                 }
             }else{
-                $tmonths = "";
+                $tmonths = "0 months";
             }
 
             /* Text years */
@@ -93,25 +93,21 @@ function secondsToTime($seconds, $contract = true)
                     $tyears = $years . " year";
                 }
             }else{
-                $tyears = "";
+                $tyears = "0 years";
             }
 
             if ($years > 0){
-                return $tweeks.", ".$tmonths." and ".$tyears;
+                return "$tyears, $tmonths and $tweeks";
             }else if ($months > 0){
-                if ($days > 0) {
-                    return $tdays . ", " . $tweeks . " and " . $tmonths;
-                }else{
-                    return $tweeks . " and " . $tmonths;
-                }
+                return "$tmonths, $tweeks and $tdays";
             }else if($weeks> 0){
-                return $thours.", ".$tdays." and ".$tweeks;
+                return "$tweeks, $tdays and $thours";
             }else if($days > 0){
-                return $thours." and ".$tdays;
+                return "$tdays and $thours";
             }else if ($hours > 0){
-                return $tmins." and ".$thours;
+                return "$thours and $tmins";
             }else if($mins > 0){
-                return $tseconds." and ".$tmins;
+                return "$tmins and $tseconds";
             }else{
                 return $tseconds;
             }
