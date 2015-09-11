@@ -2,6 +2,7 @@ RewriteEngine On
 
 RewriteRule ^admin/$ admin/ [L]
 RewriteRule ^install/$ install/ [L]
+RewriteRule ^assets/$ install/ [L]
 
 RewriteRule ^([^/]*)/$ /?page=$1 [L]
 RewriteRule ^([^/]*)/([^/]*)/$ /?page=$1&id=$2 [L]
