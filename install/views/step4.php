@@ -97,6 +97,7 @@ if ($config->set("plugins",$plugins)){
 
 /* Set MySQL details
 -------------------------------------*/
+
 if (isset($_SESSION["lolstats-enable"])&&$_SESSION["lolstats-enable"]==="on"){
 	$config->set("MYSQL_host",$_SESSION["lolstats-host"],"lolmewnStats");
 	$config->set("MYSQL_username",$_SESSION["lolstats-username"],"lolmewnStats");
@@ -123,6 +124,16 @@ if ($config->set("ip",$_SESSION["port"],"query")){
 	echo '<i class="fa fa-check text-success"></i>Set query port<br>';
 }else{
 	echo '<i class="fa fa-times text-danger"></i>Unable to set query port<br>';
+}
+
+/* Update theme assets
+-------------------------------------*/
+$theme = $_SESSION["theme"];
+$directory = "../../themes/" . $theme . "/assets";
+$scanned_directory = array_diff(scandir($directory), array('..', '.'));
+
+foreach ($scanned_directory as $item) {
+    copy("../../themes/$theme/assets/$item", "../../assets/$item");
 }
 
 echo '<a href="../admin">Admin Panel</a><br>';
