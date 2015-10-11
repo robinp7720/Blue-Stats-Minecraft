@@ -1,3 +1,41 @@
+<?php
+session_start();
+if (!file_exists("../config.json"))
+    die("Please go to /install first");
+
+/** @noinspection PhpIncludeInspection */
+require "../classes/config.class.php";
+require "../classes/mysql.class.php";
+
+$config = json_decode(file_get_contents("../config.json"),true);
+
+$mysqlMan = new mysqlMan;
+$mysqlMan->connect(
+    "BlueStats",
+    $config["mysql"]["username"],
+    $config["mysql"]["password"],
+    $config["mysql"]["host"],
+    $config["mysql"]["dbname"]
+);
+$mysqli = $mysqlMan->get("BlueStats");
+
+$config = new config($mysqli, "BlueStats_admin");
+if (!$config->configExist("username")) {
+    $config->set("username", "admin");
+}
+if (!$config->configExist("password")) {
+    $config->set("password", "admin");
+}
+
+if ((@$_POST["username"] != $config->get("username") || @$_POST["password"] != $config->get("password")) && (@$_SESSION["auth"] === false || !isset($_SESSION["auth"]))) {
+
+} else {
+    $_SESSION["auth"] = true;
+    header('location: index.php');
+    die();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
