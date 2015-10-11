@@ -24,15 +24,9 @@ class view
         $this->url = new url($bluestats->mysqli);
     }
 
-    public function render($type = "GLOBAL")
-    {
-
-        if ($type == "GLOBAL") {
-            $filePath = $this->viewPath . "global.html";
-        } else {
-            $filePath = $this->viewPath . "templates/{$this->page}.html";
-        }
+    private function getTemplate($filePath){
         $continue = true;
+        $player = null;
         if (file_exists($filePath)) {
             /* Load template file */
             $string = file_get_contents($filePath);
@@ -52,9 +46,24 @@ class view
         } else {
             $continue = false;
         }
+        return $continue ? ["content"=>$string,"player"=>$player]:false;
+    }
+
+    public function render($type = "GLOBAL")
+    {
+
+        if ($type == "GLOBAL") {
+            $filePath = $this->viewPath . "global.html";
+        } else {
+            $filePath = $this->viewPath . "templates/{$this->page}.html";
+        }
+
+        $template = $this->getTemplate($filePath);
+        $string = $template["content"];
+        $player = $template["player"];
 
 
-        if ($continue) {
+        if ($string) {
 
             if (isset($player)) {
                 $string = str_replace('{{ playername }}', $player->name, $string);
