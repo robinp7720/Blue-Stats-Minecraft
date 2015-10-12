@@ -6,6 +6,10 @@ session_start();
 if (!file_exists("../../config.json"))
     die("Please go to /install first");
 
+if (!isset($_SESSION["auth"])||$_SESSION["auth"]!=true){
+    die("Not authenticated");
+}
+
 /** @noinspection PhpIncludeInspection */
 require "../../classes/config.class.php";
 require "../../classes/mysql.class.php";
