@@ -1,5 +1,6 @@
 <?php
-
+$config->setDefault("image-src", "http://cravatar.eu/avatar/{NAME}/64");
+$imageSrc = $config->get("image-src");
 $stmt = $plugin->mysqli->stmt_init();
 
 $sql = "SELECT *, sum(value) as value 
@@ -32,7 +33,7 @@ if (!empty($output)):
     }
     ?>
     <div class="panel panel-default">
-        <img src="https://minotar.net/helm/<?= $linkId ?>.png" alt="" style="width:100%;">
+        <img src="<?= str_replace("{NAME}", $linkId, $imageSrc) ?>.png" alt="" style="width:100%;">
 
         <div class="panel-body">
             <h3><a href="<?= $url->player($linkId) ?>"><?= $output[0]["name"] ?></a></h3>
