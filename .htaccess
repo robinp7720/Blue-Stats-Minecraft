@@ -1,10 +1,16 @@
+Options +FollowSymLinks -MultiViews
 RewriteEngine On
 
-RewriteRule ^admin/$ admin/ [L]
-RewriteRule ^admin/advanced/$ admin/advanced/ [L]
-RewriteRule ^admin/advanced/actions/$ admin/advanced/actions/ [L]
-RewriteRule ^install/$ install/ [L]
-RewriteRule ^assets/$ assets/ [L]
+RewriteBase /
 
-RewriteRule ^([^/]*)/$ /?page=$1 [L]
-RewriteRule ^([^/]*)/([^/]*)/$ /?page=$1&id=$2 [L]
+RewriteRule ^admin/$ admin/ [NC,L]
+RewriteRule ^admin/advanced/$ admin/advanced/ [NC,L]
+RewriteRule ^admin/advanced/actions/$ admin/advanced/actions/ [NC,L]
+RewriteRule ^install/$ install/ [NC,L]
+RewriteRule ^assets/$ assets/ [NC,L]
+
+
+RewriteCond %{REQUEST_URI} !\.(?:css|js|jpe?g|gif|png)$ [NC]
+RewriteRule ^([^/]*)/$ /?page=$1 [NC,L]
+RewriteRule ^([^/]*)/([^/]*)/$ /?page=$1&id=$2 [NC,L]
+RewriteRule ^[^/]+/[^/]+/(.+)$ $1  [L]
