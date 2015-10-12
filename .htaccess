@@ -1,9 +1,10 @@
 RewriteEngine On
 
 RewriteRule ^admin/$ admin/ [L]
+RewriteRule ^admin/advanced/$ admin/advanced/ [L]
+RewriteRule ^admin/advanced/actions/$ admin/advanced/actions/ [L]
 RewriteRule ^install/$ install/ [L]
 RewriteRule ^assets/$ assets/ [L]
 
 RewriteRule ^([^/]*)/$ /?page=$1 [L]
 RewriteRule ^([^/]*)/([^/]*)/$ /?page=$1&id=$2 [L]
-
