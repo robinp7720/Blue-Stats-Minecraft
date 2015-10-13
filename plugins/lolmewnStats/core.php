@@ -102,6 +102,34 @@ class lolmewnStats extends MySQLplugin
         }
     }
 
+    public function getAllPlayerStatsSum($stat)
+    {
+
+        $stmt = $this->mysqli->stmt_init();
+
+        if ($stat == "last_join" || $stat == "last_seen") {
+            return "";
+        } else {
+            $sql = "SELECT sum(value) as value FROM {$this->prefix}{$stat}";
+            if ($stmt->prepare($sql)) {
+
+                /* execute query */
+                $stmt->execute();
+
+                $stmt->bind_result($output);
+                $stmt->fetch();
+
+                /* close statement */
+                $stmt->close();
+
+                return $output ?: "";
+            } else {
+                return array();
+            }
+        }
+
+    }
+
     public function getStat($stat, $player)
     {
 

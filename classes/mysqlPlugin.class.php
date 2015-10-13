@@ -149,6 +149,26 @@ class MySQLplugin extends plugin
         return false;
     }
 
+    public function getAllPlayerStatsSum($stat)
+    {
+
+        $stmt = $this->mysqli->stmt_init();
+
+        $sql = "SELECT sum(*) FROM {$this->prefix}{$stat} WHERE {$this->plugin["idColumn"]} IS NOT NULL";
+        if ($stmt->prepare($sql)) {
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $output = array();
+            while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+                $output[] = $row;
+            }
+            $stmt->close();
+
+            return $output;
+        }
+        return false;
+    }
+
     public function getUsers()
     {
 
@@ -162,6 +182,24 @@ class MySQLplugin extends plugin
             while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
                 $output[] = $row;
             }
+            $stmt->close();
+
+            return $output;
+        }
+        return false;
+    }
+
+    public function getUserCount()
+    {
+
+        $stmt = $this->mysqli->stmt_init();
+
+        $sql = "SELECT count(*) FROM {$this->prefix}{$this->plugin["indexTable"]} WHERE {$this->plugin["UUIDcolumn"]} IS NOT NULL";
+        if ($stmt->prepare($sql)) {
+            $stmt->execute();
+            $stmt->execute();
+            $stmt->bind_result($output);
+            $stmt->fetch();
             $stmt->close();
 
             return $output;

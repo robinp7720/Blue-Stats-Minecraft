@@ -5,6 +5,7 @@ $stats = $config->get("stats", "lolmewnStats");
     <thead>
     <th>Stat</th>
     <th>Value</th>
+    <th>Server Total</th>
     </thead>
     <tbody>
     <?php foreach ($stats as $id => $stat): ?>
@@ -14,6 +15,7 @@ $stats = $config->get("stats", "lolmewnStats");
             <tr>
                 <td><?= $stat ?></td>
                 <td><?= $statVal ?></td>
+                <td><?= $plugin->getAllPlayerStatsSum($id)?></td>
             </tr>
         <?php endif; ?>
     <?php endforeach; ?>

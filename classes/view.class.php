@@ -29,24 +29,28 @@ class view
         $player = null;
         if (file_exists($filePath)) {
             /* Load template file */
-            $string = file_get_contents($filePath);
+            $content = file_get_contents($filePath);
 
-            if (strpos($string, '{{ dieifnotid }}') !== false) {
+            if (strpos($content, '{{ dieifnotid }}') !== false) {
                 if (!isset($this->bluestats->request["get"]["id"])) {
-                    $continue = false;
+                    return false;
                 } else {
                     $player = new player($this->bluestats, $this->bluestats->request["get"]["id"]);
                     if (!$player->exist) {
-                        $continue = false;
+                        return false;
                     }
                 }
             }
 
-            $string = str_replace('{{ dieifnotid }}', '', $string);
+            $content = str_replace('{{ dieifnotid }}', '', $content);
         } else {
-            $continue = false;
+            return false;
         }
-        return $continue ? ["content"=>$string,"player"=>$player]:false;
+
+        return [
+            "content"=>$content,
+            "player"=>$player
+        ];
     }
 
     public function render($type = "GLOBAL")
