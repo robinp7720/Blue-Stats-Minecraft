@@ -70,22 +70,22 @@ if ($cache->reCache($uri)) {
 
     $credits = '
 	<!--
-	Copyright Robin Decker 2015
+	Copyright _OvErLoRd_ (robinp7720) 2015
 	BlueStats 3 is released under the Apache 2 license.
 	Removal of this copyright notice is an infringement of the license.
 
-	Developed by _OvErLoRd_ (robinp7720) and MySunland
+	Developed by _OvErLoRd_ (robinp7720)
 	-->
 	';
 
     $copyrightMeta = '
 	<link rel="schema.dc" href="http://purl.org/dc/elements/1.1/">
-	<meta name="dcterms.rightsHolder" content="Robin Decker, MySunland">
+	<meta name="dcterms.rightsHolder" content="_OvErLoRd_ (robinp7720)">
 	<meta name="dcterms.rights" content="Released under apache 2.0 license">
 	<meta name="dcterms.dateCopyrighted" content="2015">
 	<meta name="dc.license" content="apache 2.0">
-	<meta name="web_author" content="Robin Decker">
-	<meta name="author" content="Robin Decker">
+	<meta name="web_author" content="_OvErLoRd_ (robinp7720)">
+	<meta name="author" content="_OvErLoRd_ (robinp7720)">
 	';
     $content = str_replace("<head>", "<head>" . $copyrightMeta, $content);
 
