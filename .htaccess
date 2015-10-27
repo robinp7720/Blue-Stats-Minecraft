@@ -7,6 +7,11 @@ RewriteCond %{REQUEST_URI} !\.(?:css|js|jpe?g|gif|png)$ [NC]
 
 RewriteRule ^admin - [L,NC]
 RewriteRule ^assets - [L,NC]
+RewriteRule ^bower_components - [L,NC]
 RewriteRule ^install - [L,NC]
 RewriteRule ^([^/]*)/$ /?page=$1 [NC,L]
 RewriteRule ^([^/]*)/([^/]*)/$ /?page=$1&id=$2 [NC,L]
+
+<Files "config.json">
+Deny from all
+</Files>
