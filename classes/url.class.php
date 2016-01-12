@@ -9,7 +9,7 @@ class url
     private $defaultPlayer = "";
 
     /**
-     * @param $mysqli Mysql Connection
+     * @param $mysqli mysqli Connection
      */
     public function __Construct($mysqli)
     {

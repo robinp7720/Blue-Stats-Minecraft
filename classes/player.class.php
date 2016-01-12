@@ -42,7 +42,6 @@ class player
             if ($plugin->plugin["singleTable"]) {
                 $output .= '<h2>' . ucfirst($plugin->pluginName) . '</h2>';
                 foreach ($plugin->plugin["tables"] as $table) {
-                    $stat = [];
                     $stat = $plugin->getStat($table, $this->uuid);
                     unset($stat[0][$plugin->plugin["idColumn"]]);
 

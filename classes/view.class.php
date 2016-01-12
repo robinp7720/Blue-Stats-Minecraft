@@ -38,7 +38,7 @@ class view
         $player = $template["player"];
 
 
-        if ($string) {
+        if ($template != false) {
 
             if (isset($player)) {
                 $string = str_replace('{{ playername }}', $player->name, $string);
@@ -110,7 +110,6 @@ class view
 
     private function getTemplate($filePath)
     {
-        $continue = true;
         $player = null;
         if (file_exists($filePath)) {
             /* Load template file */
@@ -141,6 +140,9 @@ class view
     public function error($code)
     {
         /* TODO: Error pages */
+        if ($code == 404) {
+            return $this->getTemplate($this->viewPath . "404.html")["content"];
+        }
     }
 
 }
