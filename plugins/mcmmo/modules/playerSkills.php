@@ -2,6 +2,8 @@
 $stats = $plugin->getStat("skills", $player->uuid);
 /* Get headers */
 $headers = array();
+
+if (isset($stats[0])):
 unset($stats[0]["user_id"]);
 ?>
 <table class="table">
@@ -16,3 +18,8 @@ unset($stats[0]["user_id"]);
     <?php endforeach; ?>
     </tbody>
 </table>
+<?php else: ?>
+    <div class="alert alert-info" role="alert">
+        No McMMO skills stats for this user
+    </div>
+<?php endif; ?>

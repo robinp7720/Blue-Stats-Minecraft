@@ -24,35 +24,6 @@ class view
         $this->url = new url($bluestats->mysqli);
     }
 
-    private function getTemplate($filePath){
-        $continue = true;
-        $player = null;
-        if (file_exists($filePath)) {
-            /* Load template file */
-            $content = file_get_contents($filePath);
-
-            if (strpos($content, '{{ dieifnotid }}') !== false) {
-                if (!isset($this->bluestats->request["get"]["id"])) {
-                    return false;
-                } else {
-                    $player = new player($this->bluestats, $this->bluestats->request["get"]["id"]);
-                    if (!$player->exist) {
-                        return false;
-                    }
-                }
-            }
-
-            $content = str_replace('{{ dieifnotid }}', '', $content);
-        } else {
-            return false;
-        }
-
-        return [
-            "content"=>$content,
-            "player"=>$player
-        ];
-    }
-
     public function render($type = "GLOBAL")
     {
 
@@ -135,6 +106,36 @@ class view
             $string = $this->error(404);
         }
         return $string;
+    }
+
+    private function getTemplate($filePath)
+    {
+        $continue = true;
+        $player = null;
+        if (file_exists($filePath)) {
+            /* Load template file */
+            $content = file_get_contents($filePath);
+
+            if (strpos($content, '{{ dieifnotid }}') !== false) {
+                if (!isset($this->bluestats->request["get"]["id"])) {
+                    return false;
+                } else {
+                    $player = new player($this->bluestats, $this->bluestats->request["get"]["id"]);
+                    if (!$player->exist) {
+                        return false;
+                    }
+                }
+            }
+
+            $content = str_replace('{{ dieifnotid }}', '', $content);
+        } else {
+            return false;
+        }
+
+        return [
+            "content" => $content,
+            "player" => $player
+        ];
     }
 
     public function error($code)
