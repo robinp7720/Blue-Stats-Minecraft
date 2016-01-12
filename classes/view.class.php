@@ -72,7 +72,7 @@ class view
 
                     $string = str_replace($replaceStr, $output, $string);
                 } else {
-                    $output = "Plugin not found: {$matches[1][$key]}";
+                    $output = "<div class=\"alert alert-danger\" role=\"alert\">Plugin not Found: {$matches[1][$key]}</div>";
                     $string = str_replace($replaceStr, $output, $string);
                 }
             }
@@ -94,7 +94,7 @@ class view
 
                     $string = str_replace($replaceStr, $output, $string);
                 } else {
-                    $output = "Plugin not found: {$matches[1][$key]}";
+                    $output = "<div class=\"alert alert-danger\" role=\"alert\">Plugin not Found: {$matches[1][$key]}</div>";
                     $string = str_replace($replaceStr, $output, $string);
                 }
             }
