@@ -27,7 +27,7 @@ $mysqli = new mysqli(
     $config["mysql"]["password"],
     $config["mysql"]["dbname"]
 );
-$cache = new cache($mysqli->get("BlueStats"), $appPath);
+$cache = new cache($mysqli, $appPath);
 
 // Replace remove ?recache from url
 $uri = $_SERVER["REQUEST_URI"];
@@ -48,7 +48,7 @@ if ($cache->reCache($uri)) {
         /** @noinspection PhpIncludeInspection */
         include "$appPath/plugins/$plugin/core.php";
 
-        $plugins[$plugin] = new $plugin($mysqli));
+        $plugins[$plugin] = new $plugin($mysqli);
 
         /* Avoid errors on first install */
         if (isset($plugins[$plugin]->firstInstall)) {
