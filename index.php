@@ -21,15 +21,13 @@ require "$appPath/functions/utils.func.php";
 
 $config = json_decode(file_get_contents("config.json"),true);
 
-$mysqlMan = new mysqlMan;
-$mysqlMan->connect(
-    "BlueStats",
+$mysqli = new mysqli(
+    $config["mysql"]["host"],
     $config["mysql"]["username"],
     $config["mysql"]["password"],
-    $config["mysql"]["host"],
     $config["mysql"]["dbname"]
 );
-$cache = new cache($mysqlMan->get("BlueStats"), $appPath);
+$cache = new cache($mysqli->get("BlueStats"), $appPath);
 
 // Replace remove ?recache from url
 $uri = $_SERVER["REQUEST_URI"];
@@ -38,7 +36,7 @@ $uri = str_replace("&recache","",$uri);
 $uri = str_replace("?recache","",$uri);
 
 if ($cache->reCache($uri)) {
-    $BlueStats = new BlueStats($mysqlMan->get("BlueStats"), $appPath);
+    $BlueStats = new BlueStats($mysqli, $appPath);
 
     $loadablePlugins = $BlueStats->getPluginList();
     $plugins = array();
@@ -50,7 +48,7 @@ if ($cache->reCache($uri)) {
         /** @noinspection PhpIncludeInspection */
         include "$appPath/plugins/$plugin/core.php";
 
-        $plugins[$plugin] = new $plugin($mysqlMan->get("BlueStats"));
+        $plugins[$plugin] = new $plugin($mysqli));
 
         /* Avoid errors on first install */
         if (isset($plugins[$plugin]->firstInstall)) {
