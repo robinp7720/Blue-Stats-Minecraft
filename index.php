@@ -1,4 +1,9 @@
 <?php
+
+if (file_exists("./install")) {
+    die("Please remove /install after installation");
+}
+
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
