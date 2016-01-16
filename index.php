@@ -6,20 +6,10 @@ $appPath = __DIR__;
 
 /* Classes */
 require "$appPath/classes/config.class.php";
-require "$appPath/classes/mysql.class.php";
-require "$appPath/classes/plugin.class.php";
-require "$appPath/classes/bluestats.class.php";
-require "$appPath/classes/modules.class.php";
 require "$appPath/classes/cache.class.php";
-require "$appPath/classes/view.class.php";
-require "$appPath/classes/player.class.php";
-require "$appPath/classes/mysqlPlugin.class.php";
-require "$appPath/classes/url.class.php";
 
-/* Functions */
-require "$appPath/functions/utils.func.php";
 
-$config = json_decode(file_get_contents("config.json"),true);
+$config = json_decode(file_get_contents("config.json"), true);
 
 $mysqli = new mysqli(
     $config["mysql"]["host"],
@@ -31,11 +21,24 @@ $cache = new cache($mysqli, $appPath);
 
 // Replace remove ?recache from url
 $uri = $_SERVER["REQUEST_URI"];
-$uri = str_replace("?recache&","?",$uri);
-$uri = str_replace("&recache","",$uri);
-$uri = str_replace("?recache","",$uri);
+$uri = str_replace("?recache&", "?", $uri);
+$uri = str_replace("&recache", "", $uri);
+$uri = str_replace("?recache", "", $uri);
 
 if ($cache->reCache($uri)) {
+    /* Include all classes and api if a new cache has to be created */
+    require "$appPath/classes/plugin.class.php";
+    require "$appPath/classes/bluestats.class.php";
+    require "$appPath/classes/modules.class.php";
+    require "$appPath/classes/view.class.php";
+    require "$appPath/classes/player.class.php";
+    require "$appPath/classes/mysqlPlugin.class.php";
+    require "$appPath/classes/url.class.php";
+
+
+    /* Functions */
+    require "$appPath/functions/utils.func.php";
+
     $BlueStats = new BlueStats($mysqli, $appPath);
 
     $loadablePlugins = $BlueStats->getPluginList();
