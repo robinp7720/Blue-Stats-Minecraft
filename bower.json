@@ -1,0 +1,28 @@
+{
+  "name": "Blue-Stats-Minecraft",
+  "homepage": "https://github.com/robinp7720/Blue-Stats-Minecraft",
+  "authors": [
+    "robinp7720 <robin@mysunland.org>"
+  ],
+  "description": "Webend Statistics for your minecraft server community",
+  "main": "index.php",
+  "moduleType": [],
+  "keywords": [
+    "stats",
+    "minecraft"
+  ],
+  "license": "Apache 2.0",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "chartist-plugin-axistitle": "https://github.com/alexstanbury/chartist-plugin-axistitle.git#~0.1.0",
+    "chartist-plugin-tooltip": "~0.0.12",
+    "chartist": "~0.9.4"
+  }
+}
