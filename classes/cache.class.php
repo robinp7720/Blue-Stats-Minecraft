@@ -37,7 +37,7 @@ class cache
     {
         if ($this->config->get("enabled") == "true" && !isset($_GET["recache"])) {
             $file_name = md5($name) . '.json';
-            if (file_exists($this->cache_dir . $file_name)) {
+            if (!file_exists($this->cache_dir . $file_name)) {
                 $file = file_get_contents($this->cache_dir . $file_name);
                 $cache = json_decode($file, true);
                 if ($cache["time"] < time() - $this->config->get("expiry-time")) {
