@@ -1,7 +1,5 @@
 <?php
-if (!$config->configExist("stat")) {
-    $config->set("stat", "playtime");
-}
+$config->setDefault("stat", "playtime");
 ?>
 <table class="table" id="allPlayers">
     <thead>

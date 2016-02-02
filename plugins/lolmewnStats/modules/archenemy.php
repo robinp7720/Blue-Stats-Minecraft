@@ -17,10 +17,7 @@ if ($stmt->prepare($sql)) {
     $output = array();
 
     /* fetch value */
-    $res = $stmt->get_result();
-    while ($row = $res->fetch_assoc()) {
-        $output[] = $row;
-    }
+    $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
     /* close statement */
     $stmt->close();

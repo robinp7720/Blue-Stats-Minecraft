@@ -97,11 +97,8 @@ class MySQLplugin extends plugin
         if ($stmt->prepare($sql)) {
             $stmt->bind_param("i", $player_id);
             $stmt->execute();
-            $result = $stmt->get_result();
-            $output = array();
-            while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-                $output[] = $row;
-            }
+            $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
             $stmt->close();
 
             return $output;
@@ -137,11 +134,7 @@ class MySQLplugin extends plugin
         $sql = "SELECT * FROM {$this->prefix}{$column} WHERE {$this->plugin["idColumn"]} IS NOT NULL GROUP BY {$this->plugin["idColumn"]}";
         if ($stmt->prepare($sql)) {
             $stmt->execute();
-            $result = $stmt->get_result();
-            $output = array();
-            while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-                $output[] = $row;
-            }
+            $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             $stmt->close();
 
             return $output;
@@ -157,11 +150,8 @@ class MySQLplugin extends plugin
         $sql = "SELECT sum(*) FROM {$this->prefix}{$stat} WHERE {$this->plugin["idColumn"]} IS NOT NULL";
         if ($stmt->prepare($sql)) {
             $stmt->execute();
-            $result = $stmt->get_result();
-            $output = array();
-            while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-                $output[] = $row;
-            }
+            $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
             $stmt->close();
 
             return $output;
@@ -169,19 +159,17 @@ class MySQLplugin extends plugin
         return false;
     }
 
-    public function getUsers()
+    public function getUsers($start = 0, $limit = 10000)
     {
 
         $stmt = $this->mysqli->stmt_init();
 
-        $sql = "SELECT * FROM {$this->prefix}{$this->plugin["indexTable"]} WHERE {$this->plugin["UUIDcolumn"]} IS NOT NULL GROUP BY {$this->plugin["UUIDcolumn"]}";
+        $sql = "SELECT * FROM {$this->prefix}{$this->plugin["indexTable"]} WHERE {$this->plugin["UUIDcolumn"]} IS NOT NULL GROUP BY {$this->plugin["UUIDcolumn"]} LIMIT ?,?";
         if ($stmt->prepare($sql)) {
+            $stmt->bind_param('ii', $start, $limit);
             $stmt->execute();
-            $result = $stmt->get_result();
-            $output = array();
-            while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-                $output[] = $row;
-            }
+            $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
             $stmt->close();
 
             return $output;
