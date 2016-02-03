@@ -3,6 +3,8 @@
 class lolmewnStats extends MySQLplugin
 {
     public $pluginName = "lolmewnStats";
+    public $stats;
+
     public $plugin = array(
         "idColumn" => "uuid",
         "playerNameColumn" => "name",
@@ -86,13 +88,8 @@ class lolmewnStats extends MySQLplugin
             /* execute query */
             $stmt->execute();
 
-            $output = array();
-
             /* fetch value */
-            $res = $stmt->get_result();
-            while ($row = $res->fetch_assoc()) {
-                $output[] = $row;
-            }
+            $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
             /* close statement */
             $stmt->close();
@@ -181,10 +178,7 @@ class lolmewnStats extends MySQLplugin
             $output = array();
 
             /* fetch value */
-            $res = $stmt->get_result();
-            while ($row = $res->fetch_assoc()) {
-                $output[] = $row;
-            }
+            $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
             /* close statement */
             $stmt->close();
@@ -219,10 +213,7 @@ class lolmewnStats extends MySQLplugin
             $output = array();
 
             /* fetch value */
-            $res = $stmt->get_result();
-            while ($row = $res->fetch_assoc()) {
-                $output[] = $row;
-            }
+            $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
             /* close statement */
             $stmt->close();

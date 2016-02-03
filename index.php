@@ -4,8 +4,9 @@ if (file_exists("./install")) {
     die("Please remove /install after installation");
 }
 
-error_reporting(E_ALL);
-ini_set("display_errors", 1);
+// Turn of error reporting to prevent security leaks
+error_reporting(0);
+ini_set("display_errors", 0);
 
 $appPath = __DIR__;
 
@@ -97,5 +98,5 @@ if ($cache->reCache($uri)) {
     echo $credits . trim($content);
     $cache->cache($credits . trim($content), $uri);
 } else {
-    echo $cache->getCache($_SERVER["REQUEST_URI"]);
+    echo $cache->getCache($uri);
 }

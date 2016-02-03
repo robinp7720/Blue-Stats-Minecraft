@@ -1,4 +1,11 @@
 <table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Changed</th>
+    </tr>
+    </thead>
+    <tbody>
 <?php
 foreach ($plugin->getNames($player->uuid) as $name){
     echo "<tr>";
@@ -13,4 +20,5 @@ foreach ($plugin->getNames($player->uuid) as $name){
     echo "</tr>";
 }
 ?>
+    </tbody>
 </table>

@@ -159,7 +159,7 @@ class MySQLplugin extends plugin
         return false;
     }
 
-    public function getUsers($start = 0, $limit = 10000)
+    public function getUsers($start = 0, $limit = 10000, $fetchType = MYSQLI_ASSOC)
     {
 
         $stmt = $this->mysqli->stmt_init();
@@ -168,7 +168,7 @@ class MySQLplugin extends plugin
         if ($stmt->prepare($sql)) {
             $stmt->bind_param('ii', $start, $limit);
             $stmt->execute();
-            $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            $output = $stmt->get_result()->fetch_all($fetchType);
 
             $stmt->close();
 

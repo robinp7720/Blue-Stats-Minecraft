@@ -1,1 +1,12 @@
-{{ lolmewnStats:allplayers }}
+<div class="players row"></div>
+<script>
+    $.ajax('/ajax/?call=allPlayers').success(function (data) {
+        console.log(data.data);
+        for (var i in data.data) {
+            if (data.data.hasOwnProperty(i)) {
+                $('.players').append('<blockquote class="col-sm-3"><img src="http://cravatar.eu/avatar/' + data.data[i][0] + '"> ' + data.data[i][1] + '</blockquote>');
+            }
+        }
+    });
+</script>
+
