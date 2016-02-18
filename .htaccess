@@ -16,10 +16,10 @@ RewriteRule ^install - [L,NC]
 
 RewriteRule ^/?ajax - [L]
 
-RewriteRule ^([^/]*)/$ /?page=$1 [NC,L]
-RewriteRule ^([^/]*)/([^/]*)/$ /?page=$1&id=$2 [NC,L]
+RewriteRule ^([^/]*)/$ ?page=$1 [NC,L]
+RewriteRule ^([^/]*)/([^/]*)/$ ?page=$1&id=$2 [NC,L]
 
 
-RewriteRule ^([^/]*)/assets/style.css$ /assets/style.css [NC,L]
-RewriteRule ^([^/]*)/([^/]*)/assets/style.css$ /assets/style.css [NC,L]
+RewriteRule ^([^/]*)/assets/style.css$ assets/style.css [NC,L]
+RewriteRule ^([^/]*)/([^/]*)/assets/style.css$ assets/style.css [NC,L]
 
