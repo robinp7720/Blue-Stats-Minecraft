@@ -140,6 +140,9 @@ class view
     public function error($code)
     {
         /* TODO: Error pages */
+
+        http_response_code($code);
+
         if ($code == 404) {
             return $this->getTemplate($this->viewPath . "404.html")["content"];
         }

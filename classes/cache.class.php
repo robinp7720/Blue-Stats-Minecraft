@@ -27,7 +27,7 @@ class cache
             $file_name = md5($name) . '.json';
             $time = time();
 
-            $toSave = array("time" => $time, "content" => $content);
+            $toSave = array("time" => $time, "content" => $content, "http-code" => http_response_code());
 
             file_put_contents($this->cache_dir . $file_name, json_encode($toSave));
         }
@@ -56,6 +56,10 @@ class cache
     public function getCache($name)
     {
         $file_name = md5($name) . '.json';
-        return json_decode(file_get_contents($this->cache_dir . $file_name), true)["content"];
+        $currentCache = json_decode(file_get_contents($this->cache_dir . $file_name), true);
+
+        http_response_code($currentCache["http-code"]);
+
+        return $currentCache["content"];
     }
 }
