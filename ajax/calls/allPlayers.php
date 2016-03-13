@@ -8,4 +8,7 @@ $url = str_replace('{player}', $config->get("useUUID", 'BlueStats-Url')=="true"?
 $output['info'] = [
     'url' => $url
 ];
-$output['data'] = $plugin->getUsers(0, 10000, MYSQLI_NUM);
+
+$page = isset($_GET['page']) ? $_GET['page'] : 0;
+
+$output['data'] = $plugin->getUsers(50 * $page, 50, MYSQLI_NUM);

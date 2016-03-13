@@ -1,13 +1,41 @@
 <div class="players row"></div>
+<nav>
+    <ul class="pager">
+        <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Previous</a></li>
+        <li class="next"><a href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
+    </ul>
+</nav>
 <script>
-    $.ajax('/ajax/?call=allPlayers').success(function (data) {
-        console.log(data.info);
-        var url = data.info.url;
-        for (var i in data.data) {
-            if (data.data.hasOwnProperty(i)) {
-                $('.players').append('<blockquote class="col-sm-3"><a href="' + url.replace('{UUID}', data.data[i][0]).replace('{NAME}', data.data[i][1]) + '"><img src="http://cravatar.eu/avatar/' + data.data[i][0] + '"> ' + data.data[i][1] + '</a></blockquote>');
+    getPlayers = function (page) {
+        $.ajax('/ajax/?call=allPlayers', {
+            data: {
+                page: page
             }
-        }
+        }).success(function (data) {
+            var url = data.info.url;
+            $('.players').html('');
+            for (var i in data.data) {
+                if (data.data.hasOwnProperty(i)) {
+                    $('.players').append('<blockquote class="col-sm-3"><a href="' + url.replace('{UUID}', data.data[i][0]).replace('{NAME}', data.data[i][1]) + '"><img src="http://cravatar.eu/avatar/' + data.data[i][0] + '"> ' + data.data[i][1] + '</a></blockquote>');
+                }
+            }
+        });
+    };
+
+    var currentPage = 0;
+
+    getPlayers(currentPage);
+
+    $('.next').click(function (event) {
+        event.preventDefault();
+        currentPage += 1;
+        getPlayers(currentPage);
+    });
+
+    $('.previous').click(function (event) {
+        event.preventDefault();
+        currentPage -= 1;
+        getPlayers(currentPage);
     });
 </script>
 
