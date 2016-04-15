@@ -127,21 +127,36 @@ class lolmewnStats extends MySQLplugin
 
     }
 
-    public function getStat($stat, $player)
+    public function getStat($stat, $player, $group = TRUE)
     {
-
+        // TODO Clean up getStat function
         $stmt = $this->mysqli->stmt_init();
-        if ($stat == "last_join" || $stat == "last_seen") {
-            $sql = "SELECT min(value) as value FROM {$this->prefix}{$stat} WHERE uuid=? GROUP BY uuid";
+        if ($group) {
+            if ($stat == "last_join" || $stat == "last_seen") {
+                $sql = "SELECT min(value) as value FROM {$this->prefix}{$stat} WHERE uuid=?";
+            } else {
+                $sql = "SELECT sum(value) as value FROM {$this->prefix}{$stat} WHERE uuid=?";
+            }
         } else {
-            $sql = "SELECT sum(value) as value FROM {$this->prefix}{$stat} WHERE uuid=? GROUP BY uuid";
+            $sql = "SELECT * FROM {$this->prefix}{$stat} WHERE uuid=?";
         }
+
+        if ($group)
+            $sql = $sql . " GROUP BY uuid";
 
         if ($stmt->prepare($sql)) {
             $stmt->bind_param("s", $player);
             $stmt->execute();
-            $stmt->bind_result($output);
-            $stmt->fetch();
+            $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+            if ($group) {
+                if (isset($output['value']))
+                    $output = $output['value'];
+                else
+                    if (isset($output[0]))
+                        $output = $output[0]['value'];
+            }
+
             $stmt->close();
             if ($stat == "last_join" || $stat == "last_seen") {
                 if (!empty($output)) {

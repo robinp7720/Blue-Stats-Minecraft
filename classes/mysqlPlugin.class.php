@@ -87,12 +87,16 @@ class MySQLplugin extends plugin
         return false;
     }
 
-    public function getStat($table, $uuid)
+    public function getStat($table, $uuid, $group = TRUE)
     {
 
         $stmt = $this->mysqli->stmt_init();
 
-        $sql = "SELECT * FROM {$this->prefix}{$table} WHERE {$this->plugin["idColumn"]}=? GROUP BY {$this->plugin["idColumn"]}";
+        $sql = "SELECT * FROM {$this->prefix}{$table} WHERE {$this->plugin["idColumn"]}=?";
+
+        if ($group)
+            $sql = $sql . " GROUP BY {$this->plugin["idColumn"]}";
+
         $player_id = $this->getId($uuid);
         if ($stmt->prepare($sql)) {
             $stmt->bind_param("i", $player_id);

@@ -27,6 +27,7 @@ class view
     public function render($type = "GLOBAL")
     {
 
+        // Get template file to render
         if ($type == "GLOBAL") {
             $filePath = $this->viewPath . "global.html";
         } else {
@@ -34,77 +35,78 @@ class view
         }
 
         $template = $this->getTemplate($filePath);
+
+        if ($template === false) {
+            return $this->error(404);
+        }
+
         $string = $template["content"];
         $player = $template["player"];
 
 
-        if ($template != false) {
-
-            if (isset($player)) {
-                $string = str_replace('{{ playername }}', $player->name, $string);
-                $string = str_replace('{{ playeruuid }}', $player->uuid, $string);
-                if (strpos($string, '{{ playerstats }}') !== false) {
-                    $string = str_replace('{{ playerstats }}', $player->renderPlayerAllStats(), $string);
-                }
+        if (isset($player)) {
+            $string = str_replace('{{ playername }}', $player->name, $string);
+            $string = str_replace('{{ playeruuid }}', $player->uuid, $string);
+            if (strpos($string, '{{ playerstats }}') !== false) {
+                $string = str_replace('{{ playerstats }}', $player->renderPlayerAllStats(), $string);
             }
-
-            /* URLS */
-            preg_match_all('/{{ url:([^ ]+) }}/', $string, $matches);
-
-            foreach ($matches[0] as $key => $replaceStr) {
-                $string = str_replace($replaceStr, $this->url->page($matches[1][$key]), $string);
-            }
-
-            /* Modules with args */
-            preg_match_all('/{{ ([^ ]+):([^ ]+):([^ ]+) }}/', $string, $matches);
-
-            foreach ($matches[0] as $key => $replaceStr) {
-
-                /* Plugin Exist? */
-                if (isset($this->bluestats->plugins[$matches[1][$key]])) {
-                    /* Set plugin */
-                    $plugin = $this->bluestats->plugins[$matches[1][$key]];
-
-                    /* New module */
-                    $module = new module($this->bluestats->mysqli, $matches[1][$key], $matches[2][$key], $plugin, $this->theme, $this->appPath, $this->url, $matches[3][$key], isset($player) ? $player : NULL);
-                    /* Render the module */
-                    $output = $module->render();
-
-                    $string = str_replace($replaceStr, $output, $string);
-                } else {
-                    $output = "<div class=\"alert alert-danger\" role=\"alert\">Plugin not Found: {$matches[1][$key]}</div>";
-                    $string = str_replace($replaceStr, $output, $string);
-                }
-            }
-
-            /* Modules */
-            preg_match_all('/{{ ([^ ]+):([^ ]+) }}/', $string, $matches);
-
-            foreach ($matches[0] as $key => $replaceStr) {
-
-                /* Plugin Exist? */
-                if (isset($this->bluestats->plugins[$matches[1][$key]])) {
-                    /* Set plugin */
-                    $plugin = $this->bluestats->plugins[$matches[1][$key]];
-
-                    /* New module */
-                    $module = new module($this->bluestats->mysqli, $matches[1][$key], $matches[2][$key], $plugin, $this->theme, $this->appPath, $this->url, NULL, isset($player) ? $player : NULL);
-                    /* Render the module */
-                    $output = $module->render();
-
-                    $string = str_replace($replaceStr, $output, $string);
-                } else {
-                    $output = "<div class=\"alert alert-danger\" role=\"alert\">Plugin not Found: {$matches[1][$key]}</div>";
-                    $string = str_replace($replaceStr, $output, $string);
-                }
-            }
-
-            /* Page Content */
-            if (strpos($string, '{{ content }}') !== false)
-                $string = str_replace("{{ content }}", $this->render("page"), $string);
-        } else {
-            $string = $this->error(404);
         }
+
+        /* URLS */
+        preg_match_all('/{{ url:([^ ]+) }}/', $string, $matches);
+
+        foreach ($matches[0] as $key => $replaceStr) {
+            $string = str_replace($replaceStr, $this->url->page($matches[1][$key]), $string);
+        }
+
+        /* Modules with args */
+        preg_match_all('/{{ ([^ ]+):([^ ]+):([^ ]+) }}/', $string, $matches);
+
+        foreach ($matches[0] as $key => $replaceStr) {
+
+            /* Plugin Exist? */
+            if (isset($this->bluestats->plugins[$matches[1][$key]])) {
+                /* Set plugin */
+                $plugin = $this->bluestats->plugins[$matches[1][$key]];
+
+                /* New module */
+                $module = new module($this->bluestats->mysqli, $matches[1][$key], $matches[2][$key], $plugin, $this->theme, $this->appPath, $this->url, $matches[3][$key], isset($player) ? $player : NULL);
+                /* Render the module */
+                $output = $module->render();
+
+                $string = str_replace($replaceStr, $output, $string);
+            } else {
+                $output = "<div class=\"alert alert-danger\" role=\"alert\">Plugin not Found: {$matches[1][$key]}</div>";
+                $string = str_replace($replaceStr, $output, $string);
+            }
+        }
+
+        /* Modules */
+        preg_match_all('/{{ ([^ ]+):([^ ]+) }}/', $string, $matches);
+
+        foreach ($matches[0] as $key => $replaceStr) {
+
+            /* Plugin Exist? */
+            if (isset($this->bluestats->plugins[$matches[1][$key]])) {
+                /* Set plugin */
+                $plugin = $this->bluestats->plugins[$matches[1][$key]];
+
+                /* New module */
+                $module = new module($this->bluestats->mysqli, $matches[1][$key], $matches[2][$key], $plugin, $this->theme, $this->appPath, $this->url, NULL, isset($player) ? $player : NULL);
+                /* Render the module */
+                $output = $module->render();
+
+                $string = str_replace($replaceStr, $output, $string);
+            } else {
+                $output = "<div class=\"alert alert-danger\" role=\"alert\">Plugin not Found: {$matches[1][$key]}</div>";
+                $string = str_replace($replaceStr, $output, $string);
+            }
+        }
+
+        /* Page Content */
+        if (strpos($string, '{{ content }}') !== false)
+            $string = str_replace("{{ content }}", $this->render("page"), $string);
+
         return $string;
     }
 
