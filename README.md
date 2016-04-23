@@ -2,6 +2,8 @@
 
 [![Join the chat at https://gitter.im/robinp7720/Blue-Stats-Minecraft](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/robinp7720/Blue-Stats-Minecraft?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+No error, no help. Please, if you want help, you must give me your error log. Else I will simply dismiss your issue.
+
 # Blue-Stats-Minecraft
 Blue Stats 3 is a complete remake/recode of Blue Stats.
 Blue Stats 3 uses a mysql backend to save and load configuartions, caches and other things to make Blue Stats even more powerfull.
