@@ -97,14 +97,15 @@
         <h1 class="light text-center"><span class="bold">BlueStats</span> Installer</h1>
 
         <div class="install-steps">
-            <div class="step <?php if ($_GET["step"] == 1 || !isset($_GET["step"])) echo "active"; ?>">Requirements</div>
+            <div class="step <?php if (!isset($_GET["step"]) || $_GET["step"] == 1) echo "active"; ?>">Requirements
+            </div>
             <div class="step <?php if ($_GET["step"] == 2) echo "active"; ?>">Configuration</div>
             <div class="step <?php if ($_GET["step"] == 3) echo "active"; ?>">Config Check</div>
             <div class="step <?php if ($_GET["step"] == 4) echo "active"; ?>">Install</div>
         </div>
         <div class="install-container" style="overflow: hidden">
             <?php
-            if ($_GET["step"] == 1 || !isset($_GET["step"]))
+            if (!isset($_GET["step"]) || $_GET["step"] == 1)
                 include 'views/step1.php';
             if ($_GET["step"] == 2)
                 include 'views/step2.php';
