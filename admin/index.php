@@ -8,16 +8,25 @@ if (isset($_GET["logout"])) {
 if (!isset($_SESSION["auth"])||$_SESSION["auth"]!== true){
     header('location: login.php');
     die("Not authenticated");
-}else{
+} else {
     $layout = file_get_contents('layout/layout.html');
 
-    ob_start();
-    include "pages/index.php";
-    $contents = ob_get_contents();
-    ob_end_clean();
+    $pages = ["index", "security"];
 
-    $page = str_replace('{ content }',$contents,$layout);
+    $page = isset($_GET['page']) ? $_GET['page'] : "index";
 
-    echo $page;
+    if (in_array($page, $pages)) {
 
+        ob_start();
+        include "pages/$page.php";
+        $contents = ob_get_contents();
+        ob_end_clean();
+
+        $page = str_replace('{ content }', $contents, $layout);
+
+        echo $page;
+    } else {
+        header('location: index.php');
+        die("Page does not exist");
+    }
 }
