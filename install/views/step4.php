@@ -80,7 +80,7 @@ if ($config->set("theme",$_SESSION["theme"])){
 
 /* Enable plugins
 -------------------------------------*/
-$plugins = array("query","themeText");
+$plugins = array("query", "themeText", "nameHistory");
 
 if (isset($_SESSION["lolstats-enable"])&&$_SESSION["lolstats-enable"]==="on"){
 	array_push($plugins,"lolmewnStats");
@@ -117,7 +117,7 @@ if (isset($_SESSION["mcmmo-enable"])&&$_SESSION["mcmmo-enable"]==="on"){
 if ($config->set("ip",$_SESSION["ip"],"query")){
 	echo '<i class="fa fa-check text-success"></i>Set query ip<br>';
 }else{
-	echo '<i class="fa fa-times text-danger"></i>Unable to set query ipbr>';
+	echo '<i class="fa fa-times text-danger"></i>Unable to set query ip<br>';
 }
 
 if ($config->set("ip",$_SESSION["port"],"query")){

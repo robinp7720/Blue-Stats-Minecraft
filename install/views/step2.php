@@ -26,6 +26,7 @@ session_start();
         </h2>
         <label for="theme">Theme: </label>
         <select id="theme" name="theme" class="form-control">
+            <option value="yeti">Yeti</option>
             <option value="material">Material</option>
             <option value="bigBlue">Deep Blue</option>
         </select>
