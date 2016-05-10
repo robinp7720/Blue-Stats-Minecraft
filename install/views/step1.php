@@ -1,4 +1,6 @@
-<?php $allowInstall = true ?>
+<?php $allowInstall = true;
+$processUser = posix_getpwuid(posix_geteuid());
+?>
 Minimum PHP version: 5.2.0
 <?php
 if (version_compare(PHP_VERSION, '5.2.0', '>=')) {
@@ -9,7 +11,7 @@ if (version_compare(PHP_VERSION, '5.2.0', '>=')) {
 }
 ?>
 
-<br>
+<h2>PHP plugins:</h2>
 mysqlnd
 <?php
 if (function_exists('mysqli_fetch_all')) {
@@ -20,13 +22,13 @@ if (function_exists('mysqli_fetch_all')) {
 }
 ?>
 
-<br>
+<h2>File permissions:</h2>
 Can write to BlueStats root
 <?php
 if (is_writable('../')) {
     echo '<i class="fa fa-check text-success"></i>';
 } else {
-    echo '<i class="fa fa-times text-warning"></i> (Must create config files manualy)';
+    echo '<i class="fa fa-times text-warning"></i> (Must create config files manually)';
 }
 ?>
 
@@ -37,7 +39,13 @@ if (is_writable('../assets/')) {
     echo '<i class="fa fa-check text-success"></i>';
 } else {
     echo '<i class="fa fa-times text-warning"></i> (Themes will not work as expected)';
+    echo "<br>To fix, run<br>
+<pre>sudo chown {$processUser['name']} " . dirname(dirname(__DIR__)) . "/assets -R
+sudo chmod 755 " . dirname(dirname(__DIR__)) . "/assets -R</pre>";
+    $allowInstall = false;
 }
+
+
 ?>
 
 <br>
@@ -47,6 +55,10 @@ if (is_writable('../cache/')) {
     echo '<i class="fa fa-check text-success"></i>';
 } else {
     echo '<i class="fa fa-times text-warning"></i> (Cache will not work)';
+    echo "<br>To fix, run<br>
+<pre>sudo chown {$processUser['name']} " . dirname(dirname(__DIR__)) . "/cache -R
+sudo chmod 755 " . dirname(dirname(__DIR__)) . "/cache -R</pre>";
+    $allowInstall = false;
 }
 ?>
 
