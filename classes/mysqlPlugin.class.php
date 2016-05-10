@@ -168,7 +168,7 @@ class MySQLplugin extends plugin
 
         $stmt = $this->mysqli->stmt_init();
 
-        $sql = "SELECT * FROM {$this->prefix}{$this->plugin["indexTable"]} WHERE {$this->plugin["UUIDcolumn"]} IS NOT NULL GROUP BY {$this->plugin["UUIDcolumn"]} LIMIT ?,?";
+        $sql = "SELECT {$this->plugin["UUIDcolumn"]},{$this->plugin["playerNameColumn"]} FROM {$this->prefix}{$this->plugin["indexTable"]} WHERE {$this->plugin["UUIDcolumn"]} IS NOT NULL GROUP BY {$this->plugin["UUIDcolumn"]} LIMIT ?,?";
         if ($stmt->prepare($sql)) {
             $stmt->bind_param('ii', $start, $limit);
             $stmt->execute();
