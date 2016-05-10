@@ -96,6 +96,7 @@ if ($cache->reCache($uri)) {
     $content = str_replace("<head>", "<head>" . $copyrightMeta, $content);
 
     $content = trim(preg_replace('/\s\s+/', ' ', $content));
+    $content = trim(preg_replace('/\s\s+/', ' ', $content));
 
     echo $credits . $content;
     $cache->cache($credits . $content, $uri);

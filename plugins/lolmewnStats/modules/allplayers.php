@@ -50,13 +50,3 @@ $config->setDefault("stat", "playtime");
     ?>
     </tbody>
 </table>
-<script>
-    $(document).ready(function () {
-        $('#allPlayers').DataTable({
-            "aoColumnDefs": [
-                {"iDataSort": 2, "aTargets": [1]},
-                {"bVisible": false, "aTargets": [2]}
-            ]
-        });
-    });
-</script>

@@ -1,4 +1,4 @@
-<table class="table table-hover" id="blocks">
+<table class="table table-hover table-sorted" id="blocks">
     <thead>
     <tr>
         <th>Block</th>
@@ -27,8 +27,3 @@
     <?php endforeach; ?>
     </tbody>
 </table>
-<script>
-    $(document).ready(function () {
-        $('#blocks').DataTable();
-    });
-</script>

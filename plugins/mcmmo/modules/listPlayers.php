@@ -1,4 +1,4 @@
-<table class="table" id="mcmmoListPlayers">
+<table class="table table-sorted" id="mcmmoListPlayers">
     <thead>
     <tr>
         <th>Name</th>

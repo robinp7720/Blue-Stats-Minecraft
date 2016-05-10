@@ -1,4 +1,4 @@
-<table class="table" id="pvp-stats">
+<table class="table table-sorted" id="pvp-stats">
     <thead>
     <th>Victim</th>
     <th>Weapon</th>

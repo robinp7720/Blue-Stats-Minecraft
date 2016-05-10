@@ -6,7 +6,7 @@ $headers = array();
 if (isset($stats[0])):
 unset($stats[0]["user_id"]);
 ?>
-<table class="table">
+    <table class="table table-sorted">
     <thead>
     </thead>
     <tbody>
