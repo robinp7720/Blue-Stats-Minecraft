@@ -26,9 +26,7 @@ session_start();
         </h2>
         <label for="theme">Theme: </label>
         <select id="theme" name="theme" class="form-control">
-            <option value="yeti">Yeti</option>
             <option value="material">Material</option>
-            <option value="bigBlue">Deep Blue</option>
         </select>
         <label for="ip">Query IP:</label>
         <input type="text" class="form-control" id="ip" placeholder="Server Ip" name="ip" value="<?php if (isset($_SESSION["ip"])) echo $_SESSION["ip"]?>">
