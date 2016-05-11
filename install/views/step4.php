@@ -131,9 +131,18 @@ if ($config->set("ip",$_SESSION["port"],"query")){
 $theme = $_SESSION["theme"];
 $directory = "../../themes/" . $theme . "/assets";
 $scanned_directory = array_diff(scandir($directory), array('..', '.'));
-
-foreach ($scanned_directory as $item) {
-    copy("../../themes/$theme/assets/$item", "../../assets/$item");
+if (is_writeable(dirname(dirname(__DIR__)) . "/assets")) {
+	$success = true;
+	foreach ($scanned_directory as $item) {
+		if (!copy("../../themes/$theme/assets/$item", dirname(dirname(__DIR__)) . "/assets/$item")) {
+			echo '<i class="fa fa-times text-danger"></i>Could not copy' . "../../themes/$theme/assets/$item to " . dirname(dirname(__DIR__)) . "/assets/$item <br>";
+			$success = false;
+		}
+	}
+	if ($success)
+		echo '<i class="fa fa-check text-success"></i>Successfully copied theme assets to assets directory<br>';
+} else {
+	echo "<i class=\"fa fa-times text-danger\"></i> Cannot copy theme assets to " . dirname(dirname(__DIR__)) . "/assets/$item <br>";
 }
 
 echo '<a href="../admin">Admin Panel</a><br>';
