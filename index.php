@@ -85,21 +85,20 @@ if ($cache->reCache($uri)) {
 	';
 
     $copyrightMeta = '
-	<link rel="schema.dc" href="http://purl.org/dc/elements/1.1/">
-	<meta name="dcterms.rightsHolder" content="_OvErLoRd_ (robinp7720)">
+	<meta name="dcterms.rightsHolder" content="Zeyphros (robinp7720)">
 	<meta name="dcterms.rights" content="Released under apache 2.0 license">
 	<meta name="dcterms.dateCopyrighted" content="2015">
-	<meta name="dc.license" content="apache 2.0">
-	<meta name="web_author" content="_OvErLoRd_ (robinp7720)">
-	<meta name="author" content="_OvErLoRd_ (robinp7720)">
-	';
+	<meta name="dc.license" content="Apache 2.0">
+	<meta name="web_author" content="Zeyphros (robinp7720)">	';
     $content = str_replace("<head>", "<head>" . $copyrightMeta, $content);
 
     $content = trim(preg_replace('/\s\s+/', ' ', $content));
     $content = trim(preg_replace('/\s\s+/', ' ', $content));
 
-    echo $credits . $content;
-    $cache->cache($credits . $content, $uri);
+    $content = str_replace("<head>", "<head>" . $credits, $content);
+
+    echo $content;
+    $cache->cache($content, $uri);
 } else {
     echo $cache->getCache($uri);
 }

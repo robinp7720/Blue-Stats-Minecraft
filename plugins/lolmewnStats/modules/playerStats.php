@@ -3,9 +3,11 @@ $stats = $config->get("stats", "lolmewnStats");
 ?>
 <table class="table table-sorted" id="stats">
     <thead>
-    <th>Stat</th>
-    <th>Value</th>
-    <th>Server Total</th>
+        <tr>
+            <th>Stat</th>
+            <th>Value</th>
+            <th>Server Total</th>
+        </tr>
     </thead>
     <tbody>
     <?php foreach ($stats as $id => $stat): ?>
