@@ -1,7 +1,3 @@
-<?php
-session_start();
-?>
-
 <form action="?step=3" method="post" style="overflow: hidden">
 <div class="row">
     <div class="col-md-6">

@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 $success = true;
 
 if (isset($_POST["bs-host"]) && isset($_POST["bs-username"]) && isset($_POST["bs-password"]) && isset($_POST["bs-db"])) {
