@@ -1,6 +1,8 @@
 <?php
+define('ROOT', dirname(dirname(__DIR__)));
+
 error_reporting(E_ALL);
-require "../classes/config.class.php";
+require ROOT."/classes/config.class.php";
 
 
 echo "<pre>".print_r($_SESSION,2)."</pre>";
@@ -128,13 +130,13 @@ if ($config->set("ip",$_SESSION["port"],"query")){
 /* Update theme assets
 -------------------------------------*/
 $theme = $_SESSION["theme"];
-$directory = "../../themes/" . $theme . "/assets";
+$directory = ROOT . "/themes/" . $theme . "/assets";
 $scanned_directory = array_diff(scandir($directory), array('..', '.'));
-if (is_writeable(dirname(dirname(__DIR__)) . "/assets")) {
+if (is_writeable(ROOT . "/assets")) {
 	$success = true;
 	foreach ($scanned_directory as $item) {
-		if (!copy("../../themes/$theme/assets/$item", dirname(dirname(__DIR__)) . "/assets/$item")) {
-			echo '<i class="fa fa-times text-danger"></i>Could not copy' . "../../themes/$theme/assets/$item to " . dirname(dirname(__DIR__)) . "/assets/$item <br>";
+		if (!copy(ROOT . "/themes/$theme/assets/$item", dirname(dirname(__DIR__)) . "/assets/$item")) {
+			echo '<i class="fa fa-times text-danger"></i>Could not copy ' . ROOT . "/themes/$theme/assets/$item to " . dirname(dirname(__DIR__)) . "/assets/$item <br>";
 			$success = false;
 		}
 	}
