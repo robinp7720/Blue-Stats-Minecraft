@@ -93,7 +93,9 @@ if ($cache->reCache($uri)) {
     $content = str_replace("<head>", "<head>" . $copyrightMeta, $content);
 
     $content = trim(preg_replace('/\s\s+/', ' ', $content));
-    $content = trim(preg_replace('/\s\s+/', ' ', $content));
+
+    $content = str_replace("\lf", '', $content);
+    //$content = str_replace(PHP_EOL, '', $content);
 
     $content = str_replace("<head>", "<head>" . $credits, $content);
 
