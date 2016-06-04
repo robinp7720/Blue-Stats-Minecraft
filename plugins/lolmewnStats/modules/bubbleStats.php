@@ -48,6 +48,20 @@ $userCount = $plugin->getUserCount();
 ?>
 
 <div class="row">
+    <div class="col-lg-4 col-sm-6">
+        <div class="circle-tile ">
+            <a>
+                <div class="circle-tile-heading bg-primary">
+                    <i class="fa fa-users fa-fw fa-3x"></i>
+                </div>
+            </a>
+            <div class="circle-tile-content bg-primary">
+                <div class="circle-tile-description text-faded">User count</div>
+                <div class="circle-tile-number text-faded "><?=$userCount?></div>
+                <a class="circle-tile-footer" href="<?= $url->page("allPlayers") ?>">All players</a>
+            </div>
+        </div>
+    </div>
     <?php foreach ($stats as $statName => $iconName) : ?>
         <?php $statTitle = $plugin->statName($statName);
         if ($statName!="last_join"&&$statName!="last_seen"){
