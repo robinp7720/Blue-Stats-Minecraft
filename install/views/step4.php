@@ -1,7 +1,6 @@
 <?php
 define('ROOT', dirname(dirname(__DIR__)));
 
-error_reporting(E_ALL);
 require ROOT."/classes/config.class.php";
 
 
@@ -20,9 +19,6 @@ $mysqli = new mysqli(
 /* Basic mysql configs */
 /* Set MySQL mode */
 $mysqli->query('SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO"');
-
-/* Set Time Zone */
-$mysqli->query('SET time_zone = "+00:00"');
 
 /* Create Tables */
 /* Create Config table */
@@ -65,9 +61,6 @@ if (!file_put_contents("../config.json", $configFile)) {
 -------------------------------------*/
 $config = new config($mysqli,"BlueStats");
 
-
-
-
 /* Set theme option
 -------------------------------------*/
 if ($config->set("theme",$_SESSION["theme"])){
@@ -77,7 +70,11 @@ if ($config->set("theme",$_SESSION["theme"])){
 }
 
 
-
+/* Set misc options
+-------------------------------------*/
+$config->setDefault("server-name", "A Minecraft Server");
+$config->setDefault("view_path", ROOT . "/themes/{THEME}/");
+$config->setDefault("homepage", "home");
 
 /* Enable plugins
 -------------------------------------*/
@@ -105,6 +102,7 @@ if (isset($_SESSION["lolstats-enable"])&&$_SESSION["lolstats-enable"]==="on"){
 	$config->set("MYSQL_password",$_SESSION["lolstats-password"],"lolmewnStats");
 	$config->set("MYSQL_database",$_SESSION["lolstats-db"],"lolmewnStats");
 	$config->set("MYSQL_prefix",$_SESSION["lolstats-prefix"],"lolmewnStats");
+    $config->setDefault("base_plugin", "lolmewnStats");
 }
 
 if (isset($_SESSION["mcmmo-enable"])&&$_SESSION["mcmmo-enable"]==="on"){
@@ -113,6 +111,7 @@ if (isset($_SESSION["mcmmo-enable"])&&$_SESSION["mcmmo-enable"]==="on"){
 	$config->set("MYSQL_password",$_SESSION["mcmmo-password"],"mcmmo");
 	$config->set("MYSQL_database",$_SESSION["mcmmo-db"],"mcmmo");
 	$config->set("MYSQL_prefix",$_SESSION["mcmmo-prefix"],"mcmmo");
+    $config->setDefault("base_plugin", "mcmmo");
 }
 
 if ($config->set("ip",$_SESSION["ip"],"query")){

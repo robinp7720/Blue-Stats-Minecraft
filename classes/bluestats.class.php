@@ -20,12 +20,6 @@ class BlueStats
         $this->mysqli = $mysqli;
 
         $this->config = new config($mysqli, $this->pluginName);
-        $this->config->setDefault("plugins", array("lolmewnStats", "query", "themeText"));
-        $this->config->setDefault("server-name", "A Minecraft Server");
-        $this->config->setDefault("theme", "material");
-        $this->config->setDefault("base_plugin", "lolmewnStats");
-        $this->config->setDefault("view_path", "$appPath/themes/{THEME}/");
-        $this->config->setDefault("homepage", "home");
 
         $this->theme = $this->config->get("theme");
         $this->page = isset($this->request["get"]["page"]) ? $this->request["get"]["page"] : $this->config->get("homepage");

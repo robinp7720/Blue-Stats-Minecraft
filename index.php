@@ -66,6 +66,7 @@ if ($cache->reCache($uri)) {
             }
         }
 
+        // Call plugin load function
         if (method_exists($plugins[$plugin], "onLoad")) {
             $plugins[$plugin]->onLoad();
         }
@@ -92,11 +93,11 @@ if ($cache->reCache($uri)) {
 	<meta name="web_author" content="Zeyphros (robinp7720)">	';
     $content = str_replace("<head>", "<head>" . $copyrightMeta, $content);
 
+    // Compress html
     $content = trim(preg_replace('/\s\s+/', ' ', $content));
-
     $content = str_replace("\lf", '', $content);
-    //$content = str_replace(PHP_EOL, '', $content);
 
+    // Add credits into head
     $content = str_replace("<head>", "<head>" . $credits, $content);
 
     echo $content;
