@@ -3,9 +3,6 @@ define('ROOT', dirname(dirname(__DIR__)));
 
 require ROOT."/classes/config.class.php";
 
-
-echo "<pre>".print_r($_SESSION,2)."</pre>";
-
 /* Connect to MySQL */
 $mysqli = new mysqli(
     $_SESSION["bs-host"],
@@ -49,7 +46,7 @@ $configFile = json_encode(array(
 	)
 ));
 
-if (!file_put_contents("../config.json", $configFile)) {
+if (!file_put_contents(ROOT . "/config.json", $configFile)) {
 	$configFile = htmlspecialchars($configFile);
     echo 'Please create a config.json file in the root directory of BlueStats with the following contents: <pre>'.$configFile.'</pre>';
 
