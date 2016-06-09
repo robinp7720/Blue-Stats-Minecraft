@@ -4,24 +4,19 @@ if (!file_exists("../config.json"))
     die("Please go to /install first");
 
 require "../classes/config.class.php";
-require "../classes/mysql.class.php";
 
 $dbConf = json_decode(file_get_contents("../config.json"),true);
 
-$mysqlMan = new mysqlMan;
-$mysqlMan->connect(
-    "BlueStats",
+$mysqli = new mysqli(
+    $dbConf["mysql"]["host"],
     $dbConf["mysql"]["username"],
     $dbConf["mysql"]["password"],
-    $dbConf["mysql"]["host"],
     $dbConf["mysql"]["dbname"]
 );
-$mysqli = $mysqlMan->get("BlueStats");
 
 $config = new config($mysqli, "BlueStatsAdmin");
 
 $config->setDefault('username','admin');
-$config->setDefault('password','admin');
 
 if ((@$_POST["username"] != $config->get("username") || @$_POST["password"] != $config->get("password")) && (@$_SESSION["auth"] === false || !isset($_SESSION["auth"]))) {
 
