@@ -48,20 +48,10 @@ class config
         $serverId = $this->serverId;
         $stmt = $mysqli->stmt_init();
         if ($stmt->prepare("SELECT count(*) FROM BlueStats_config WHERE `server_id`=? AND `option`=? AND `plugin`=?")) {
-
-            /* bind parameters for markers */
             $stmt->bind_param("iss", $serverId, $option, $plugin);
-
-            /* execute query */
             $stmt->execute();
-
-            /* bind result variables */
             $stmt->bind_result($count);
-
-            /* fetch value */
             $stmt->fetch();
-
-            /* close statement */
             $stmt->close();
         }
         if ($count > 0) {
