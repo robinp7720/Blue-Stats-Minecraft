@@ -37,7 +37,7 @@ $stats = array(
     "tools_broken" => "unlink",
     "trades" => "exchange",
     "votes" => "thumbs-o-up",
-    "xpgained" => "flask",
+    "xp_gained" => "flask",
     "words_said" => "comment",
 );
 

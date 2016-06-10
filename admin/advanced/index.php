@@ -12,19 +12,15 @@ if (!isset($_SESSION["auth"])||$_SESSION["auth"]!=true){
 
 /** @noinspection PhpIncludeInspection */
 require "../../classes/config.class.php";
-require "../../classes/mysql.class.php";
 
-$config = json_decode(file_get_contents("../../config.json"),true);
+$dbConf = json_decode(file_get_contents("../../config.json"),true);
 
-$mysqlMan = new mysqlMan;
-$mysqlMan->connect(
-    "BlueStats",
-    $config["mysql"]["username"],
-    $config["mysql"]["password"],
-    $config["mysql"]["host"],
-    $config["mysql"]["dbname"]
+$mysqli = new mysqli(
+    $dbConf["mysql"]["host"],
+    $dbConf["mysql"]["username"],
+    $dbConf["mysql"]["password"],
+    $dbConf["mysql"]["dbname"]
 );
-$mysqli = $mysqlMan->get("BlueStats");
 
 $config = new config($mysqli, "BlueStats_admin");
 

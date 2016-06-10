@@ -2,6 +2,7 @@
 $processUser = posix_getpwuid(posix_geteuid());
 $secure = true;
 ?>
+<h2>Security</h2>
 
 <?php if ($processUser['name'] == "root"): ?>
     <div class="alert alert-danger" role="alert">
