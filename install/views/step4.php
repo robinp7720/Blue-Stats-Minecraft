@@ -139,7 +139,7 @@ if (is_writeable(ROOT . "/assets")) {
 	if ($success)
 		echo '<i class="fa fa-check text-success"></i>Successfully copied theme assets to assets directory<br>';
 } else {
-	echo "<i class=\"fa fa-times text-danger\"></i> Cannot copy theme assets to " . dirname(dirname(__DIR__)) . "/assets/$item <br>";
+	echo "<i class=\"fa fa-times text-danger\"></i> Cannot copy theme assets to " . dirname(dirname(__DIR__)) . "/assets/ <br>";
 }
 
 echo '<a href="../admin">Admin Panel</a><br>';
