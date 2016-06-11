@@ -10,19 +10,16 @@ if ($_SESSION["auth"] != true)
     die("Not authenticated");
 
 require(ROOT."/classes/config.class.php");
-require(ROOT."/classes/mysql.class.php");
-$config = json_decode(file_get_contents(ROOT."/config.json"),true);
+$dbConf = json_decode(file_get_contents(ROOT."/config.json"),true);
 
-$mysqlMan = new mysqlMan;
-$mysqlMan->connect(
-    "BlueStats",
-    $config["mysql"]["username"],
-    $config["mysql"]["password"],
-    $config["mysql"]["host"],
-    $config["mysql"]["dbname"]
+$mysqli = new mysqli(
+    $dbConf["mysql"]["host"],
+    $dbConf["mysql"]["username"],
+    $dbConf["mysql"]["password"],
+    $dbConf["mysql"]["dbname"]
 );
 
-$config = new config($mysqlMan->get("BlueStats"),"BlueStats");
+$config = new config($mysqli,"BlueStats");
 $theme = $config->get("theme");
 
 $directory = ROOT."/themes/$theme/assets";
