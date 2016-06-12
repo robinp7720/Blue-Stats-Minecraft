@@ -1,12 +1,18 @@
 <?php
+$debug = false;
 
 if (file_exists("./install")) {
     die("Please remove /install after installation");
 }
 
 // Turn of error reporting to prevent security leaks
-error_reporting(0);
-ini_set("display_errors", 0);
+if ($debug) {
+    error_reporting(-1);
+    ini_set("display_errors", 'On');
+}else{
+    error_reporting(0);
+    ini_set("display_errors", 0);
+}
 
 $appPath = __DIR__;
 
