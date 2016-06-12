@@ -65,7 +65,7 @@ $userCount = $plugin->getUserCount();
     <?php foreach ($stats as $statName => $iconName) : ?>
         <?php $statTitle = $plugin->statName($statName);
         if ($statName!="last_join"&&$statName!="last_seen"){
-            $server_total =  (float) $plugin->getAllPlayerStatsSum($statName);
+            $server_total =  (float) $plugin->getStatSum($statName);
         }else{
             $server_total=0;
         }

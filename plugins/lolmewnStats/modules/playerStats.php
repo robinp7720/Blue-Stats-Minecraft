@@ -17,7 +17,7 @@ $stats = $config->get("stats", "lolmewnStats");
             <tr>
                 <td><?= $stat ?></td>
                 <td><?= $statVal ?></td>
-                <td><?= $plugin->getAllPlayerStatsSum($id)?></td>
+                <td><?= $plugin->getStatSum($id)?></td>
             </tr>
         <?php endif; ?>
     <?php endforeach; ?>

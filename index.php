@@ -83,17 +83,17 @@ if ($cache->reCache($uri)) {
 
     $credits = '
 	<!--
-	Copyright _OvErLoRd_ (robinp7720) 2015
+	Copyright Zeyphros (robinp7720) 2015
 	BlueStats 3 is released under the Apache 2 license.
 	Removal of this copyright notice is an infringement of the license.
 
-	Developed by _OvErLoRd_ (robinp7720)
+	Developed by Zeyphros (robinp7720)
 	-->
 	';
 
     $copyrightMeta = '
 	<meta name="dcterms.rightsHolder" content="Zeyphros (robinp7720)">
-	<meta name="dcterms.rights" content="Released under apache 2.0 license">
+	<meta name="dcterms.rights" content="Released under Apache 2.0 license">
 	<meta name="dcterms.dateCopyrighted" content="2015">
 	<meta name="dc.license" content="Apache 2.0">
 	<meta name="web_author" content="Zeyphros (robinp7720)">	';

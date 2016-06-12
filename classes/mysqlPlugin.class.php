@@ -146,7 +146,7 @@ class MySQLplugin extends plugin
         return false;
     }
 
-    public function getAllPlayerStatsSum($stat)
+    public function getStatSum($stat)
     {
 
         $stmt = $this->mysqli->stmt_init();
@@ -163,14 +163,22 @@ class MySQLplugin extends plugin
         return false;
     }
 
-    public function getUsers($start = 0, $limit = 10000, $fetchType = MYSQLI_ASSOC)
+    public function getUsers($start = 0, $limit = 10000, $fetchType = MYSQLI_ASSOC, $search = "")
     {
 
         $stmt = $this->mysqli->stmt_init();
 
-        $sql = "SELECT {$this->plugin["UUIDcolumn"]},{$this->plugin["playerNameColumn"]} FROM {$this->prefix}{$this->plugin["indexTable"]} WHERE {$this->plugin["UUIDcolumn"]} IS NOT NULL GROUP BY {$this->plugin["UUIDcolumn"]} LIMIT ?,?";
+        $search = "%$search%";
+
+        $sql = "SELECT {$this->plugin["UUIDcolumn"]},{$this->plugin["playerNameColumn"]}
+        FROM {$this->prefix}{$this->plugin["indexTable"]}
+        WHERE {$this->plugin["UUIDcolumn"]} IS NOT NULL AND {$this->plugin["playerNameColumn"]} like ?
+        GROUP BY {$this->plugin["UUIDcolumn"]} LIMIT ?,?";
+
+
+
         if ($stmt->prepare($sql)) {
-            $stmt->bind_param('ii', $start, $limit);
+            $stmt->bind_param('sii',$search, $start, $limit);
             $stmt->execute();
             $output = $stmt->get_result()->fetch_all($fetchType);
 

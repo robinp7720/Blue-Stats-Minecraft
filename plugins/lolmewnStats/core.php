@@ -99,7 +99,7 @@ class lolmewnStats extends MySQLplugin
         }
     }
 
-    public function getAllPlayerStatsSum($stat)
+    public function getStatSum($stat)
     {
 
         $stmt = $this->mysqli->stmt_init();
@@ -208,12 +208,12 @@ class lolmewnStats extends MySQLplugin
         $stmt = $this->mysqli->stmt_init();
 
         $sql = "SELECT *,
-					{$this->prefix}blocks_broken.name as name, 
-					{$this->prefix}blocks_broken.value as 'broken', 
-					{$this->prefix}blocks_placed.value as 'placed' 
+					{$this->prefix}blocks_broken.name as name,
+					{$this->prefix}blocks_broken.value as 'broken',
+					{$this->prefix}blocks_placed.value as 'placed'
 				FROM {$this->prefix}blocks_broken
-				INNER JOIN `{$this->prefix}blocks_placed` on 
-					{$this->prefix}blocks_broken.uuid = {$this->prefix}blocks_placed.uuid 
+				INNER JOIN `{$this->prefix}blocks_placed` on
+					{$this->prefix}blocks_broken.uuid = {$this->prefix}blocks_placed.uuid
 					and {$this->prefix}blocks_broken.name = {$this->prefix}blocks_placed.name
 					and {$this->prefix}blocks_broken.world = {$this->prefix}blocks_placed.world
 				WHERE {$this->prefix}blocks_broken.uuid = ?

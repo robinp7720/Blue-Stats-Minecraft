@@ -54,16 +54,18 @@
     $(function () {
         /* AJAX player list */
         var getPlayers = function (page) {
+            console.log($('#search').val());
             $.ajax('{{ ajax }}?call=allPlayers', {
                 data: {
-                    page: page
+                    page: page,
+                    search: $('#search').val()
                 }
             }).success(function (data) {
                 var url = data.info.url;
                 $('.players').html('');
                 for (var i in data.data) {
                     if (data.data.hasOwnProperty(i)) {
-                        $('.players').append('<blockquote class="col-md-3 col-sm-6"><a href="' + url.replace('{UUID}', data.data[i][0]).replace('{NAME}', data.data[i][1]) + '"><img src="http://cravatar.eu/avatar/' + data.data[i][0] + '"> ' + data.data[i][1] + '</a></blockquote>');
+                        $('.players').append('<blockquote class="col-md-3 col-sm-6"><a href="' + url.replace('{UUID}', data.data[i][0]).replace('{NAME}', data.data[i][1]) + '"><img src="//cravatar.eu/avatar/' + data.data[i][0] + '"> ' + data.data[i][1] + '</a></blockquote>');
                     }
                 }
             });
@@ -72,6 +74,10 @@
         var currentPage = 0;
 
         getPlayers(currentPage);
+        $('#search').on( "change input", function(){
+            currentPage = 0;
+            getPlayers(currentPage);
+        });
 
         $('.next').click(function (event) {
             event.preventDefault();

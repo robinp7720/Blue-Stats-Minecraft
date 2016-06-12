@@ -11,4 +11,10 @@ $output['info'] = [
 
 $page = isset($_GET['page']) ? $_GET['page'] : 0;
 
-$output['data'] = $plugin->getUsers(50 * $page, 50, MYSQLI_NUM);
+$search = "";
+
+if (isset($_GET['search'])) {
+    $search = $_GET['search'];
+}
+
+$output['data'] = $plugin->getUsers(50 * $page, 50, MYSQLI_NUM, $search);
