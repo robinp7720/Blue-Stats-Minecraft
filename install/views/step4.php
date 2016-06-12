@@ -117,7 +117,7 @@ if ($config->set("ip",$_SESSION["ip"],"query")){
 	echo '<i class="fa fa-times text-danger"></i>Unable to set query ip<br>';
 }
 
-if ($config->set("ip",$_SESSION["port"],"query")){
+if ($config->set("port",$_SESSION["port"],"query")){
 	echo '<i class="fa fa-check text-success"></i>Set query port<br>';
 }else{
 	echo '<i class="fa fa-times text-danger"></i>Unable to set query port<br>';
