@@ -58,6 +58,7 @@ class view
         foreach ($matches[0] as $key => $replaceStr) {
             $string = str_replace($replaceStr, $this->url->page($matches[1][$key]), $string);
         }
+        $string = str_replace('{{ ajax }}', $this->url->urls['ajax'], $string);
 
         /* Modules with args */
         preg_match_all('/{{ ([^ ]+):([^ ]+):([^ ]+) }}/', $string, $matches);

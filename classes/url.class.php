@@ -5,7 +5,7 @@ class url
     public $useUUID = true;
     private $mysqli;
     private $config;
-    private $urls = [];
+    public $urls = [];
     private $defaultPlayer = "";
 
     /**
@@ -19,6 +19,7 @@ class url
         $this->urls = [
             "player" => $this->config->get("player-url"),
             "default" => $this->config->get("default-url"),
+            "ajax" => $this->config->get("ajax-base-url"),
         ];
         $this->defaultPlayer = $this->config->get("default-player-page");
         $this->useUUID = $this->config->get("useUUID") == "true" ? true : false;
@@ -28,6 +29,7 @@ class url
     {
         $this->config->setDefault("player-url", "http://$_SERVER[HTTP_HOST]/{page}/{player}/");
         $this->config->setDefault("default-url", "http://$_SERVER[HTTP_HOST]/{page}/");
+        $this->config->setDefault("ajax-base-url", "http://$_SERVER[HTTP_HOST]/ajax/");
         $this->config->setDefault("default-player-page", "player");
         $this->config->setDefault("useUUID", "true");
     }
