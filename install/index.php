@@ -109,7 +109,7 @@ error_reporting(E_ALL);
         </div>
         <div class="install-container" style="overflow: hidden">
             <?php
-            if (!isset($_GET["step"]){
+            if (!isset($_GET["step"])){
                 include 'views/step1.php';
             }else{
                 if (!isset($_GET["step"]) || $_GET["step"] == 1)
