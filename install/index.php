@@ -112,7 +112,7 @@ error_reporting(E_ALL);
             if (!isset($_GET["step"])){
                 include 'views/step1.php';
             }else{
-                if (!isset($_GET["step"]) || $_GET["step"] == 1)
+                if ($_GET["step"] == 1)
                     include 'views/step1.php';
                 if ($_GET["step"] == 2)
                     include 'views/step2.php';
