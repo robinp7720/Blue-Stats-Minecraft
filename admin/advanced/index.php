@@ -47,5 +47,6 @@ if (isset($_GET["update"]) && $_SESSION["auth"] === true) {
 }
 
 /* include page */
-if ($_SESSION["auth"] === true)
+if ($_SESSION["auth"] === true) {
     require 'parts/main.php';
+}
