@@ -2,12 +2,11 @@
 
 define('ROOT', dirname(dirname(dirname(__DIR__))));
 
-error_reporting(E_ALL);
-ini_set('error_reporting', E_ALL);
 session_start();
 
-if ($_SESSION["auth"] != true)
-    die("Not authenticated");
+if ($_SESSION["auth"] != true) {
+    die(json_encode(['code' => 500, 'message' => 'User is not authenticated']));
+}
 
 require(ROOT."/classes/config.class.php");
 $dbConf = json_decode(file_get_contents(ROOT."/config.json"),true);
@@ -25,7 +24,19 @@ $theme = $config->get("theme");
 $directory = ROOT."/themes/$theme/assets";
 $scanned_directory = array_diff(scandir($directory), array('..', '.'));
 
+$success = 0;
+$fail = 0;
 
 foreach ($scanned_directory as $item){
-    copy(ROOT."/themes/$theme/assets/$item",ROOT."/assets/$item");
+    if (copy(ROOT."/themes/$theme/assets/$item",ROOT."/assets/$item")) {
+        $success++;
+    } else {
+        $fail++;
+    }
 }
+
+echo json_encode([
+    'code' => 200,
+    'success' => $success,
+    'fail' => $fail
+]);
