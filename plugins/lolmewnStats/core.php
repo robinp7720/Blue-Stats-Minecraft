@@ -207,21 +207,22 @@ class lolmewnStats extends MySQLplugin
 
         $stmt = $this->mysqli->stmt_init();
 
-        $sql = "SELECT *,
-					{$this->prefix}blocks_broken.name as name,
-					{$this->prefix}blocks_broken.value as 'broken',
-					{$this->prefix}blocks_placed.value as 'placed'
-				FROM {$this->prefix}blocks_broken
-				INNER JOIN `{$this->prefix}blocks_placed` on
-					{$this->prefix}blocks_broken.uuid = {$this->prefix}blocks_placed.uuid
-					and {$this->prefix}blocks_broken.name = {$this->prefix}blocks_placed.name
-					and {$this->prefix}blocks_broken.world = {$this->prefix}blocks_placed.world
-				WHERE {$this->prefix}blocks_broken.uuid = ?
-				GROUP BY {$this->prefix}blocks_broken.name, {$this->prefix}blocks_broken.world";
+        $sql = "
+SELECT a.world, a.name as name, ifnull(a.value, 0) as 'broken', ifnull(b.value, 0) as 'placed' 
+FROM {$this->prefix}blocks_broken as a 
+LEFT OUTER JOIN {$this->prefix}blocks_placed as b on a.uuid = b.uuid and a.name = b.name and a.world = b.world 
+WHERE a.uuid = ? 
+GROUP BY a.name, a.world 
+UNION ALL 
+SELECT d.world, d.name as name, ifnull(c.value, 0) as 'broken', ifnull(d.value, 0) as 'placed' 
+FROM {$this->prefix}blocks_broken as c 
+RIGHT OUTER JOIN {$this->prefix}blocks_placed as d on c.uuid = d.uuid and c.name = d.name and c.world = d.world 
+WHERE d.uuid = ? and c.value is null 
+GROUP BY d.name, d.world";
 
 
         if ($stmt->prepare($sql)) {
-            $stmt->bind_param("s", $player);
+            $stmt->bind_param("ss", $player,$player);
             /* execute query */
             $stmt->execute();
 
