@@ -84,19 +84,12 @@ class lolmewnStats extends MySQLplugin
         }
 
         if ($stmt->prepare($sql)) {
-
-            /* execute query */
             $stmt->execute();
-
-            /* fetch value */
             $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-
-            /* close statement */
             $stmt->close();
-            return $output ?: array();
-        } else {
-            return array();
+            return $output ?: [];
         }
+        return [];
     }
 
     public function getStatSum($stat)
@@ -106,25 +99,16 @@ class lolmewnStats extends MySQLplugin
 
         if ($stat == "last_join" || $stat == "last_seen") {
             return "";
-        } else {
-            $sql = "SELECT sum(value) as value FROM {$this->prefix}{$stat}";
-            if ($stmt->prepare($sql)) {
-
-                /* execute query */
-                $stmt->execute();
-
-                $stmt->bind_result($output);
-                $stmt->fetch();
-
-                /* close statement */
-                $stmt->close();
-
-                return $output ?: "";
-            } else {
-                return array();
-            }
         }
-
+        $sql = "SELECT sum(value) as value FROM {$this->prefix}{$stat}";
+        if ($stmt->prepare($sql)) {
+            $stmt->execute();
+            $stmt->bind_result($output);
+            $stmt->fetch();
+            $stmt->close();
+            return $output ?: "";
+        }
+        return [];
     }
 
     public function getStat($stat, $player, $group = TRUE)
@@ -150,11 +134,13 @@ class lolmewnStats extends MySQLplugin
             $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
             if ($group) {
-                if (isset($output['value']))
+                if (isset($output['value'])) {
                     $output = $output['value'];
-                else
-                    if (isset($output[0]))
+                } else {
+                    if (isset($output[0])) {
                         $output = $output[0]['value'];
+                    }
+                }
             }
 
             $stmt->close();
@@ -187,15 +173,8 @@ class lolmewnStats extends MySQLplugin
         }
         if ($stmt->prepare($sql)) {
             $stmt->bind_param("s", $player);
-            /* execute query */
             $stmt->execute();
-
-            $output = array();
-
-            /* fetch value */
             $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-
-            /* close statement */
             $stmt->close();
             return $output;
         }
@@ -223,15 +202,8 @@ GROUP BY d.name, d.world";
 
         if ($stmt->prepare($sql)) {
             $stmt->bind_param("ss", $player,$player);
-            /* execute query */
             $stmt->execute();
-
-            $output = array();
-
-            /* fetch value */
             $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-
-            /* close statement */
             $stmt->close();
             return $output;
         }
