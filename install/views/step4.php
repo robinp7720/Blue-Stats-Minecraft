@@ -75,7 +75,13 @@ $config->setDefault("homepage", "home");
 
 /* Enable plugins
 -------------------------------------*/
-$plugins = array("query", "themeText", "nameHistory");
+
+$plugins = array("themeText", "nameHistory");
+
+// Enable query only if ip and port has been set
+if (isset($_SESSION["ip"]) && !empty($_SESSION["ip"]) && isset($_SESSION["port"]) && !empty($_SESSION["port"])) {
+    array_push($plugins, "query");
+}
 
 if (isset($_SESSION["lolstats-enable"])&&$_SESSION["lolstats-enable"]==="on"){
 	array_push($plugins,"lolmewnStats");
