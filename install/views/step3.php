@@ -1,4 +1,10 @@
 <?php
+
+require dirname(dirname(__DIR__)) . "/plugins/query/minecraftQuery.php";
+
+use xPaw\MinecraftQuery;
+use xPaw\MinecraftQueryException;
+
 $success = true;
 
 if (isset($_POST["bs-host"]) && isset($_POST["bs-username"]) && isset($_POST["bs-password"]) && isset($_POST["bs-db"])) {
@@ -66,6 +72,17 @@ if (isset($_POST["mcmmo-enable"])&&$_POST["mcmmo-enable"]=="on") {
         $success = false;
     }
 }
+
+$this->Query = new MinecraftQuery();
+
+try {
+    $this->Query->Connect($_POST['ip'], $_POST['port']);
+    echo "Successfully queried server<br>";
+} catch (MinecraftQueryException $e) {
+    echo "Server query failed<br>";
+    $success = false;
+}
+
 
 $_SESSION = $_POST;
 
