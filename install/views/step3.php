@@ -73,16 +73,17 @@ if (isset($_POST["mcmmo-enable"])&&$_POST["mcmmo-enable"]=="on") {
     }
 }
 
-$this->Query = new MinecraftQuery();
+$query = new MinecraftQuery();
 
-try {
-    $this->Query->Connect($_POST['ip'], $_POST['port']);
-    echo "Successfully queried server<br>";
-} catch (MinecraftQueryException $e) {
-    echo "Server query failed<br>";
-    $success = false;
+if (isset($_POST['ip']) && isset( $_POST['port'])) {
+    try {
+        $query->Connect($_POST['ip'], $_POST['port']);
+        echo "Successfully queried server<br>";
+    } catch (MinecraftQueryException $e) {
+        echo "Server query failed<br>";
+        $success = false;
+    }
 }
-
 
 $_SESSION = $_POST;
 
