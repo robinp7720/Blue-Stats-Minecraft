@@ -27,10 +27,17 @@
                         <?php if (gettype(json_decode($row["value"])) == "array" || gettype(json_decode($row["value"])) == "object"): ?>
                             <textarea name="value" id="" class="form-control"
                                       style="height:100px;"><?= htmlspecialchars($value) ?></textarea>
-                            <input type="submit" class="btn btn-success pull-right" style="margin-top:5px">
+                            <button type="submit" class="btn btn-success pull-right" style="margin-top:5px">Set</button>
                         <?php else: ?>
-                            <input name="value" type="text" class="form-control" value="<?= htmlspecialchars($value) ?>"
-                                   style="width:100%;max-width:100%;">
+                            <div class="row">
+                                <div class="col-md-11">
+                                <input name="value" type="text" class="form-control" value="<?= htmlspecialchars($value) ?>"
+                                       style="width:100%;max-width:100%;">
+                                </div>
+                                <div class="col-md-1">
+                                <button type="submit" class="btn btn-success" style="margin-top:5px">Set</button>
+                                </div>
+                            </div>
                         <?php endif; ?>
                     </td>
                     <input type="hidden" name="option" value="<?= htmlspecialchars($row["option"]) ?>">
