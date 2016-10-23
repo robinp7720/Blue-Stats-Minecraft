@@ -94,6 +94,7 @@ class view
 
                 /* New module */
                 $module = new module($this->bluestats->mysqli, $matches[1][$key], $matches[2][$key], $plugin, $this->theme, $this->appPath, $this->url, NULL, isset($player) ? $player : NULL);
+                $module->setBasePlugin($this->bluestats->basePlugin);
                 /* Render the module */
                 $output = $module->render();
 

@@ -8,6 +8,8 @@ class module
     private $theme;
     private $appPath;
 
+    private $basePlugin;
+
     private $player;
 
     private $config;
@@ -34,6 +36,14 @@ class module
         $this->config = new config($mysqli, "MODULE__" . $this->pluginName . "___" . $this->moduleName);
     }
 
+    /**
+     * @param MySQLplugin $basePlugin
+     */
+    public function setBasePlugin($basePlugin)
+    {
+        $this->basePlugin = $basePlugin;
+    }
+
     public function render()
     {
         $player = $this->player;
@@ -43,6 +53,7 @@ class module
         $plugin = $this->plugin;
         $pluginN = $this->pluginName;
         $moduleN = $this->moduleName;
+        $basePlugin = $this->basePlugin;
 
         /** @noinspection PhpUnusedLocalVariableInspection */
         $config = $this->config;

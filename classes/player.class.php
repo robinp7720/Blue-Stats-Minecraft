@@ -7,7 +7,7 @@ class player
     public $name = "";
     private $config;
     private $mysqli;
-    private $base_plugin;
+    private $basePlugin;
     private $bluestats;
 
     public function __Construct($bluestats, $player)
@@ -17,13 +17,13 @@ class player
 
         $this->config = new config($this->mysqli, "Player");
 
-        $this->base_plugin = $this->bluestats->base_plugin;
-        $this->name = $this->base_plugin->getUserName($player);
+        $this->basePlugin = $this->bluestats->basePlugin;
+        $this->name = $this->basePlugin->getUserName($player);
         if (!empty($this->name)) {
             $this->uuid = $player;
             $this->exist = true;
         } else {
-            $this->uuid = $this->base_plugin->getUUID($player);
+            $this->uuid = $this->basePlugin->getUUID($player);
             if (!empty($this->uuid)) {
                 $this->name = $player;
                 $this->exist = true;

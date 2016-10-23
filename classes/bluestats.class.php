@@ -10,12 +10,13 @@ class BlueStats
     public $plugins = [];
     public $config;
     public $mysqli;
-    public $base_plugin;
+    public $basePlugin;
 
     public $request = [];
 
     function __construct($mysqli, $appPath)
     {
+
         $this->setUpGlobals();
         $this->mysqli = $mysqli;
 
@@ -46,7 +47,7 @@ class BlueStats
     {
         $this->plugins = $plugins;
         if (isset($this->plugins[$this->config->get("base_plugin")])) {
-            $this->base_plugin = $this->plugins[$this->config->get("base_plugin")];
+            $this->basePlugin = $this->plugins[$this->config->get("base_plugin")];
         } else {
             echo "Base plugin does not exist: " . $this->config->get("base_plugin");
             echo "<br>Please install this plugin or change the base plugin";
