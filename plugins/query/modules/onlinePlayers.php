@@ -8,7 +8,7 @@ $imageSrc = $config->get("image-src");
     foreach ($plugin->onlinePlayers() as $player):
 
         ?>
-        <a href="<?= $url->player($player) ?>">
+        <a href="<?= $url->useUUID ? $url->player($basePlugin->getUUID($player)) : $url->player($player) ?>">
             <img src="<?= str_replace("{NAME}", $player, $imageSrc) ?>" alt="<?= $player ?>" title="<?= $player ?>"
                  data-toggle="tooltip" data-placement="top">
         </a>
