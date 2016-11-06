@@ -19,6 +19,9 @@ Find help on installing BlueStats here: https://github.com/robinp7720/Blue-Stats
 ## Troubleshooting
 Please refer to this wiki article to help with troubleshooting: https://github.com/robinp7720/Blue-Stats-Minecraft/wiki/Troubleshooting
 
+## Support me!
+If BlueStats has helped you or your server, please consider supporting me via paypal with the email donate@mysunland.org
+
 Planned features
 =====================
 - [x] Admin interface     
