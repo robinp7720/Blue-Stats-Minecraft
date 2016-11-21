@@ -11,17 +11,6 @@ if (version_compare(PHP_VERSION, '5.2.0', '>=')) {
 }
 ?>
 
-<h2>PHP plugins:</h2>
-mysqlnd
-<?php
-if (function_exists('mysqli_fetch_all')) {
-    echo '<i class="fa fa-check text-success"></i>';
-} else {
-    echo '<i class="fa fa-times text-warning"></i> (Please install mysqlnd)';
-    $allowInstall = false;
-}
-?>
-
 <h2>File permissions:</h2>
 Can write to BlueStats root
 <?php
