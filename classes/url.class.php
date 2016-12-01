@@ -3,9 +3,9 @@
 class url
 {
     public $useUUID = true;
+    public $urls = [];
     private $mysqli;
     private $config;
-    public $urls = [];
     private $defaultPlayer = "";
 
     /**

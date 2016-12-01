@@ -31,11 +31,12 @@
                         <?php else: ?>
                             <div class="row">
                                 <div class="col-md-11">
-                                <input name="value" type="text" class="form-control" value="<?= htmlspecialchars($value) ?>"
-                                       style="width:100%;max-width:100%;">
+                                    <input name="value" type="text" class="form-control"
+                                           value="<?= htmlspecialchars($value) ?>"
+                                           style="width:100%;max-width:100%;">
                                 </div>
                                 <div class="col-md-1">
-                                <button type="submit" class="btn btn-success" style="margin-top:5px">Set</button>
+                                    <button type="submit" class="btn btn-success" style="margin-top:5px">Set</button>
                                 </div>
                             </div>
                         <?php endif; ?>
@@ -46,7 +47,7 @@
                            value="<?= htmlspecialchars(gettype(json_decode($row["value"]))) ?>">
                 </form>
             </tr>
-        <?php
+            <?php
         }
         $stmt->close();
     }

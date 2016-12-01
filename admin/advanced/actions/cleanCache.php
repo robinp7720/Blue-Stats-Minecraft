@@ -8,14 +8,14 @@ if ($_SESSION["auth"] != true) {
     die(json_encode(['code' => 500, 'message' => 'User is not authenticated']));
 }
 
-$directory = ROOT."/cache/";
+$directory = ROOT . "/cache/";
 $scanned_directory = array_diff(scandir($directory), array('..', '.'));
 
 $deleteSuccess = 0;
 $deleteFail = 0;
 
-foreach ($scanned_directory as $item){
-    if (unlink(ROOT."/cache/$item")) {
+foreach ($scanned_directory as $item) {
+    if (unlink(ROOT . "/cache/$item")) {
         $deleteSuccess++;
     } else {
         $deleteFail++;
@@ -23,7 +23,7 @@ foreach ($scanned_directory as $item){
 }
 
 echo json_encode([
-   'code' => 200,
+    'code' => 200,
     'success' => $deleteSuccess,
     'fail' => $deleteFail
 ]);

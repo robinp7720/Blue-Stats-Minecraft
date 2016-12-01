@@ -201,7 +201,7 @@ GROUP BY d.name, d.world";
 
 
         if ($stmt->prepare($sql)) {
-            $stmt->bind_param("ss", $player,$player);
+            $stmt->bind_param("ss", $player, $player);
             $stmt->execute();
             $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             $stmt->close();

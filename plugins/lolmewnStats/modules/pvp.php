@@ -10,10 +10,10 @@
 
     foreach ($plugin->getStat('pvp', $player->uuid, False) as $stat):?>
         <tr>
-            <td><?=$plugin->getUserName($stat['victim'])?></td>
-            <td><?=$stat['weapon']?></td>
-            <td><?=$stat['world']?></td>
-            <td><?=$stat['time']?></td>
+            <td><?= $plugin->getUserName($stat['victim']) ?></td>
+            <td><?= $stat['weapon'] ?></td>
+            <td><?= $stat['world'] ?></td>
+            <td><?= $stat['time'] ?></td>
         </tr>
     <?php endforeach; ?>
     </tbody>

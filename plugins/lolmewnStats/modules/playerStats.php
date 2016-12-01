@@ -3,11 +3,11 @@ $stats = $config->get("stats", "lolmewnStats");
 ?>
 <table class="table table-sorted" id="stats">
     <thead>
-        <tr>
-            <th>Stat</th>
-            <th>Value</th>
-            <th>Server Total</th>
-        </tr>
+    <tr>
+        <th>Stat</th>
+        <th>Value</th>
+        <th>Server Total</th>
+    </tr>
     </thead>
     <tbody>
     <?php foreach ($stats as $id => $stat): ?>
@@ -17,7 +17,7 @@ $stats = $config->get("stats", "lolmewnStats");
             <tr>
                 <td><?= $stat ?></td>
                 <td><?= $statVal ?></td>
-                <td><?= $plugin->getStatSum($id)?></td>
+                <td><?= $plugin->getStatSum($id) ?></td>
             </tr>
         <?php endif; ?>
     <?php endforeach; ?>

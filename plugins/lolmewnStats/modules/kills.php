@@ -9,10 +9,10 @@
     <?php
     foreach ($plugin->getStat('kill', $player->uuid, False) as $stat):?>
         <tr>
-            <td><?=$stat['weapon']?></td>
-            <td><?=$stat['world']?></td>
-            <td><?=$stat['value']?></td>
-            <td><?=$stat['entityType']?></td>
+            <td><?= $stat['weapon'] ?></td>
+            <td><?= $stat['world'] ?></td>
+            <td><?= $stat['value'] ?></td>
+            <td><?= $stat['entityType'] ?></td>
         </tr>
     <?php endforeach; ?>
     </tbody>

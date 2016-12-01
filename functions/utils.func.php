@@ -5,12 +5,12 @@ function secondsToTime($seconds, $contract = true)
         $dtF = new DateTime("@0");
         $dtT = new DateTime("@$seconds");
         if ($contract) {
-            $mins = floor($seconds/60);
-            $hours = floor($mins/60);
-            $days = floor($hours/24);
-            $weeks = floor($days/7);
-            $months = floor($weeks/4.348125);
-            $years = floor($months/12);
+            $mins = floor($seconds / 60);
+            $hours = floor($mins / 60);
+            $days = floor($hours / 24);
+            $weeks = floor($days / 7);
+            $months = floor($weeks / 4.348125);
+            $years = floor($months / 12);
 
             $seconds -= $mins * 60;
             $mins -= $hours * 60;
@@ -20,95 +20,95 @@ function secondsToTime($seconds, $contract = true)
             $months -= $years * 12;
 
             /* Text seconds */
-            if (round($seconds)>0){
-                if (round($seconds)>1){
+            if (round($seconds) > 0) {
+                if (round($seconds) > 1) {
                     $tseconds = $seconds . " seconds";
-                }else{
+                } else {
                     $tseconds = $seconds . " second";
                 }
-            }else{
+            } else {
                 $tseconds = "0 seconds";
             }
 
             /* Text mins */
-            if (round($mins)>0){
-                if (round($mins)>1){
+            if (round($mins) > 0) {
+                if (round($mins) > 1) {
                     $tmins = $mins . " mins";
-                }else{
+                } else {
                     $tmins = $mins . " min";
                 }
-            }else{
+            } else {
                 $tmins = "0 mins";
             }
 
             /* Text hours */
-            if (round($hours)>0){
-                if (round($hours)>1){
+            if (round($hours) > 0) {
+                if (round($hours) > 1) {
                     $thours = $hours . " hours";
-                }else{
+                } else {
                     $thours = $hours . " hours";
                 }
-            }else{
+            } else {
                 $thours = "0 hours";
             }
 
             /* Text days */
-            if (round($days)>0){
-                if (round($days)>1){
+            if (round($days) > 0) {
+                if (round($days) > 1) {
                     $tdays = $days . " days";
-                }else{
+                } else {
                     $tdays = $days . " day";
                 }
-            }else{
+            } else {
                 $tdays = "0 days";
             }
 
             /* Text weeks */
-            if (round($weeks)>0){
-                if (round($weeks)>1){
+            if (round($weeks) > 0) {
+                if (round($weeks) > 1) {
                     $tweeks = round($weeks) . " weeks";
-                }else{
+                } else {
                     $tweeks = round($weeks) . " week";
                 }
-            }else{
+            } else {
                 $tweeks = " 0 weeks";
             }
 
             /* Text months */
-            if (round($months)>0){
-                if (round($months)>1){
+            if (round($months) > 0) {
+                if (round($months) > 1) {
                     $tmonths = $months . " months";
-                }else{
+                } else {
                     $tmonths = $months . " month";
                 }
-            }else{
+            } else {
                 $tmonths = "0 months";
             }
 
             /* Text years */
-            if (round($years)>0){
-                if (round($years)>1){
+            if (round($years) > 0) {
+                if (round($years) > 1) {
                     $tyears = $years . " years";
-                }else{
+                } else {
                     $tyears = $years . " year";
                 }
-            }else{
+            } else {
                 $tyears = "0 years";
             }
 
-            if ($years > 0){
+            if ($years > 0) {
                 return "$tyears, $tmonths and $tweeks";
-            }else if ($months > 0){
+            } else if ($months > 0) {
                 return "$tmonths, $tweeks and $tdays";
-            }else if($weeks> 0){
+            } else if ($weeks > 0) {
                 return "$tweeks, $tdays and $thours";
-            }else if($days > 0){
+            } else if ($days > 0) {
                 return "$tdays and $thours";
-            }else if ($hours > 0){
+            } else if ($hours > 0) {
                 return "$thours and $tmins";
-            }else if($mins > 0){
+            } else if ($mins > 0) {
                 return "$tmins and $tseconds";
-            }else{
+            } else {
                 return $tseconds;
             }
         } else {

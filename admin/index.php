@@ -5,7 +5,7 @@ if (isset($_GET["logout"])) {
     $_SESSION["auth"] = false;
 }
 
-if (!isset($_SESSION["auth"])||$_SESSION["auth"]!== true){
+if (!isset($_SESSION["auth"]) || $_SESSION["auth"] !== true) {
     header('location: login.php');
     die("Not authenticated");
 } else {

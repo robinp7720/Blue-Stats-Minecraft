@@ -57,32 +57,32 @@ $userCount = $plugin->getUserCount();
             </a>
             <div class="circle-tile-content bg-primary">
                 <div class="circle-tile-description text-faded">User count</div>
-                <div class="circle-tile-number text-faded "><?=$userCount?></div>
+                <div class="circle-tile-number text-faded "><?= $userCount ?></div>
                 <a class="circle-tile-footer" href="<?= $url->page("allPlayers") ?>">All players</a>
             </div>
         </div>
     </div>
     <?php foreach ($stats as $statName => $iconName) : ?>
         <?php $statTitle = $plugin->statName($statName);
-        if ($statName!="last_join"&&$statName!="last_seen"){
-            $server_total =  (float) $plugin->getStatSum($statName);
-        }else{
-            $server_total=0;
+        if ($statName != "last_join" && $statName != "last_seen") {
+            $server_total = (float)$plugin->getStatSum($statName);
+        } else {
+            $server_total = 0;
         }
 
 
-        if ($statName!="lastjoin"&&$statName!="lastleave"){
-            if ($server_total < 1){
+        if ($statName != "lastjoin" && $statName != "lastleave") {
+            if ($server_total < 1) {
                 $server_average = 0;
-            }else {
+            } else {
                 $server_average = round($server_total / $userCount);
             }
-        }else{
-            $server_average="";
+        } else {
+            $server_average = "";
         }
-        if ($statName == "playtime"){
-            $server_total=secondsToTime($server_total,false);
-            $server_average=secondsToTime($server_average,false);
+        if ($statName == "playtime") {
+            $server_total = secondsToTime($server_total, false);
+            $server_average = secondsToTime($server_average, false);
         }
 
         ?>
@@ -90,13 +90,13 @@ $userCount = $plugin->getUserCount();
             <div class="circle-tile ">
                 <a>
                     <div class="circle-tile-heading bg-primary">
-                        <i class="fa fa-<?=$iconName?> fa-fw fa-3x"></i>
+                        <i class="fa fa-<?= $iconName ?> fa-fw fa-3x"></i>
                     </div>
                 </a>
                 <div class="circle-tile-content bg-primary">
-                    <div class="circle-tile-description text-faded"> <?=$statTitle?></div>
-                    <div class="circle-tile-number text-faded "><?=$server_total?></div>
-                    <a class="circle-tile-footer">Server Average: <?=$server_average?></a>
+                    <div class="circle-tile-description text-faded"> <?= $statTitle ?></div>
+                    <div class="circle-tile-number text-faded "><?= $server_total ?></div>
+                    <a class="circle-tile-footer">Server Average: <?= $server_average ?></a>
                 </div>
             </div>
         </div>

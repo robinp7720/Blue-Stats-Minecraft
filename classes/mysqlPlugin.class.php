@@ -176,9 +176,8 @@ class MySQLplugin extends plugin
         GROUP BY {$this->plugin["UUIDcolumn"]} LIMIT ?,?";
 
 
-
         if ($stmt->prepare($sql)) {
-            $stmt->bind_param('sii',$search, $start, $limit);
+            $stmt->bind_param('sii', $search, $start, $limit);
             $stmt->execute();
             $output = $stmt->get_result()->fetch_all($fetchType);
 

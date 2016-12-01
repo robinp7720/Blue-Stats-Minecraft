@@ -28,9 +28,11 @@ ini_set("display_errors", 'On');
             -webkit-box-shadow: 0 0 20px 0 #3B3B3B;
             box-shadow: 0 0 20px 0 #3B3B3B;
         }
-        .input-group{
+
+        .input-group {
             margin: 2px 0;
         }
+
         .light {
             font-weight: 300;
         }
@@ -74,6 +76,7 @@ ini_set("display_errors", 'On');
             border-left: none;
             border-bottom: none;
         }
+
         .install-steps .step:last-of-type.active {
             border-top-left-radius: 5px;
             border-top-right-radius: 0;
@@ -110,9 +113,9 @@ ini_set("display_errors", 'On');
         </div>
         <div class="install-container" style="overflow: hidden">
             <?php
-            if (!isset($_GET["step"])){
+            if (!isset($_GET["step"])) {
                 include 'views/step1.php';
-            }else{
+            } else {
                 if ($_GET["step"] == 1)
                     include 'views/step1.php';
                 if ($_GET["step"] == 2)

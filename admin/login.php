@@ -5,7 +5,7 @@ if (!file_exists("../config.json"))
 
 require "../classes/config.class.php";
 
-$dbConf = json_decode(file_get_contents("../config.json"),true);
+$dbConf = json_decode(file_get_contents("../config.json"), true);
 
 $mysqli = new mysqli(
     $dbConf["mysql"]["host"],
@@ -16,8 +16,8 @@ $mysqli = new mysqli(
 
 $config = new config($mysqli, "BlueStatsAdmin");
 
-$config->setDefault('username','admin');
-$config->setDefault('password','admin');
+$config->setDefault('username', 'admin');
+$config->setDefault('password', 'admin');
 
 if ((@$_POST["username"] != $config->get("username") || @$_POST["password"] != $config->get("password")) && (@$_SESSION["auth"] === false || !isset($_SESSION["auth"]))) {
 

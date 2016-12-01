@@ -6,14 +6,14 @@ session_start();
 if (!file_exists("../../config.json"))
     die("Please go to /install first");
 
-if (!isset($_SESSION["auth"])||$_SESSION["auth"]!=true){
+if (!isset($_SESSION["auth"]) || $_SESSION["auth"] != true) {
     die("Not authenticated");
 }
 
 /** @noinspection PhpIncludeInspection */
 require "../../classes/config.class.php";
 
-$dbConf = json_decode(file_get_contents("../../config.json"),true);
+$dbConf = json_decode(file_get_contents("../../config.json"), true);
 
 $mysqli = new mysqli(
     $dbConf["mysql"]["host"],

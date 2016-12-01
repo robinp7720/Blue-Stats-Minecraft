@@ -1,7 +1,7 @@
 <?php
 define('ROOT', dirname(dirname(__DIR__)));
 
-require ROOT."/classes/config.class.php";
+require ROOT . "/classes/config.class.php";
 
 /* Connect to MySQL */
 $mysqli = new mysqli(
@@ -20,11 +20,11 @@ $mysqli->query('SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO"');
 /* Create Tables */
 /* Create Config table */
 $mysqli->query('CREATE TABLE IF NOT EXISTS `BlueStats_config` (
-	`row_id` int(11) NOT NULL,
-	  `server_id` int(11) NOT NULL,
-	  `option` varchar(64) NOT NULL,
-	  `plugin` varchar(64) NOT NULL,
-	  `value` text NOT NULL
+	`row_id` INT(11) NOT NULL,
+	  `server_id` INT(11) NOT NULL,
+	  `option` VARCHAR(64) NOT NULL,
+	  `plugin` VARCHAR(64) NOT NULL,
+	  `value` TEXT NOT NULL
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1');
 
 /* Table indexes */
@@ -34,21 +34,21 @@ $mysqli->query('ALTER TABLE `BlueStats_config`
 
 /* Auto Increment */
 $mysqli->query('ALTER TABLE `BlueStats_config`
-	MODIFY `row_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1');
+	MODIFY `row_id` INT(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1');
 
 /* Make config file */
 $configFile = json_encode(array(
-	"mysql" => array(
-		"username" => $_SESSION["bs-username"],
-		"password" => $_SESSION["bs-password"],
-		"dbname"   => $_SESSION["bs-db"],
-		"host"     => $_SESSION["bs-host"]
-	)
+    "mysql" => array(
+        "username" => $_SESSION["bs-username"],
+        "password" => $_SESSION["bs-password"],
+        "dbname" => $_SESSION["bs-db"],
+        "host" => $_SESSION["bs-host"]
+    )
 ));
 
 if (!file_put_contents(ROOT . "/config.json", $configFile)) {
-	$configFile = htmlspecialchars($configFile);
-    echo 'Please create a config.json file in the root directory of BlueStats with the following contents: <pre>'.$configFile.'</pre>';
+    $configFile = htmlspecialchars($configFile);
+    echo 'Please create a config.json file in the root directory of BlueStats with the following contents: <pre>' . $configFile . '</pre>';
 
 } else {
     echo 'BlueStats config file has been created<br>';
@@ -56,14 +56,14 @@ if (!file_put_contents(ROOT . "/config.json", $configFile)) {
 
 /* Set up config class
 -------------------------------------*/
-$config = new config($mysqli,"BlueStats");
+$config = new config($mysqli, "BlueStats");
 
 /* Set theme option
 -------------------------------------*/
-if ($config->set("theme",$_SESSION["theme"])){
-	echo '<i class="fa fa-check text-success"></i>Set theme<br>';
-}else{
-	echo '<i class="fa fa-times text-danger"></i>Failed to set theme<br>';
+if ($config->set("theme", $_SESSION["theme"])) {
+    echo '<i class="fa fa-check text-success"></i>Set theme<br>';
+} else {
+    echo '<i class="fa fa-times text-danger"></i>Failed to set theme<br>';
 }
 
 
@@ -85,42 +85,42 @@ if (function_exists('fsockopen')) {
     }
 }
 
-if (isset($_SESSION["lolstats-enable"])&&$_SESSION["lolstats-enable"]==="on"){
-	array_push($plugins,"lolmewnStats");
+if (isset($_SESSION["lolstats-enable"]) && $_SESSION["lolstats-enable"] === "on") {
+    array_push($plugins, "lolmewnStats");
 }
-if (isset($_SESSION["mcmmo-enable"])&&$_SESSION["mcmmo-enable"]==="on"){
-	array_push($plugins,"mcmmo");
+if (isset($_SESSION["mcmmo-enable"]) && $_SESSION["mcmmo-enable"] === "on") {
+    array_push($plugins, "mcmmo");
 }
 
-if ($config->set("plugins",$plugins)){
+if ($config->set("plugins", $plugins)) {
     echo '<i class="fa fa-check text-success"></i>Enabled plugins:<br>';
     echo '<ul>';
     foreach ($plugins as $plugin) {
         echo '<li><i class="fa fa-check text-success"></i>' . $plugin . '<br></li>';
     }
     echo '</ul>';
-}else{
-	echo '<i class="fa fa-times text-danger"></i>Unable to enable plugins<br>';
+} else {
+    echo '<i class="fa fa-times text-danger"></i>Unable to enable plugins<br>';
 }
 
 /* Set MySQL details
 -------------------------------------*/
 
-if (isset($_SESSION["lolstats-enable"])&&$_SESSION["lolstats-enable"]==="on"){
-	$config->set("MYSQL_host",$_SESSION["lolstats-host"],"lolmewnStats");
-	$config->set("MYSQL_username",$_SESSION["lolstats-username"],"lolmewnStats");
-	$config->set("MYSQL_password",$_SESSION["lolstats-password"],"lolmewnStats");
-	$config->set("MYSQL_database",$_SESSION["lolstats-db"],"lolmewnStats");
-	$config->set("MYSQL_prefix",$_SESSION["lolstats-prefix"],"lolmewnStats");
+if (isset($_SESSION["lolstats-enable"]) && $_SESSION["lolstats-enable"] === "on") {
+    $config->set("MYSQL_host", $_SESSION["lolstats-host"], "lolmewnStats");
+    $config->set("MYSQL_username", $_SESSION["lolstats-username"], "lolmewnStats");
+    $config->set("MYSQL_password", $_SESSION["lolstats-password"], "lolmewnStats");
+    $config->set("MYSQL_database", $_SESSION["lolstats-db"], "lolmewnStats");
+    $config->set("MYSQL_prefix", $_SESSION["lolstats-prefix"], "lolmewnStats");
     $config->setDefault("base_plugin", "lolmewnStats");
 }
 
-if (isset($_SESSION["mcmmo-enable"])&&$_SESSION["mcmmo-enable"]==="on"){
-	$config->set("MYSQL_host",$_SESSION["mcmmo-host"],"mcmmo");
-	$config->set("MYSQL_username",$_SESSION["mcmmo-username"],"mcmmo");
-	$config->set("MYSQL_password",$_SESSION["mcmmo-password"],"mcmmo");
-	$config->set("MYSQL_database",$_SESSION["mcmmo-db"],"mcmmo");
-	$config->set("MYSQL_prefix",$_SESSION["mcmmo-prefix"],"mcmmo");
+if (isset($_SESSION["mcmmo-enable"]) && $_SESSION["mcmmo-enable"] === "on") {
+    $config->set("MYSQL_host", $_SESSION["mcmmo-host"], "mcmmo");
+    $config->set("MYSQL_username", $_SESSION["mcmmo-username"], "mcmmo");
+    $config->set("MYSQL_password", $_SESSION["mcmmo-password"], "mcmmo");
+    $config->set("MYSQL_database", $_SESSION["mcmmo-db"], "mcmmo");
+    $config->set("MYSQL_prefix", $_SESSION["mcmmo-prefix"], "mcmmo");
     $config->setDefault("base_plugin", "mcmmo");
 }
 
@@ -146,17 +146,17 @@ $theme = $_SESSION["theme"];
 $directory = ROOT . "/themes/" . $theme . "/assets";
 $scanned_directory = array_diff(scandir($directory), array('..', '.'));
 if (is_writeable(ROOT . "/assets")) {
-	$success = true;
-	foreach ($scanned_directory as $item) {
-		if (!copy(ROOT . "/themes/$theme/assets/$item", dirname(dirname(__DIR__)) . "/assets/$item")) {
-			echo '<i class="fa fa-times text-danger"></i>Could not copy ' . ROOT . "/themes/$theme/assets/$item to " . dirname(dirname(__DIR__)) . "/assets/$item <br>";
-			$success = false;
-		}
-	}
-	if ($success)
-		echo '<i class="fa fa-check text-success"></i>Successfully copied theme assets to assets directory<br>';
+    $success = true;
+    foreach ($scanned_directory as $item) {
+        if (!copy(ROOT . "/themes/$theme/assets/$item", dirname(dirname(__DIR__)) . "/assets/$item")) {
+            echo '<i class="fa fa-times text-danger"></i>Could not copy ' . ROOT . "/themes/$theme/assets/$item to " . dirname(dirname(__DIR__)) . "/assets/$item <br>";
+            $success = false;
+        }
+    }
+    if ($success)
+        echo '<i class="fa fa-check text-success"></i>Successfully copied theme assets to assets directory<br>';
 } else {
-	echo "<i class=\"fa fa-times text-danger\"></i> Cannot copy theme assets to " . dirname(dirname(__DIR__)) . "/assets/ <br>";
+    echo "<i class=\"fa fa-times text-danger\"></i> Cannot copy theme assets to " . dirname(dirname(__DIR__)) . "/assets/ <br>";
 }
 
 echo '<a href="../admin">Admin Panel</a><br>';
