@@ -79,8 +79,10 @@ $config->setDefault("homepage", "home");
 $plugins = array("themeText", "nameHistory");
 
 // Enable query only if ip and port has been set
-if (isset($_SESSION["ip"]) && !empty($_SESSION["ip"]) && isset($_SESSION["port"]) && !empty($_SESSION["port"])) {
-    array_push($plugins, "query");
+if (function_exists('fsockopen')) {
+    if (isset($_SESSION["ip"]) && !empty($_SESSION["ip"]) && isset($_SESSION["port"]) && !empty($_SESSION["port"])) {
+        array_push($plugins, "query");
+    }
 }
 
 if (isset($_SESSION["lolstats-enable"])&&$_SESSION["lolstats-enable"]==="on"){
@@ -91,7 +93,12 @@ if (isset($_SESSION["mcmmo-enable"])&&$_SESSION["mcmmo-enable"]==="on"){
 }
 
 if ($config->set("plugins",$plugins)){
-	echo '<i class="fa fa-check text-success"></i>Enabled plugins<br>';
+    echo '<i class="fa fa-check text-success"></i>Enabled plugins:<br>';
+    echo '<ul>';
+    foreach ($plugins as $plugin) {
+        echo '<li><i class="fa fa-check text-success"></i>' . $plugin . '<br></li>';
+    }
+    echo '</ul>';
 }else{
 	echo '<i class="fa fa-times text-danger"></i>Unable to enable plugins<br>';
 }
@@ -117,16 +124,20 @@ if (isset($_SESSION["mcmmo-enable"])&&$_SESSION["mcmmo-enable"]==="on"){
     $config->setDefault("base_plugin", "mcmmo");
 }
 
-if ($config->set("ip",$_SESSION["ip"],"query")){
-	echo '<i class="fa fa-check text-success"></i>Set query ip<br>';
-}else{
-	echo '<i class="fa fa-times text-danger"></i>Unable to set query ip<br>';
-}
+if (function_exists('fsockopen')) {
+    if ($config->set("ip", $_SESSION["ip"], "query")) {
+        echo '<i class="fa fa-check text-success"></i>Set query ip<br>';
+    } else {
+        echo '<i class="fa fa-times text-danger"></i>Unable to set query ip<br>';
+    }
 
-if ($config->set("port",$_SESSION["port"],"query")){
-	echo '<i class="fa fa-check text-success"></i>Set query port<br>';
-}else{
-	echo '<i class="fa fa-times text-danger"></i>Unable to set query port<br>';
+    if ($config->set("port", $_SESSION["port"], "query")) {
+        echo '<i class="fa fa-check text-success"></i>Set query port<br>';
+    } else {
+        echo '<i class="fa fa-times text-danger"></i>Unable to set query port<br>';
+    }
+} else {
+    echo '<i class="fa fa-times text-danger"></i>Query port and ip not set due to dependency missing<br>';
 }
 
 /* Update theme assets

@@ -11,6 +11,17 @@ if (version_compare(PHP_VERSION, '5.2.0', '>=')) {
 }
 ?>
 
+<h2>Php modules:</h2>
+fsockopen is installed
+<?php
+if (function_exists('fsockopen')) {
+    echo '<i class="fa fa-check text-success"></i>';
+} else {
+    echo '<i class="fa fa-times text-warning"></i> (MC query will be disabled)';
+}
+
+?>
+
 <h2>File permissions:</h2>
 Can write to BlueStats root
 <?php
