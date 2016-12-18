@@ -12,33 +12,37 @@ if (version_compare(PHP_VERSION, '5.2.0', '>=')) {
 ?>
 
 <h2>Php modules:</h2>
-fsockopen is installed
 <?php
 if (function_exists('fsockopen')) {
-    echo '<i class="fa fa-check text-success"></i>';
+    echo 'fsockopen is installed <i class="fa fa-check text-success"></i>';
 } else {
-    echo '<i class="fa fa-times text-warning"></i> (MC query will be disabled)';
+    echo 'fsockopen is not installed <i class="fa fa-times text-warning"></i> (MC query will be disabled)';
 }
 
+if (function_exists('fsockopen')) {
+    echo 'MySQLnd is installed <i class="fa fa-check text-success"></i>';
+} else {
+    echo 'MySQLnd is not installed <i class="fa fa-times text-warning"></i> (Install or activate MySQLnd before continuing))';
+    $allowInstall = false;
+}
 ?>
 
 <h2>File permissions:</h2>
-Can write to BlueStats root
 <?php
 if (is_writable('../')) {
-    echo '<i class="fa fa-check text-success"></i>';
+    echo 'Can write to BlueStats root <i class="fa fa-check text-success"></i>';
 } else {
-    echo '<i class="fa fa-times text-warning"></i> (Must create config files manually)';
+    echo 'Can not write to BlueStats root <i class="fa fa-times text-warning"></i> (Must create config files manually)';
 }
 ?>
 
 <br>
-Can write to assets folder
+
 <?php
 if (is_writable('../assets/')) {
-    echo '<i class="fa fa-check text-success"></i>';
+    echo 'Can write to assets folder <i class="fa fa-check text-success"></i>';
 } else {
-    echo '<i class="fa fa-times text-warning"></i> (Themes will not work as expected)';
+    echo 'Can not write to assets folder <i class="fa fa-times text-warning"></i> (Themes will not work as expected)';
     echo "<br>To fix, run<br>
 <pre>sudo chown {$processUser['name']} " . dirname(dirname(__DIR__)) . "/assets -R
 sudo chmod 755 " . dirname(dirname(__DIR__)) . "/assets -R</pre>";
@@ -49,12 +53,12 @@ sudo chmod 755 " . dirname(dirname(__DIR__)) . "/assets -R</pre>";
 ?>
 
 <br>
-Can write to cache folder
+
 <?php
 if (is_writable('../cache/')) {
-    echo '<i class="fa fa-check text-success"></i>';
+    echo 'Can write to cache folder <i class="fa fa-check text-success"></i>';
 } else {
-    echo '<i class="fa fa-times text-warning"></i> (Cache will not work)';
+    echo 'Can not write to cache folder <i class="fa fa-times text-warning"></i> (Cache will not work)';
     echo "<br>To fix, run<br>
 <pre>sudo chown {$processUser['name']} " . dirname(dirname(__DIR__)) . "/cache -R
 sudo chmod 755 " . dirname(dirname(__DIR__)) . "/cache -R</pre>";
