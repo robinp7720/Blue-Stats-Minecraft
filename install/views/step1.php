@@ -18,7 +18,9 @@ if (function_exists('fsockopen')) {
 } else {
     echo 'fsockopen is not installed <i class="fa fa-times text-warning"></i> (MC query will be disabled)';
 }
-
+?>
+<br>
+<?php
 if (function_exists('fsockopen')) {
     echo 'MySQLnd is installed <i class="fa fa-check text-success"></i>';
 } else {
