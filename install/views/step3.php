@@ -17,16 +17,17 @@ if (isset($_POST["bs-host"]) && isset($_POST["bs-username"]) && isset($_POST["bs
     );
 
     if ($mysqli->connect_error) {
-        echo "<b>BlueStats database connetion error:</b> " . $mysqli->connect_error . "<br>";
+        echo "<i class=\"fa fa-times text-warning\"></i> <b>BlueStats database connetion error:</b> " . $mysqli->connect_error . "<br>";
         $success = false;
     } else {
-        echo "BlueStats database success!<br>";
+        echo "<i class=\"fa fa-check text-success\"></i> BlueStats database success!<br>";
     }
 
 } else {
-    echo "BlueStats database details missing<br>";
+    echo "<i class=\"fa fa-times text-warning\"></i> BlueStats database details missing<br>";
     $success = false;
 }
+
 if (isset($_POST["lolstats-enable"]) && $_POST["lolstats-enable"] == "on") {
     if (isset($_POST["lolstats-host"]) && isset($_POST["lolstats-username"]) && isset($_POST["lolstats-password"]) && isset($_POST["lolstats-db"])) {
         /* Connect to MySQL */
@@ -38,14 +39,14 @@ if (isset($_POST["lolstats-enable"]) && $_POST["lolstats-enable"] == "on") {
         );
 
         if ($mysqli->connect_error) {
-            echo "<b>Lolmewn Stats database connetion error:</b> " . $mysqli->connect_error . "<br>";
+            echo "<i class=\"fa fa-times text-warning\"></i> <b>Lolmewn Stats database connetion error:</b> " . $mysqli->connect_error . "<br>";
             $success = false;
         } else {
-            echo "Lolmewn Stats success!<br>";
+            echo "<i class=\"fa fa-check text-success\"></i> Lolmewn Stats success!<br>";
         }
 
     } else {
-        echo "Lolmewn Stats database details missing<br>";
+        echo "<i class=\"fa fa-times text-warning\"></i> Lolmewn Stats database details missing<br>";
         $success = false;
     }
 }
@@ -61,14 +62,14 @@ if (isset($_POST["mcmmo-enable"]) && $_POST["mcmmo-enable"] == "on") {
         );
 
         if ($mysqli->connect_error) {
-            echo "<b>Mcmmo database connetion error:</b> " . $mysqli->connect_error . "<br>";
+            echo "<i class=\"fa fa-times text-warning\"></i> <b>Mcmmo database connetion error:</b> " . $mysqli->connect_error . "<br>";
             $success = false;
         } else {
-            echo "Mcmmo success!<br>";
+            echo "<i class=\"fa fa-check text-success\"></i> Mcmmo success!<br>";
         }
 
     } else {
-        echo "Mcmmo database details missing<br>";
+        echo "<i class=\"fa fa-times text-warning\"></i> Mcmmo database details missing<br>";
         $success = false;
     }
 }
@@ -78,9 +79,9 @@ if (function_exists('fsockopen')) {
     if (isset($_POST['ip']) && isset($_POST['port'])) {
         try {
             $query->Connect($_POST['ip'], $_POST['port']);
-            echo "Successfully queried server<br>";
+            echo "<i class=\"fa fa-check text-success\"></i> Successfully queried server<br>";
         } catch (MinecraftQueryException $e) {
-            echo "Server query failed<br>";
+            echo "<i class=\"fa fa-times text-warning\"></i> Server query failed<br>";
             $success = false;
         }
     }
