@@ -12,7 +12,7 @@
         <tr>
             <td>
                 <!--<img src="http://blocks.fishbans.com/" alt="">-->
-                <?= ucfirst(strtolower(str_replace("_", " ", $value["name"]))) . ":" . $value["date"] ?>
+                <?= ucfirst(strtolower(str_replace("_", " ", $value["name"]))) . ":" . $value["data"] ?>
             </td>
             <td>
                 <?= $value["world"] ?>
