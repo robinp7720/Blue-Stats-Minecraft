@@ -73,9 +73,9 @@ class lolmewnStats extends MySQLplugin
         $stmt = $this->mysqli->stmt_init();
 
         if ($stat == "last_join" || $stat == "last_seen") {
-            $sql = "SELECT *, min(value) as value FROM {$this->prefix}{$stat} INNER JOIN `{$this->prefix}players` on {$this->prefix}{$stat}.UUID = {$this->prefix}players.UUID GROUP BY {$this->prefix}{$stat}.UUID ORDER BY value Desc";
+            $sql = "SELECT *, min(value) as value FROM {$this->prefix}{$stat} INNER JOIN `{$this->prefix}players` on {$this->prefix}{$stat}.{$this->plugin['idColumn']} = {$this->prefix}players.{$this->plugin['idColumn']}  GROUP BY {$this->prefix}{$stat}.{$this->plugin['idColumn']}  ORDER BY value Desc";
         } else {
-            $sql = "SELECT *, sum(value) as value FROM {$this->prefix}{$stat} INNER JOIN `{$this->prefix}players` on {$this->prefix}{$stat}.UUID = {$this->prefix}players.UUID GROUP BY {$this->prefix}{$stat}.UUID ORDER BY value Desc";
+            $sql = "SELECT *, sum(value) as value FROM {$this->prefix}{$stat} INNER JOIN `{$this->prefix}players` on {$this->prefix}{$stat}.{$this->plugin['idColumn']}  = {$this->prefix}players.{$this->plugin['idColumn']}  GROUP BY {$this->prefix}{$stat}.{$this->plugin['idColumn']}  ORDER BY value Desc";
         }
 
 
