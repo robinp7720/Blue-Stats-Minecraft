@@ -12,16 +12,16 @@
         <tr>
             <td>
                 <!--<img src="http://blocks.fishbans.com/" alt="">-->
-                <?= ucfirst(strtolower(str_replace("_", " ", $value["name"]))) ?>
+                <?= ucfirst(strtolower(str_replace("_", " ", $value["name"]))) . ":" . $value["date"] ?>
             </td>
             <td>
                 <?= $value["world"] ?>
             </td>
             <td>
-                <?= $value["broken"] ?>
+                <?= $value["blocks_broken"] ?>
             </td>
             <td>
-                <?= $value["placed"] ?>
+                <?= $value["blocks_broken"] ?>
             </td>
         </tr>
     <?php endforeach; ?>
