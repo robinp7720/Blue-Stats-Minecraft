@@ -51,6 +51,7 @@ class player
             } else {
                 $stat = [];
                 foreach ($plugin->plugin["tables"] as $table) {
+                    $value = 0;
                     $statOut = $plugin->getStat($table, $this->uuid);
                     if (is_array($statOut)) {
                         if (isset($statOut[$plugin->plugin["valueColumn"]])) {
