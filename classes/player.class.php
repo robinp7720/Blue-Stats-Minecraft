@@ -53,7 +53,9 @@ class player
                 foreach ($plugin->plugin["tables"] as $table) {
                     $statOut = $plugin->getStat($table, $this->uuid);
                     if (is_array($statOut)) {
-                        $value = $statOut[$plugin->plugin["valueColumn"]];
+                        if (isset($plugin->plugin["valueColumn"])) {
+                            $value = $statOut[$plugin->plugin["valueColumn"]];
+                        }
                     } else {
                         $value = $statOut;
                     }
