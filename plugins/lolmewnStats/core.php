@@ -189,7 +189,7 @@ class lolmewnStats extends MySQLplugin
         $sql = "SELECT {$this->prefix}blocks_placed.name,{$this->prefix}blocks_placed.data, {$this->prefix}blocks_placed.world,{$this->prefix}blocks_placed.value as \"blocks_placed\", {$this->prefix}blocks_broken.value as \"blocks_broken\" FROM {$this->prefix}blocks_broken INNER JOIN {$this->prefix}blocks_placed on ({$this->prefix}blocks_broken.uuid = {$this->prefix}blocks_placed.uuid and {$this->prefix}blocks_broken.world = {$this->prefix}blocks_placed.world and {$this->prefix}blocks_broken.data = {$this->prefix}blocks_placed.data and {$this->prefix}blocks_broken.name = {$this->prefix}blocks_placed.name ) WHERE {$this->prefix}blocks_broken.uuid = ?";
 
         if ($stmt->prepare($sql)) {
-            $stmt->bind_param("ss", $player, $player);
+            $stmt->bind_param("s", $player);
             $stmt->execute();
             $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             $stmt->close();
