@@ -85,7 +85,9 @@ class lolmewnStats extends MySQLplugin
 
         if ($stmt->prepare($sql)) {
             $stmt->execute();
+            echo $stmt->error;
             $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            echo $stmt->error;
             $stmt->close();
             return $output ?: [];
         }
@@ -117,7 +119,7 @@ class lolmewnStats extends MySQLplugin
         $stmt = $this->mysqli->stmt_init();
         if ($group) {
             if ($stat == "last_join" || $stat == "last_seen") {
-                $sql = "SELECT min(value) as value FROM {$this->prefix}{$stat} WHERE uuid=?";
+                $sql = "SELECT max(value) as value FROM {$this->prefix}{$stat} WHERE uuid=?";
             } else {
                 $sql = "SELECT sum(value) as value FROM {$this->prefix}{$stat} WHERE uuid=?";
             }
@@ -146,8 +148,9 @@ class lolmewnStats extends MySQLplugin
             $stmt->close();
             if ($stat == "last_join" || $stat == "last_seen") {
                 if (!empty($output)) {
-                    $time = time() - ($output / 1000);
+                    $time = time() - ($output/1000);
                     $output = secondsToTime(round($time)) . " ago";
+                    #$output = time().":".$output;
                 } else {
                     $output = "Never";
                 }
