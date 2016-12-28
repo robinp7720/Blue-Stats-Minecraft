@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta name="theme-color" content="#2196f3">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/paper/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/plug-ins/1.10.6/integration/bootstrap/3/dataTables.bootstrap.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+
+    <title>BlueStats</title>
+</head>
+<body>
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">BlueStats</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url:home }}">Home</a></li>
+                <li><a href="{{ url:highscores }}">highscores</a></li>
+                <li><a href="{{ url:allPlayers }}">All Players</a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</nav>
+<main>
+    <div class="container">
+        {{ content }}
+    </div>
+</main>
+<!-- Latest compiled and minified CSS & JS -->
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//cdn.datatables.net/1.10.6/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/plug-ins/1.10.6/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+
+<script>
+    $(function () {
+        /* AJAX player list */
+        var getPlayers = function (page) {
+            console.log($('#search').val());
+            $.ajax('{{ ajax }}?call=allPlayers', {
+                data: {
+                    page: page,
+                    search: $('#search').val()
+                }
+            }).success(function (data) {
+                var url = data.info.url;
+                $('.players').html('');
+                for (var i in data.data) {
+                    if (data.data.hasOwnProperty(i)) {
+                        $('.players').append('<blockquote class="col-md-3 col-sm-6"><a href="' + url.replace('{UUID}', data.data[i][0]).replace('{NAME}', data.data[i][1]) + '"><img src="//cravatar.eu/avatar/' + data.data[i][0] + '"> ' + data.data[i][1] + '</a></blockquote>');
+                    }
+                }
+            });
+        };
+
+        var currentPage = 0;
+
+        getPlayers(currentPage);
+        $('#search').on("change input", function () {
+            currentPage = 0;
+            getPlayers(currentPage);
+        });
+
+        $('.next').click(function (event) {
+            event.preventDefault();
+            currentPage += 1;
+            getPlayers(currentPage);
+        });
+
+        $('.previous').click(function (event) {
+            event.preventDefault();
+            currentPage -= 1;
+            getPlayers(currentPage);
+        });
+
+        $('.table-sorted').DataTable();
+    });
+</script>
+
+</body>
+</html>
