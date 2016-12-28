@@ -84,9 +84,9 @@ class player
     {
         $tableid = uniqid();
         if (!$h2)
-            $output = '<h3>' . ucfirst($name) . '</h3><table class="table" id="' . $tableid . '"><thead><tr><th>Stat</th><td>Value</td></tr></thead><tbody>';
+            $output = '<h3>' . ucfirst($name) . '</h3><table class="table table-sorted" id="' . $tableid . '"><thead><tr><th>Stat</th><td>Value</td></tr></thead><tbody>';
         else
-            $output = '<h2>' . ucfirst($name) . '</h2><table class="table" id="' . $tableid . '"><thead><tr><th>Stat</th><td>Value</td></tr></thead><tbody>';
+            $output = '<h2>' . ucfirst($name) . '</h2><table class="table table-sorted" id="' . $tableid . '"><thead><tr><th>Stat</th><td>Value</td></tr></thead><tbody>';
 
         foreach ($stats[0] as $key => $val) {
             $output .= '<tr><td>' . ucfirst(str_replace(array("-", "_"), " ", $key)) . '</td><td>' . $val . '</td></tr>';
