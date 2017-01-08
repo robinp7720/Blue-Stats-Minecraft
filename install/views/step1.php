@@ -1,6 +1,6 @@
 <?php $allowInstall = true;
 $processUser = null;
-if (function_exists('posix_getpwuide')) {
+if (function_exists('posix_getpwuid')) {
     $processUser = posix_getpwuid(posix_geteuid());
 }
 ?>
@@ -51,16 +51,12 @@ if (is_writable('../assets/')) {
     if ($processUser !== null) { ?>
         <br>To fix, run<br>
         <pre>
-            sudo chown {$processUser['name']} " . dirname(dirname(__DIR__)) . "/assets -R
-            sudo chmod 755 " . dirname(dirname(__DIR__)) . "/assets -R
-        </pre>
+sudo chown <?=$processUser['name']?> <?=dirname(dirname(__DIR__))?>/assets -R
+sudo chmod 755 <?=dirname(dirname(__DIR__))?>/assets -R</pre>
         <?php
     }
-
-
     $allowInstall = false;
 }
-
 
 ?>
 
@@ -74,12 +70,11 @@ if (is_writable('../cache/')) {
     if ($processUser !== null) { ?>
         <br>To fix, run<br>
         <pre>
-            sudo chown {$processUser['name']} " . dirname(dirname(__DIR__)) . "/cache -R
-            sudo chmod 755 " . dirname(dirname(__DIR__)) . "/cache -R
-        </pre>
-        $allowInstall = false;
+sudo chown <?=$processUser['name']?> <?=dirname(dirname(__DIR__))?>/cache -R
+sudo chmod 755 <?=dirname(dirname(__DIR__))?>/cache -R</pre>
         <?php
     }
+    $allowInstall = false;
 }
 ?>
 
