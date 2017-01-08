@@ -1,5 +1,8 @@
 <?php $allowInstall = true;
-$processUser = posix_getpwuid(posix_geteuid());
+$processUser = null;
+if (function_exists('posix_getpwuide')) {
+    $processUser = posix_getpwuid(posix_geteuid());
+}
 ?>
 Minimum PHP version: 5.2.0
 <?php
@@ -45,9 +48,16 @@ if (is_writable('../assets/')) {
     echo 'Can write to assets folder <i class="fa fa-check text-success"></i>';
 } else {
     echo 'Can not write to assets folder <i class="fa fa-times text-warning"></i> (Themes will not work as expected)';
-    echo "<br>To fix, run<br>
-<pre>sudo chown {$processUser['name']} " . dirname(dirname(__DIR__)) . "/assets -R
-sudo chmod 755 " . dirname(dirname(__DIR__)) . "/assets -R</pre>";
+    if ($processUser !== null) { ?>
+        <br>To fix, run<br>
+        <pre>
+            sudo chown {$processUser['name']} " . dirname(dirname(__DIR__)) . "/assets -R
+            sudo chmod 755 " . dirname(dirname(__DIR__)) . "/assets -R
+        </pre>
+        <?php
+    }
+
+
     $allowInstall = false;
 }
 
@@ -61,10 +71,15 @@ if (is_writable('../cache/')) {
     echo 'Can write to cache folder <i class="fa fa-check text-success"></i>';
 } else {
     echo 'Can not write to cache folder <i class="fa fa-times text-warning"></i> (Cache will not work)';
-    echo "<br>To fix, run<br>
-<pre>sudo chown {$processUser['name']} " . dirname(dirname(__DIR__)) . "/cache -R
-sudo chmod 755 " . dirname(dirname(__DIR__)) . "/cache -R</pre>";
-    $allowInstall = false;
+    if ($processUser !== null) { ?>
+        <br>To fix, run<br>
+        <pre>
+            sudo chown {$processUser['name']} " . dirname(dirname(__DIR__)) . "/cache -R
+            sudo chmod 755 " . dirname(dirname(__DIR__)) . "/cache -R
+        </pre>
+        $allowInstall = false;
+        <?php
+    }
 }
 ?>
 
