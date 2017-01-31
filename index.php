@@ -1,5 +1,5 @@
 <?php
-$debug = flase;
+$debug = false;
 $GLOBALS['debug'] = $debug;
 
 // Before allow the page to be rendered, check if the install page is still there. This is because the install script can change configs and be a sever security flaw when still there.
@@ -9,7 +9,7 @@ if (!$debug){
     }
 }
 
-// Turn of error reporting to prevent security leaks
+// Turn off error reporting to prevent security leaks
 if ($debug) {
     error_reporting(-1);
     ini_set("display_errors", 'On');
