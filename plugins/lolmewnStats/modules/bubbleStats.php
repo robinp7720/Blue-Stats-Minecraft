@@ -42,7 +42,12 @@ $stats = array(
 );
 
 $config->setDefault("icons", $stats);
+$config->setDefault("user-count-text", "User count");
+$config->setDefault("all-players-text", "All players");
+$config->setDefault("average-text", "Server Average: ");
+
 $stats = $config->get("icons");
+$averageText = $config->get("average-text");
 
 $userCount = $plugin->getUserCount();
 ?>
@@ -56,30 +61,31 @@ $userCount = $plugin->getUserCount();
                 </div>
             </a>
             <div class="circle-tile-content bg-primary">
-                <div class="circle-tile-description text-faded">User count</div>
+                <div class="circle-tile-description text-faded"><?= $config->get("user-count-text"); ?></div>
                 <div class="circle-tile-number text-faded "><?= $userCount ?></div>
-                <a class="circle-tile-footer" href="<?= $url->page("allPlayers") ?>">All players</a>
+                <a class="circle-tile-footer"
+                   href="<?= $url->page("allPlayers") ?>"><?= $config->get("all-players-text"); ?></a>
             </div>
         </div>
     </div>
     <?php foreach ($stats as $statName => $iconName) : ?>
         <?php $statTitle = $plugin->statName($statName);
+
+        $server_total = 0;
+        $server_average = "";
+
         if ($statName != "last_join" && $statName != "last_seen") {
             $server_total = (float)$plugin->getStatSum($statName);
-        } else {
-            $server_total = 0;
         }
 
+        if ($statName != "last_join" && $statName != "last_seen") {
+            $server_average = round($server_total / $userCount);
 
-        if ($statName != "lastjoin" && $statName != "lastleave") {
             if ($server_total < 1) {
                 $server_average = 0;
-            } else {
-                $server_average = round($server_total / $userCount);
             }
-        } else {
-            $server_average = "";
         }
+
         if ($statName == "playtime") {
             $server_total = secondsToTime($server_total, false);
             $server_average = secondsToTime($server_average, false);
@@ -96,7 +102,7 @@ $userCount = $plugin->getUserCount();
                 <div class="circle-tile-content bg-primary">
                     <div class="circle-tile-description text-faded"> <?= $statTitle ?></div>
                     <div class="circle-tile-number text-faded "><?= $server_total ?></div>
-                    <a class="circle-tile-footer">Server Average: <?= $server_average ?></a>
+                    <a class="circle-tile-footer"><?= $averageText ?> <?= $server_average ?></a>
                 </div>
             </div>
         </div>
