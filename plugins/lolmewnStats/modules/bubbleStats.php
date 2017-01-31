@@ -69,16 +69,14 @@ $userCount = $plugin->getUserCount();
         </div>
     </div>
     <?php foreach ($stats as $statName => $iconName) : ?>
-        <?php $statTitle = $plugin->statName($statName);
+        <?php
+        $statTitle = $plugin->statName($statName);
 
         $server_total = 0;
         $server_average = "";
 
         if ($statName != "last_join" && $statName != "last_seen") {
             $server_total = (float)$plugin->getStatSum($statName);
-        }
-
-        if ($statName != "last_join" && $statName != "last_seen") {
             $server_average = round($server_total / $userCount);
 
             if ($server_total < 1) {
