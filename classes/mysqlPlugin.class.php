@@ -65,6 +65,11 @@ class MySQLplugin extends plugin
             $stmt->execute();
             $stmt->bind_result($output);
             $stmt->fetch();
+
+            // If there is an error log it
+            if ($stmt->error && $GLOBALS['debug'])
+                print($stmt->error);
+
             $stmt->close();
             return $output;
         }
@@ -81,6 +86,11 @@ class MySQLplugin extends plugin
             $stmt->execute();
             $stmt->bind_result($output);
             $stmt->fetch();
+
+            // If there is an error log it
+            if ($stmt->error && $GLOBALS['debug'])
+                print($stmt->error);
+
             $stmt->close();
             return $output;
         }
@@ -103,6 +113,10 @@ class MySQLplugin extends plugin
             $stmt->execute();
             $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
+            // If there is an error log it
+            if ($stmt->error && $GLOBALS['debug'])
+                print($stmt->error);
+
             $stmt->close();
 
             return $output;
@@ -123,6 +137,11 @@ class MySQLplugin extends plugin
                 $stmt->execute();
                 $stmt->bind_result($id);
                 $stmt->fetch();
+
+                // If there is an error log it
+                if ($stmt->error && $GLOBALS['debug'])
+                    print($stmt->error);
+
                 $stmt->close();
                 return $id;
             }
@@ -139,6 +158,11 @@ class MySQLplugin extends plugin
         if ($stmt->prepare($sql)) {
             $stmt->execute();
             $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+            // If there is an error log it
+            if ($stmt->error && $GLOBALS['debug'])
+                print($stmt->error);
+
             $stmt->close();
 
             return $output;
@@ -155,6 +179,10 @@ class MySQLplugin extends plugin
         if ($stmt->prepare($sql)) {
             $stmt->execute();
             $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+            // If there is an error log it
+            if ($stmt->error && $GLOBALS['debug'])
+                print($stmt->error);
 
             $stmt->close();
 
@@ -181,6 +209,10 @@ class MySQLplugin extends plugin
             $stmt->execute();
             $output = $stmt->get_result()->fetch_all($fetchType);
 
+            // If there is an error log it
+            if ($stmt->error && $GLOBALS['debug'])
+                print($stmt->error);
+
             $stmt->close();
 
             return $output;
@@ -199,6 +231,11 @@ class MySQLplugin extends plugin
             $stmt->execute();
             $stmt->bind_result($output);
             $stmt->fetch();
+
+            // If there is an error log it
+            if ($stmt->error && $GLOBALS['debug'])
+                print($stmt->error);
+
             $stmt->close();
 
             return $output;

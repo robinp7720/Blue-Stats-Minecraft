@@ -1,5 +1,6 @@
 <?php
-$debug = false;
+$debug = flase;
+$GLOBALS['debug'] = $debug;
 
 // Before allow the page to be rendered, check if the install page is still there. This is because the install script can change configs and be a sever security flaw when still there.
 if (!$debug){

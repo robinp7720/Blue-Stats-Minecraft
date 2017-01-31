@@ -87,7 +87,11 @@ class lolmewnStats extends MySQLplugin
             $stmt->execute();
             echo $stmt->error;
             $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-            echo $stmt->error;
+
+            // If there is an error log it
+            if ($stmt->error && $GLOBALS['debug'])
+                print($stmt->error);
+
             $stmt->close();
             return $output ?: [];
         }
@@ -107,6 +111,11 @@ class lolmewnStats extends MySQLplugin
             $stmt->execute();
             $stmt->bind_result($output);
             $stmt->fetch();
+
+            // If there is an error log it
+            if ($stmt->error && $GLOBALS['debug'])
+                print($stmt->error);
+
             $stmt->close();
             return $output ?: "";
         }
@@ -145,6 +154,10 @@ class lolmewnStats extends MySQLplugin
                 }
             }
 
+            // If there is an error log it
+            if ($stmt->error && $GLOBALS['debug'])
+                print($stmt->error);
+
             $stmt->close();
             if ($stat == "last_join" || $stat == "last_seen") {
                 if (!empty($output)) {
@@ -164,20 +177,24 @@ class lolmewnStats extends MySQLplugin
 
     public function getStats($stat, $player, $limit = 0, $extra = "")
     {
-
         $stmt = $this->mysqli->stmt_init();
 
         $sql = "SELECT * FROM {$this->prefix}{$stat} WHERE uuid = ?";
 
         if ($limit != 0) {
-            $sql = $sql . ' ' . $extra . " LIMIT $limit";
+            $sql = "$sql $extra LIMIT $limit";
         } else {
-            $sql = $sql . ' ' . $extra;
+            $sql = "$sql $extra";
         }
         if ($stmt->prepare($sql)) {
             $stmt->bind_param("s", $player);
             $stmt->execute();
             $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+            // If there is an error log it
+            if ($stmt->error && $GLOBALS['debug'])
+                print($stmt->error);
+
             $stmt->close();
             return $output;
         }
@@ -195,6 +212,11 @@ class lolmewnStats extends MySQLplugin
             $stmt->bind_param("s", $player);
             $stmt->execute();
             $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+            // If there is an error log it
+            if ($stmt->error && $GLOBALS['debug'])
+                print($stmt->error);
+
             $stmt->close();
             return $output;
         }
