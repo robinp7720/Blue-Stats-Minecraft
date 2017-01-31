@@ -117,7 +117,7 @@ class lolmewnStats extends MySQLplugin
                 print($stmt->error);
 
             $stmt->close();
-            return $output ?: "";
+            return round($output) ?: "";
         }
         return [];
     }
