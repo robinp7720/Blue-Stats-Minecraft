@@ -87,8 +87,10 @@ $userCount = $plugin->getUserCount();
         if ($statName == "playtime") {
             $server_total = secondsToTime($server_total, false);
             $server_average = secondsToTime($server_average, false);
+        } else {
+            $server_total = number_shorten($server_total);
+            $server_average = number_shorten($server_average);
         }
-
         ?>
         <div class="col-lg-4 col-sm-6">
             <div class="circle-tile ">
