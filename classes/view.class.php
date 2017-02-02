@@ -19,8 +19,9 @@ class view
         $this->viewPath = str_replace("{THEME}", $this->theme, $viewPath);
         $this->appPath = $appPath;
 
-        $this->page = str_replace(array('/', '.'), '', $this->bluestats->page);
+        $this->page = str_replace(['/', '.'], '', $this->bluestats->page);
 
+        // Start url generator
         $this->url = new url($bluestats->mysqli);
     }
 
@@ -28,10 +29,10 @@ class view
     {
 
         // Get template file to render
+        $filePath = $this->viewPath . "templates/{$this->page}.html";
+
         if ($type == "GLOBAL") {
             $filePath = $this->viewPath . "global.html";
-        } else {
-            $filePath = $this->viewPath . "templates/{$this->page}.html";
         }
 
         $template = $this->getTemplate($filePath);
@@ -131,14 +132,13 @@ class view
             }
 
             $content = str_replace('{{ dieifnotid }}', '', $content);
-        } else {
-            return false;
-        }
 
-        return [
-            "content" => $content,
-            "player" => $player
-        ];
+            return [
+                "content" => $content,
+                "player" => $player
+            ];
+        }
+        return false;
     }
 
     public function error($code)
@@ -150,6 +150,9 @@ class view
         if ($code == 404) {
             return $this->getTemplate($this->viewPath . "404.html")["content"];
         }
+
+        // If no valid error code supplied, return a 404 error page
+        return $this->getTemplate($this->viewPath . "404.html")["content"];
     }
 
 }

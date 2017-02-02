@@ -1,5 +1,5 @@
 <?php
-$debug = false;
+$debug = true;
 $GLOBALS['debug'] = $debug;
 
 // Before allow the page to be rendered, check if the install page is still there. This is because the install script can change configs and be a sever security flaw when still there.
@@ -85,6 +85,9 @@ if ($cache->reCache($uri)) {
 
     $content = $BlueStats->loadPage();
 
+    // Add the copyright statements
+    // I don't trust theme creators to include my copyright after all :)
+    // Because I (The Author) do like attribution for what I make.
     $credits = '
 	<!--
 	Copyright Zeyphros (robinp7720) 2015
@@ -95,12 +98,9 @@ if ($cache->reCache($uri)) {
 	-->
 	';
 
-    $copyrightMeta = '
-	<meta name="dcterms.rightsHolder" content="Zeyphros (robinp7720)">
-	<meta name="dcterms.rights" content="Released under Apache 2.0 license">
-	<meta name="dcterms.dateCopyrighted" content="2015">
-	<meta name="dc.license" content="Apache 2.0">
-	<meta name="web_author" content="Zeyphros (robinp7720)">	';
+    $copyrightMeta = '<meta name="dcterms.rightsHolder" content="Zeyphros (robinp7720)"><meta name="dcterms.rights" content="Released under Apache 2.0 license"><meta name="dcterms.dateCopyrighted" content="2015"><meta name="dc.license" content="Apache 2.0"><meta name="web_author" content="Zeyphros (robinp7720)">';
+
+    // Add the copyright stuff to the head tag
     $content = str_replace("<head>", "<head>" . $copyrightMeta, $content);
 
     // Compress html

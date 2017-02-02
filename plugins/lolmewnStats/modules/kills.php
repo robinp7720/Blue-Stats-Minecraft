@@ -1,9 +1,11 @@
 <table class="table table-sorted" id="pvp-stats">
     <thead>
-    <th>Weapon</th>
-    <th>World</th>
-    <th>Amount</th>
-    <th>Entity Type</th>
+    <tr>
+        <th>Weapon</th>
+        <th>World</th>
+        <th>Amount</th>
+        <th>Entity Type</th>
+    </tr>
     </thead>
     <tbody>
     <?php
