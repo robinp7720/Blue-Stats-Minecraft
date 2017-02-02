@@ -25,6 +25,7 @@ class MySQLplugin extends plugin
     public function __construct($mysqli)
     {
         parent::__construct($mysqli);
+
         if (
             $this->config->setDefault("MYSQL_host", "localhost") &&
             $this->config->setDefault("MYSQL_username", "minecraft") &&
@@ -33,8 +34,6 @@ class MySQLplugin extends plugin
             $this->config->setDefault("MYSQL_prefix", $this->plugin["defaultPrefix"])
         ) {
             $this->firstInstall = true;
-        } else {
-            $this->firstInstall = false;
         }
 
         $this->config->setDefault("include_in_player_stats", "true");
