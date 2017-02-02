@@ -19,7 +19,7 @@ abstract class MySQLplugin extends plugin
         "defaultPrefix" => ""
     );
 
-    protected $mcPlugin = true;
+    public $mcPlugin = true;
 
     public function __construct($mysqli)
     {
