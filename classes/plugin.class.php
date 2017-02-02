@@ -2,7 +2,7 @@
 
 abstract class plugin
 {
-    protected $mcPlugin = false;
+    public $mcPlugin = false;
 
     protected $config;
 

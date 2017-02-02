@@ -18,6 +18,7 @@ abstract class MySQLplugin extends plugin
         "tables" => ["skills", "experience"],
         "defaultPrefix" => ""
     );
+
     protected $mcPlugin = true;
 
     public function __construct($mysqli)
