@@ -63,8 +63,7 @@ class lolmewnStats extends MySQLplugin
     {
         if (isset($this->stats[$stat]))
             return $this->stats[$stat];
-        else
-            return $stat;
+        return $stat;
     }
 
     public function getAllPlayerStats($stat, $limit = 0)
