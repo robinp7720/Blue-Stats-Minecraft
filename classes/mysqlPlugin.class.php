@@ -1,15 +1,12 @@
 <?php
 
-class MySQLplugin extends plugin
+abstract class MySQLplugin extends plugin
 {
     public $mysqli;
     public $prefix = "";
-
-    public $mcPlugin = true;
     public $display_in_playerstats = true;
     public $pluginName = "Unnamed plugin";
     public $firstInstall = false;
-
     public $plugin = array(
         "idColumn" => "row_id",
         "playerNameColum" => "name",
@@ -21,6 +18,7 @@ class MySQLplugin extends plugin
         "tables" => ["skills", "experience"],
         "defaultPrefix" => ""
     );
+    protected $mcPlugin = true;
 
     public function __construct($mysqli)
     {

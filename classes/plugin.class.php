@@ -1,8 +1,9 @@
 <?php
 
-class plugin
+abstract class plugin
 {
-    public $mcPlugin = false;
+    protected $mcPlugin = false;
+
     protected $config;
 
     function __construct($mysqli)
