@@ -28,6 +28,7 @@
             <label for="theme">Theme: </label>
             <select id="theme" name="theme" class="form-control">
                 <option value="material">Material</option>
+                <option value="webstatx">Web Stats X</option>
             </select>
             <label for="ip">Query IP:</label>
             <input type="text" class="form-control" id="ip" placeholder="Server Ip" name="ip"
