@@ -24,7 +24,7 @@ if (function_exists('fsockopen')) {
 ?>
 <br>
 <?php
-if (function_exists('fsockopen')) {
+if (function_exists('mysqli_fetch_all')) {
     echo 'MySQLnd is installed <i class="fa fa-check text-success"></i>';
 } else {
     echo 'MySQLnd is not installed <i class="fa fa-times text-warning"></i> (Install or activate MySQLnd before continuing))';
