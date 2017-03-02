@@ -87,6 +87,12 @@ if (function_exists('fsockopen')) {
     }
 }
 
+if (isset($_POST["theme"])) {
+    if (in_array($_POST["theme"], ["webstatsx","material"])) {
+        $_SESSION["theme"] = $_POST["theme"];
+    }
+}
+
 
 $_SESSION = $_POST;
 
