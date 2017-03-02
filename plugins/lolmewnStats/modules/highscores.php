@@ -1,18 +1,15 @@
 <?php
-if (!$config->configExist("stats")) {
-    $config->set("stats", array("playtime", "joins"));
-}
-if (!$config->configExist("show_name_head")) {
-    $config->set("show_name_head", "true");
-}
-if (!$config->configExist("limit")) {
-    $config->set("limit", "10");
-}
+$config->setDefault("stats", array("playtime", "joins"));
+$config->setDefault("show_name_head", "true");
+$config->setDefault("limit", "10");
+$config->setDefault("show_number", "true");
+
 ?>
 
 <?php
 $showPlayerTitle = $config->get("show_name_head");
 $limit = $config->get("limit");
+$showNum = $config->get("show_number");
 ?>
 <div class="row">
     <?php foreach ($config->get("stats") as $statName): ?>
@@ -25,6 +22,9 @@ $limit = $config->get("limit");
                     <table class="table">
                         <thead>
                         <tr>
+                            <?php if ($showNum == "true") {
+                                    echo "<th>#</th>";
+                                } ?>
                             <th><?php if ($showPlayerTitle == "true") {
                                     echo "Player";
                                 } ?></th>
@@ -33,7 +33,8 @@ $limit = $config->get("limit");
                         </thead>
                         <tbody>
                         <?php
-                        foreach ($plugin->getAllPlayerStats($statName, $limit) as $stat) {
+                        foreach ($plugin->getAllPlayerStats($statName, $limit) as $id => $stat): ?>
+                        <?php
                             if ($statName == "last_join" || $statName == "last_seen") {
                                 $statDisplay = secondsToTime(round(time() - ($stat["value"]/1000)));
                             } elseif ($statName == "playtime") {
@@ -41,23 +42,28 @@ $limit = $config->get("limit");
                             } else {
                                 $statDisplay = $stat["value"];
                             }
-                            if ($url->useUUID) {
-                                $linkId = $stat["uuid"];
-                            } else {
-                                $linkId = $stat["name"];
-                            }
+                            $linkId = $url->useUUID ? $stat["uuid"] : $stat["name"];
                             $linkUrl = $url->player($linkId);
-                            echo "
+
+                            $place = $id + 1
+                            ?>
+
 							<tr>
+                                <?php
+                                if ($showNum == "true") {
+                                    echo "<td>$place</td>";
+                                } ?>
 								<td>
-									<a href=\"$linkUrl\"><img src=\"https://minotar.net/helm/{$stat["name"]}/32.png\" alt=\"\"> {$stat["name"]}</a>
+									<a href="<?=$linkUrl?>">
+                                        <img src="https://minotar.net/helm/<?=$stat["name"]?>/32.png\" alt="">
+                                        <?=$stat["name"]?>
+                                    </a>
 								</td>
 								<td>
-									" . $statDisplay . "
+                                    <?=$statDisplay?>
 								</td>
-							</tr>";
-                        }
-                        ?>
+							</tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
