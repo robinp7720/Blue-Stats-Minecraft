@@ -94,7 +94,7 @@ ORDER BY value Desc";
             $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
             // If there is an error log it
-            if ($stmt->error && $GLOBALS['debug'])
+            if ($stmt->error && DEBUG)
                 print($stmt->error);
 
             $stmt->close();
@@ -118,7 +118,7 @@ ORDER BY value Desc";
             $stmt->fetch();
 
             // If there is an error log it
-            if ($stmt->error && $GLOBALS['debug'])
+            if ($stmt->error && DEBUG)
                 print($stmt->error);
 
             $stmt->close();
@@ -160,7 +160,7 @@ ORDER BY value Desc";
             }
 
             // If there is an error log it
-            if ($stmt->error && $GLOBALS['debug'])
+            if ($stmt->error && DEBUG)
                 print($stmt->error);
 
             $stmt->close();
@@ -197,7 +197,7 @@ ORDER BY value Desc";
             $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
             // If there is an error log it
-            if ($stmt->error && $GLOBALS['debug'])
+            if ($stmt->error && DEBUG)
                 print($stmt->error);
 
             $stmt->close();
@@ -219,7 +219,7 @@ ORDER BY value Desc";
             $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
             // If there is an error log it
-            if ($stmt->error && $GLOBALS['debug'])
+            if ($stmt->error && DEBUG)
                 print($stmt->error);
 
             $stmt->close();

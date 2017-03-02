@@ -1,16 +1,16 @@
 <?php
-$debug = true;
-$GLOBALS['debug'] = $debug;
+
+define('DEBUG', true);
 
 // Before allow the page to be rendered, check if the install page is still there. This is because the install script can change configs and be a sever security flaw when still there.
-if (!$debug){
+if (!DEBUG){
     if (file_exists("./install")) {
         die("Please remove /install after installation");
     }
 }
 
 // Turn off error reporting to prevent security leaks
-if ($debug) {
+if (DEBUG) {
     error_reporting(-1);
     ini_set("display_errors", 'On');
 } else {
@@ -23,7 +23,6 @@ $appPath = __DIR__;
 /* Classes */
 require "$appPath/classes/config.class.php";
 require "$appPath/classes/cache.class.php";
-
 
 $config = json_decode(file_get_contents("config.json"), true);
 

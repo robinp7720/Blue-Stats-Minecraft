@@ -68,7 +68,7 @@ abstract class MySQLplugin extends plugin
             $stmt->fetch();
 
             // If there is an error log it
-            if ($stmt->error && $GLOBALS['debug'])
+            if ($stmt->error && DEBUG)
                 print($stmt->error);
 
             $stmt->close();
@@ -89,7 +89,7 @@ abstract class MySQLplugin extends plugin
             $stmt->fetch();
 
             // If there is an error log it
-            if ($stmt->error && $GLOBALS['debug'])
+            if ($stmt->error && DEBUG)
                 print($stmt->error);
 
             $stmt->close();
@@ -115,7 +115,7 @@ abstract class MySQLplugin extends plugin
             $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
             // If there is an error log it
-            if ($stmt->error && $GLOBALS['debug'])
+            if ($stmt->error && DEBUG)
                 print($stmt->error);
 
             $stmt->close();
@@ -140,7 +140,7 @@ abstract class MySQLplugin extends plugin
                 $stmt->fetch();
 
                 // If there is an error log it
-                if ($stmt->error && $GLOBALS['debug'])
+                if ($stmt->error && DEBUG)
                     print($stmt->error);
 
                 $stmt->close();
@@ -161,7 +161,7 @@ abstract class MySQLplugin extends plugin
             $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
             // If there is an error log it
-            if ($stmt->error && $GLOBALS['debug'])
+            if ($stmt->error && DEBUG)
                 print($stmt->error);
 
             $stmt->close();
@@ -182,7 +182,7 @@ abstract class MySQLplugin extends plugin
             $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
             // If there is an error log it
-            if ($stmt->error && $GLOBALS['debug'])
+            if ($stmt->error && DEBUG)
                 print($stmt->error);
 
             $stmt->close();
@@ -211,7 +211,7 @@ abstract class MySQLplugin extends plugin
             $output = $stmt->get_result()->fetch_all($fetchType);
 
             // If there is an error log it
-            if ($stmt->error && $GLOBALS['debug'])
+            if ($stmt->error && DEBUG)
                 print($stmt->error);
 
             $stmt->close();
@@ -234,7 +234,7 @@ abstract class MySQLplugin extends plugin
             $stmt->fetch();
 
             // If there is an error log it
-            if ($stmt->error && $GLOBALS['debug'])
+            if ($stmt->error && DEBUG)
                 print($stmt->error);
 
             $stmt->close();
