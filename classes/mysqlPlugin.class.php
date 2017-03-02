@@ -3,6 +3,7 @@
 abstract class MySQLplugin extends plugin
 {
     public $mysqli;
+    public $dbname;
     public $prefix = "";
     public $display_in_playerstats = true;
     public $pluginName = "Unnamed plugin";
@@ -37,13 +38,15 @@ abstract class MySQLplugin extends plugin
 
         $this->config->setDefault("include_in_player_stats", "true");
 
+        $this->dbname = $this->config->get("MYSQL_database");
+
         $this->prefix = $this->config->get("MYSQL_prefix");
         try {
             $this->mysqli = new mysqli(
                 $this->config->get("MYSQL_host"),
                 $this->config->get("MYSQL_username"),
                 $this->config->get("MYSQL_password"),
-                $this->config->get("MYSQL_database")
+                $this->dbname
             );
         } catch (Exception $e) {
             echo $this->pluginName . " could not connect to mysql database.";

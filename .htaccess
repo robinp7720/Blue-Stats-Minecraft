@@ -1,7 +1,6 @@
 Options +FollowSymLinks -MultiViews
 RewriteEngine On
 
-RewriteBase /
 
 <Files "config.json">
 Deny from all
