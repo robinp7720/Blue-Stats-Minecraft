@@ -34,8 +34,10 @@ $limit = $config->get("limit");
                         <tbody>
                         <?php
                         foreach ($plugin->getAllPlayerStats($statName, $limit) as $stat) {
-                            if ($statName == "playtime") {
-                                $statDisplay = secondsToTime($stat["value"], $contract = true);
+                            if ($statName == "last_join" || $statName == "last_seen") {
+                                $statDisplay = secondsToTime(round(time() - ($stat["value"]/1000)));
+                            } elseif ($statName == "playtime") {
+                                $statDisplay = secondsToTime($stat["value"]);
                             } else {
                                 $statDisplay = $stat["value"];
                             }

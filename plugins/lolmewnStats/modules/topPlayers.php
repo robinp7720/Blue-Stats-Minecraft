@@ -47,10 +47,10 @@ $stats = $config->get("stats");
         <?php
         $data = $plugin->getAllPlayerStats($stat, 1);
         if (isset($data[0]["value"])) {
-            if ($stat == "playtime") {
+            if ($stat == "last_join" || $stat == "last_seen") {
+                $display = secondsToTime(round(time() - ($data[0]["value"]/1000)));
+            } elseif ($stat == "playtime") {
                 $display = secondsToTime($data[0]["value"]);
-            } else {
-                $display = $data[0]["value"];
             }
         } else {
             $display = "0";
