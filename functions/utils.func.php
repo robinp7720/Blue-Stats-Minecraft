@@ -27,7 +27,7 @@ function secondsToTime($seconds, $contract = true)
                     $tseconds = $seconds . " second";
                 }
             } else {
-                $tseconds = "0 seconds";
+                $tseconds = "";
             }
 
             /* Text mins */
@@ -38,7 +38,7 @@ function secondsToTime($seconds, $contract = true)
                     $tmins = $mins . " min";
                 }
             } else {
-                $tmins = "0 mins";
+                $tmins = "";
             }
 
             /* Text hours */
@@ -49,7 +49,7 @@ function secondsToTime($seconds, $contract = true)
                     $thours = $hours . " hours";
                 }
             } else {
-                $thours = "0 hours";
+                $thours = "";
             }
 
             /* Text days */
@@ -60,7 +60,7 @@ function secondsToTime($seconds, $contract = true)
                     $tdays = $days . " day";
                 }
             } else {
-                $tdays = "0 days";
+                $tdays = "";
             }
 
             /* Text weeks */
@@ -71,7 +71,7 @@ function secondsToTime($seconds, $contract = true)
                     $tweeks = round($weeks) . " week";
                 }
             } else {
-                $tweeks = " 0 weeks";
+                $tweeks = "";
             }
 
             /* Text months */
@@ -82,7 +82,7 @@ function secondsToTime($seconds, $contract = true)
                     $tmonths = $months . " month";
                 }
             } else {
-                $tmonths = "0 months";
+                $tmonths = "";
             }
 
             /* Text years */
@@ -93,10 +93,10 @@ function secondsToTime($seconds, $contract = true)
                     $tyears = $years . " year";
                 }
             } else {
-                $tyears = "0 years";
+                $tyears = "";
             }
 
-            if ($years > 0) {
+            /*if ($years > 0) {
                 return "$tyears, $tmonths and $tweeks";
             } else if ($months > 0) {
                 return "$tmonths, $tweeks and $tdays";
@@ -111,6 +111,58 @@ function secondsToTime($seconds, $contract = true)
             } else {
                 return $tseconds;
             }
+            */
+
+            $output = "";
+            $values = 0;
+
+            if (!empty($tyears) and $values < 2) {
+                $output.= $tyears;
+                $values++;
+            }
+
+            if (!empty($tmonths) and $values < 2) {
+                if ($values !== 0) {
+                    $output.= " and ";
+                }
+                $output.= $tmonths;
+                $values++;
+            }
+
+            if (!empty($tweeks) and $values < 2) {
+                if ($values !== 0) {
+                    $output.= " and ";
+                }
+                $output.= $tweeks;
+                $values++;
+            }
+
+            if (!empty($tdays) and $values < 2) {
+                if ($values !== 0) {
+                    $output.= " and ";
+                }
+                $output.= $tdays;
+                $values++;
+            }
+
+            if (!empty($mins) and $values < 2) {
+                if ($values !== 0) {
+                    $output.= " and ";
+                }
+                $output.= $tmins;
+                $values++;
+            }
+
+            if (!empty($tseconds) and $values < 2) {
+                if ($values !== 0) {
+                    $output.= " and ";
+                }
+                $output.= $tseconds;
+                $values++;
+            }
+
+            return $output;
+
         } else {
             if ($seconds >= 86400) {
                 return $dtF->diff($dtT)->format('%ad:%hh:%mm:%ss');
