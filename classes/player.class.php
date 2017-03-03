@@ -10,6 +10,9 @@ class player
     private $basePlugin;
     private $bluestats;
 
+    private $renderChart = false;
+    private $maxPerChart= 5;
+
     public function __Construct($bluestats, $player)
     {
         $this->mysqli = $bluestats->mysqli;
@@ -38,6 +41,16 @@ class player
     public function renderPlayerAllStats()
     {
         $output = "";
+
+        $this->config->setDefault("charts", "false");
+        $this->config->setDefault("statsPerGraph", 5);
+
+        if ($this->config->get("charts") === "true") {
+            $this->renderChart = true;
+        }
+
+        $this->maxPerChart = $this->config->get("statsPerGraph");
+
         foreach ($this->getMysqlPlugins() as $plugin) {
             if ($plugin->plugin["singleTable"]) {
                 $output .= '<h2>' . ucfirst($plugin->pluginName) . '</h2>';
@@ -82,21 +95,41 @@ class player
 
     public function render($name, $stats, $h2 = false)
     {
+        if ($this->renderChart) {
+            $chart = new chart();
+            $chart->setType("bar");
+        }
         $tableid = uniqid();
+
+        $graphOut = "";
+        $count = 0;
+
         if (!$h2)
             $output = '<h3>' . ucfirst($name) . '</h3><table class="table table-sorted" id="' . $tableid . '"><thead><tr><th>Stat</th><td>Value</td></tr></thead><tbody>';
         else
             $output = '<h2>' . ucfirst($name) . '</h2><table class="table table-sorted" id="' . $tableid . '"><thead><tr><th>Stat</th><td>Value</td></tr></thead><tbody>';
 
         foreach ($stats[0] as $key => $val) {
-            $output .= '<tr><td>' . ucfirst(str_replace(array("-", "_"), " ", $key)) . '</td><td>' . $val . '</td></tr>';
+            $label = ucfirst(str_replace(array("-", "_"), " ", $key));
+            if (is_numeric($val) && $this->renderChart) {
+                $chart->addLabel($label);
+                $chart->addData($label, $val);
+                $count += 1;
+                if ($count == $this->maxPerChart) {
+                    $count = 0;
+                    $graphOut .= $chart->render();
+                    $chart = new chart();
+                    $chart->setType("bar");
+                }
+            }
+            $output .= "<tr><td>$label</td><td>$val</td></tr>";
         }
         $output .= '</tbody></table>';
-        $output .= "<script>
-    $(document).ready(function () {
+        $output .= "<script>$(document).ready(function () {
         $('#$tableid').DataTable();
     });
 </script>";
-        return $output;
+        return $output.$graphOut;
     }
+
 }

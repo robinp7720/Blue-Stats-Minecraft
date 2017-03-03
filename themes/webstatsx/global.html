@@ -14,6 +14,11 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/style.css">
 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+
     <title>BlueStats</title>
 </head>
 <body>
@@ -34,6 +39,8 @@
                     <li class="list-group-item"><a href="{{ url:allPlayers }}">Players</a></li>
                     <li class="list-group-item"><a href="{{ url:server }}">Server</a></li>
                     <li class="list-group-item"><a href="{{ url:map }}">Map</a></li>
+                    <br>
+                    {{ query:onlinePlayers }}
                 </ul>
             </div>
             <div class="col-md-10 col-sm-9">
@@ -43,7 +50,6 @@
     </div>
 </main>
 <!-- Latest compiled and minified CSS & JS -->
-<script src="//code.jquery.com/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="//cdn.datatables.net/1.10.6/js/jquery.dataTables.min.js"></script>
 <script src="//cdn.datatables.net/plug-ins/1.10.6/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>

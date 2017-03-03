@@ -1,6 +1,6 @@
 <?php
 
-define('DEBUG', false);
+define('DEBUG', true);
 
 // Before allow the page to be rendered, check if the install page is still there. This is because the install script can change configs and be a sever security flaw when still there.
 if (!DEBUG){
@@ -49,6 +49,7 @@ if ($cache->reCache($uri)) {
     require "$appPath/classes/player.class.php";
     require "$appPath/classes/mysqlPlugin.class.php";
     require "$appPath/classes/url.class.php";
+    require "$appPath/classes/chart.class.php";
 
 
     /* Functions */
