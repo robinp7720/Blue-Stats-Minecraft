@@ -3,6 +3,7 @@ $config->setDefault("stats", array("playtime", "joins"));
 $config->setDefault("show_name_head", "true");
 $config->setDefault("limit", "10");
 $config->setDefault("show_number", "true");
+$config->setDefault("show_online", "true");
 
 ?>
 
@@ -10,6 +11,11 @@ $config->setDefault("show_number", "true");
 $showPlayerTitle = $config->get("show_name_head");
 $limit = $config->get("limit");
 $showNum = $config->get("show_number");
+$showOnline = $config->get("show_online");
+
+if ($showOnline == "true")
+    $query = new query($plugin->BlueStatsMYQLI);
+
 ?>
 <div class="row">
     <?php foreach ($config->get("stats") as $statName): ?>
@@ -28,6 +34,9 @@ $showNum = $config->get("show_number");
                             <th><?php if ($showPlayerTitle == "true") {
                                     echo "Player";
                                 } ?></th>
+                            <?php if ($showOnline == "true") {
+                                echo "<th>Status</th>";
+                            } ?>
                             <th><?= $plugin->statName($statName) ?></th>
                         </tr>
                         </thead>
@@ -59,6 +68,14 @@ $showNum = $config->get("show_number");
                                         <?=$stat["name"]?>
                                     </a>
 								</td>
+                                <?php
+                                if ($showOnline == "true") {
+                                    if (in_array($stat["name"], $query->onlinePlayers())) {
+                                        echo '<td><span class="label label-success">Online</span></td>';
+                                    } else {
+                                        echo '<td><span class="label label-danger">Offline</span></td>';
+                                    }
+                                } ?>
 								<td>
                                     <?=$statDisplay?>
 								</td>
