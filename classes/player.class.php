@@ -129,6 +129,8 @@ class player
         $('#$tableid').DataTable();
     });
 </script>";
+        if ($this->renderChart)
+            $graphOut .= $chart->render();
         return $output.$graphOut;
     }
 
