@@ -202,7 +202,7 @@ abstract class MySQLplugin extends plugin
         $sql = "SELECT {$this->plugin["UUIDcolumn"]},{$this->plugin["playerNameColumn"]}
         FROM {$this->prefix}{$this->plugin["indexTable"]}
         WHERE {$this->plugin["UUIDcolumn"]} IS NOT NULL AND {$this->plugin["playerNameColumn"]} like ?
-        GROUP BY {$this->plugin["UUIDcolumn"]} LIMIT ?,?";
+        GROUP BY {$this->plugin["UUIDcolumn"]},{$this->plugin["playerNameColumn"]} LIMIT ?,?";
 
 
         if ($stmt->prepare($sql)) {
