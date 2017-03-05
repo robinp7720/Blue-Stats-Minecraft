@@ -72,17 +72,26 @@ class lolmewnStats extends MySQLplugin
         $stmt = $this->mysqli->stmt_init();
 
         if ($stat == "last_join" || $stat == "last_seen") {
-            $sql = "SELECT *, max(value) as value 
-FROM {$this->prefix}{$stat} INNER JOIN `{$this->prefix}{$this->plugin['indexTable']}` on {$this->prefix}{$stat}.{$this->plugin['idColumn']} = {$this->prefix}{$this->plugin['indexTable']}.{$this->plugin['idColumn']}
-GROUP BY {$this->dbname}.{$this->prefix}{$stat}.{$this->plugin['idColumn']}
+            $sql = "
+SELECT
+  {$this->prefix}{$this->plugin['indexTable']}.name as name,
+  {$this->prefix}{$stat}.{$this->plugin['idColumn']},
+  sum({$this->prefix}{$stat}.value) as `value` 
+FROM {$this->prefix}{$stat}
+INNER JOIN `{$this->prefix}{$this->plugin['indexTable']}` on {$this->prefix}{$stat}.{$this->plugin['idColumn']} = {$this->prefix}{$this->plugin['indexTable']}.{$this->plugin['idColumn']}
+GROUP BY {$this->prefix}{$this->plugin['indexTable']}.name, {$this->prefix}{$stat}.{$this->plugin['idColumn']}
 ORDER BY value Desc";
         } else {
-            $sql = "SELECT *, sum(value) as value 
-FROM {$this->prefix}{$stat} INNER JOIN `{$this->prefix}{$this->plugin['indexTable']}` on {$this->prefix}{$stat}.{$this->plugin['idColumn']} = {$this->prefix}{$this->plugin['indexTable']}.{$this->plugin['idColumn']}
-GROUP BY {$this->dbname}.{$this->prefix}{$stat}.{$this->plugin['idColumn']}
+            $sql = "
+SELECT 
+  {$this->prefix}{$this->plugin['indexTable']}.name as name,
+  {$this->prefix}{$stat}.{$this->plugin['idColumn']},
+  sum({$this->prefix}{$stat}.value) as `value` 
+FROM {$this->prefix}{$stat} 
+INNER JOIN `{$this->prefix}{$this->plugin['indexTable']}` on {$this->prefix}{$stat}.{$this->plugin['idColumn']} = {$this->prefix}{$this->plugin['indexTable']}.{$this->plugin['idColumn']}
+GROUP BY {$this->prefix}{$this->plugin['indexTable']}.name, {$this->prefix}{$stat}.{$this->plugin['idColumn']}
 ORDER BY value Desc";
         }
-
 
         if ($limit != 0) {
             $sql = $sql . " LIMIT $limit";
