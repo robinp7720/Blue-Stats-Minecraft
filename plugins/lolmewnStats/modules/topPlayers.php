@@ -46,14 +46,16 @@ $stats = $config->get("stats");
     <?php foreach ($stats as $stat): ?>
         <?php
         $data = $plugin->getAllPlayerStats($stat, 1);
+
+        $display = "0";
+
         if (isset($data[0]["value"])) {
+            $display = $data[0]["value"];
             if ($stat == "last_join" || $stat == "last_seen") {
                 $display = secondsToTime(round(time() - ($data[0]["value"]/1000)));
             } elseif ($stat == "playtime") {
                 $display = secondsToTime($data[0]["value"]);
             }
-        } else {
-            $display = "0";
         }
 
         if ($url->useUUID) {
