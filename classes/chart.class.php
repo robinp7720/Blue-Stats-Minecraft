@@ -49,6 +49,13 @@ class chart
     }
 
     public function render() {
+        if ($this->type == 'bar')
+            return $this->renderBar();
+        if ($this->type == 'pie')
+            return $this->renderPie();
+    }
+
+    public function renderBar() {
         $values = [];
         foreach ($this->labels as $label) {
             array_push($values, $this->data[$label]);
@@ -64,6 +71,26 @@ class chart
                 new Chartist.Bar('#a$id', {
                     labels: $labelsJson,
                     series: [$seriesJson]
+                });
+            </script>";
+    }
+
+    public function renderPie() {
+        $values = [];
+        foreach ($this->labels as $label) {
+            array_push($values, $this->data[$label]);
+        }
+        $id = uniqid();
+
+        $labelsJson = json_encode($this->labels);
+        $seriesJson = json_encode($values);
+
+        return
+            "<div id=\"a$id\"></div>
+            <script>
+                new Chartist.Pie('#a$id', {
+                    labels: $labelsJson,
+                    series: $seriesJson
                 });
             </script>";
     }
