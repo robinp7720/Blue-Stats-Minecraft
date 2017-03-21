@@ -21,7 +21,7 @@
                 <?= $value["blocks_broken"] ?>
             </td>
             <td>
-                <?= $value["blocks_broken"] ?>
+                <?= $value["blocks_placed"] ?>
             </td>
         </tr>
     <?php endforeach; ?>
