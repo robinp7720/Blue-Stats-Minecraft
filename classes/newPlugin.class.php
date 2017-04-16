@@ -12,6 +12,12 @@ abstract class newPlugin
                 "name" => "name",
                 "id" => "id",
             ]
+        ],
+        "stats" => [
+            "jumps" => [
+                "database" => "jumps",
+                "column"   => "value"
+            ]
         ]
     ];
 
@@ -19,22 +25,57 @@ abstract class newPlugin
 
     }
 
+    // PLAYER IDENTIFICATION FUNTIONS
+
     /**
-     * @param String | int $id ID of user as defined by plugin
+     * This function uses the user id to get the username 
+     * @param int $id ID of user as defined by plugin
      */
     public function getName($id) {
 
     }
 
     /**
-     * @param String | int $id ID of user as defined by plugin
+     * This function uses the user id to get the uuid of a user
+     * @param int $id ID of user as defined by plugin
      */
     public function getUUID($id) {
 
     }
 
-    public function getID() {
+    /**
+     *
+     * @param String $user UUID or username of player
+     */
+
+    public function getID($user) {
 
     }
 
+    /**
+     * @param String $uuid UUID of player
+     */
+
+    public function getIDfromUUID($uuid) {
+
+    }
+
+    /**
+     * @param String $name Username of player
+     */
+
+    public function getIDfromName($name) {
+
+    }
+
+    // STAT RETRIEVAL FUNCTIONS
+
+    /**
+     * @param int $playerID ID of a player
+     * @param String $stat Stat name to get stat of
+     */
+
+    public function getStat($playerID,$stat) {
+
+    }
 }
