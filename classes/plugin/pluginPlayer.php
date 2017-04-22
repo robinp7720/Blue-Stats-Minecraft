@@ -1,6 +1,12 @@
 <?php
 
-abstract class newPlugin
+/**
+ * Created by PhpStorm.
+ * User: ricing
+ * Date: 4/22/17
+ * Time: 11:52 AM
+ */
+class pluginPlayer
 {
 
     public $database = [
@@ -12,26 +18,24 @@ abstract class newPlugin
                 "name" => "name",
                 "id" => "id",
             ]
-        ],
-        "stats" => [
-            "jumps" => [
-                "database" => "jumps",
-                "column"   => "value"
-            ]
         ]
     ];
 
-    public function install() {
-
+    /**
+     * pluginPlayer constructor.
+     * @param $database array Database layout to identify players in the database
+     */
+    public function __construct($database)
+    {
+        $this->database = $database;
     }
 
-    // PLAYER IDENTIFICATION FUNTIONS
-
     /**
-     * This function uses the user id to get the username 
+     * This function uses the user id to get the username
      * @param int $id ID of user as defined by plugin
      */
-    public function getName($id) {
+    public function getName($id)
+    {
 
     }
 
@@ -39,7 +43,8 @@ abstract class newPlugin
      * This function uses the user id to get the uuid of a user
      * @param int $id ID of user as defined by plugin
      */
-    public function getUUID($id) {
+    public function getUUID($id)
+    {
 
     }
 
@@ -48,15 +53,17 @@ abstract class newPlugin
      * @param String $user UUID or username of player
      */
 
-    public function getID($user) {
-
+    public function getID($user)
+    {
+        return $this->getIDfromUUID($user) || $this->getIDfromName($user);
     }
 
     /**
      * @param String $uuid UUID of player
      */
 
-    public function getIDfromUUID($uuid) {
+    public function getIDfromUUID($uuid)
+    {
 
     }
 
@@ -64,18 +71,8 @@ abstract class newPlugin
      * @param String $name Username of player
      */
 
-    public function getIDfromName($name) {
-
-    }
-
-    // STAT RETRIEVAL FUNCTIONS
-
-    /**
-     * @param int $playerID ID of a player
-     * @param String $stat Stat name to get stat of
-     */
-
-    public function getStat($playerID,$stat) {
+    public function getIDfromName($name)
+    {
 
     }
 }
