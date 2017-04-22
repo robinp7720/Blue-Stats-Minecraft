@@ -12,7 +12,7 @@ With making this webapp, I have kept customizability, ease of use and power in m
 
 More information can be found on the forums post here: https://bukkit.org/threads/blue-stats-the-most-advanced-statistics-web-interface.334006/
 
-A live demo can be found here: http://mysunland.org/
+A live demo can be found here: https://stats.mysunland.org
 
 Find help on installing BlueStats here: https://github.com/robinp7720/Blue-Stats-Minecraft/wiki
 
