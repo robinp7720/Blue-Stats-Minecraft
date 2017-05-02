@@ -2,6 +2,8 @@
 session_start();
 error_reporting(-1);
 ini_set("display_errors", 'On');
+
+$step = isset($_GET['step'])? $_GET['step'] : 1;
 ?>
 <!DOCTYPE html>
 <html>
@@ -105,24 +107,24 @@ ini_set("display_errors", 'On');
         <h1 class="light text-center"><span class="bold">BlueStats</span> Installer</h1>
 
         <div class="install-steps">
-            <div class="step <?php if (!isset($_GET["step"]) || $_GET["step"] == 1) echo "active"; ?>">Requirements
+            <div class="step <?php if ($step == 1) echo "active"; ?>">Requirements
             </div>
-            <div class="step <?php if ($_GET["step"] == 2) echo "active"; ?>">Configuration</div>
-            <div class="step <?php if ($_GET["step"] == 3) echo "active"; ?>">Config Check</div>
-            <div class="step <?php if ($_GET["step"] == 4) echo "active"; ?>">Install</div>
+            <div class="step <?php if ($step == 2) echo "active"; ?>">Configuration</div>
+            <div class="step <?php if ($step == 3) echo "active"; ?>">Config Check</div>
+            <div class="step <?php if ($step == 4) echo "active"; ?>">Install</div>
         </div>
         <div class="install-container" style="overflow: hidden">
             <?php
             if (!isset($_GET["step"])) {
                 include 'views/step1.php';
             } else {
-                if ($_GET["step"] == 1)
+                if ($step == 1)
                     include 'views/step1.php';
-                if ($_GET["step"] == 2)
+                if ($step == 2)
                     include 'views/step2.php';
-                if ($_GET["step"] == 3)
+                if ($step == 3)
                     include 'views/step3.php';
-                if ($_GET["step"] == 4)
+                if ($step == 4)
                     include 'views/step4.php';
             }
             ?>
