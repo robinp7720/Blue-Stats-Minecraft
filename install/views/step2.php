@@ -30,7 +30,12 @@
                 <option value="material">Material</option>
                 <option value="webstatx">Web Stats X</option>
             </select>
+            <br>
             <label for="ip">Query IP:</label>
+            <br>
+            <label for="query-enable">Enable: </label>
+            <input type="checkbox" id="query-enable"
+                   name="query-enable" <?php if (isset($_SESSION["query-enable"]) && $_SESSION["query-enable"] === "on") echo "checked" ?>>
             <input type="text" class="form-control" id="ip" placeholder="Server Ip" name="ip"
                    value="<?php if (isset($_SESSION["ip"])) echo $_SESSION["ip"] ?>">
 

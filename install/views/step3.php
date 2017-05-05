@@ -77,12 +77,16 @@ if (isset($_POST["mcmmo-enable"]) && $_POST["mcmmo-enable"] == "on") {
 $query = new MinecraftQuery();
 if (function_exists('fsockopen')) {
     if (isset($_POST['ip']) && isset($_POST['port'])) {
-        try {
-            $query->Connect($_POST['ip'], $_POST['port']);
-            echo "<i class=\"fa fa-check text-success\"></i> Successfully queried server<br>";
-        } catch (MinecraftQueryException $e) {
-            echo "<i class=\"fa fa-times text-warning\"></i> Server query failed<br>";
-            $success = false;
+        if (isset($_POST['query-enable'])) {
+            if ($_POST['query-enable'] == "on") {
+                try {
+                    $query->Connect($_POST['ip'], $_POST['port']);
+                    echo "<i class=\"fa fa-check text-success\"></i> Successfully queried server<br>";
+                } catch (MinecraftQueryException $e) {
+                    echo "<i class=\"fa fa-times text-warning\"></i> Server query failed<br>";
+                    $success = false;
+                }
+            }
         }
     }
 }
