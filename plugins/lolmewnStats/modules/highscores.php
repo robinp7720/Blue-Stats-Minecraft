@@ -11,7 +11,13 @@ $config->setDefault("show_online", "true");
 $showPlayerTitle = $config->get("show_name_head");
 $limit = $config->get("limit");
 $showNum = $config->get("show_number");
-$showOnline = $config->get("show_online");
+
+$plugins = $config->get("plugins","BlueStats");
+
+$showOnline = false;
+
+if (in_array('query', $plugins))
+    $showOnline = $config->get("show_online");
 
 if ($showOnline == "true")
     $query = new query($plugin->BlueStatsMYQLI);
