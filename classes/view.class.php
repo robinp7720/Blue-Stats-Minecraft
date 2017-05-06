@@ -7,6 +7,8 @@ class view
     private $viewPath = "";
     private $appPath = "";
 
+    private $player = null;
+
     private $page;
 
     private $url;
@@ -35,6 +37,13 @@ class view
             $filePath = $this->viewPath . "global.html";
         }
 
+        $this->bluestats->config->setDefault('page-names', [
+            'home' => 'Home',
+            'allPlayers' => 'All Players',
+            'highscores' => 'Highscores',
+            'player' => 'Player | {{ playername }}'
+        ]);
+
         $template = $this->getTemplate($filePath);
 
         if ($template === false) {
@@ -42,7 +51,10 @@ class view
         }
 
         $string = $template["content"];
-        $player = $template["player"];
+        $player = $this->player;
+
+        $title = $this->bluestats->config->get('page-names')[$this->page];
+        $string = str_replace('{{ title }}', $title, $string);
 
 
         if (isset($player)) {
@@ -51,6 +63,10 @@ class view
             if (strpos($string, '{{ playerstats }}') !== false) {
                 $string = str_replace('{{ playerstats }}', $player->renderPlayerAllStats(), $string);
             }
+        } else {
+            // Remove replacement strings if not a player page
+            $string = str_replace('{{ playername }}', '', $string);
+            $string = str_replace('{{ playeruuid }}', '', $string);
         }
 
         /* URLS */
@@ -115,17 +131,18 @@ class view
 
     private function getTemplate($filePath)
     {
-        $player = null;
         if (file_exists($filePath)) {
             /* Load template file */
             $content = file_get_contents($filePath);
+
+            if (isset($this->bluestats->request["get"]["id"]) && $this->player == null)
+                $this->player = new player($this->bluestats, $this->bluestats->request["get"]["id"]);
 
             if (strpos($content, '{{ dieifnotid }}') !== false) {
                 if (!isset($this->bluestats->request["get"]["id"])) {
                     return false;
                 } else {
-                    $player = new player($this->bluestats, $this->bluestats->request["get"]["id"]);
-                    if (!$player->exist) {
+                    if (!$this->player->exist) {
                         return false;
                     }
                 }
@@ -134,8 +151,7 @@ class view
             $content = str_replace('{{ dieifnotid }}', '', $content);
 
             return [
-                "content" => $content,
-                "player" => $player
+                "content" => $content
             ];
         }
         return false;

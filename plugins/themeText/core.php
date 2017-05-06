@@ -8,5 +8,6 @@ class themeText extends plugin
     public function onLoad()
     {
         $this->texts["server-name"] = $this->config->get("server-name", "BlueStats");
+        $this->texts["page-name"] = isset($_GET['page'])? $_GET['page'] : "home";
     }
 }
