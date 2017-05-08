@@ -149,7 +149,7 @@ function secondsToTime($seconds, $contract = true)
                 if ($values !== 0) {
                     $output.= " and ";
                 }
-                $output.= $hours;
+                $output.= $thours;
                 $values++;
             }
 
