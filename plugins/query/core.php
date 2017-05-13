@@ -4,7 +4,7 @@ use xPaw\MinecraftQueryException;
 
 require "minecraftQuery.php";
 
-class query extends plugin
+class query extends legacyPlugin
 {
     public $pluginName = "query";
     public $Query;

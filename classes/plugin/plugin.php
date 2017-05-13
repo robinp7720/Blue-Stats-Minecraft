@@ -1,9 +1,11 @@
 <?php
 
+require_once "pluginPlayer.php";
+require_once "pluginStats.php";
+
 abstract class plugin
 {
     public $name = 'A plugin';
-
 
     public $stats;
     public $player;
@@ -25,7 +27,8 @@ abstract class plugin
         "stats" => [
             "jumps" => [
                 "database" => "jumps",
-                "column"   => "value"
+                "value"   => "value", // Column from which the stat is collected from
+                "action"   => "sum",
             ]
         ]
     ];

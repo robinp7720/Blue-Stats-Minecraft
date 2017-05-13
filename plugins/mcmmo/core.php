@@ -1,6 +1,6 @@
 <?php
 
-class mcmmo extends MySQLplugin
+class mcmmo extends legacyMySQLplugin
 {
     public $pluginName = "mcmmo";
     public $plugin = array(

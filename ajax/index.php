@@ -5,7 +5,7 @@ $appPath = __DIR__ . "/..";
 require "$appPath/classes/config.class.php";
 require "$appPath/classes/plugin.class.php";
 require "$appPath/classes/player.class.php";
-require "$appPath/classes/mysqlPlugin.class.php";
+require "$appPath/classes/legacymysqlPlugin.class.php";
 require "$appPath/classes/url.class.php";
 
 $file_config = json_decode(file_get_contents("$appPath/config.json"), true);

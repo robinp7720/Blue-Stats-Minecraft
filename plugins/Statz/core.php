@@ -1,6 +1,6 @@
 <?php
 
-class Statz extends MySQLplugin
+ class Statz extends legacyMySQLplugin
 {
     public $pluginName = "Statz";
     public $stats;

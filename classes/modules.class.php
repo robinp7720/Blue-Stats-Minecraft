@@ -37,7 +37,7 @@ class module
     }
 
     /**
-     * @param MySQLplugin $basePlugin
+     * @param legacyMySQLplugin $basePlugin
      */
     public function setBasePlugin($basePlugin)
     {

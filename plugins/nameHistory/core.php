@@ -1,6 +1,6 @@
 <?php
 
-class nameHistory extends plugin
+class nameHistory extends legacyPlugin
 {
     public $pluginName = "nameHistory";
 

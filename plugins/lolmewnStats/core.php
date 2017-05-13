@@ -1,6 +1,6 @@
 <?php
 
-class lolmewnStats extends MySQLplugin
+class lolmewnStats extends legacyMySQLplugin
 {
     public $pluginName = "lolmewnStats";
     public $stats;

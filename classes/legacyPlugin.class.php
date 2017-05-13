@@ -1,6 +1,6 @@
 <?php
 
-abstract class plugin
+abstract class legacyPlugin
 {
     public $mcPlugin = false;
 

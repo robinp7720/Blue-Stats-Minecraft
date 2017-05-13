@@ -85,7 +85,7 @@ class pluginPlayer
 
     public function getID($user)
     {
-        return $this->getIDfromUUID($user) || $this->getIDfromName($user);
+        return $this->getIDfromUUID($user)?: $this->getIDfromName($user);
     }
 
     /**

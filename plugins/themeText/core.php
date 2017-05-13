@@ -1,6 +1,6 @@
 <?php
 
-class themeText extends plugin
+class themeText extends legacyPlugin
 {
     public $pluginName = "theme text";
     public $texts = [];

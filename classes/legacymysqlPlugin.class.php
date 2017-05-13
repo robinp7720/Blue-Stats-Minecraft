@@ -1,6 +1,6 @@
 <?php
 
-abstract class MySQLplugin extends plugin
+abstract class legacyMySQLplugin extends legacyPlugin
 {
     public $mysqli;
     public $dbname;
