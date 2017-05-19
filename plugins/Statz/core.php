@@ -74,22 +74,22 @@
         if ($stat == "last_join" || $stat == "last_seen") {
             $sql = "
 SELECT
-  {$this->prefix}{$this->plugin['indexTable']}.name as name,
+  {$this->prefix}{$this->plugin['indexTable']}.{$this->plugin['playerNameColumn']} as name,
   {$this->prefix}{$stat}.{$this->plugin['idColumn']},
   max({$this->prefix}{$stat}.value) as `value`
 FROM {$this->prefix}{$stat}
 INNER JOIN `{$this->prefix}{$this->plugin['indexTable']}` on {$this->prefix}{$stat}.{$this->plugin['idColumn']} = {$this->prefix}{$this->plugin['indexTable']}.{$this->plugin['idColumn']}
-GROUP BY {$this->prefix}{$this->plugin['indexTable']}.name, {$this->prefix}{$stat}.{$this->plugin['idColumn']}
+GROUP BY {$this->prefix}{$this->plugin['indexTable']}.{$this->plugin['playerNameColumn']}, {$this->prefix}{$stat}.{$this->plugin['idColumn']}
 ORDER BY value Desc";
         } else {
             $sql = "
 SELECT
-  {$this->prefix}{$this->plugin['indexTable']}.name as name,
+  {$this->prefix}{$this->plugin['indexTable']}.{$this->plugin['playerNameColumn']} as name,
   {$this->prefix}{$stat}.{$this->plugin['idColumn']},
   sum({$this->prefix}{$stat}.value) as `value`
 FROM {$this->prefix}{$stat}
 INNER JOIN `{$this->prefix}{$this->plugin['indexTable']}` on {$this->prefix}{$stat}.{$this->plugin['idColumn']} = {$this->prefix}{$this->plugin['indexTable']}.{$this->plugin['idColumn']}
-GROUP BY {$this->prefix}{$this->plugin['indexTable']}.name, {$this->prefix}{$stat}.{$this->plugin['idColumn']}
+GROUP BY {$this->prefix}{$this->plugin['indexTable']}.{$this->plugin['playerNameColumn']}, {$this->prefix}{$stat}.{$this->plugin['idColumn']}
 ORDER BY value Desc";
         }
 
