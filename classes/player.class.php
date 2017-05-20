@@ -58,7 +58,7 @@ class player
                     $stat = $plugin->getStat($table, $this->uuid);
                     unset($stat[0][$plugin->plugin["idColumn"]]);
 
-                    $output .= $this->render($table, $stat);
+                    $output .= $this->render($table, $stat, false, $plugin);
                 }
 
             } else {
@@ -76,7 +76,7 @@ class player
                     $stat[0][$table] = $value ?: 0;
                     unset($stat[$plugin->plugin["idColumn"]]);
                 }
-                $output .= $this->render($plugin->pluginName, $stat, true);
+                $output .= $this->render($plugin->pluginName, $stat, true, $plugin);
             }
         }
         return $output;
@@ -93,7 +93,7 @@ class player
         return $mysqlPlugins;
     }
 
-    public function render($name, $stats, $h2 = false)
+    public function render($name, $stats, $h2 = false, $plugin)
     {
         if ($this->renderChart) {
             $chart = new chart();
@@ -110,7 +110,12 @@ class player
             $output = '<h2>' . ucfirst($name) . '</h2><table class="table table-sorted" id="' . $tableid . '"><thead><tr><th>Stat</th><td>Value</td></tr></thead><tbody>';
 
         foreach ($stats[0] as $key => $val) {
-            $label = ucfirst(str_replace(array("-", "_"), " ", $key));
+            if ($h2)
+                $label = ucfirst(str_replace(array("-", "_"), " ", $key));
+            else
+                $label = $plugin->statName($key);
+
+
             if (is_numeric($val) && $this->renderChart) {
                 $chart->addLabel($label);
                 $chart->addData($label, $val);

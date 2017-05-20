@@ -20,36 +20,33 @@
     public function onLoad()
     {
         $this->config->setDefault("stats", array(
-            "arrows" => "Arrows Shot",
-            "beds_entered" => "Beds Entered",
+            "arrows_shot" => "Arrows Shot",
             "blocks_broken" => "Blocks Broken",
             "blocks_placed" => "Blocks Placed",
             "buckets_emptied" => "Buckets Emptied",
             "buckets_filled" => "Buckets Filled",
-            "commands_done" => "Commands Done",
+            "commands_performed" => "Commands Done",
             "damage_taken" => "Damage Taken",
             "death" => "Times Died",
             "eggs_thrown" => "Eggs Thrown",
-            "fish_caught" => "Fish Caught",
+            "beds_entered" => "Times slept",
+            "items_caught" => "Items Caught (Fished)",
             "items_crafted" => "Items Crafted",
             "items_dropped" => "Items Dropped",
             "items_picked_up" => "Items Picked Up",
             "joins" => "Joins",
-            "kill" => "Kills",
-            "last_join" => "Last Joined",
-            "last_seen" => "Last Seen",
-            "move" => "Blocks Traversed",
-            "omnomnom" => "Food Eaten",
-            "playtime" => "Play Time",
-            "pvp" => "PvP Kills",
-            "shears" => "Times striped a sheep",
+            "kills_mobs" => "Mobs killed",
+            "kills_players" => "Players killed",
+            "distance_travelled" => "Blocks Traversed",
+            "feed_eaten" => "Food Eaten",
+            "time_played" => "Play Time",
+            "times_shorn" => "Times striped a sheep",
             "teleports" => "Teleports",
-            "times_changed_world" => "Worlds Changed",
+            "worlds_changed" => "Worlds Changed",
             "times_kicked" => "Times Kicked",
             "tools_broken" => "Tools Broken",
-            "trades" => "Trades",
+            "villager_trades" => "Trades",
             "votes" => "Votes",
-            "words_said" => "Words Said",
             "xp_gained" => "Xp Gained",
         ));
         $this->stats = $this->config->get("stats");
@@ -74,22 +71,22 @@
         if ($stat == "last_join" || $stat == "last_seen") {
             $sql = "
 SELECT
-  {$this->prefix}{$this->plugin['indexTable']}.name as name,
+  {$this->prefix}{$this->plugin['indexTable']}.{$this->plugin['playerNameColumn']} as name,
   {$this->prefix}{$stat}.{$this->plugin['idColumn']},
   max({$this->prefix}{$stat}.value) as `value`
 FROM {$this->prefix}{$stat}
 INNER JOIN `{$this->prefix}{$this->plugin['indexTable']}` on {$this->prefix}{$stat}.{$this->plugin['idColumn']} = {$this->prefix}{$this->plugin['indexTable']}.{$this->plugin['idColumn']}
-GROUP BY {$this->prefix}{$this->plugin['indexTable']}.name, {$this->prefix}{$stat}.{$this->plugin['idColumn']}
+GROUP BY {$this->prefix}{$this->plugin['indexTable']}.{$this->plugin['playerNameColumn']}, {$this->prefix}{$stat}.{$this->plugin['idColumn']}
 ORDER BY value Desc";
         } else {
             $sql = "
 SELECT
-  {$this->prefix}{$this->plugin['indexTable']}.name as name,
+  {$this->prefix}{$this->plugin['indexTable']}.{$this->plugin['playerNameColumn']} as name,
   {$this->prefix}{$stat}.{$this->plugin['idColumn']},
   sum({$this->prefix}{$stat}.value) as `value`
 FROM {$this->prefix}{$stat}
 INNER JOIN `{$this->prefix}{$this->plugin['indexTable']}` on {$this->prefix}{$stat}.{$this->plugin['idColumn']} = {$this->prefix}{$this->plugin['indexTable']}.{$this->plugin['idColumn']}
-GROUP BY {$this->prefix}{$this->plugin['indexTable']}.name, {$this->prefix}{$stat}.{$this->plugin['idColumn']}
+GROUP BY {$this->prefix}{$this->plugin['indexTable']}.{$this->plugin['playerNameColumn']}, {$this->prefix}{$stat}.{$this->plugin['idColumn']}
 ORDER BY value Desc";
         }
 
