@@ -32,20 +32,24 @@ class pluginStats
         $mysqli = $this->mysql;
         $stmt = $mysqli->stmt_init();
 
-        // Select the name from the player identification table using the id column for identification
-        switch ($this->database["stats"][$stat]["action"]) {
-            case "sum":
-                $query = "SELECT sum({$this->database["stats"][$stat]["value"]}) FROM {$this->database["prefix"]}{$this->database["stats"][$stat]["database"]} WHERE {$this->database["index"]["columns"][$this->database['identifier']]} = ?";
-                break;
-            default:
-                $query = "SELECT {$this->database["stats"][$stat]["value"]} FROM {$this->database["prefix"]}{$this->database["stats"][$stat]["database"]} WHERE {$this->database["index"]["columns"][$this->database['identifier']]} = ?";
+        $query = "SELECT ";
+
+        foreach ($this->database["stats"][$stat]["values"] as $info) {
+            $query .= "`$info[column]` as `$info[name]`,";
         }
+
+        // Remove last comma
+        $query = substr($query, 0 , -1);
+
+        $query .= " FROM {$this->database["prefix"]}{$this->database["stats"][$stat]["database"]} WHERE {$this->database["index"]["columns"][$this->database['identifier']]} = ?";
+
+        var_dump($query);
 
         if ($stmt->prepare($query)) {
             $stmt->bind_param("s", $player);
             $stmt->execute();
-            $stmt->bind_result($output);
-            $stmt->fetch();
+
+            $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
             // If there is an error log it
             if ($stmt->error && DEBUG)
@@ -54,6 +58,9 @@ class pluginStats
             $stmt->close();
             return $output;
         }
+        if ($stmt->error && DEBUG)
+            print($stmt->error);
+
         return false;
     }
 

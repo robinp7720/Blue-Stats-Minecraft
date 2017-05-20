@@ -25,10 +25,28 @@ abstract class plugin
             ]
         ],
         "stats" => [
-            "jumps" => [
-                "database" => "jumps",
-                "value"   => "value", // Column from which the stat is collected from
-                "action"   => "sum",
+            "arrows_shot" => [
+                "database" => "arrows_shot",
+                "values" => [
+                    [
+                        "column" => "value", // column in which the data is stored in the table
+                        "dataType" => "int", // The type of data stored in the column. This can be: time, date, mob, player, world, item_id, item_type, item_name, int
+                        "aggregate" => true, // If true this column is used as a stat summary
+                        "name" => "Value"    // Human readable name of the stat
+                    ],
+                    [
+                        "column" => "world",
+                        "dataType" => "world",
+                        "aggregate" => false,
+                        "name" => "World"
+                    ],
+                    [
+                        "column" => "forceShot",
+                        "dataType" => "int",
+                        "aggregate" => false,
+                        "name" => "Force"
+                    ],
+                ]
             ]
         ]
     ];
