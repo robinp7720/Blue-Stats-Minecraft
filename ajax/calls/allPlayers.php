@@ -17,4 +17,4 @@ if (isset($_GET['search'])) {
     $search = $_GET['search'];
 }
 
-$output['data'] = $plugin->getUsers(48 * $page, 48, MYSQLI_NUM, $search);
+$output['data'] = $plugin->player->searchUser($search, $page,10);

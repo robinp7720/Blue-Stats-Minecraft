@@ -37,7 +37,7 @@ if (!$config->configExist("english")) {
     $config->set("english", $defaultText);
 }
 if (!$config->configExist("stats")) {
-    $config->set("stats", array("playtime", "joins", "move", "votes"));
+    $config->set("stats", array("blocks_broken", "joins", "move", "votes"));
 }
 $english = $config->get("english");
 $stats = $config->get("stats");

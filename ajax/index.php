@@ -7,6 +7,9 @@ require "$appPath/classes/legacyPlugin.class.php";
 require "$appPath/classes/player.class.php";
 require "$appPath/classes/legacymysqlPlugin.class.php";
 require "$appPath/classes/url.class.php";
+require_once "$appPath/classes/plugin/plugin.php";
+require_once "$appPath/classes/table.class.php";
+
 
 $file_config = json_decode(file_get_contents("$appPath/config.json"), true);
 
@@ -24,17 +27,16 @@ $config = new config($mysqli, "BlueStats");
 /*  Get enabled plugins list */
 $loadablePlugins = $config->get("plugins");
 
+/* Load all plugins */
 foreach ($loadablePlugins as $plugin) {
 
     /* Load in core plugin class*/
     /** @noinspection PhpIncludeInspection */
-    include "$appPath/plugins/$plugin/core.php";
+    include "$appPath/plugins/new/$plugin/$plugin.php";
 
-    $plugins[$plugin] = new $plugin($mysqli);
+    $pluginClass = "\\BlueStats\\Plugin\\$plugin";
 
-    if (method_exists($plugins[$plugin], "onLoad")) {
-        $plugins[$plugin]->onLoad();
-    }
+    $plugins[$plugin] = new $pluginClass($mysqli);
 }
 
 $call = $_GET['call'];

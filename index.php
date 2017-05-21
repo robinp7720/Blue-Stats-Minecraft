@@ -50,6 +50,8 @@ if ($cache->reCache($uri)) {
     require "$appPath/classes/legacymysqlPlugin.class.php";
     require "$appPath/classes/url.class.php";
     require "$appPath/classes/chart.class.php";
+    require_once "$appPath/classes/plugin/plugin.php";
+    require_once "$appPath/classes/table.class.php";
 
 
     /* Functions */
@@ -65,22 +67,13 @@ if ($cache->reCache($uri)) {
 
         /* Load in core plugin class*/
         /** @noinspection PhpIncludeInspection */
-        include "$appPath/plugins/$plugin/core.php";
+        include "$appPath/plugins/new/$plugin/$plugin.php";
 
-        $plugins[$plugin] = new $plugin($mysqli);
+        $pluginClass = "\\BlueStats\\Plugin\\$plugin";
 
-        /* Avoid errors on first install */
-        if (isset($plugins[$plugin]->firstInstall)) {
-            if ($plugins[$plugin]->firstInstall === true) {
-                unset($plugins[$plugin]);
-            }
-        }
-
-        // Call plugin load function
-        if (method_exists($plugins[$plugin], "onLoad")) {
-            $plugins[$plugin]->onLoad();
-        }
+        $plugins[$plugin] = new $pluginClass($mysqli);
     }
+
     $BlueStats->loadPlugins($plugins);
 
     $content = $BlueStats->loadPage();

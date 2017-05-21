@@ -1,5 +1,10 @@
 <?php
 
+namespace BlueStats\API;
+
+use config;
+use mysqli;
+
 require_once "pluginPlayer.php";
 require_once "pluginStats.php";
 
@@ -27,10 +32,11 @@ abstract class plugin
         "stats" => [
             "arrows_shot" => [
                 "database" => "arrows_shot",
+                "name" => "Arrows shots",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
-                        "dataType" => "int", // The type of data stored in the column. This can be: time, date, mob, player, world, item_id, item_type, item_name, int
+                        "dataType" => "int", // The type of data stored in the column. This can be: time, date, mob_name, player_name, world, item_id, item_type, item_name, int
                         "aggregate" => true, // If true this column is used as a stat summary
                         "name" => "Value"    // Human readable name of the stat
                     ],

@@ -77,50 +77,6 @@ class view
         }
         $string = str_replace('{{ ajax }}', $this->url->urls['ajax'], $string);
 
-        /* Modules with args */
-        preg_match_all('/{{ ([^ ]+):([^ ]+):([^ ]+) }}/', $string, $matches);
-
-        foreach ($matches[0] as $key => $replaceStr) {
-
-            /* Plugin Exist? */
-            if (isset($this->bluestats->plugins[$matches[1][$key]])) {
-                /* Set plugin */
-                $plugin = $this->bluestats->plugins[$matches[1][$key]];
-
-                /* New module */
-                $module = new module($this->bluestats->mysqli, $matches[1][$key], $matches[2][$key], $plugin, $this->theme, $this->appPath, $this->url, $matches[3][$key], isset($player) ? $player : NULL);
-                /* Render the module */
-                $output = $module->render();
-
-                $string = str_replace($replaceStr, $output, $string);
-            } else {
-                $output = "<div class=\"alert alert-danger\" role=\"alert\">Plugin not Found: {$matches[1][$key]}</div>";
-                $string = str_replace($replaceStr, $output, $string);
-            }
-        }
-
-        /* Modules */
-        preg_match_all('/{{ ([^ ]+):([^ ]+) }}/', $string, $matches);
-
-        foreach ($matches[0] as $key => $replaceStr) {
-
-            /* Plugin Exist? */
-            if (isset($this->bluestats->plugins[$matches[1][$key]])) {
-                /* Set plugin */
-                $plugin = $this->bluestats->plugins[$matches[1][$key]];
-
-                /* New module */
-                $module = new module($this->bluestats->mysqli, $matches[1][$key], $matches[2][$key], $plugin, $this->theme, $this->appPath, $this->url, NULL, isset($player) ? $player : NULL);
-                $module->setBasePlugin($this->bluestats->basePlugin);
-                /* Render the module */
-                $output = $module->render();
-
-                $string = str_replace($replaceStr, $output, $string);
-            } else {
-                $output = "<div class=\"alert alert-danger\" role=\"alert\">Plugin not Found: {$matches[1][$key]}</div>";
-                $string = str_replace($replaceStr, $output, $string);
-            }
-        }
 
         /* Page Content */
         if (strpos($string, '{{ content }}') !== false)

@@ -6,6 +6,9 @@
  * Date: 4/22/17
  * Time: 12:08 PM
  */
+
+namespace BlueStats\API;
+
 class pluginStats
 {
 
@@ -26,7 +29,7 @@ class pluginStats
     /**
      * @param $player int Player ID, Name or UUID, according to player identification method
      * @param $stat string Stat name
-     * @return int value of selected player stat
+     * @return array all values relating to stat selected from player
      */
     public function player($player, $stat) {
         $mysqli = $this->mysql;
@@ -35,15 +38,13 @@ class pluginStats
         $query = "SELECT ";
 
         foreach ($this->database["stats"][$stat]["values"] as $info) {
-            $query .= "`$info[column]` as `$info[name]`,";
+            $query .= "`$info[column]`,";
         }
 
         // Remove last comma
         $query = substr($query, 0 , -1);
 
         $query .= " FROM {$this->database["prefix"]}{$this->database["stats"][$stat]["database"]} WHERE {$this->database["index"]["columns"][$this->database['identifier']]} = ?";
-
-        var_dump($query);
 
         if ($stmt->prepare($query)) {
             $stmt->bind_param("s", $player);
