@@ -56,6 +56,7 @@ if ($cache->reCache($uri)) {
 
     /* Functions */
     require "$appPath/functions/utils.func.php";
+    require "$appPath/functions/blocks.func.php";
 
     $BlueStats = new BlueStats($mysqli, $appPath);
 

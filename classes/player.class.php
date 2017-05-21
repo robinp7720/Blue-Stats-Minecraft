@@ -8,6 +8,8 @@ class player
     private $config;
     private $mysqli;
     private $basePlugin;
+
+    /** @var BlueStats $bluestats */
     private $bluestats;
 
     private $renderChart = false;
@@ -40,6 +42,8 @@ class player
 
     public function renderPlayerAllStats()
     {
+        $blocks_names = json_decode(file_get_contents($this->bluestats->appPath."/items.json"),true);
+
         $output = "";
 
         $this->config->setDefault("charts", "false");
@@ -61,8 +65,28 @@ class player
                 $data = $plugin->stats->player($plugin->player->getUUID($plugin->player->getID("206d307c-ef43-45b0-aa77-3511e13df2f1")), $stat);
                 foreach ($data as $key => $entry) {
                     $values = [];
+                    $count = 0;
+                    $itemID = 0;
                     foreach ($entry as $statt => $value) {
-                        array_push($values, $value);
+                        switch ($plugin->database["stats"][$stat]["values"][$count]["dataType"]){
+                            case "item_id":
+                                // If the data collected was of type item_id, store it and wait until the data type is received.
+                                $itemID = $value;
+                                break;
+                            case "item_type":
+                                $name = getBlockNameFromID($itemID, $value, $blocks_names);
+                                if (!$name)
+                                    $name = getBlockNameFromID($itemID, 0, $blocks_names);
+                                if ($name)
+                                    $name .= " ($itemID-$value)";
+                                if (!$name)
+                                    $name = $itemID . "-". $value;
+                                array_push($values, $name);
+                                break;
+                            default:
+                                array_push($values, $value);
+                        }
+                        $count++;
                     }
                     call_user_func_array([$table, 'addRecord'], $values);
                 }
@@ -71,7 +95,15 @@ class player
                 $values = [];
 
                 foreach ($plugin->database["stats"][$stat]["values"] as $entry) {
-                    array_push($values, $entry["name"]);
+                    switch ($entry["dataType"]) {
+                        case "item_id":
+                            break;
+                        case "item_type":
+                            array_push($values, "Block");
+                            break;
+                        default:
+                            array_push($values, $entry["name"]);
+                    }
                 }
                 call_user_func_array([$table, 'makeHeader'], $values);
                 $output .= $table->tableToHTML();
