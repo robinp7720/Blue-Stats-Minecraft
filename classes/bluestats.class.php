@@ -11,6 +11,7 @@ class BlueStats
     public $config;
     public $mysqli;
     public $basePlugin;
+    public $url;
 
     public $request = [];
 
@@ -26,6 +27,8 @@ class BlueStats
         $this->page = isset($this->request["get"]["page"]) ? $this->request["get"]["page"] : $this->config->get("homepage");
 
         $this->appPath = $appPath;
+
+        $this->url = new url($this->mysqli);
     }
 
     private function setUpGlobals()

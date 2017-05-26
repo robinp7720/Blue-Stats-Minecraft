@@ -150,6 +150,34 @@ class pluginPlayer
     }
 
     /**
+     * @param String $name Username of player
+     * @return int User UUID
+     */
+
+    public function getUUIDfromName($name)
+    {
+        $mysqli = $this->mysql;
+        $stmt = $mysqli->stmt_init();
+
+        // Select the id from the player identification table using the name column for identification
+        $query = "SELECT {$this->database["index"]["columns"]["uuid"]} FROM {$this->database["prefix"]}{$this->database["index"]["table"]} WHERE {$this->database["index"]["columns"]["name"]} = ?";
+        if ($stmt->prepare($query)) {
+            $stmt->bind_param("s", $name);
+            $stmt->execute();
+            $stmt->bind_result($output);
+            $stmt->fetch();
+
+            // If there is an error log it
+            if ($stmt->error && DEBUG)
+                print($stmt->error);
+
+            $stmt->close();
+            return $output;
+        }
+        return false;
+    }
+
+    /**
      * @param String $user name or uuid to search for in the database
      * @param int $page
      * @param int $limit

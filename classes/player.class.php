@@ -7,6 +7,7 @@ class player
     public $name = "";
     private $config;
     private $mysqli;
+    /** @var \BlueStats\API\plugin $basePlugin */
     private $basePlugin;
 
     /** @var BlueStats $bluestats */
@@ -82,6 +83,15 @@ class player
                                 if (!$name)
                                     $name = $itemID . "-". $value;
                                 array_push($values, $name);
+                                break;
+                            case "player_name":
+                                if ($this->bluestats->url->useUUID) {
+                                    $uuid = $this->basePlugin->player->getUUIDfromName($value);
+                                    $value = "<a href=\"" . $this->bluestats->url->player($uuid) . "\"><img src=\"https://minotar.net/helm/{$value}/32.png\" alt=\"\"> {$value}</a>";
+                                } else {
+                                    $value = "<a href=\"" . $this->bluestats->url->player($value) . "\"><img src=\"https://minotar.net/helm/{$value}/32.png\" alt=\"\"> {$value}</a>";
+                                }
+                                array_push($values, $value);
                                 break;
                             default:
                                 array_push($values, $value);
