@@ -112,8 +112,10 @@ class player
         foreach ($stats[0] as $key => $val) {
             if ($h2)
                 $label = ucfirst(str_replace(array("-", "_"), " ", $key));
-            else
+            elseif (method_exists($plugin,"statName"))
                 $label = $plugin->statName($key);
+            else
+                $label = ucfirst(str_replace(array("-", "_"), " ", $key));
 
 
             if (is_numeric($val) && $this->renderChart) {
