@@ -8,14 +8,18 @@
  */
 class module
 {
+    /** @var BlueStats $bluestats */
     private $bluestats;
     private $plugins = [];
     private $name;
+    private $config;
 
     public function __construct($bluestats, $name)
     {
-     $this->bluestats = $bluestats;
-     $this->name = $name;
+        /** @var BlueStats $bluestats */
+        $this->bluestats = $bluestats;
+        $this->name = $name;
+        $this->config = new config($bluestats->mysqli, "MODULE__" . $name);
     }
 
     public function loadPlugin($plugin) {
