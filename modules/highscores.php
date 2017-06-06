@@ -4,6 +4,8 @@ $this->loadPlugin("McMMO");
 
 foreach ($this->bluestats->plugins as $plugin) {
 /** @var \BlueStats\API\plugin $plugin */
+    if (!$plugin::$isMySQLplugin)
+        break;
     echo "<h2>{$plugin->name}</h2><div class='row'>";
     foreach ($plugin->database['stats'] as $stat => $info) {
         echo "<div class='col-md-6'><h3>$info[name]</h3>";
