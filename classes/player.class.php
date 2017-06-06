@@ -57,6 +57,8 @@ class player
         $this->maxPerChart = $this->config->get("statsPerGraph");
         /** @var \BlueStats\API\plugin $plugin */
         foreach ($this->bluestats->plugins as $plugin) {
+            if (!$plugin::$isMySQLplugin)
+                break;
             $output .= "<h3>$plugin->name</h3>";
             foreach ($plugin->database['stats'] as $stat => $info) {
                 $statName = $plugin->database["stats"][$stat]["name"];

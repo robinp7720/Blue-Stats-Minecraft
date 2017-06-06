@@ -96,6 +96,9 @@ foreach ($files as $dir) {
         if (isset($_SESSION["$dir-enable"]) && $_SESSION["$dir-enable"] === "on") {
             array_push($plugins, $dir);
         }
+        if (!isset($_SESSION["$dir-enable"])) {
+            array_push($plugins, $dir);
+        }
     }
 }
 
@@ -121,6 +124,10 @@ array_shift($files);
 
 foreach ($files as $dir) {
     if (is_dir(dirname(dirname(__dir__)).'/plugins/'.$dir)) {
+        include dirname(dirname(__dir__))."/plugins/$dir/$dir.php";
+        $pluginClass = "\\BlueStats\\Plugin\\$dir";
+        if (!$pluginClass::$isMySQLplugin)
+            break;
         if (isset($_SESSION["$dir-enable"]) && $_SESSION["$dir-enable"] === "on") {
             $config->set("MYSQL_host", $_SESSION["$dir-host"], $dir);
             $config->set("MYSQL_username", $_SESSION["$dir-username"], $dir);

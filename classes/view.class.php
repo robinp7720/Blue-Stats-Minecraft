@@ -74,6 +74,8 @@ class view
 
         foreach ($matches[0] as $key => $replaceStr) {
             $module = new module($this->bluestats, $matches[1][$key]);
+            if (isset($player))
+                $module->setPlayer($player);
             $string = str_replace($replaceStr, $module->render(), $string);
         }
 

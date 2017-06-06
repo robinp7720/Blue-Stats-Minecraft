@@ -7,7 +7,7 @@ class Statz extends plugin
 {
 
     public $name = 'Statz';
-
+    public static $isMySQLplugin = true;
     public $database = [
         "prefix" => "statz_",
         "identifier" => "uuid", // Can be id, uuid or name. Used to get stats based on id. name or uuid
@@ -23,6 +23,7 @@ class Statz extends plugin
             "arrows_shot" => [
                 "database" => "arrows_shot",
                 "name" => "Arrows shot",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
@@ -47,6 +48,7 @@ class Statz extends plugin
             "blocks_broken" => [
                 "database" => "blocks_broken",
                 "name" => "Blocks broken",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
@@ -77,6 +79,7 @@ class Statz extends plugin
             "blocks_placed" => [
                 "database" => "blocks_placed",
                 "name" => "Blocks placed",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
@@ -107,6 +110,7 @@ class Statz extends plugin
             "buckets_emptied" => [
                 "database" => "buckets_emptied",
                 "name" => "Buckets emptied",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
@@ -125,6 +129,7 @@ class Statz extends plugin
             "buckets_filled" => [
                 "database" => "buckets_filled",
                 "name" => "Buckets filled",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
@@ -143,6 +148,7 @@ class Statz extends plugin
             "damage_taken" => [
                 "database" => "damage_taken",
                 "name" => "Damage taken",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
@@ -167,6 +173,7 @@ class Statz extends plugin
             "deaths" => [
                 "database" => "deaths",
                 "name" => "Deaths",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
@@ -185,6 +192,7 @@ class Statz extends plugin
             "eggs_thrown" => [
                 "database" => "eggs_thrown",
                 "name" => "Eggs thrown",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
@@ -203,6 +211,7 @@ class Statz extends plugin
             "entered_beds" => [
                 "database" => "entered_beds",
                 "name" => "Beds entered",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
@@ -221,6 +230,7 @@ class Statz extends plugin
             "food_eaten" => [
                 "database" => "food_eaten",
                 "name" => "Food eaten",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
@@ -245,6 +255,7 @@ class Statz extends plugin
             "items_caught" => [
                 "database" => "items_caught",
                 "name" => "Items caught",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
@@ -269,6 +280,7 @@ class Statz extends plugin
             "items_crafted" => [
                 "database" => "items_crafted",
                 "name" => "Items crafted",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
@@ -293,6 +305,7 @@ class Statz extends plugin
             "items_dropped" => [
                 "database" => "items_dropped",
                 "name" => "Items dropped",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
@@ -317,6 +330,7 @@ class Statz extends plugin
             "items_picked_up" => [
                 "database" => "items_picked_up",
                 "name" => "Items picked up",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
@@ -341,6 +355,7 @@ class Statz extends plugin
             "joins" => [
                 "database" => "joins",
                 "name" => "Joins",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
@@ -353,6 +368,7 @@ class Statz extends plugin
             "kills_mobs" => [
                 "database" => "kills_mobs",
                 "name" => "Mobs killed",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
@@ -377,6 +393,7 @@ class Statz extends plugin
             "kills_players" => [
                 "database" => "kills_players",
                 "name" => "Players killed",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
@@ -401,6 +418,7 @@ class Statz extends plugin
             "teleports" => [
                 "database" => "teleports",
                 "name" => "Teleports",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
@@ -425,6 +443,7 @@ class Statz extends plugin
             "times_kicked" => [
                 "database" => "times_kicked",
                 "name" => "Kicks",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
@@ -449,6 +468,7 @@ class Statz extends plugin
             "times_shorn" => [
                 "database" => "times_shorn",
                 "name" => "Sheep stripped",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
@@ -467,6 +487,7 @@ class Statz extends plugin
             "time_played" => [
                 "database" => "time_played",
                 "name" => "Playtime",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
@@ -485,6 +506,7 @@ class Statz extends plugin
             "tools_broken" => [
                 "database" => "tools_broken",
                 "name" => "Tools broken",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
@@ -509,6 +531,7 @@ class Statz extends plugin
             "villager_trades" => [
                 "database" => "villager_trades",
                 "name" => "Villager trades",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
@@ -531,8 +554,9 @@ class Statz extends plugin
                 ]
             ],
             "votes" => [
-                "database" => "kills_players",
-                "name" => "Players killed",
+                "database" => "votes",
+                "name" => "Votes",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
@@ -545,6 +569,7 @@ class Statz extends plugin
             "worlds_changed" => [
                 "database" => "worlds_changed",
                 "name" => "Worlds changed",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
@@ -569,6 +594,7 @@ class Statz extends plugin
             "xp_gained" => [
                 "database" => "xp_gained",
                 "name" => "XP gained",
+                "user_identifier" => "uuid",
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table

@@ -36,6 +36,10 @@ array_shift($files);
 
 foreach ($files as $dir) {
     if (is_dir(dirname(dirname(__dir__)).'/plugins/'.$dir)) {
+        include dirname(dirname(__dir__))."/plugins/$dir/$dir.php";
+        $pluginClass = "\\BlueStats\\Plugin\\$dir";
+        if (!$pluginClass::$isMySQLplugin)
+            break;
         if (isset($_POST["$dir-enable"]) && $_POST["$dir-enable"] == "on") {
             if (isset($_POST["$dir-host"]) && isset($_POST["$dir-username"]) && isset($_POST["$dir-password"]) && isset($_POST["$dir-db"])) {
                 /* Connect to MySQL */

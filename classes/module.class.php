@@ -13,6 +13,7 @@ class module
     private $plugins = [];
     private $name;
     private $config;
+    private $player;
 
     public function __construct($bluestats, $name)
     {
@@ -36,6 +37,14 @@ class module
         ob_end_clean();
 
         return $contents;
+    }
+
+    /**
+     * @param player $player
+     */
+    public function setPlayer($player)
+    {
+        $this->player = $player;
     }
 
 }

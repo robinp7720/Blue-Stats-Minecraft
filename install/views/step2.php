@@ -56,6 +56,10 @@
 
         foreach ($files as $dir) {
             if (is_dir(dirname(dirname(__dir__)).'/plugins/'.$dir)) {
+                include dirname(dirname(__dir__))."/plugins/$dir/$dir.php";
+                $pluginClass = "\\BlueStats\\Plugin\\$dir";
+                if (!$pluginClass::$isMySQLplugin)
+                    break;
                 ?>
                 <div class="col-md-6">
                     <h2><?=$dir?> DataBase</h2>
