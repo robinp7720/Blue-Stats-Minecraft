@@ -63,7 +63,7 @@ class player
                 $output .= "<h4>$statName</h4>";
                 $table = New Table();
                 // Loop through all values in database
-                $data = $plugin->stats->player($plugin->player->getUUID($plugin->player->getID("206d307c-ef43-45b0-aa77-3511e13df2f1")), $stat);
+                $data = $plugin->stats->player($plugin->player->getUUID($plugin->player->getID($this->uuid)), $stat);
                 foreach ($data as $key => $entry) {
                     $values = [];
                     $count = 0;
