@@ -1,9 +1,9 @@
 <?php
 
-require dirname(dirname(__DIR__)) . "/plugins/query/minecraftQuery.php";
+/*require dirname(dirname(__DIR__)) . "/plugins/query/minecraftQuery.php";
 
 use xPaw\MinecraftQuery;
-use xPaw\MinecraftQueryException;
+use xPaw\MinecraftQueryException;*/
 
 $success = true;
 
@@ -28,53 +28,41 @@ if (isset($_POST["bs-host"]) && isset($_POST["bs-username"]) && isset($_POST["bs
     $success = false;
 }
 
-if (isset($_POST["lolstats-enable"]) && $_POST["lolstats-enable"] == "on") {
-    if (isset($_POST["lolstats-host"]) && isset($_POST["lolstats-username"]) && isset($_POST["lolstats-password"]) && isset($_POST["lolstats-db"])) {
-        /* Connect to MySQL */
-        $mysqli = new mysqli(
-            $_POST["lolstats-host"],
-            $_POST["lolstats-username"],
-            $_POST["lolstats-password"],
-            $_POST["lolstats-db"]
-        );
+$files = scandir(dirname(dirname(__dir__)).'/plugins');
 
-        if ($mysqli->connect_error) {
-            echo "<i class=\"fa fa-times text-warning\"></i> <b>Lolmewn Stats database connetion error:</b> " . $mysqli->connect_error . "<br>";
-            $success = false;
-        } else {
-            echo "<i class=\"fa fa-check text-success\"></i> Lolmewn Stats success!<br>";
+// Remove . and .. from array
+array_shift($files);
+array_shift($files);
+
+foreach ($files as $dir) {
+    if (is_dir(dirname(dirname(__dir__)).'/plugins/'.$dir)) {
+        if (isset($_POST["$dir-enable"]) && $_POST["$dir-enable"] == "on") {
+            if (isset($_POST["$dir-host"]) && isset($_POST["$dir-username"]) && isset($_POST["$dir-password"]) && isset($_POST["$dir-db"])) {
+                /* Connect to MySQL */
+                $mysqli = new mysqli(
+                    $_POST["$dir-host"],
+                    $_POST["$dir-username"],
+                    $_POST["$dir-password"],
+                    $_POST["$dir-db"]
+                );
+
+                if ($mysqli->connect_error) {
+                    echo "<i class=\"fa fa-times text-warning\"></i> <b>$dir database connetion error:</b> " . $mysqli->connect_error . "<br>";
+                    $success = false;
+                } else {
+                    echo "<i class=\"fa fa-check text-success\"></i> $dir success!<br>";
+                }
+
+            } else {
+                echo "<i class=\"fa fa-times text-warning\"></i> $dir database details missing<br>";
+                $success = false;
+            }
         }
-
-    } else {
-        echo "<i class=\"fa fa-times text-warning\"></i> Lolmewn Stats database details missing<br>";
-        $success = false;
     }
 }
 
-if (isset($_POST["mcmmo-enable"]) && $_POST["mcmmo-enable"] == "on") {
-    if (isset($_POST["mcmmo-host"]) && isset($_POST["mcmmo-username"]) && isset($_POST["mcmmo-password"]) && isset($_POST["mcmmo-db"])) {
-        /* Connect to MySQL */
-        $mysqli = new mysqli(
-            $_POST["mcmmo-host"],
-            $_POST["mcmmo-username"],
-            $_POST["mcmmo-password"],
-            $_POST["mcmmo-db"]
-        );
 
-        if ($mysqli->connect_error) {
-            echo "<i class=\"fa fa-times text-warning\"></i> <b>Mcmmo database connetion error:</b> " . $mysqli->connect_error . "<br>";
-            $success = false;
-        } else {
-            echo "<i class=\"fa fa-check text-success\"></i> Mcmmo success!<br>";
-        }
-
-    } else {
-        echo "<i class=\"fa fa-times text-warning\"></i> Mcmmo database details missing<br>";
-        $success = false;
-    }
-}
-
-$query = new MinecraftQuery();
+/*$query = new MinecraftQuery();
 if (function_exists('fsockopen')) {
     if (isset($_POST['ip']) && isset($_POST['port'])) {
         if (isset($_POST['query-enable'])) {
@@ -89,7 +77,7 @@ if (function_exists('fsockopen')) {
             }
         }
     }
-}
+}*/
 
 if (isset($_POST["theme"])) {
     if (in_array($_POST["theme"], ["webstatsx","material"])) {
