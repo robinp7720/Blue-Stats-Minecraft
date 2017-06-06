@@ -56,6 +56,9 @@ class view
         $title = $this->bluestats->config->get('page-names')[$this->page];
         $string = str_replace('{{ title }}', $title, $string);
 
+        $title = $this->bluestats->config->get('server-name');
+        $string = str_replace('{{ server-name }}', $title, $string);
+
 
         if (isset($player)) {
             $string = str_replace('{{ playername }}', $player->name, $string);
