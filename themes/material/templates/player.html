@@ -2,14 +2,14 @@
 <div class="page-header">
     <h1>
         {{ playername }}
-        {{ query:playerOnline }}
+        {{ module:playerOnline }}
     </h1>
 </div>
 <div class="row">
     <div class="col-md-3">
         <img src="https://cravatar.eu/3d/{{ playername }}/800" alt="" style="width:100%; max-width:300px;">
         <br><br>
-        {{ lolmewnStats:archenemy }}
+        {{ Statz:archenemy }}
     </div>
     <div class="col-md-9">
         {{ playerstats }}
@@ -24,4 +24,4 @@
     </div>
 </div>
 <h2>Block Stats</h2>
-{{ lolmewnStats:playerBlocks }}
+{{ Statz:playerBlocks }}

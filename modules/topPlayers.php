@@ -45,13 +45,24 @@ $stats = $this->config->get("stats");
     <?php foreach ($stats as $stat): ?>
         <?php
         $data = $plugin->stats->statList($stat, 1);
-        $display = $data[0]["aggregate"];
-        $username = $plugin->player->getName($plugin->player->getID($data[0]["uuid"]));
+        $display = 0;
+        $linkId = "";
+        if (isset($data[0])) {
+            $display = $data[0]["aggregate"];
 
-        if ($this->bluestats->url->useUUID) {
-            $linkId = $data[0]["uuid"];
-        } else {
-            $linkId = $username;
+            if ($plugin->database['identifier'] == "id") {
+                $username = $plugin->player->getName($data[0]['id']);
+                $uuid = $plugin->player->getUUID($data[0]['id']);
+            } else {
+                $username = $plugin->player->getName($plugin->player->getID($data[0]['id']));
+                $uuid = $data[0]['id'];
+            }
+
+            if ($this->bluestats->url->useUUID) {
+                $linkId = $uuid;
+            } else {
+                $linkId = $username;
+            }
         }
 
         ?>

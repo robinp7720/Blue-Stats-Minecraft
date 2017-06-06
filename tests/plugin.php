@@ -15,7 +15,7 @@ $mysqli = new mysqli(
     $config["mysql"]["dbname"]
 );
 
-$plugin = new \BlueStats\Plugin\Statz($mysqli);
+$plugin = new \BlueStats\Plugin\McMMO($mysqli);
 
 echo $plugin->player->getID("Zeyphros") . PHP_EOL;
 echo $plugin->player->getID("5f7e4c8d-8c79-42a9-953b-538e3f62e644") . PHP_EOL;
