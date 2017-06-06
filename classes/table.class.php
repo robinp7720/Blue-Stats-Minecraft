@@ -128,10 +128,12 @@ class Table
      * Gives: string with formatted table in HTML
      *
      * */
-    public function tableToHTML() {
+    public function tableToHTML($sorted = true) {
         $cellsY=count($this->data);
         $cellsX=$this->biggestRow;
-        $string="<table class='table table-sorted'>\n";
+        $string="<table class='table'>\n";
+        if ($sorted)
+            $string="<table class='table table-sorted'>\n";
         // th case
         if (!empty($this->header)) {
             $header=$this->header;

@@ -76,7 +76,7 @@ class pluginStats
                 $aggregate = $info['column'];
         }
 
-        $query = "SELECT {$this->database["index"]["columns"][$this->database['identifier']]},sum($aggregate) as aggregate FROM {$this->database["prefix"]}{$this->database["stats"][$stat]["database"]} GROUP BY {$this->database["index"]["columns"][$this->database['identifier']]} ORDER BY $aggregate DESC LIMIT ?";
+        $query = "SELECT {$this->database["index"]["columns"][$this->database['identifier']]},sum($aggregate) as aggregate FROM {$this->database["prefix"]}{$this->database["stats"][$stat]["database"]} GROUP BY {$this->database["index"]["columns"][$this->database['identifier']]} ORDER BY sum($aggregate) DESC LIMIT ?";
 
         if ($stmt->prepare($query)) {
             $stmt->bind_param("i", $limit);

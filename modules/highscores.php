@@ -23,7 +23,7 @@ foreach ($plugin->database['stats'] as $stat => $info) {
     }
     $table->makeHeader("Player", $info['name']);
 
-    echo $table->tableToHTML();
+    echo $table->tableToHTML(false);
 
     echo "</div>";
 }
