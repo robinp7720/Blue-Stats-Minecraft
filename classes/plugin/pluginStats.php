@@ -66,6 +66,34 @@ class pluginStats
     }
 
     public function statList($stat, $limit) {
+        $mysqli = $this->mysql;
+        $stmt = $mysqli->stmt_init();
 
+        $aggregate = "";
+
+        foreach ($this->database["stats"][$stat]["values"] as $info) {
+            if ($info['aggregate'])
+                $aggregate = $info['column'];
+        }
+
+        $query = "SELECT {$this->database["index"]["columns"][$this->database['identifier']]},sum($aggregate) as aggregate FROM {$this->database["prefix"]}{$this->database["stats"][$stat]["database"]} GROUP BY {$this->database["index"]["columns"][$this->database['identifier']]} ORDER BY $aggregate DESC LIMIT ?";
+
+        if ($stmt->prepare($query)) {
+            $stmt->bind_param("i", $limit);
+            $stmt->execute();
+
+            $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+            // If there is an error log it
+            if ($stmt->error && DEBUG)
+                print($stmt->error);
+
+            $stmt->close();
+            return $output;
+        }
+        if ($stmt->error && DEBUG)
+            print($stmt->error);
+
+        return false;
     }
 }

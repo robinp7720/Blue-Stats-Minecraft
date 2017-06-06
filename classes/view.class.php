@@ -69,6 +69,14 @@ class view
             $string = str_replace('{{ playeruuid }}', '', $string);
         }
 
+        /* Modules */
+        preg_match_all('/{{ module:([^ ]+) }}/', $string, $matches);
+
+        foreach ($matches[0] as $key => $replaceStr) {
+            $module = new module($this->bluestats, $matches[1][$key]);
+            $string = str_replace($replaceStr, $module->render(), $string);
+        }
+
         /* URLS */
         preg_match_all('/{{ url:([^ ]+) }}/', $string, $matches);
 

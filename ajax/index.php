@@ -32,7 +32,7 @@ foreach ($loadablePlugins as $plugin) {
 
     /* Load in core plugin class*/
     /** @noinspection PhpIncludeInspection */
-    include "$appPath/plugins/new/$plugin/$plugin.php";
+    include "$appPath/plugins/$plugin/$plugin.php";
 
     $pluginClass = "\\BlueStats\\Plugin\\$plugin";
 

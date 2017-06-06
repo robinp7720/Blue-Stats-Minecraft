@@ -44,7 +44,7 @@ if ($cache->reCache($uri)) {
     /* Include all classes and api if a new cache has to be created */
     require "$appPath/classes/legacyPlugin.class.php";
     require "$appPath/classes/bluestats.class.php";
-    require "$appPath/classes/modules.class.php";
+    require "$appPath/classes/module.class.php";
     require "$appPath/classes/view.class.php";
     require "$appPath/classes/player.class.php";
     require "$appPath/classes/legacymysqlPlugin.class.php";
@@ -68,7 +68,7 @@ if ($cache->reCache($uri)) {
 
         /* Load in core plugin class*/
         /** @noinspection PhpIncludeInspection */
-        include "$appPath/plugins/new/$plugin/$plugin.php";
+        include "$appPath/plugins/$plugin/$plugin.php";
 
         $pluginClass = "\\BlueStats\\Plugin\\$plugin";
 
