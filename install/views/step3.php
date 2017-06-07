@@ -1,9 +1,6 @@
 <?php
-
-/*require dirname(dirname(__DIR__)) . "/plugins/query/minecraftQuery.php";
-
 use xPaw\MinecraftQuery;
-use xPaw\MinecraftQueryException;*/
+use xPaw\MinecraftQueryException;
 
 $success = true;
 
@@ -36,7 +33,7 @@ array_shift($files);
 
 foreach ($files as $dir) {
     if (is_dir(dirname(dirname(__dir__)).'/plugins/'.$dir)) {
-        include dirname(dirname(__dir__))."/plugins/$dir/$dir.php";
+        require_once dirname(dirname(__dir__))."/plugins/$dir/$dir.php";
         $pluginClass = "\\BlueStats\\Plugin\\$dir";
         if (!$pluginClass::$isMySQLplugin)
             break;
@@ -66,7 +63,7 @@ foreach ($files as $dir) {
 }
 
 
-/*$query = new MinecraftQuery();
+$query = new MinecraftQuery();
 if (function_exists('fsockopen')) {
     if (isset($_POST['ip']) && isset($_POST['port'])) {
         if (isset($_POST['query-enable'])) {
@@ -81,7 +78,7 @@ if (function_exists('fsockopen')) {
             }
         }
     }
-}*/
+}
 
 if (isset($_POST["theme"])) {
     if (in_array($_POST["theme"], ["webstatsx","material"])) {
