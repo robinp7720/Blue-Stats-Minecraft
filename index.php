@@ -1,6 +1,6 @@
 <?php
 
-define('DEBUG', false);
+define('DEBUG', true);
 
 
 // If the config file does not exist assume the installer has not yet been executed and thus show a link to the install page.
@@ -25,11 +25,12 @@ if (DEBUG) {
     ini_set("display_errors", 0);
 }
 
+// Make reference of the root path of BlueStats. This is used in other parts of the webapp to get theme files and others.
 $appPath = __DIR__;
 
 /* Classes */
-require "$appPath/classes/config.class.php";
-require "$appPath/classes/cache.class.php";
+require_once "$appPath/classes/config.class.php";
+require_once "$appPath/classes/cache.class.php";
 
 // Load config file. This file stores the BlueStats mysql settings.
 // It is used to establish the connection the to config database.
@@ -41,6 +42,7 @@ $mysqli = new mysqli(
     $config["mysql"]["password"],
     $config["mysql"]["dbname"]
 );
+
 $cache = new cache($mysqli, $appPath);
 
 // Replace remove ?recache from url
@@ -66,6 +68,7 @@ if ($cache->reCache($uri)) {
     require_once "$appPath/functions/utils.func.php";
     require_once "$appPath/functions/blocks.func.php";
 
+    // Start the BlueStats core
     $BlueStats = new BlueStats($mysqli, $appPath);
 
     $plugins = [];

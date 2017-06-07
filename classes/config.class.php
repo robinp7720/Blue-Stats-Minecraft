@@ -45,12 +45,15 @@ class config
         if ($plugin == "this")
             $plugin = $this->pluginName;
         $mysqli = $this->BlueStatsMYQLI;
+
+	    $count = "";
+
         $serverId = $this->serverId;
         $stmt = $mysqli->stmt_init();
         if ($stmt->prepare("SELECT count(*) FROM BlueStats_config WHERE `server_id`=? AND `option`=? AND `plugin`=?")) {
             $stmt->bind_param("iss", $serverId, $option, $plugin);
             $stmt->execute();
-            $stmt->bind_result($count);
+	        $stmt->bind_result($count);
             $stmt->fetch();
             $stmt->close();
         }
