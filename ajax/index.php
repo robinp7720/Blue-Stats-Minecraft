@@ -3,9 +3,7 @@ $appPath = __DIR__ . "/..";
 
 /* Classes */
 require "$appPath/classes/config.class.php";
-require "$appPath/classes/legacyPlugin.class.php";
 require "$appPath/classes/player.class.php";
-require "$appPath/classes/legacymysqlPlugin.class.php";
 require "$appPath/classes/url.class.php";
 require_once "$appPath/classes/plugin/plugin.php";
 require_once "$appPath/classes/table.class.php";

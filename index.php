@@ -53,12 +53,10 @@ $uri = str_replace("?recache", "", $uri);
 
 if ($cache->reCache($uri)) {
     /* Include all classes and api if a new cache has to be created */
-    require_once "$appPath/classes/legacyPlugin.class.php";
     require_once "$appPath/classes/bluestats.class.php";
     require_once "$appPath/classes/module.class.php";
     require_once "$appPath/classes/view.class.php";
     require_once "$appPath/classes/player.class.php";
-    require_once "$appPath/classes/legacymysqlPlugin.class.php";
     require_once "$appPath/classes/url.class.php";
     require_once "$appPath/classes/chart.class.php";
     require_once "$appPath/classes/plugin/plugin.php";
