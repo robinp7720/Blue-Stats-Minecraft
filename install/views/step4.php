@@ -76,7 +76,7 @@ $config->setDefault("homepage", "home");
 /* Enable plugins
 -------------------------------------*/
 
-$plugins = array("themeText", "nameHistory");
+$plugins = [];
 
 // Enable query only if ip and port has been set
 if (function_exists('fsockopen')) {
@@ -85,11 +85,21 @@ if (function_exists('fsockopen')) {
     }
 }
 
-if (isset($_SESSION["lolstats-enable"]) && $_SESSION["lolstats-enable"] === "on") {
-    array_push($plugins, "lolmewnStats");
-}
-if (isset($_SESSION["mcmmo-enable"]) && $_SESSION["mcmmo-enable"] === "on") {
-    array_push($plugins, "mcmmo");
+$files = scandir(dirname(dirname(__dir__)).'/plugins');
+
+// Remove . and .. from array
+array_shift($files);
+array_shift($files);
+
+foreach ($files as $dir) {
+    if (is_dir(dirname(dirname(__dir__)).'/plugins/'.$dir)) {
+        if (isset($_SESSION["$dir-enable"]) && $_SESSION["$dir-enable"] === "on") {
+            array_push($plugins, $dir);
+        }
+        if (!isset($_SESSION["$dir-enable"])) {
+            array_push($plugins, $dir);
+        }
+    }
 }
 
 if ($config->set("plugins", $plugins)) {
@@ -106,22 +116,27 @@ if ($config->set("plugins", $plugins)) {
 /* Set MySQL details
 -------------------------------------*/
 
-if (isset($_SESSION["lolstats-enable"]) && $_SESSION["lolstats-enable"] === "on") {
-    $config->set("MYSQL_host", $_SESSION["lolstats-host"], "lolmewnStats");
-    $config->set("MYSQL_username", $_SESSION["lolstats-username"], "lolmewnStats");
-    $config->set("MYSQL_password", $_SESSION["lolstats-password"], "lolmewnStats");
-    $config->set("MYSQL_database", $_SESSION["lolstats-db"], "lolmewnStats");
-    $config->set("MYSQL_prefix", $_SESSION["lolstats-prefix"], "lolmewnStats");
-    $config->setDefault("base_plugin", "lolmewnStats");
-}
+$files = scandir(dirname(dirname(__dir__)).'/plugins');
 
-if (isset($_SESSION["mcmmo-enable"]) && $_SESSION["mcmmo-enable"] === "on") {
-    $config->set("MYSQL_host", $_SESSION["mcmmo-host"], "mcmmo");
-    $config->set("MYSQL_username", $_SESSION["mcmmo-username"], "mcmmo");
-    $config->set("MYSQL_password", $_SESSION["mcmmo-password"], "mcmmo");
-    $config->set("MYSQL_database", $_SESSION["mcmmo-db"], "mcmmo");
-    $config->set("MYSQL_prefix", $_SESSION["mcmmo-prefix"], "mcmmo");
-    $config->setDefault("base_plugin", "mcmmo");
+// Remove . and .. from array
+array_shift($files);
+array_shift($files);
+
+foreach ($files as $dir) {
+    if (is_dir(dirname(dirname(__dir__)).'/plugins/'.$dir)) {
+        include dirname(dirname(__dir__))."/plugins/$dir/$dir.php";
+        $pluginClass = "\\BlueStats\\Plugin\\$dir";
+        if (!$pluginClass::$isMySQLplugin)
+            break;
+        if (isset($_SESSION["$dir-enable"]) && $_SESSION["$dir-enable"] === "on") {
+            $config->set("MYSQL_host", $_SESSION["$dir-host"], $dir);
+            $config->set("MYSQL_username", $_SESSION["$dir-username"], $dir);
+            $config->set("MYSQL_password", $_SESSION["$dir-password"], $dir);
+            $config->set("MYSQL_database", $_SESSION["$dir-db"], $dir);
+            $config->set("MYSQL_prefix", $_SESSION["$dir-prefix"], $dir);
+            $config->setDefault("base_plugin", $dir);
+        }
+    }
 }
 
 if (function_exists('fsockopen')) {

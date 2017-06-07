@@ -1,5 +1,10 @@
 <?php
 
+namespace BlueStats\API;
+
+use config;
+use mysqli;
+
 require_once "pluginPlayer.php";
 require_once "pluginStats.php";
 
@@ -7,11 +12,13 @@ abstract class plugin
 {
     public $name = 'A plugin';
 
+    public static $isMySQLplugin = true;
+
     public $stats;
     public $player;
 
-    private $mysql;
-    private $config;
+    public $mysql;
+    public $config;
 
     public $database = [
         "prefix" => "statz_",
@@ -27,10 +34,12 @@ abstract class plugin
         "stats" => [
             "arrows_shot" => [
                 "database" => "arrows_shot",
+                "name" => "Arrows shots",
+                "user_identifier" => "user_id", // ID column in the stat column
                 "values" => [
                     [
                         "column" => "value", // column in which the data is stored in the table
-                        "dataType" => "int", // The type of data stored in the column. This can be: time, date, mob, player, world, item_id, item_type, item_name, int
+                        "dataType" => "int", // The type of data stored in the column. This can be: time, date, mob_name, player_name, world, item_id, item_type, item_name, int
                         "aggregate" => true, // If true this column is used as a stat summary
                         "name" => "Value"    // Human readable name of the stat
                     ],
@@ -60,16 +69,18 @@ abstract class plugin
         // Create config object. This is used to retrieve all the config option used throughout the plugin
         $this->config = new config($mysql, $this->name);
 
-        // Connect with database server.
-        $this->mysql = new mysqli(
-            $this->config->get("MYSQL_host"),
-            $this->config->get("MYSQL_username"),
-            $this->config->get("MYSQL_password"),
-            $this->config->get("MYSQL_database")
-        );
+        if ($this::$isMySQLplugin) {
+            // Connect with database server.
+            $this->mysql = new mysqli(
+                $this->config->get("MYSQL_host"),
+                $this->config->get("MYSQL_username"),
+                $this->config->get("MYSQL_password"),
+                $this->config->get("MYSQL_database")
+            );
 
-        $this->player = new pluginPlayer($this->database, $this->mysql);
-        $this->stats = new pluginStats($this->database, $this->mysql);
+            $this->player = new pluginPlayer($this->database, $this->mysql);
+            $this->stats = new pluginStats($this->database, $this->mysql);
+        }
     }
 
     public function install() {

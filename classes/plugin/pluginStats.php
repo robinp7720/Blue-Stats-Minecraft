@@ -6,6 +6,9 @@
  * Date: 4/22/17
  * Time: 12:08 PM
  */
+
+namespace BlueStats\API;
+
 class pluginStats
 {
 
@@ -26,7 +29,7 @@ class pluginStats
     /**
      * @param $player int Player ID, Name or UUID, according to player identification method
      * @param $stat string Stat name
-     * @return int value of selected player stat
+     * @return array all values relating to stat selected from player
      */
     public function player($player, $stat) {
         $mysqli = $this->mysql;
@@ -35,15 +38,13 @@ class pluginStats
         $query = "SELECT ";
 
         foreach ($this->database["stats"][$stat]["values"] as $info) {
-            $query .= "`$info[column]` as `$info[name]`,";
+            $query .= "`$info[column]`,";
         }
 
         // Remove last comma
         $query = substr($query, 0 , -1);
 
-        $query .= " FROM {$this->database["prefix"]}{$this->database["stats"][$stat]["database"]} WHERE {$this->database["index"]["columns"][$this->database['identifier']]} = ?";
-
-        var_dump($query);
+        $query .= " FROM {$this->database["prefix"]}{$this->database["stats"][$stat]["database"]} WHERE {$this->database["stats"][$stat]["user_identifier"]} = ?";
 
         if ($stmt->prepare($query)) {
             $stmt->bind_param("s", $player);
@@ -65,6 +66,34 @@ class pluginStats
     }
 
     public function statList($stat, $limit) {
+        $mysqli = $this->mysql;
+        $stmt = $mysqli->stmt_init();
 
+        $aggregate = "";
+
+        foreach ($this->database["stats"][$stat]["values"] as $info) {
+            if ($info['aggregate'])
+                $aggregate = $info['column'];
+        }
+
+        $query = "SELECT {$this->database["stats"][$stat]["user_identifier"]} as id ,sum($aggregate) as aggregate FROM {$this->database["prefix"]}{$this->database["stats"][$stat]["database"]} GROUP BY {$this->database["stats"][$stat]["user_identifier"]} ORDER BY sum($aggregate) DESC LIMIT ?";
+
+        if ($stmt->prepare($query)) {
+            $stmt->bind_param("i", $limit);
+            $stmt->execute();
+
+            $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+            // If there is an error log it
+            if ($stmt->error && DEBUG)
+                print($stmt->error);
+
+            $stmt->close();
+            return $output;
+        }
+        if ($stmt->error && DEBUG)
+            print($stmt->error);
+
+        return false;
     }
 }

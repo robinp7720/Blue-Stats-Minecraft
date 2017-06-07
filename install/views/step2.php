@@ -47,62 +47,52 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6">
-            <h2>LolmewnStats DataBase</h2>
-            <label for="lolstats-enable">Enable: </label>
-            <input type="checkbox" id="lolstats-enable"
-                   name="lolstats-enable" <?php if (isset($_SESSION["lolstats-enable"]) && $_SESSION["lolstats-enable"] === "on") echo "checked" ?>>
-            <br>
-            <label for="lolstats-host">Host:</label>
-            <input type="text" class="form-control" id="lolstats-host" placeholder="Host" name="lolstats-host"
-                   value="<?php if (isset($_SESSION["lolstats-host"])) echo $_SESSION["lolstats-host"] ?>">
+        <?php
+        $files = scandir(dirname(dirname(__dir__)).'/plugins');
 
-            <label for="lolstats-username">Username:</label>
-            <input type="text" class="form-control" id="lolstats-username" placeholder="Username"
-                   name="lolstats-username"
-                   value="<?php if (isset($_SESSION["lolstats-username"])) echo $_SESSION["lolstats-username"] ?>">
+        // Remove . and .. from array
+        array_shift($files);
+        array_shift($files);
 
-            <label for="lolstats-password">Password:</label>
-            <input type="password" class="form-control" id="lolstats-password" placeholder="Password"
-                   name="lolstats-password" value="">
+        foreach ($files as $dir) {
+            if (is_dir(dirname(dirname(__dir__)).'/plugins/'.$dir)) {
+                include dirname(dirname(__dir__))."/plugins/$dir/$dir.php";
+                $pluginClass = "\\BlueStats\\Plugin\\$dir";
+                if (!$pluginClass::$isMySQLplugin)
+                    break;
+                ?>
+                <div class="col-md-6">
+                    <h2><?=$dir?> DataBase</h2>
+                    <label for="<?=$dir?>-enable">Enable: </label>
+                    <input type="checkbox" id="<?=$dir?>-enable"
+                           name="<?=$dir?>-enable" <?php if (isset($_SESSION["$dir-enable"]) && $_SESSION["$dir-enable"] === "on") echo "checked" ?>>
+                    <br>
+                    <label for="<?=$dir?>-host">Host:</label>
+                    <input type="text" class="form-control" id="<?=$dir?>-host" placeholder="Host" name="<?=$dir?>-host"
+                           value="<?php if (isset($_SESSION["$dir-host"])) echo $_SESSION["$dir-host"] ?>">
 
-            <label for="lolstats-db">Data Base:</label>
-            <input type="text" class="form-control" id="lolstats-db" placeholder="Database name" name="lolstats-db"
-                   value="<?php if (isset($_SESSION["lolstats-db"])) echo $_SESSION["lolstats-db"] ?>">
+                    <label for="<?=$dir?>-username">Username:</label>
+                    <input type="text" class="form-control" id="<?=$dir?>-username" placeholder="Username"
+                           name="<?=$dir?>-username"
+                           value="<?php if (isset($_SESSION["$dir-username"])) echo $_SESSION["$dir-username"] ?>">
 
-            <label for="lolstats-prefix">Table Prefixes:</label>
-            <input type="text" class="form-control" id="lolstats-prefix" placeholder="Table prefixes"
-                   name="lolstats-prefix"
-                   value="<?php if (isset($_SESSION["lolstats-prefix"])) echo $_SESSION["lolstats-prefix"] ?>">
+                    <label for="<?=$dir?>-password">Password:</label>
+                    <input type="password" class="form-control" id="<?=$dir?>-password" placeholder="Password"
+                           name="<?=$dir?>-password" value="">
 
-        </div>
-        <div class="col-md-6">
-            <h2>mcmmo DataBase</h2>
-            <label for="mcmmo-enable">Enable: </label>
-            <input type="checkbox" id="mcmmo-enable"
-                   name="mcmmo-enable" <?php if (isset($_SESSION["mcmmo-enable"]) && $_SESSION["mcmmo-enable"] === "on") echo "checked" ?>>
-            <br>
-            <label for="mcmmo-host">Host:</label>
-            <input type="text" class="form-control" id="mcmmo-host" placeholder="Host" name="mcmmo-host"
-                   value="<?php if (isset($_SESSION["mcmmo-host"])) echo $_SESSION["mcmmo-host"] ?>">
+                    <label for="<?=$dir?>-db">Data Base:</label>
+                    <input type="text" class="form-control" id="<?=$dir?>-db" placeholder="Database name" name="<?=$dir?>-db"
+                           value="<?php if (isset($_SESSION["$dir-db"])) echo $_SESSION["$dir-db"] ?>">
 
-            <label for="mcmmo-username">Username:</label>
-            <input type="text" class="form-control" id="mcmmo-username" placeholder="Username" name="mcmmo-username"
-                   value="<?php if (isset($_SESSION["mcmmo-username"])) echo $_SESSION["mcmmo-username"] ?>">
-
-            <label for="mcmmo-password">Password:</label>
-            <input type="password" class="form-control" id="mcmmo-password" placeholder="Password" name="mcmmo-password"
-                   value="">
-
-            <label for="mcmmo-db">Data Base:</label>
-            <input type="text" class="form-control" id="mcmmo-db" placeholder="Database name" name="mcmmo-db"
-                   value="<?php if (isset($_SESSION["mcmmo-db"])) echo $_SESSION["mcmmo-db"] ?>">
-
-            <label for="mcmmo-prefix">Table Prefixes:</label>
-            <input type="text" class="form-control" id="mcmmo-prefix" placeholder="Table prefixes" name="mcmmo-prefix"
-                   value="<?php if (isset($_SESSION["mcmmo-prefix"])) echo $_SESSION["mcmmo-prefix"] ?>">
-
-        </div>
+                    <label for="<?=$dir?>-prefix">Table Prefixes:</label>
+                    <input type="text" class="form-control" id="<?=$dir?>-prefix" placeholder="Table prefixes"
+                           name="<?=$dir?>-prefix"
+                           value="<?php if (isset($_SESSION["$dir-prefix"])) echo $_SESSION["$dir-prefix"] ?>">
+                </div>
+            <?php
+            }
+        }
+        ?>
     </div>
     <button type="submit" class="btn btn-success pull-right">Submit</button>
 </form>

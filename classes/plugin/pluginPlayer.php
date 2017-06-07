@@ -6,10 +6,15 @@
  * Date: 4/22/17
  * Time: 11:52 AM
  */
+
+namespace BlueStats\API;
+
 class pluginPlayer
 {
 
     public $database; // Loaded from parent plugin class
+
+    /** @var \mysqli $mysqli */
     private $mysql;   // Loaded from parent plugin class
 
     /**
@@ -133,6 +138,111 @@ class pluginPlayer
             $stmt->execute();
             $stmt->bind_result($output);
             $stmt->fetch();
+
+            // If there is an error log it
+            if ($stmt->error && DEBUG)
+                print($stmt->error);
+
+            $stmt->close();
+            return $output;
+        }
+        return false;
+    }
+
+    /**
+     * @param String $name Username of player
+     * @return int User UUID
+     */
+
+    public function getUUIDfromName($name)
+    {
+        $mysqli = $this->mysql;
+        $stmt = $mysqli->stmt_init();
+
+        // Select the id from the player identification table using the name column for identification
+        $query = "SELECT {$this->database["index"]["columns"]["uuid"]} FROM {$this->database["prefix"]}{$this->database["index"]["table"]} WHERE {$this->database["index"]["columns"]["name"]} = ?";
+        if ($stmt->prepare($query)) {
+            $stmt->bind_param("s", $name);
+            $stmt->execute();
+            $stmt->bind_result($output);
+            $stmt->fetch();
+
+            // If there is an error log it
+            if ($stmt->error && DEBUG)
+                print($stmt->error);
+
+            $stmt->close();
+            return $output;
+        }
+        return false;
+    }
+
+    /**
+     * @param String $user name or uuid to search for in the database
+     * @param int $page
+     * @param int $limit
+     * @return array|bool an array of all users found with the search criteria
+     */
+
+
+    public function searchUser($user, $page = 0, $limit = 100)
+    {
+        return $this->searchByName($user, $page, $limit)?: $this->searchByUUID($user, $page, $limit);
+    }
+
+    /**
+     * @param String $name name to search for in the database
+     * @param int $page
+     * @param int $limit
+     * @return array|bool an array of all users found with the search criteria
+     */
+
+    public function searchByName($name, $page = 0, $limit = 100)
+    {
+        $mysqli = $this->mysql;
+        $stmt = $mysqli->stmt_init();
+
+        $name = "%$name%";
+        $start = $page * $limit;
+
+        // Select the id from the player identification table using the uuid column for identification
+        $query = "SELECT {$this->database["index"]["columns"]["id"]} as id, {$this->database["index"]["columns"]["name"]} as name, {$this->database["index"]["columns"]["uuid"]} as uuid FROM {$this->database["prefix"]}{$this->database["index"]["table"]} WHERE {$this->database["index"]["columns"]["name"]} LIKE ? LIMIT ?,?";
+        if ($stmt->prepare($query)) {
+            $stmt->bind_param("sii", $name, $start, $limit);
+            $stmt->execute();
+            $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+            // If there is an error log it
+            if ($stmt->error && DEBUG)
+                print($stmt->error);
+
+            $stmt->close();
+            return $output;
+        }
+        return false;
+    }
+
+    /**
+     * @param String $uuid UUID to search for in the database
+     * @param int $page
+     * @param int $limit
+     * @return array|bool an array of all users found with the search criteria
+     */
+
+    public function searchByUUID($uuid, $page = 0, $limit = 100)
+    {
+        $mysqli = $this->mysql;
+        $stmt = $mysqli->stmt_init();
+
+        $uuid = "%$uuid%";
+        $start = $page * $limit;
+
+        // Select the id from the player identification table using the uuid column for identification
+        $query = "SELECT {$this->database["index"]["columns"]["id"]} as id, {$this->database["index"]["columns"]["name"]} as name, {$this->database["index"]["columns"]["uuid"]} as uuid FROM {$this->database["prefix"]}{$this->database["index"]["table"]} WHERE {$this->database["index"]["columns"]["uuid"]} LIKE ? LIMIT ?,?";
+        if ($stmt->prepare($query)) {
+            $stmt->bind_param("sii", $uuid, $start, $limit);
+            $stmt->execute();
+            $output = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
             // If there is an error log it
             if ($stmt->error && DEBUG)

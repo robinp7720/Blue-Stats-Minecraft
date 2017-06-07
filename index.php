@@ -2,6 +2,13 @@
 
 define('DEBUG', true);
 
+
+// If the config file does not exist assume the installer has not yet been executed and thus show a link to the install page.
+if (!file_exists("./config.json")) {
+	include 'NewInstall.html';
+	die();
+}
+
 // Before allow the page to be rendered, check if the install page is still there. This is because the install script can change configs and be a sever security flaw when still there.
 if (!DEBUG){
     if (file_exists("./install")) {
@@ -18,12 +25,15 @@ if (DEBUG) {
     ini_set("display_errors", 0);
 }
 
+// Make reference of the root path of BlueStats. This is used in other parts of the webapp to get theme files and others.
 $appPath = __DIR__;
 
 /* Classes */
-require "$appPath/classes/config.class.php";
-require "$appPath/classes/cache.class.php";
+require_once "$appPath/classes/config.class.php";
+require_once "$appPath/classes/cache.class.php";
 
+// Load config file. This file stores the BlueStats mysql settings.
+// It is used to establish the connection the to config database.
 $config = json_decode(file_get_contents("config.json"), true);
 
 $mysqli = new mysqli(
@@ -32,6 +42,7 @@ $mysqli = new mysqli(
     $config["mysql"]["password"],
     $config["mysql"]["dbname"]
 );
+
 $cache = new cache($mysqli, $appPath);
 
 // Replace remove ?recache from url
@@ -42,45 +53,35 @@ $uri = str_replace("?recache", "", $uri);
 
 if ($cache->reCache($uri)) {
     /* Include all classes and api if a new cache has to be created */
-    require "$appPath/classes/legacyPlugin.class.php";
-    require "$appPath/classes/bluestats.class.php";
-    require "$appPath/classes/modules.class.php";
-    require "$appPath/classes/view.class.php";
-    require "$appPath/classes/player.class.php";
-    require "$appPath/classes/legacymysqlPlugin.class.php";
-    require "$appPath/classes/url.class.php";
-    require "$appPath/classes/chart.class.php";
-
+    require_once "$appPath/classes/legacyPlugin.class.php";
+    require_once "$appPath/classes/bluestats.class.php";
+    require_once "$appPath/classes/module.class.php";
+    require_once "$appPath/classes/view.class.php";
+    require_once "$appPath/classes/player.class.php";
+    require_once "$appPath/classes/legacymysqlPlugin.class.php";
+    require_once "$appPath/classes/url.class.php";
+    require_once "$appPath/classes/chart.class.php";
+    require_once "$appPath/classes/plugin/plugin.php";
+    require_once "$appPath/classes/table.class.php";
 
     /* Functions */
-    require "$appPath/functions/utils.func.php";
+    require_once "$appPath/functions/utils.func.php";
+    require_once "$appPath/functions/blocks.func.php";
 
+    // Start the BlueStats core
     $BlueStats = new BlueStats($mysqli, $appPath);
 
-    $loadablePlugins = $BlueStats->getPluginList();
-    $plugins = array();
+    $plugins = [];
 
     /* Load all plugins */
-    foreach ($loadablePlugins as $plugin) {
-
+    foreach ($BlueStats->getPluginList() as $plugin) {
         /* Load in core plugin class*/
         /** @noinspection PhpIncludeInspection */
-        include "$appPath/plugins/$plugin/core.php";
-
-        $plugins[$plugin] = new $plugin($mysqli);
-
-        /* Avoid errors on first install */
-        if (isset($plugins[$plugin]->firstInstall)) {
-            if ($plugins[$plugin]->firstInstall === true) {
-                unset($plugins[$plugin]);
-            }
-        }
-
-        // Call plugin load function
-        if (method_exists($plugins[$plugin], "onLoad")) {
-            $plugins[$plugin]->onLoad();
-        }
+        include "$appPath/plugins/$plugin/$plugin.php";
+        $pluginClass = "\\BlueStats\\Plugin\\$plugin";
+        $plugins[$plugin] = new $pluginClass($mysqli);
     }
+
     $BlueStats->loadPlugins($plugins);
 
     $content = $BlueStats->loadPage();

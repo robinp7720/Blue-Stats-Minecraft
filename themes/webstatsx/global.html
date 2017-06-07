@@ -19,14 +19,14 @@
     <script src="//code.jquery.com/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 
-    <title>{{ themeText:text:server-name }}  | {{ title }}</title>
+    <title>{{ server-name }}  | {{ title }}</title>
 </head>
 <body>
 <nav class="navbar navbar-inverse" role="navigation">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">{{ themeText:text:server-name }} </a>
+            <a class="navbar-brand" href="#">{{ server-name }} </a>
         </div>
     </div>
 </nav>
@@ -39,8 +39,6 @@
                     <li class="list-group-item"><a href="{{ url:allPlayers }}">Players</a></li>
                     <li class="list-group-item"><a href="{{ url:server }}">Server</a></li>
                     <li class="list-group-item"><a href="{{ url:map }}">Map</a></li>
-                    <br>
-                    {{ query:onlinePlayers }}
                 </ul>
             </div>
             <div class="col-md-10 col-sm-9">
@@ -65,11 +63,13 @@
                     search: $('#search').val()
                 }
             }).success(function (data) {
+                console.log(data);
                 var url = data.info.url;
                 $('.players').html('');
                 for (var i in data.data) {
                     if (data.data.hasOwnProperty(i)) {
-                        $('.players').append('<div class="col-md-3 col-sm-6"><div class="panel panel-default"><div class="panel-body"><a href="' + url.replace('{UUID}', data.data[i][0]).replace('{NAME}', data.data[i][1]) + '"><img src="//cravatar.eu/avatar/' + data.data[i][0] + '"> ' + data.data[i][1] + '</a></div></div></div>');
+                        console.log(data.data[i]);
+                        $('.players').append('<div class="col-md-3 col-sm-6"><div class="panel panel-default"><div class="panel-body"><a href="' + url.replace('{UUID}', data.data[i].uuid).replace('{NAME}', data.data[i].name) + '"><img src="//cravatar.eu/avatar/' + data.data[i].uuid + '"> ' + data.data[i].name + '</a></div></div></div>');
                     }
                 }
             });

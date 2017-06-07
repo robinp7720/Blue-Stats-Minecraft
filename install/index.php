@@ -1,7 +1,7 @@
 <?php
 session_start();
-error_reporting(0);
-ini_set("display_errors", 'Off');
+
+require_once "../classes/plugin/plugin.php";
 
 $step = isset($_GET['step'])? $_GET['step'] : 1;
 ?>
@@ -14,9 +14,20 @@ $step = isset($_GET['step'])? $_GET['step'] : 1;
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
 
     <style>
-        body {
+        html, body {
+            width: 100%;
+            height: 100%;
             background: #eee;
+            margin: 0;
         }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
 
         .install {
             font-family: 'Open Sans', sans-serif;

@@ -17,7 +17,7 @@
     <script src="//code.jquery.com/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 
-    <title>{{ themeText:text:server-name }} | {{ title }}</title>
+    <title>{{ server-name }} | {{ title }}</title>
 </head>
 <body>
 <nav class="navbar navbar-inverse" role="navigation">
@@ -30,7 +30,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">{{ themeText:text:server-name }}</a>
+            <a class="navbar-brand" href="#">{{ server-name }}</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -65,11 +65,13 @@
                     search: $('#search').val()
                 }
             }).success(function (data) {
+                console.log(data);
                 var url = data.info.url;
                 $('.players').html('');
                 for (var i in data.data) {
                     if (data.data.hasOwnProperty(i)) {
-                        $('.players').append('<div class="col-md-3 col-sm-6"><div class="panel panel-default"><div class="panel-body"><a href="' + url.replace('{UUID}', data.data[i][0]).replace('{NAME}', data.data[i][1]) + '"><img src="//cravatar.eu/avatar/' + data.data[i][0] + '"> ' + data.data[i][1] + '</a></div></div></div>');
+                        console.log(data.data[i]);
+                        $('.players').append('<div class="col-md-3 col-sm-6"><div class="panel panel-default"><div class="panel-body"><a href="' + url.replace('{UUID}', data.data[i].uuid).replace('{NAME}', data.data[i].name) + '"><img src="//cravatar.eu/avatar/' + data.data[i].uuid + '"> ' + data.data[i].name + '</a></div></div></div>');
                     }
                 }
             });

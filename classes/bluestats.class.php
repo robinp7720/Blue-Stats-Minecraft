@@ -11,6 +11,7 @@ class BlueStats
     public $config;
     public $mysqli;
     public $basePlugin;
+    public $url;
 
     public $request = [];
 
@@ -26,6 +27,8 @@ class BlueStats
         $this->page = isset($this->request["get"]["page"]) ? $this->request["get"]["page"] : $this->config->get("homepage");
 
         $this->appPath = $appPath;
+
+        $this->url = new url($this->mysqli);
     }
 
     private function setUpGlobals()
@@ -46,10 +49,12 @@ class BlueStats
     public function loadPlugins(array $plugins)
     {
         $this->plugins = $plugins;
-        if (isset($this->plugins[$this->config->get("base_plugin")])) {
-            $this->basePlugin = $this->plugins[$this->config->get("base_plugin")];
+        $baseplugin = $this->config->get("base_plugin");
+
+        if (isset($this->plugins[$baseplugin])) {
+            $this->basePlugin = $this->plugins[$baseplugin];
         } else {
-            echo "Base plugin does not exist: " . $this->config->get("base_plugin");
+            echo "Base plugin does not exist: $baseplugin";
             echo "<br>Please install this plugin or change the base plugin";
         }
     }

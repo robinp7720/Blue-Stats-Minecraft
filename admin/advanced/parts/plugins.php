@@ -28,28 +28,26 @@
     }
     ?>
 </div>
-<?php if (!empty($plugin)): ?>
-    <h3>Modules</h3>
-    <div class="list-group">
-        <?php
+<h3>Modules</h3>
+<div class="list-group">
+    <?php
 
-        $stmt = $mysqli->stmt_init();
-        if ($stmt->prepare("SELECT plugin FROM BlueStats_config WHERE plugin like ? GROUP BY plugin")) {
-            $search = "MODULE__" . $plugin . "___%";
-            $stmt->bind_param("s", $search);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $output = array();
-            while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-                ?>
-                <a href="?plugin=<?= urlencode($row["plugin"]) ?>"
-                   class="list-group-item <?php if ($_GET["plugin"] === $row["plugin"]) echo 'active' ?>">
-                    <?= substr($row["plugin"], strlen("MODULE__" . $plugin . "___")) ?>
-                </a>
-                <?php
-            }
-            $stmt->close();
+    $stmt = $mysqli->stmt_init();
+    if ($stmt->prepare("SELECT plugin FROM BlueStats_config WHERE plugin like ? GROUP BY plugin")) {
+        $search = "MODULE__%";
+        $stmt->bind_param("s", $search);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $output = array();
+        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+            ?>
+            <a href="?plugin=<?= urlencode($row["plugin"]) ?>"
+               class="list-group-item <?php if ($_GET["plugin"] === $row["plugin"]) echo 'active' ?>">
+                <?= substr($row["plugin"], strlen("MODULE__")) ?>
+            </a>
+            <?php
         }
-        ?>
-    </div>
-<?php endif ?>
+        $stmt->close();
+    }
+    ?>
+</div>
