@@ -63,14 +63,22 @@ class view
         if (isset($player)) {
             $string = str_replace('{{ playername }}', $player->name, $string);
             $string = str_replace('{{ playeruuid }}', $player->uuid, $string);
-            if (strpos($string, '{{ playerstats }}') !== false) {
-                $string = str_replace('{{ playerstats }}', $player->renderPlayerAllStats(), $string);
-            }
         } else {
             // Remove replacement strings if not a player page
             $string = str_replace('{{ playername }}', '', $string);
             $string = str_replace('{{ playeruuid }}', '', $string);
         }
+
+	    /* Modules with arguments */
+	    preg_match_all('/{{ module:([^ ]+):([^ ]+) }}/', $string, $matches);
+
+	    foreach ($matches[0] as $key => $replaceStr) {
+		    $module = new module($this->bluestats, $matches[1][$key]);
+		    $module->setArgs([$matches[2][$key]]);
+		    if (isset($player))
+			    $module->setPlayer($player);
+		    $string = str_replace($replaceStr, $module->render(), $string);
+	    }
 
         /* Modules */
         preg_match_all('/{{ module:([^ ]+) }}/', $string, $matches);

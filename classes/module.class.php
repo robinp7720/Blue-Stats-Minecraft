@@ -9,11 +9,12 @@
 class module
 {
     /** @var BlueStats $bluestats */
-    private $bluestats;
-    private $plugins = [];
-    private $name;
-    private $config;
-    private $player;
+    public $bluestats;
+    public $plugins = [];
+    public $name;
+    public $config;
+    public $player;
+    public $args;
 
     public function __construct($bluestats, $name)
     {
@@ -46,5 +47,13 @@ class module
     {
         $this->player = $player;
     }
+
+	/**
+	 * @param mixed $args
+	 */
+	public function setArgs($args)
+	{
+		$this->args = $args;
+	}
 
 }
