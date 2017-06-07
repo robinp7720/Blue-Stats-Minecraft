@@ -1,6 +1,13 @@
 <?php
 
-define('DEBUG', true);
+define('DEBUG', false);
+
+
+// If the config file does not exist assume the installer has not yet been executed and thus show a link to the install page.
+if (!file_exists("./config.json")) {
+	include 'NewInstall.html';
+	die();
+}
 
 // Before allow the page to be rendered, check if the install page is still there. This is because the install script can change configs and be a sever security flaw when still there.
 if (!DEBUG){
