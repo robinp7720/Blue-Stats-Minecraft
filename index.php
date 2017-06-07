@@ -31,6 +31,8 @@ $appPath = __DIR__;
 require "$appPath/classes/config.class.php";
 require "$appPath/classes/cache.class.php";
 
+// Load config file. This file stores the BlueStats mysql settings.
+// It is used to establish the connection the to config database.
 $config = json_decode(file_get_contents("config.json"), true);
 
 $mysqli = new mysqli(
@@ -49,36 +51,31 @@ $uri = str_replace("?recache", "", $uri);
 
 if ($cache->reCache($uri)) {
     /* Include all classes and api if a new cache has to be created */
-    require "$appPath/classes/legacyPlugin.class.php";
-    require "$appPath/classes/bluestats.class.php";
-    require "$appPath/classes/module.class.php";
-    require "$appPath/classes/view.class.php";
-    require "$appPath/classes/player.class.php";
-    require "$appPath/classes/legacymysqlPlugin.class.php";
-    require "$appPath/classes/url.class.php";
-    require "$appPath/classes/chart.class.php";
+    require_once "$appPath/classes/legacyPlugin.class.php";
+    require_once "$appPath/classes/bluestats.class.php";
+    require_once "$appPath/classes/module.class.php";
+    require_once "$appPath/classes/view.class.php";
+    require_once "$appPath/classes/player.class.php";
+    require_once "$appPath/classes/legacymysqlPlugin.class.php";
+    require_once "$appPath/classes/url.class.php";
+    require_once "$appPath/classes/chart.class.php";
     require_once "$appPath/classes/plugin/plugin.php";
     require_once "$appPath/classes/table.class.php";
 
-
     /* Functions */
-    require "$appPath/functions/utils.func.php";
-    require "$appPath/functions/blocks.func.php";
+    require_once "$appPath/functions/utils.func.php";
+    require_once "$appPath/functions/blocks.func.php";
 
     $BlueStats = new BlueStats($mysqli, $appPath);
 
-    $loadablePlugins = $BlueStats->getPluginList();
-    $plugins = array();
+    $plugins = [];
 
     /* Load all plugins */
-    foreach ($loadablePlugins as $plugin) {
-
+    foreach ($BlueStats->getPluginList() as $plugin) {
         /* Load in core plugin class*/
         /** @noinspection PhpIncludeInspection */
         include "$appPath/plugins/$plugin/$plugin.php";
-
         $pluginClass = "\\BlueStats\\Plugin\\$plugin";
-
         $plugins[$plugin] = new $pluginClass($mysqli);
     }
 
