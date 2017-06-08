@@ -1,16 +1,6 @@
 <?php
+/** @var module $this */
 $blocks_names = json_decode(file_get_contents($this->bluestats->appPath."/items.json"),true);
-
-$output = "";
-
-$this->config->setDefault("charts", "false");
-$this->config->setDefault("statsPerGraph", 5);
-
-if ($this->config->get("charts") === "true") {
-	$this->renderChart = true;
-}
-
-$this->maxPerChart = $this->config->get("statsPerGraph");
 
 $render = function ($module, $plugin, $blocks_names) {
 	$output = "";
@@ -19,7 +9,7 @@ $render = function ($module, $plugin, $blocks_names) {
 		$output .= "<h4>$statName</h4>";
 		$table = New Table();
 		// Loop through all values in database
-		$data = $plugin->stats->player($plugin->player->getUUID($plugin->player->getID($module->player->uuid)), $stat);
+		$data = $plugin->stats->player($module->player, $stat);
 		foreach ($data as $key => $entry) {
 			$values = [];
 			$count = 0;
@@ -31,18 +21,13 @@ $render = function ($module, $plugin, $blocks_names) {
 						$itemID = $value;
 						break;
 					case "item_type":
-						$name = getBlockNameFromID($itemID, $value, $blocks_names);
-						if (!$name)
-							$name = getBlockNameFromID($itemID, 0, $blocks_names);
-						if ($name)
-							$name .= " ($itemID-$value)";
-						if (!$name)
-							$name = $itemID . "-". $value;
+						// If an item type value is recieved assume the item id has already been recieved. Thus, also print the name of the bock into the table
+						$name = getBlockNameFromID($itemID, $value, $blocks_names)?: getBlockNameFromID($itemID, 0, $blocks_names)?: $itemID . '-' . $value;
 						array_push($values, $name);
 						break;
 					case "player_name":
 						if ($module->bluestats->url->useUUID) {
-							$uuid = $module->basePlugin->player->getUUIDfromName($value);
+							$uuid = $module->bluestats->basePlugin->player->getUUIDfromName($value);
 							$value = "<a href=\"" . $module->bluestats->url->player($uuid) . "\"><img src=\"https://minotar.net/helm/{$value}/32.png\" alt=\"\"> {$value}</a>";
 						} else {
 							$value = "<a href=\"" . $module->bluestats->url->player($value) . "\"><img src=\"https://minotar.net/helm/{$value}/32.png\" alt=\"\"> {$value}</a>";
@@ -80,11 +65,12 @@ $render = function ($module, $plugin, $blocks_names) {
 if (isset($this->args[0]))
 	return print($render($this, $this->bluestats->plugins[$this->args[0]], $blocks_names));
 
+$output = "";
+
 /** @var \BlueStats\API\plugin $plugin */
 foreach ($this->bluestats->plugins as $plugin) {
-	if (!$plugin::$isMySQLplugin)
-		break;
-	$output .= "<h3>$plugin->name</h3>" . $render($this, $plugin, $blocks_names);
+	if ($plugin::$isMySQLplugin)
+		$output .= "<h3>$plugin->name</h3>" . $render($this, $plugin, $blocks_names);
 }
 
 echo $output;
