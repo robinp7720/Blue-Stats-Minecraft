@@ -15,6 +15,9 @@ class pluginStats
     public $database; // Loaded from parent plugin class
     private $mysql;   // Loaded from parent plugin class
 
+	/** @var pluginPlayer $pluginPlayer */
+	private $pluginPlayer;
+
     /**
      * pluginStats constructor.
      * @param $database array Database layout to identify players in the database
@@ -27,13 +30,24 @@ class pluginStats
     }
 
     /**
-     * @param $player int Player ID, Name or UUID, according to player identification method
+     * @param $player int|player Player ID, Name or UUID, according to player identification method
      * @param $stat string Stat name
      * @return array all values relating to stat selected from player
      */
     public function player($player, $stat) {
         $mysqli = $this->mysql;
         $stmt = $mysqli->stmt_init();
+
+        // If the player argument is of the player class, get the uuid, name or id depending on identification method
+	    // set in the database layout scheme
+        if (get_class($player) == "player") {
+	        if ($this->database['identifier'] == 'id')
+		        $player = $this->pluginPlayer->getID($player->uuid);
+	        elseif ($this->database['identifier'] == 'uuid')
+		        $player = $player->uuid;
+	        elseif ($this->database['identifier'] == 'name')
+		        $player = $player->name;
+        }
 
         $query = "SELECT ";
 
@@ -96,4 +110,12 @@ class pluginStats
 
         return false;
     }
+
+	/**
+	 * @param pluginPlayer $pluginPlayer
+	 */
+	public function setPluginPlayer($pluginPlayer)
+	{
+		$this->pluginPlayer = $pluginPlayer;
+	}
 }

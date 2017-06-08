@@ -80,6 +80,7 @@ abstract class plugin
 
             $this->player = new pluginPlayer($this->database, $this->mysql);
             $this->stats = new pluginStats($this->database, $this->mysql);
+            $this->stats->setPluginPlayer($this->player);
         }
     }
 
