@@ -48,20 +48,11 @@ class cache
                                 {
                                         return true;
                                 }
-                                else
-                                {
-                                        return false;
-                                }
-                        }
-                        else
-                        {
-                                return true;
+                                return false;
                         }
                 }
-                else
-                {
-                        return true;
-                }
+                // If cache is disable, force a new page to be generate; ignore the cache completely
+                return true;
         }
 
         public function getCache ($name)
