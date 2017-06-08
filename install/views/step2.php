@@ -47,56 +47,54 @@
     </div>
 
     <div class="row">
-            <?php
-            $files = scandir(dirname(dirname(__dir__)) . '/plugins');
+        <?php
+        $files = scandir(dirname(dirname(__dir__)) . '/plugins');
 
-            // Remove . and .. from array
-            array_shift($files);
-            array_shift($files);
+        // Remove . and .. from array
+        array_shift($files);
+        array_shift($files);
 
-            foreach ($files as $dir)
-            {
-                    if (is_dir(dirname(dirname(__dir__)) . '/plugins/' . $dir))
-                    {
-                            include dirname(dirname(__dir__)) . "/plugins/$dir/$dir.php";
-                            $pluginClass = "\\BlueStats\\Plugin\\$dir";
-                            if (!$pluginClass::$isMySQLplugin)
-                                    break;
-                            ?>
-                        <div class="col-md-6">
-                            <h2><?= $dir ?> DataBase</h2>
-                            <label for="<?= $dir ?>-enable">Enable: </label>
-                            <input type="checkbox" id="<?= $dir ?>-enable"
-                                   name="<?= $dir ?>-enable" <?php if (isset($_SESSION["$dir-enable"]) && $_SESSION["$dir-enable"] === "on") echo "checked" ?>>
-                            <br>
-                            <label for="<?= $dir ?>-host">Host:</label>
-                            <input type="text" class="form-control" id="<?= $dir ?>-host" placeholder="Host"
-                                   name="<?= $dir ?>-host"
-                                   value="<?php if (isset($_SESSION["$dir-host"])) echo $_SESSION["$dir-host"] ?>">
+        foreach ($files as $dir) {
+            if (is_dir(dirname(dirname(__dir__)) . '/plugins/' . $dir)) {
+                include dirname(dirname(__dir__)) . "/plugins/$dir/$dir.php";
+                $pluginClass = "\\BlueStats\\Plugin\\$dir";
+                if (!$pluginClass::$isMySQLplugin)
+                    break;
+                ?>
+                <div class="col-md-6">
+                    <h2><?= $dir ?> DataBase</h2>
+                    <label for="<?= $dir ?>-enable">Enable: </label>
+                    <input type="checkbox" id="<?= $dir ?>-enable"
+                           name="<?= $dir ?>-enable" <?php if (isset($_SESSION["$dir-enable"]) && $_SESSION["$dir-enable"] === "on") echo "checked" ?>>
+                    <br>
+                    <label for="<?= $dir ?>-host">Host:</label>
+                    <input type="text" class="form-control" id="<?= $dir ?>-host" placeholder="Host"
+                           name="<?= $dir ?>-host"
+                           value="<?php if (isset($_SESSION["$dir-host"])) echo $_SESSION["$dir-host"] ?>">
 
-                            <label for="<?= $dir ?>-username">Username:</label>
-                            <input type="text" class="form-control" id="<?= $dir ?>-username" placeholder="Username"
-                                   name="<?= $dir ?>-username"
-                                   value="<?php if (isset($_SESSION["$dir-username"])) echo $_SESSION["$dir-username"] ?>">
+                    <label for="<?= $dir ?>-username">Username:</label>
+                    <input type="text" class="form-control" id="<?= $dir ?>-username" placeholder="Username"
+                           name="<?= $dir ?>-username"
+                           value="<?php if (isset($_SESSION["$dir-username"])) echo $_SESSION["$dir-username"] ?>">
 
-                            <label for="<?= $dir ?>-password">Password:</label>
-                            <input type="password" class="form-control" id="<?= $dir ?>-password" placeholder="Password"
-                                   name="<?= $dir ?>-password" value="">
+                    <label for="<?= $dir ?>-password">Password:</label>
+                    <input type="password" class="form-control" id="<?= $dir ?>-password" placeholder="Password"
+                           name="<?= $dir ?>-password" value="">
 
-                            <label for="<?= $dir ?>-db">Data Base:</label>
-                            <input type="text" class="form-control" id="<?= $dir ?>-db" placeholder="Database name"
-                                   name="<?= $dir ?>-db"
-                                   value="<?php if (isset($_SESSION["$dir-db"])) echo $_SESSION["$dir-db"] ?>">
+                    <label for="<?= $dir ?>-db">Data Base:</label>
+                    <input type="text" class="form-control" id="<?= $dir ?>-db" placeholder="Database name"
+                           name="<?= $dir ?>-db"
+                           value="<?php if (isset($_SESSION["$dir-db"])) echo $_SESSION["$dir-db"] ?>">
 
-                            <label for="<?= $dir ?>-prefix">Table Prefixes:</label>
-                            <input type="text" class="form-control" id="<?= $dir ?>-prefix" placeholder="Table prefixes"
-                                   name="<?= $dir ?>-prefix"
-                                   value="<?php if (isset($_SESSION["$dir-prefix"])) echo $_SESSION["$dir-prefix"] ?>">
-                        </div>
-                            <?php
-                    }
+                    <label for="<?= $dir ?>-prefix">Table Prefixes:</label>
+                    <input type="text" class="form-control" id="<?= $dir ?>-prefix" placeholder="Table prefixes"
+                           name="<?= $dir ?>-prefix"
+                           value="<?php if (isset($_SESSION["$dir-prefix"])) echo $_SESSION["$dir-prefix"] ?>">
+                </div>
+                <?php
             }
-            ?>
+        }
+        ?>
     </div>
     <button type="submit" class="btn btn-success pull-right">Submit</button>
 </form>
