@@ -53,6 +53,7 @@ class chart
             return $this->renderBar();
         if ($this->type == 'pie')
             return $this->renderPie();
+	return false;
     }
 
     public function renderBar() {

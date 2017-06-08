@@ -189,4 +189,3 @@ class Table
         return $this->biggestRow;
     }
 }
-?>
