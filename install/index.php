@@ -3,7 +3,7 @@ session_start();
 
 require_once "../classes/plugin/plugin.php";
 
-$step = isset($_GET['step'])? $_GET['step'] : 1;
+$step = isset($_GET['step']) ? $_GET['step'] : 1;
 ?>
 <!DOCTYPE html>
 <html>
@@ -26,8 +26,6 @@ $step = isset($_GET['step'])? $_GET['step'] : 1;
             align-items: center;
             justify-content: center;
         }
-
-
 
         .install {
             font-family: 'Open Sans', sans-serif;
@@ -125,20 +123,23 @@ $step = isset($_GET['step'])? $_GET['step'] : 1;
             <div class="step <?php if ($step == 4) echo "active"; ?>">Install</div>
         </div>
         <div class="install-container" style="overflow: hidden">
-            <?php
-            if (!isset($_GET["step"])) {
-                include 'views/step1.php';
-            } else {
-                if ($step == 1)
-                    include 'views/step1.php';
-                if ($step == 2)
-                    include 'views/step2.php';
-                if ($step == 3)
-                    include 'views/step3.php';
-                if ($step == 4)
-                    include 'views/step4.php';
-            }
-            ?>
+                <?php
+                if (!isset($_GET["step"]))
+                {
+                        include 'views/step1.php';
+                }
+                else
+                {
+                        if ($step == 1)
+                                include 'views/step1.php';
+                        if ($step == 2)
+                                include 'views/step2.php';
+                        if ($step == 3)
+                                include 'views/step3.php';
+                        if ($step == 4)
+                                include 'views/step4.php';
+                }
+                ?>
         </div>
     </div>
 </div>

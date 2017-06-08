@@ -32,20 +32,21 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3">
-            <?php
-            include "parts/plugins.php";
-            ?>
+                <?php
+                include "parts/plugins.php";
+                ?>
         </div>
         <div class="col-md-9">
-            <?php
-            if (isset($message)) {
-                echo '<div class="alert alert-info" role="alert">' . $message . '</div>';
-            }
-            ?>
-            <?php
-            /** @noinspection PhpIncludeInspection */
-            include "parts/values.php";
-            ?>
+                <?php
+                if (isset($message))
+                {
+                        echo '<div class="alert alert-info" role="alert">' . $message . '</div>';
+                }
+                ?>
+                <?php
+                /** @noinspection PhpIncludeInspection */
+                include "parts/values.php";
+                ?>
         </div>
     </div>
 </div>

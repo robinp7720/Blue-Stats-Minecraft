@@ -58,7 +58,6 @@
     $(function () {
         /* AJAX player list */
         var getPlayers = function (page) {
-            console.log($('#search').val());
             $.ajax('{{ ajax }}?call=allPlayers', {
                 data: {
                     page: page,

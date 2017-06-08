@@ -1,17 +1,17 @@
 <?php
 session_start();
 if (!file_exists("../config.json"))
-    die("Please go to /install first");
+        die("Please go to /install first");
 
 require "../classes/config.class.php";
 
 $dbConf = json_decode(file_get_contents("../config.json"), true);
 
 $mysqli = new mysqli(
-    $dbConf["mysql"]["host"],
-    $dbConf["mysql"]["username"],
-    $dbConf["mysql"]["password"],
-    $dbConf["mysql"]["dbname"]
+        $dbConf["mysql"]["host"],
+        $dbConf["mysql"]["username"],
+        $dbConf["mysql"]["password"],
+        $dbConf["mysql"]["dbname"]
 );
 
 $config = new config($mysqli, "BlueStatsAdmin");
@@ -19,12 +19,15 @@ $config = new config($mysqli, "BlueStatsAdmin");
 $config->setDefault('username', 'admin');
 $config->setDefault('password', 'admin');
 
-if ((@$_POST["username"] != $config->get("username") || @$_POST["password"] != $config->get("password")) && (@$_SESSION["auth"] === false || !isset($_SESSION["auth"]))) {
+if ((@$_POST["username"] != $config->get("username") || @$_POST["password"] != $config->get("password")) && (@$_SESSION["auth"] === false || !isset($_SESSION["auth"])))
+{
 
-} else {
-    $_SESSION["auth"] = true;
-    header('location: index.php');
-    die();
+}
+else
+{
+        $_SESSION["auth"] = true;
+        header('location: index.php');
+        die();
 }
 ?>
 

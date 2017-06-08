@@ -9,10 +9,10 @@ require_once "../classes/config.class.php";
 $config = json_decode(file_get_contents("../config.json"), true);
 
 $mysqli = new mysqli(
-    $config["mysql"]["host"],
-    $config["mysql"]["username"],
-    $config["mysql"]["password"],
-    $config["mysql"]["dbname"]
+        $config["mysql"]["host"],
+        $config["mysql"]["username"],
+        $config["mysql"]["password"],
+        $config["mysql"]["dbname"]
 );
 
 $plugin = new \BlueStats\Plugin\McMMO($mysqli);
@@ -23,7 +23,7 @@ echo $plugin->player->getUUID($plugin->player->getID("2Low")) . PHP_EOL;
 echo $plugin->player->getName($plugin->player->getID("206d307c-ef43-45b0-aa77-3511e13df2f1")) . PHP_EOL;
 
 foreach ($plugin->database['stats'] as $stat => $info)
-    var_dump($plugin->stats->player($plugin->player->getUUID($plugin->player->getID("206d307c-ef43-45b0-aa77-3511e13df2f1")),$stat));
+        var_dump($plugin->stats->player($plugin->player->getUUID($plugin->player->getID("206d307c-ef43-45b0-aa77-3511e13df2f1")), $stat));
 
 foreach ($plugin->database['stats'] as $stat => $info)
-    var_dump($plugin->stats->statList($stat, 10));
+        var_dump($plugin->stats->statList($stat, 10));
