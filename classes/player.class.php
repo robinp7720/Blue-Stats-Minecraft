@@ -20,13 +20,13 @@ class player {
         $this->config = new config($this->mysqli, "Player");
 
         $this->basePlugin = $this->bluestats->basePlugin;
-        $this->name       = $this->basePlugin->player->getName($this->basePlugin->player->getID($player));
+        $this->name       = $this->basePlugin->player->getNamefromID($this->basePlugin->player->getID($player));
         if (!empty($this->name)) {
             $this->uuid  = $player;
             $this->exist = TRUE;
         }
         else {
-            $this->uuid = $this->basePlugin->player->getUUID($this->basePlugin->player->getID($player));
+            $this->uuid = $this->basePlugin->player->getUUIDfromID($this->basePlugin->player->getID($player));
             if (!empty($this->uuid)) {
                 $this->name  = $player;
                 $this->exist = TRUE;

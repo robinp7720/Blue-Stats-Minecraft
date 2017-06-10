@@ -30,13 +30,42 @@ class pluginPlayer {
     }
 
     /**
+     * @param String $user UUID or username of player
+     *
+     * @return int Player ID
+     */
+    public function getID ($user) {
+        return $this->getIDfromUUID($user) ?: $this->getIDfromName($user);
+    }
+
+    /**
+     * @param String $user UUID or ID of player
+     *
+     * @return string Player name
+     */
+    public function getName ($user) {
+        if (is_int($user)) return $this->getNamefromID($user);
+        return $this->getNamefromUUID($user) ?: $this->getNamefromID($user);
+    }
+
+    /**
+     * @param String $user Name or ID of player
+     *
+     * @return string Player UUID
+     */
+    public function getUUID ($user) {
+        if (is_int($user)) return $this->getUUIDfromID($user);
+        return $this->getUUIDfromName($user) ?: $this->getUUIDfromID($user);
+    }
+
+    /**
      * This function uses the user id to get the username
      *
      * @param int $id ID of user as defined by plugin
      *
      * @return string Username of player
      */
-    public function getName ($id) {
+    public function getNamefromID ($id) {
         $mysqli = $this->mysql;
         $stmt   = $mysqli->stmt_init();
 
@@ -67,7 +96,7 @@ class pluginPlayer {
      *
      * @return string UUID of player
      */
-    public function getUUID ($id) {
+    public function getUUIDfromID ($id) {
         $mysqli = $this->mysql;
         $stmt   = $mysqli->stmt_init();
 
@@ -89,14 +118,6 @@ class pluginPlayer {
         }
 
         return FALSE;
-    }
-
-    /*
-     * @param String $user UUID or username of player
-     */
-
-    public function getID ($user) {
-        return $this->getIDfromUUID($user) ?: $this->getIDfromName($user);
     }
 
     /**

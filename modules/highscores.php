@@ -16,11 +16,11 @@ foreach ($this->bluestats->plugins as $plugin) {
 
         foreach ($plugin->stats->statList($stat, 10, $options) as $row) {
             if ($plugin->database['identifier'] == "id") {
-                $username = $plugin->player->getName($row['id']);
-                $uuid     = $plugin->player->getUUID($row['id']);
+                $username = $plugin->player->getNamefromID($row['id']);
+                $uuid     = $plugin->player->getUUIDfromID($row['id']);
             }
             else {
-                $username = $plugin->player->getName($plugin->player->getID($row['id']));
+                $username = $plugin->player->getNamefromID($plugin->player->getID($row['id']));
                 $uuid     = $row['id'];
             }
             if ($this->bluestats->url->useUUID) {

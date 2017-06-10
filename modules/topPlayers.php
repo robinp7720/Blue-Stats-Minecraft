@@ -51,11 +51,11 @@ $stats   = $this->config->get("stats");
             $display = $data[0]["aggregate"];
 
             if ($plugin->database['identifier'] == "id") {
-                $username = $plugin->player->getName($data[0]['id']);
-                $uuid     = $plugin->player->getUUID($data[0]['id']);
+                $username = $plugin->player->getNamefromID($data[0]['id']);
+                $uuid     = $plugin->player->getUUIDfromID($data[0]['id']);
             }
             else {
-                $username = $plugin->player->getName($plugin->player->getID($data[0]['id']));
+                $username = $plugin->player->getNamefromID($plugin->player->getID($data[0]['id']));
                 $uuid     = $data[0]['id'];
             }
 
