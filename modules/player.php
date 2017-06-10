@@ -35,6 +35,17 @@ $render = function ($module, $plugin, $blocks_names) {
                         }
                         array_push($values, $value);
                         break;
+                    case "player_uuid":
+                        $uuid  = $value;
+                        $name = $module->bluestats->basePlugin->player->getNamefromUUID($value);
+                        if ($module->bluestats->url->useUUID) {
+                            $value = "<a href=\"" . $module->bluestats->url->player($uuid) . "\"><img src=\"https://minotar.net/helm/{$name}/32.png\" alt=\"\"> {$name}</a>";
+                        }
+                        else {
+                            $value = "<a href=\"" . $module->bluestats->url->player($value) . "\"><img src=\"https://minotar.net/helm/{$name}/32.png\" alt=\"\"> {$name}</a>";
+                        }
+                        array_push($values, $value);
+                        break;
                     default:
                         array_push($values, $value);
                 }
