@@ -190,6 +190,31 @@ class Statz extends plugin {
                     ],
                 ],
             ],
+            "distance_travelled"          => [
+                "database"        => "distance_travelled",
+                "name"            => "Distance traversed",
+                "user_identifier" => "uuid",
+                "values"          => [
+                    [
+                        "column"    => "value", // column in which the data is stored in the table
+                        "dataType"  => "int", // The type of data stored in the column. This can be: time, date, mob, player, world, item_id, item_type, item_name, int
+                        "aggregate" => TRUE, // If true this column is used as a stat summary
+                        "name"      => "Count"    // Human readable name of the stat
+                    ],
+                    [
+                        "column"    => "world",
+                        "dataType"  => "world",
+                        "aggregate" => FALSE,
+                        "name"      => "World",
+                    ],
+                    [
+                        "column"    => "moveType",
+                        "dataType"  => "move_type",
+                        "aggregate" => FALSE,
+                        "name"      => "Movement Type",
+                    ],
+                ],
+            ],
             "eggs_thrown"     => [
                 "database"        => "eggs_thrown",
                 "name"            => "Eggs thrown",
