@@ -75,6 +75,9 @@ abstract class plugin {
                 $this->config->get("MYSQL_database")
             );
 
+            // Set table prefix
+            $this->database['prefix'] = $this->config->get("MYSQL_database");
+
             $this->player = new pluginPlayer($this->database, $this->mysql);
             $this->stats  = new pluginStats($this->database, $this->mysql);
             $this->stats->setPluginPlayer($this->player);
