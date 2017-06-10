@@ -17,4 +17,6 @@ if (isset($_GET['search'])) {
     $search = $_GET['search'];
 }
 
-$output['data'] = $plugin->player->searchUser($search, $page, 10);
+$config->setDefault("amount", 20, "allPlayers");
+
+$output['data'] = $plugin->player->searchUser($search, $page, $config->get("amount","allPlayers"));
