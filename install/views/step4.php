@@ -98,9 +98,6 @@ foreach ($files as $dir) {
         if (isset($_SESSION["$dir-enable"]) && $_SESSION["$dir-enable"] === "on") {
             array_push($plugins, $dir);
         }
-        if (!isset($_SESSION["$dir-enable"])) {
-            array_push($plugins, $dir);
-        }
     }
 }
 
