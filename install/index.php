@@ -23,7 +23,7 @@ $step = isset($_GET['step']) ? $_GET['step'] : 1;
 
         body {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
         }
 
