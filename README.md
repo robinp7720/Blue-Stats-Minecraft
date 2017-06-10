@@ -5,12 +5,9 @@
 No error, no help. Please, if you want help, you must give me your error log. Else I will simply dismiss your issue.
 
 # Blue-Stats-Minecraft
-Blue Stats 3 is a complete remake/recode of Blue Stats.
-Blue Stats 3 uses a mysql backend to save and load configuartions, caches and other things to make Blue Stats even more powerfull.
+BlueStats is not your standard minecraft statistics panel. It is not made to support a single plugin, instead it is designed to support all of them. Through the use of plugins, BlueStats can be thought how to read the database layouts of bukkit/spigot plugins. Not only is it designed to display server statistics, it is designed to replace your server homepage to have a dynamically updating site with user statistics built right in!
 
-With making this webapp, I have kept customizability, ease of use and power in mind. This tool is extremely easy to install and get going.
-
-More information can be found on the forums post here: https://bukkit.org/threads/blue-stats-the-most-advanced-statistics-web-interface.334006/
+BlueStats is expandable through the use of plugins and themes to suit your minecraft brand. While the included themes work out of the box, you are encouraged to create your own to advertise your server.
 
 A live demo can be found here: https://stats.mysunland.org
 
@@ -21,12 +18,3 @@ Please refer to this wiki article to help with troubleshooting: https://github.c
 
 ## Support me!
 If BlueStats has helped you or your server, please consider supporting me via paypal at https://www.paypal.me/RobinDecker
-
-Planned features
-=====================
-- [x] Admin interface     
-- [ ] Login with minecraft (Maybe)     
-- [ ] Graphs api     
-- [ ] Graphs     
-- [x] Server query and ping     
-- [x] Page caching
