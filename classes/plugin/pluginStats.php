@@ -83,7 +83,10 @@ class pluginStats {
         return FALSE;
     }
 
-    public function statList ($stat, $limit) {
+    public function statList ($stat, $limit, $options = []) {
+        // Define default options
+        if (!isset($options['selectMethod'])) $options['selectMethod'] = "sum";
+
         $mysqli = $this->mysql;
         $stmt   = $mysqli->stmt_init();
 
@@ -94,7 +97,7 @@ class pluginStats {
                 $aggregate = $info['column'];
         }
 
-        $query = "SELECT {$this->database["stats"][$stat]["user_identifier"]} as id ,sum($aggregate) as aggregate FROM {$this->database["prefix"]}{$this->database["stats"][$stat]["database"]} GROUP BY {$this->database["stats"][$stat]["user_identifier"]} ORDER BY sum($aggregate) DESC LIMIT ?";
+        $query = "SELECT {$this->database["stats"][$stat]["user_identifier"]} as id, {$options['selectMethod']}($aggregate) as aggregate FROM {$this->database["prefix"]}{$this->database["stats"][$stat]["database"]} GROUP BY {$this->database["stats"][$stat]["user_identifier"]} ORDER BY sum($aggregate) DESC LIMIT ?";
 
         if ($stmt->prepare($query)) {
             $stmt->bind_param("i", $limit);

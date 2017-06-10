@@ -1,7 +1,5 @@
 <?php
 /** @var module $this */
-$this->loadPlugin("McMMO");
-
 foreach ($this->bluestats->plugins as $plugin) {
     /** @var \BlueStats\API\plugin $plugin */
     if (!$plugin::$isMySQLplugin)
@@ -12,7 +10,11 @@ foreach ($this->bluestats->plugins as $plugin) {
 
         $table = new Table();
 
-        foreach ($plugin->stats->statList($stat, 10) as $row) {
+        $options = [
+          "selectMethod" => $info["summary"]?: "sum"
+        ];
+
+        foreach ($plugin->stats->statList($stat, 10, $options) as $row) {
             if ($plugin->database['identifier'] == "id") {
                 $username = $plugin->player->getName($row['id']);
                 $uuid     = $plugin->player->getUUID($row['id']);
