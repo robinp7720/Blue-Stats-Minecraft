@@ -11,7 +11,7 @@ foreach ($this->bluestats->plugins as $plugin) {
         $table = new Table();
 
         $options = [
-          "selectMethod" => $info["summary"]?: "sum"
+            "selectMethod" => isset($info["summary"]) ? $info["summary"] : "sum",
         ];
 
         foreach ($plugin->stats->statList($stat, 10, $options) as $row) {
