@@ -78,14 +78,12 @@ abstract class plugin {
             // Set table prefix
             $this->database['prefix'] = $this->config->get("MYSQL_prefix");
 
+            // Initiate Player and Stats objects. These are used to perform the queries
             $this->player = new pluginPlayer($this->database, $this->mysql);
             $this->stats  = new pluginStats($this->database, $this->mysql);
+
+            // Pass player object to stats object to allow uuid/name translation
             $this->stats->setPluginPlayer($this->player);
         }
     }
-
-    public function install () {
-
-    }
-
 }
