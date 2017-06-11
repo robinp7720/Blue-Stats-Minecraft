@@ -22,9 +22,12 @@ class McMMO extends plugin {
         ],
         "groups"     => [
             "skills" => [
-                "useSummary" => TRUE,
                 "display" => TRUE,
                 "name" => "Skills",
+                "headers" => [
+                  "Stat",
+                  "Value"
+                ],
                 "stats"      => [
                     "taming_skill",
                     "mining_skill",
