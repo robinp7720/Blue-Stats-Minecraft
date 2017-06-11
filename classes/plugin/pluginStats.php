@@ -37,9 +37,12 @@ class pluginStats {
      *
      * @return array all values relating to stat selected from player
      */
-    public function player ($player, $stat) {
+    public function player ($player, $stat, $options = []) {
         $mysqli = $this->mysql;
         $stmt   = $mysqli->stmt_init();
+
+        // Set default method options
+        if (!isset($options['summary'])) $options['summary'] = FALSE;
 
         // If the player argument is of the player class, get the uuid, name or id depending on identification method
         // set in the database layout scheme
@@ -54,10 +57,15 @@ class pluginStats {
 
         $query = "SELECT ";
 
-        foreach ($this->database["stats"][$stat]["values"] as $info) {
-            $query .= "`$info[column]`,";
+        if ($options['summary']) {
+            foreach ($this->database["stats"][$stat]["values"] as $info) {
+                $query .= "sum(`$info[column]`) as $info[column],";
+            }
+        } else {
+            foreach ($this->database["stats"][$stat]["values"] as $info) {
+                $query .= "`$info[column]`,";
+            }
         }
-
         // Remove last comma
         $query = substr($query, 0, -1);
 

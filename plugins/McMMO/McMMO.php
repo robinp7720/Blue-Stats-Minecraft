@@ -20,11 +20,34 @@ class McMMO extends plugin {
                               "id"   => "id",
                           ],
         ],
+        "groups"     => [
+            "skills" => [
+                "useSummary" => TRUE,
+                "display" => TRUE,
+                "name" => "Skills",
+                "stats"      => [
+                    "taming_skill",
+                    "mining_skill",
+                    "woodcutting_skill",
+                    "repair_skill",
+                    "unarmed_skill",
+                    "herbalism_skill",
+                    "excavation_skill",
+                    "archery_skill",
+                    "swords_skill",
+                    "axes_skill",
+                    "acrobatics_skill",
+                    "fishing_skill",
+                    "alchemy_skill",
+                ],
+            ],
+        ],
         "stats"      => [
-            "Taming"       => [
+            "taming_skill"      => [
                 "database"        => "skills",
                 "user_identifier" => "user_id",
                 "name"            => "Taming",
+                "display" => FALSE,
                 "values"          => [
                     [
                         "column"    => "taming", // column in which the data is stored in the table
@@ -34,10 +57,11 @@ class McMMO extends plugin {
                     ],
                 ],
             ],
-            "Mining"       => [
+            "mining_skill"      => [
                 "database"        => "skills",
                 "user_identifier" => "user_id",
                 "name"            => "Mining",
+                "display" => FALSE,
                 "values"          => [
                     [
                         "column"    => "mining", // column in which the data is stored in the table
@@ -47,10 +71,11 @@ class McMMO extends plugin {
                     ],
                 ],
             ],
-            "Wood Cutting" => [
+            "woodcutting_skill" => [
                 "database"        => "skills",
                 "user_identifier" => "user_id",
                 "name"            => "Wood Cutting",
+                "display" => FALSE,
                 "values"          => [
                     [
                         "column"    => "woodcutting", // column in which the data is stored in the table
@@ -60,10 +85,11 @@ class McMMO extends plugin {
                     ],
                 ],
             ],
-            "Repair"       => [
+            "repair_skill"      => [
                 "database"        => "skills",
                 "user_identifier" => "user_id",
                 "name"            => "Repair",
+                "display" => FALSE,
                 "values"          => [
                     [
                         "column"    => "repair", // column in which the data is stored in the table
@@ -73,10 +99,11 @@ class McMMO extends plugin {
                     ],
                 ],
             ],
-            "Unarmed"      => [
+            "unarmed_skill"     => [
                 "database"        => "skills",
                 "user_identifier" => "user_id",
                 "name"            => "Unarmed",
+                "display" => FALSE,
                 "values"          => [
                     [
                         "column"    => "unarmed", // column in which the data is stored in the table
@@ -86,10 +113,11 @@ class McMMO extends plugin {
                     ],
                 ],
             ],
-            "Herbalism"    => [
+            "herbalism_skill"   => [
                 "database"        => "skills",
                 "user_identifier" => "user_id",
                 "name"            => "Herbalism",
+                "display" => FALSE,
                 "values"          => [
                     [
                         "column"    => "herbalism", // column in which the data is stored in the table
@@ -99,10 +127,11 @@ class McMMO extends plugin {
                     ],
                 ],
             ],
-            "Excavation"   => [
+            "excavation_skill"  => [
                 "database"        => "skills",
                 "user_identifier" => "user_id",
                 "name"            => "Excavation",
+                "display" => FALSE,
                 "values"          => [
                     [
                         "column"    => "excavation", // column in which the data is stored in the table
@@ -112,10 +141,11 @@ class McMMO extends plugin {
                     ],
                 ],
             ],
-            "Archery"      => [
+            "archery_skill"     => [
                 "database"        => "skills",
                 "user_identifier" => "user_id",
                 "name"            => "Archery",
+                "display" => FALSE,
                 "values"          => [
                     [
                         "column"    => "archery", // column in which the data is stored in the table
@@ -125,10 +155,11 @@ class McMMO extends plugin {
                     ],
                 ],
             ],
-            "Swords"       => [
+            "swords_skill"      => [
                 "database"        => "skills",
                 "user_identifier" => "user_id",
                 "name"            => "Swords",
+                "display" => FALSE,
                 "values"          => [
                     [
                         "column"    => "swords", // column in which the data is stored in the table
@@ -138,10 +169,11 @@ class McMMO extends plugin {
                     ],
                 ],
             ],
-            "Axes"         => [
+            "axes_skill"        => [
                 "database"        => "skills",
                 "user_identifier" => "user_id",
                 "name"            => "Axes",
+                "display" => FALSE,
                 "values"          => [
                     [
                         "column"    => "axes", // column in which the data is stored in the table
@@ -151,10 +183,11 @@ class McMMO extends plugin {
                     ],
                 ],
             ],
-            "Acrobatics"   => [
+            "acrobatics_skill"  => [
                 "database"        => "skills",
                 "user_identifier" => "user_id",
                 "name"            => "Acrobatics",
+                "display" => FALSE,
                 "values"          => [
                     [
                         "column"    => "acrobatics", // column in which the data is stored in the table
@@ -164,10 +197,11 @@ class McMMO extends plugin {
                     ],
                 ],
             ],
-            "Fishing"      => [
+            "fishing_skill"     => [
                 "database"        => "skills",
                 "user_identifier" => "user_id",
                 "name"            => "Fishing",
+                "display" => FALSE,
                 "values"          => [
                     [
                         "column"    => "fishing", // column in which the data is stored in the table
@@ -177,10 +211,11 @@ class McMMO extends plugin {
                     ],
                 ],
             ],
-            "Alchemy"      => [
+            "alchemy_skill"     => [
                 "database"        => "skills",
                 "user_identifier" => "user_id",
                 "name"            => "Alchemy",
+                "display" => FALSE,
                 "values"          => [
                     [
                         "column"    => "alchemy", // column in which the data is stored in the table

@@ -4,7 +4,38 @@ $blocks_names = json_decode(file_get_contents($this->bluestats->appPath . "/item
 
 $render = function ($module, $plugin, $blocks_names) {
     $output = "";
+
+    if (!isset($plugin->database['groups'])) $plugin->database['groups'] = [];
+
+    // First render the groups defined in the plugin definition
+    foreach ($plugin->database['groups'] as $groupId => $info) {
+        // Set default stat options
+        if (!isset($info['display'])) $info['display'] = TRUE;
+
+        // If group is set to not display, break now to stop rendering
+        if (!$info['display']) break;
+
+        $output   .= "<h4>{$plugin->database["groups"][$groupId]["name"]}</h4>";
+        $table    = New Table();
+
+        foreach ($plugin->database["groups"][$groupId]['stats'] as $stat) {
+            $values = [$plugin->database['stats'][$stat]['name']];
+            $data = $plugin->stats->player($module->player, $stat);
+            foreach ($data[0] as $key => $entry) array_push($values, $entry);
+
+            call_user_func_array([$table, 'addRecord'], $values);
+        }
+        $output .= $table->tableToHTML();
+    }
+
+
+    // Loop through all defined stats in plugin definition
     foreach ($plugin->database['stats'] as $stat => $info) {
+        // Set default stat options
+        if (!isset($info['display'])) $info['display'] = TRUE;
+
+        if (!$info['display']) break;
+
         $statName = $plugin->database["stats"][$stat]["name"];
         $output   .= "<h4>$statName</h4>";
         $table    = New Table();
