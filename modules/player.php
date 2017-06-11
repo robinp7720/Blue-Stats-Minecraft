@@ -18,13 +18,23 @@ $render = function ($module, $plugin, $blocks_names) {
         $output   .= "<h4>{$plugin->database["groups"][$groupId]["name"]}</h4>";
         $table    = New Table();
 
+        $maxLength = 1;
+
         foreach ($plugin->database["groups"][$groupId]['stats'] as $stat) {
             $values = [$plugin->database['stats'][$stat]['name']];
             $data = $plugin->stats->player($module->player, $stat);
             foreach ($data[0] as $key => $entry) array_push($values, $entry);
-
             call_user_func_array([$table, 'addRecord'], $values);
         }
+
+        // Generate header for table
+        $values = [];
+
+        foreach ($plugin->database["groups"][$groupId]['headers'] as $entry) {
+                array_push($values, $entry);
+        }
+        call_user_func_array([$table, 'makeHeader'], $values);
+
         $output .= $table->tableToHTML();
     }
 
