@@ -512,7 +512,7 @@ class Statz extends plugin {
             ],
             "time_played"     => [
                 "database"        => "time_played",
-                "name"            => "Playtime",
+                "name"            => "Play time",
                 "user_identifier" => "uuid",
                 "values"          => [
                     [

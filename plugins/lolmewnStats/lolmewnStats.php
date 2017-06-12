@@ -602,7 +602,7 @@ class lolmewnStats extends plugin {
             ],
             "times_changed_world"  => [
                 "database"        => "times_changed_world",
-                "name"            => "times_changed_world",
+                "name"            => "Worlds changed",
                 "user_identifier" => "uuid",
                 "values"          => [
                     [
