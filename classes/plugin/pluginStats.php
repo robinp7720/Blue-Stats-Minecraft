@@ -101,8 +101,10 @@ class pluginStats {
         $aggregate = "";
 
         foreach ($this->database["stats"][$stat]["values"] as $info) {
-            if ($info['aggregate'])
+            if ($info['aggregate']) {
                 $aggregate = $info['column'];
+                break;
+            }
         }
 
         $query = "SELECT {$this->database["stats"][$stat]["user_identifier"]} as id, {$options['selectMethod']}($aggregate) as aggregate FROM {$this->database["prefix"]}{$this->database["stats"][$stat]["database"]} GROUP BY {$this->database["stats"][$stat]["user_identifier"]} ORDER BY sum($aggregate) DESC LIMIT ?";
