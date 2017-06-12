@@ -45,6 +45,7 @@ class pluginPlayer {
      */
     public function getName ($user) {
         if (is_int($user)) return $this->getNamefromID($user);
+
         return $this->getNamefromUUID($user) ?: $this->getNamefromID($user);
     }
 
@@ -55,6 +56,7 @@ class pluginPlayer {
      */
     public function getUUID ($user) {
         if (is_int($user)) return $this->getUUIDfromID($user);
+
         return $this->getUUIDfromName($user) ?: $this->getUUIDfromID($user);
     }
 
@@ -66,6 +68,10 @@ class pluginPlayer {
      * @return string Username of player
      */
     public function getNamefromID ($id) {
+        // Return false if ID column is not set
+        if (!isset($this->database["index"]["columns"]["id"]))
+            return FALSE;
+
         $mysqli = $this->mysql;
         $stmt   = $mysqli->stmt_init();
 
@@ -97,6 +103,10 @@ class pluginPlayer {
      * @return string UUID of player
      */
     public function getUUIDfromID ($id) {
+        // Return false if ID column is not set
+        if (!isset($this->database["index"]["columns"]["id"]))
+            return FALSE;
+
         $mysqli = $this->mysql;
         $stmt   = $mysqli->stmt_init();
 
