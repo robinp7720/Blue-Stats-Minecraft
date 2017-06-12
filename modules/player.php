@@ -47,13 +47,17 @@ $render = function ($module, $plugin, $blocks_names) {
         if (!$info['display']) break;
 
         $statName = $plugin->database["stats"][$stat]["name"];
-        $output   .= "<h4>$statName</h4>";
         $table    = New Table();
-        // Loop through all values in database
+
+        // Get stats
         $data = $plugin->stats->player($module->player, $stat);
 
+        // If retrieved stats are empty, don't bother displaying them
         if (!isset($data) || empty($data))
             continue;
+
+        // Add stat title
+        $output   .= "<h4>$statName</h4>";
 
         foreach ($data as $key => $entry) {
             $values = [];
