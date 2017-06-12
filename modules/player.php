@@ -53,7 +53,7 @@ $render = function ($module, $plugin, $blocks_names) {
         $data = $plugin->stats->player($module->player, $stat);
 
         if (!isset($data) || empty($data))
-            return FALSE;
+            continue;
 
         foreach ($data as $key => $entry) {
             $values = [];
