@@ -23,6 +23,10 @@ $render = function($module, $plugin, $stat) {
         return FALSE;
 
     foreach ($stats as $row) {
+        // Clear username and uuid values
+        $username = "";
+        $uuid = "";
+
         // Get username of player
         if ($plugin->database['identifier'] != 'name')
             $username = $plugin->player->getName($row['id']);
