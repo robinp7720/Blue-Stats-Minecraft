@@ -23,8 +23,15 @@ $render = function($module, $plugin, $stat) {
         return FALSE;
 
     foreach ($stats as $row) {
-        $username = $plugin->player->getName($row['id']);
-        $uuid     = $plugin->player->getUUID($row['id']);
+        // Get username of player
+        if ($plugin->database['identifier'] != 'name')
+            $username = $plugin->player->getName($row['id']);
+        if ($plugin->database['identifier'] != 'uuid')
+            $uuid = $plugin->player->getUUID($row['id']);
+        if (!isset($uuid) || empty($uuid))
+            $uuid = $row['id'];
+        if (!isset($username) || empty($username))
+            $username = $row['id'];
 
         if ($this->bluestats->url->useUUID) {
             $name = "<a href=\"" . $module->bluestats->url->player($uuid) . "\"><img src=\"https://minotar.net/helm/$username/32.png\" alt=\"\"> {$username}</a>";
