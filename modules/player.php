@@ -51,6 +51,10 @@ $render = function ($module, $plugin, $blocks_names) {
         $table    = New Table();
         // Loop through all values in database
         $data = $plugin->stats->player($module->player, $stat);
+
+        if (!isset($data) || empty($data))
+            return FALSE;
+
         foreach ($data as $key => $entry) {
             $values = [];
             $count  = 0;
