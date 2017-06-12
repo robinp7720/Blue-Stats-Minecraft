@@ -40,7 +40,7 @@ $render = function($module, $plugin, $stat) {
 foreach ($this->bluestats->plugins as $plugin) {
     /** @var \BlueStats\API\plugin $plugin */
     if (!$plugin::$isMySQLplugin)
-        break;
+        continue;
 
     echo "<h2>{$plugin->name}</h2>";
 
