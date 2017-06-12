@@ -80,13 +80,7 @@ class lolmewnStats extends plugin {
                         "dataType"  => "item_name",
                         "aggregate" => FALSE,
                         "name"      => "Item name",
-                    ],
-                    [
-                        "column"    => "data",
-                        "dataType"  => "item_type",
-                        "aggregate" => FALSE,
-                        "name"      => "Item value",
-                    ],
+                    ]
                 ],
             ],
             "blocks_placed"   => [
@@ -111,13 +105,7 @@ class lolmewnStats extends plugin {
                         "dataType"  => "item_name",
                         "aggregate" => FALSE,
                         "name"      => "Item name",
-                    ],
-                    [
-                        "column"    => "data",
-                        "dataType"  => "item_type",
-                        "aggregate" => FALSE,
-                        "name"      => "Item value",
-                    ],
+                    ]
                 ],
             ],
             "buckets_emptied" => [
