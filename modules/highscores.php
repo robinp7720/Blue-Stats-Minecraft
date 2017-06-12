@@ -7,11 +7,22 @@ $render = function($module, $plugin, $stat) {
 
     $table = new Table();
 
-    $options = [
-        "selectMethod" => isset($info["summary"]) ? $info["summary"] : "sum",
-    ];
+    $aggregateID = "";
 
-    foreach ($plugin->stats->statList($stat, 10, $options) as $row) {
+    // Get aggregate stat id
+    foreach ($info["values"] as $id => $info) {
+        if ($info['aggregate']) {
+            $aggregateID = $id;
+            break;
+        }
+    }
+
+    $stats = $plugin->stats->statList($stat, 10);
+
+    if (!isset($stats) || empty($stats))
+        return FALSE;
+
+    foreach ($stats as $row) {
         $username = $plugin->player->getName($row['id']);
         $uuid     = $plugin->player->getUUID($row['id']);
 
@@ -20,6 +31,18 @@ $render = function($module, $plugin, $stat) {
         }
         else {
             $name = "<a href=\"" . $module->bluestats->url->player($username) . "\"><img src=\"https://minotar.net/helm/$username/32.png\" alt=\"\"> {$username}</a>";
+        }
+
+        // Format according to datatype of value
+        switch ($plugin->database['stats'][$stat]["values"][$aggregateID]["dataType"]) {
+            case "date":
+                $row['aggregate'] = date('H:i m-d-y',$row['aggregate']);
+                break;
+            case "time":
+                $row['aggregate'] = secondsToTime($row['aggregate']);
+                break;
+            default:
+                break;
         }
 
         $table->addRecord(

@@ -92,22 +92,26 @@ class pluginStats {
     }
 
     public function statList ($stat, $limit, $options = []) {
-        // Define default options
-        if (!isset($options['selectMethod'])) $options['selectMethod'] = "sum";
-
         $mysqli = $this->mysql;
         $stmt   = $mysqli->stmt_init();
 
-        $aggregate = "";
+        $aggregateColumn = "";
+        $aggregateID = "";
 
-        foreach ($this->database["stats"][$stat]["values"] as $info) {
+        foreach ($this->database["stats"][$stat]["values"] as $id => $info) {
             if ($info['aggregate']) {
-                $aggregate = $info['column'];
+                $aggregateColumn = $info['column'];
+                $aggregateID = $id;
                 break;
             }
         }
 
-        $query = "SELECT {$this->database["stats"][$stat]["user_identifier"]} as id, {$options['selectMethod']}($aggregate) as aggregate FROM {$this->database["prefix"]}{$this->database["stats"][$stat]["database"]} GROUP BY {$this->database["stats"][$stat]["user_identifier"]} ORDER BY sum($aggregate) DESC LIMIT ?";
+        // Get aggregate type
+        $aggregateType = "sum";
+        if (isset($this->database["stats"][$stat]["values"][$aggregateID]["aggregate_type"]))
+            $aggregateType = $this->database["stats"][$stat]["values"][$aggregateID]["aggregate_type"];
+
+        $query = "SELECT {$this->database["stats"][$stat]["user_identifier"]} as id, {$aggregateType}($aggregateColumn) as aggregate FROM {$this->database["prefix"]}{$this->database["stats"][$stat]["database"]} GROUP BY {$this->database["stats"][$stat]["user_identifier"]} ORDER BY $aggregateType($aggregateColumn) DESC LIMIT ?";
 
         if ($stmt->prepare($query)) {
             $stmt->bind_param("i", $limit);
