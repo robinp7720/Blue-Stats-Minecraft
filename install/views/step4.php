@@ -83,7 +83,28 @@ $plugins = [];
 // Enable query only if ip and port has been set
 if (function_exists('fsockopen')) {
     if (isset($_SESSION["ip"]) && !empty($_SESSION["ip"]) && isset($_SESSION["port"]) && !empty($_SESSION["port"])) {
-        array_push($plugins, "query");
+        if (!in_array("query",$plugins))
+            array_push($plugins, "query");
+
+        // Set query settings
+        if (function_exists('fsockopen')) {
+            if ($config->set("ip", $_SESSION["ip"], "query")) {
+                echo '<i class="fa fa-check text-success"></i>Set query ip<br>';
+            }
+            else {
+                echo '<i class="fa fa-times text-danger"></i>Unable to set query ip<br>';
+            }
+
+            if ($config->set("port", $_SESSION["port"], "query")) {
+                echo '<i class="fa fa-check text-success"></i>Set query port<br>';
+            }
+            else {
+                echo '<i class="fa fa-times text-danger"></i>Unable to set query port<br>';
+            }
+        }
+        else {
+            echo '<i class="fa fa-times text-danger"></i>Query port and ip not set due to dependency missing<br>';
+        }
     }
 }
 
@@ -96,7 +117,8 @@ array_shift($files);
 foreach ($files as $dir) {
     if (is_dir(dirname(dirname(__dir__)) . '/plugins/' . $dir)) {
         if (isset($_SESSION["$dir-enable"]) && $_SESSION["$dir-enable"] === "on") {
-            array_push($plugins, $dir);
+            if (!in_array($dir,$plugins))
+                array_push($plugins, $dir);
         }
     }
 }
@@ -115,16 +137,9 @@ else {
 
 /* Set MySQL details
 -------------------------------------*/
-
-$files = scandir(dirname(dirname(__dir__)) . '/plugins');
-
-// Remove . and .. from array
-array_shift($files);
-array_shift($files);
-
-foreach ($files as $dir) {
-    if (is_dir(dirname(dirname(__dir__)) . '/plugins/' . $dir)) {
-        include dirname(dirname(__dir__)) . "/plugins/$dir/$dir.php";
+foreach ($plugins as $dir) {
+    if (is_dir(ROOT . '/plugins/' . $dir)) {
+        include ROOT. "/plugins/$dir/$dir.php";
         $pluginClass = "\\BlueStats\\Plugin\\$dir";
         if (!$pluginClass::$isMySQLplugin)
             break;
@@ -137,25 +152,6 @@ foreach ($files as $dir) {
             $config->setDefault("base_plugin", $dir);
         }
     }
-}
-
-if (function_exists('fsockopen')) {
-    if ($config->set("ip", $_SESSION["ip"], "query")) {
-        echo '<i class="fa fa-check text-success"></i>Set query ip<br>';
-    }
-    else {
-        echo '<i class="fa fa-times text-danger"></i>Unable to set query ip<br>';
-    }
-
-    if ($config->set("port", $_SESSION["port"], "query")) {
-        echo '<i class="fa fa-check text-success"></i>Set query port<br>';
-    }
-    else {
-        echo '<i class="fa fa-times text-danger"></i>Unable to set query port<br>';
-    }
-}
-else {
-    echo '<i class="fa fa-times text-danger"></i>Query port and ip not set due to dependency missing<br>';
 }
 
 /* Update theme assets
