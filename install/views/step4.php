@@ -83,7 +83,7 @@ $plugins = [];
 // Enable query only if ip and port has been set
 if (function_exists('fsockopen')) {
     if (isset($_SESSION["ip"]) && !empty($_SESSION["ip"]) && isset($_SESSION["port"]) && !empty($_SESSION["port"])) {
-        if (!in_array("query",$plugins))
+        if (!in_array("query", $plugins))
             array_push($plugins, "query");
 
         // Set query settings
@@ -108,16 +108,14 @@ if (function_exists('fsockopen')) {
     }
 }
 
-$files = scandir(dirname(dirname(__dir__)) . '/plugins');
 
-// Remove . and .. from array
-array_shift($files);
-array_shift($files);
+// Scan for all available plugins in the plugins folder
+$files = $scanned_directory = array_diff(scandir(ROOT . '/plugins'), ['..', '.']);
 
 foreach ($files as $dir) {
-    if (is_dir(dirname(dirname(__dir__)) . '/plugins/' . $dir)) {
+    if (is_dir(ROOT . '/plugins/' . $dir)) {
         if (isset($_SESSION["$dir-enable"]) && $_SESSION["$dir-enable"] === "on") {
-            if (!in_array($dir,$plugins))
+            if (!in_array($dir, $plugins))
                 array_push($plugins, $dir);
         }
     }
@@ -139,7 +137,7 @@ else {
 -------------------------------------*/
 foreach ($plugins as $dir) {
     if (is_dir(ROOT . '/plugins/' . $dir)) {
-        include ROOT. "/plugins/$dir/$dir.php";
+        include ROOT . "/plugins/$dir/$dir.php";
         $pluginClass = "\\BlueStats\\Plugin\\$dir";
         if (!$pluginClass::$isMySQLplugin)
             break;
@@ -162,8 +160,8 @@ $scanned_directory = array_diff(scandir($directory), ['..', '.']);
 if (is_writeable(ROOT . "/assets")) {
     $success = TRUE;
     foreach ($scanned_directory as $item) {
-        if (!copy(ROOT . "/themes/$theme/assets/$item", dirname(dirname(__DIR__)) . "/assets/$item")) {
-            echo '<i class="fa fa-times text-danger"></i>Could not copy ' . ROOT . "/themes/$theme/assets/$item to " . dirname(dirname(__DIR__)) . "/assets/$item <br>";
+        if (!copy(ROOT . "/themes/$theme/assets/$item", ROOT . "/assets/$item")) {
+            echo '<i class="fa fa-times text-danger"></i>Could not copy ' . ROOT . "/themes/$theme/assets/$item to " . ROOT . "/assets/$item <br>";
             $success = FALSE;
         }
     }
@@ -171,7 +169,7 @@ if (is_writeable(ROOT . "/assets")) {
         echo '<i class="fa fa-check text-success"></i>Successfully copied theme assets to assets directory<br>';
 }
 else {
-    echo "<i class=\"fa fa-times text-danger\"></i> Cannot copy theme assets to " . dirname(dirname(__DIR__)) . "/assets/ <br>";
+    echo "<i class=\"fa fa-times text-danger\"></i> Cannot copy theme assets to " . ROOT . "/assets/ <br>";
 }
 
 echo '<a href="../admin">Admin Panel</a><br>';
