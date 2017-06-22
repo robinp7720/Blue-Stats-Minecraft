@@ -23,7 +23,8 @@ class module {
     }
 
     public function loadPlugin ($plugin) {
-        if (isset($this->plugins[$plugin])) $this->plugins[$plugin] = $this->bluestats->plugins[$plugin];
+        if (isset($this->bluestats->plugins[$plugin]))
+            $this->plugins[$plugin] = $this->bluestats->plugins[$plugin];
     }
 
     public function render () {
