@@ -1,6 +1,6 @@
 <?php
 
-$render = function($module, $plugin, $stat) {
+$render = function ($module, $plugin, $stat) {
     $info = $plugin->database['stats'][$stat];
 
     $output = "<div class='col-md-6'><h4>$info[name]</h4>";
@@ -23,19 +23,13 @@ $render = function($module, $plugin, $stat) {
         return FALSE;
 
     foreach ($stats as $row) {
-        // Clear username and uuid values
-        $username = "";
-        $uuid = "";
+        // If the ID is not the username, get the username from the id. If the ID is the username, don't bother with any database queries
+        if ($plugin->database['identifier'] != 'name') $username = $plugin->player->getName($row['id']);
+        else $username = $row['id'];
 
-        // Get username of player
-        if ($plugin->database['identifier'] != 'name')
-            $username = $plugin->player->getName($row['id']);
-        if ($plugin->database['identifier'] != 'uuid')
-            $uuid = $plugin->player->getUUID($row['id']);
-        if (!isset($uuid) || empty($uuid))
-            $uuid = $row['id'];
-        if (!isset($username) || empty($username))
-            $username = $row['id'];
+        // Do the same for the uuid
+        if ($plugin->database['identifier'] != 'uuid') $uuid = $plugin->player->getUUID($row['id']);
+        else $uuid = $row['id'];
 
         if ($this->bluestats->url->useUUID) {
             $name = "<a href=\"" . $module->bluestats->url->player($uuid) . "\"><img src=\"https://minotar.net/helm/$username/32.png\" alt=\"\"> {$username}</a>";
@@ -47,7 +41,7 @@ $render = function($module, $plugin, $stat) {
         // Format according to datatype of value
         switch ($plugin->database['stats'][$stat]["values"][$aggregateID]["dataType"]) {
             case "date":
-                $row['aggregate'] = date('H:i m-d-y',$row['aggregate']);
+                $row['aggregate'] = date('H:i m-d-y', $row['aggregate']);
                 break;
             case "time":
                 $row['aggregate'] = secondsToTime($row['aggregate']);
