@@ -5,48 +5,19 @@ $this->loadPlugin("Statz");
 /** @var \BlueStats\API\plugin $plugin */
 $plugin = $this->plugins['Statz'];
 
-$defaultText = [
-    "arrows_shot"        => "Shot {VALUE} arrows",
-    "blocks_broken"      => "Broke {VALUE} blocks",
-    "blocks_placed"      => "Placed {VALUE} blocks",
-    "buckets_emptied"    => "Emptied {VALUE} buckets",
-    "buckets_filled"     => "Filled {VALUE} buckets",
-    "commands_performed" => "Executed {VALUE} commands",
-    "damage_taken"       => "Took {VALUE} damage",
-    "deaths"             => "Died {VALUE} times",
-    "distance_travelled" => "Traveled {VALUE} blocks",
-    "eggs_thrown"        => "Threw {VALUE} eggs",
-    "entered_beds"       => "Entered {VALUE} beds",
-    "food_eaten"         => "Ate {VALUE} foods",
-    "items_caught"       => "Caught {VALUE} fish",
-    "items_crafted"      => "Crafted {VALUE} items",
-    "items_dropped"      => "Dropped {VALUE} items",
-    "items_picked_up"    => "Picked up {VALUE} items",
-    "joins"              => "Joined {VALUE} times",
-    "kills_mobs"         => "Killed {VALUE} mobs",
-    "kills_players"      => "Killed {VALUE} players",
-    "teleports"          => "Teleported {VALUE} times",
-    "times_kicked"       => "Was kicked {VALUE} times",
-    "times_shorn"        => "Striped {VALUE} sheep",
-    "time_played"        => "Played for {VALUE}",
-    "tools_broken"       => "Broke {VALUE} tools",
-    "villager_trades"    => "Traded {VALUE} times",
-    "votes"              => "Voted for the server {VALUE} times",
-    "words_changed"      => "Traveled through {VALUE} realms",
-    "xp_gained"          => "Gained {VALUE} XP",
-];
-$this->config->setDefault("english", $defaultText);
 $this->config->setDefault("stats", ['votes', 'teleports', 'deaths', 'blocks_broken']);
 
-$english = $this->config->get("english");
+$language = $this->config->get("language","BlueStats");
 $stats   = $this->config->get("stats");
 ?>
+
 <div class="row">
     <?php foreach ($stats as $stat): ?>
         <?php
         $data    = $plugin->stats->statList($stat, 1);
         $display = 0;
         $linkId  = "";
+
         if (isset($data[0])) {
             $display = $data[0]["aggregate"];
 
@@ -67,6 +38,10 @@ $stats   = $this->config->get("stats");
             }
         }
 
+        $replace = $plugin->database['stats'][$stat]['text'][$language]['plural'];
+        if ($display === 1)
+            $replace = $plugin->database['stats'][$stat]['text'][$language]['single'];
+
         ?>
         <div class="col-md-3 col-sm-4 col-xs-6">
             <div class="panel panel-default">
@@ -78,7 +53,7 @@ $stats   = $this->config->get("stats");
                                 href="<?= $this->bluestats->url->player($linkId) ?>"><?= isset($username) ? $username : "Nobody" ?></a>
                     </h3>
                     <h6 style="margin-top:0;padding:0;"
-                        class="text-muted"><?= str_replace("{VALUE}", $display, $english[$stat]) ?></h6>
+                        class="text-muted"><?= str_replace("{VALUE}", $display, $replace) ?></h6>
                 </div>
             </div>
         </div>

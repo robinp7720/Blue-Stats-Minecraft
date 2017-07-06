@@ -19,7 +19,11 @@ class BlueStats {
         $this->setUpGlobals();
         $this->mysqli = $mysqli;
 
+        // Initiate base config class
         $this->config = new config($mysqli, $this->pluginName);
+
+        // Set default language for BlueStats - This needs to be here to upgrade older version. Can be safely removed
+        $this->config->setDefault("language","en_US");
 
         $this->theme = $this->config->get("theme");
         $this->page  = isset($this->request["get"]["page"]) ? $this->request["get"]["page"] : $this->config->get("homepage");
