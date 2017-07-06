@@ -317,13 +317,13 @@ class Statz extends plugin {
                 "database"        => "food_eaten",
                 "name"            => "Food eaten",
                 "user_identifier" => "uuid",
+                "text" => [
+                    "en_US" => [
+                        "single" => "Ate {VALUE} food",
+                        "plural" => "Ate {VALUE} foods"
+                    ]
+                ],
                 "values"          => [
-                    "text" => [
-                        "en_US" => [
-                            "single" => "Ate {VALUE} food",
-                            "plural" => "Ate {VALUE} foods"
-                        ]
-                    ],
                     [
                         "column"    => "value", // column in which the data is stored in the table
                         "dataType"  => "int", // The type of data stored in the column. This can be: time, date, mob, player, world, item_id, item_type, item_name, int
