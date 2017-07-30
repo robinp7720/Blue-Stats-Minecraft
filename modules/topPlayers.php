@@ -15,11 +15,11 @@ $stats   = $this->config->get("stats");
     <?php foreach ($stats as $stat): ?>
         <?php
         $data    = $plugin->stats->statList($stat, 1);
-        $display = 0;
+        $value = 0;
         $linkId  = "";
 
         if (isset($data[0])) {
-            $display = $data[0]["aggregate"];
+            $value = $data[0]["aggregate"];
 
             if ($plugin->database['identifier'] == "id") {
                 $username = $plugin->player->getNamefromID($data[0]['id']);
@@ -39,8 +39,10 @@ $stats   = $this->config->get("stats");
         }
 
         $replace = $plugin->database['stats'][$stat]['text'][$language]['plural'];
-        if ($display === 1)
+        if ($value === 1)
             $replace = $plugin->database['stats'][$stat]['text'][$language]['single'];
+
+        $display = $value;
 
         ?>
         <div class="col-md-3 col-sm-4 col-xs-6">
