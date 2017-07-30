@@ -95,6 +95,9 @@ $render = function ($module, $plugin, $blocks_names) {
                         }
                         array_push($values, $value);
                         break;
+                    case "date":
+                        array_push($values, date('H:i m-d-y', $value/1000));
+                        break;
                     case "time":
                         array_push($values, secondsToTime($value));
                         break;
