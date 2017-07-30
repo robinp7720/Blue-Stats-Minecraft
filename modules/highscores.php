@@ -1,9 +1,12 @@
 <?php
 
+// Option to whether or not to put the highscore in a bootstrap panel
+$this->config->setDefault("panelEnable", TRUE);
+
+$panelEnable = $this->config->get("panelEnable");
+
 $render = function ($module, $plugin, $stat) {
     $info = $plugin->database['stats'][$stat];
-
-    $output = "<div class='col-md-6'><h4>$info[name]</h4>";
 
     $table = new Table();
 
@@ -57,10 +60,7 @@ $render = function ($module, $plugin, $stat) {
     }
     $table->makeHeader("Player", $info['name']);
 
-    $output .= $table->tableToHTML(FALSE);
-    $output .= "</div>";
-
-    return $output;
+    return $table->tableToHTML(FALSE);
 
 };
 
@@ -78,7 +78,25 @@ foreach ($this->bluestats->plugins as $plugin) {
         echo "<h3>{$group['name']}</h3>";
         echo "<div class='row'>";
         foreach ($group['stats'] as $stat) {
-            echo $render($this, $plugin, $stat);
+            $info = $plugin->database['stats'][$stat];
+
+            if ($panelEnable): ?>
+                <div class='col-md-6'>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title"><?= $info['name'] ?></h4>
+                        </div>
+                        <div class="panel-body">
+                            <?= $render($this, $plugin, $stat); ?>
+                        </div>
+                    </div>
+                </div>
+            <?php else: ?>
+                <div class='col-md-6'>
+                    <h4><?= $info['name'] ?></h4>
+                    <?= $render($this, $plugin, $stat); ?>
+                </div>
+            <?php endif;
         }
         echo "</div>";
     }
@@ -90,7 +108,26 @@ foreach ($this->bluestats->plugins as $plugin) {
         if (!isset($info['display'])) $info['display'] = TRUE;
         if (!$info['display']) break;
 
-        echo $render($this, $plugin, $stat);
+        $info = $plugin->database['stats'][$stat];
+
+        if ($panelEnable): ?>
+            <div class='col-md-6'>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><?= $info['name'] ?></h4>
+                    </div>
+                    <div class="panel-body">
+                        <?= $render($this, $plugin, $stat); ?>
+                    </div>
+                </div>
+            </div>
+        <?php else: ?>
+            <div class='col-md-6'>
+                <h4><?= $info['name'] ?></h4>
+                <?= $render($this, $plugin, $stat); ?>
+            </div>
+        <?php endif;
+
     }
     echo "</div>";
 }
