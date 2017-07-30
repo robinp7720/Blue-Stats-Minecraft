@@ -95,6 +95,9 @@ $render = function ($module, $plugin, $blocks_names) {
                         }
                         array_push($values, $value);
                         break;
+                    case "time":
+                        array_push($values, secondsToTime($value));
+                        break;
                     default:
                         array_push($values, $value);
                 }
