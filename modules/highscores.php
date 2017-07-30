@@ -2,10 +2,12 @@
 
 // Option to whether or not to put the highscore in a bootstrap panel
 $this->config->setDefault("panelEnable", TRUE);
+$this->config->setDefault("count", 10);
 
 $panelEnable = $this->config->get("panelEnable");
+$count = $this->config->get("count");
 
-$render = function ($module, $plugin, $stat) {
+$render = function ($module, $plugin, $stat, $count) {
     $info = $plugin->database['stats'][$stat];
 
     $table = new Table();
@@ -20,7 +22,7 @@ $render = function ($module, $plugin, $stat) {
         }
     }
 
-    $stats = $plugin->stats->statList($stat, 10);
+    $stats = $plugin->stats->statList($stat, $count);
 
     if (!isset($stats) || empty($stats))
         return FALSE;
@@ -87,14 +89,14 @@ foreach ($this->bluestats->plugins as $plugin) {
                             <h4 class="panel-title"><?= $info['name'] ?></h4>
                         </div>
                         <div class="panel-body">
-                            <?= $render($this, $plugin, $stat); ?>
+                            <?= $render($this, $plugin, $stat, $count); ?>
                         </div>
                     </div>
                 </div>
             <?php else: ?>
                 <div class='col-md-6'>
                     <h4><?= $info['name'] ?></h4>
-                    <?= $render($this, $plugin, $stat); ?>
+                    <?= $render($this, $plugin, $stat, $count); ?>
                 </div>
             <?php endif;
         }
@@ -117,14 +119,14 @@ foreach ($this->bluestats->plugins as $plugin) {
                         <h4 class="panel-title"><?= $info['name'] ?></h4>
                     </div>
                     <div class="panel-body">
-                        <?= $render($this, $plugin, $stat); ?>
+                        <?= $render($this, $plugin, $stat, $count); ?>
                     </div>
                 </div>
             </div>
         <?php else: ?>
             <div class='col-md-6'>
                 <h4><?= $info['name'] ?></h4>
-                <?= $render($this, $plugin, $stat); ?>
+                <?= $render($this, $plugin, $stat, $count); ?>
             </div>
         <?php endif;
 
