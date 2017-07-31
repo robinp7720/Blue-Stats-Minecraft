@@ -5,6 +5,9 @@
     <!-- Latest compiled and minified CSS & JS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/paper/bootstrap.min.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+
+    <script src="//code.jquery.com/jquery.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-inverse">
@@ -31,8 +34,10 @@
     <div class="row">
         <div class="col-xs-4 col-sm-3  col-md-2">
             <div class="list-group">
+                <a href="?page=look" class="list-group-item ">Look</a>
                 <a href="?page=security" class="list-group-item ">Security</a>
-                <a href="" class="list-group-item ">URLs</a>
+                <a href="?page=urls" class="list-group-item ">URLs</a>
+                <a href="?page=security" class="list-group-item ">Installation Settings</a>
                 <a href="" class="list-group-item ">Statistics</a>
             </div>
             <div class="list-group">
@@ -46,11 +51,14 @@
                 <a href="advanced/" class="list-group-item ">Advanced</a>
             </div>
         </div>
-        <div class="col-xs-8 col-sm-9  col-md-10" id="content">{ content }</div>
+        <div class="col-xs-8 col-sm-9  col-md-10" id="content">
+            <div class="messages">
+
+            </div>
+            { content }
+        </div>
     </div>
 </div>
-<script src="//code.jquery.com/jquery.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 
 <script>

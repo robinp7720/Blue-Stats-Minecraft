@@ -1,4 +1,5 @@
 <?php
+define('ROOT', dirname(__DIR__));
 session_start();
 
 if (isset($_GET["logout"])) {
@@ -12,7 +13,7 @@ if (!isset($_SESSION["auth"]) || $_SESSION["auth"] !== TRUE) {
 else {
     $layout = file_get_contents('layout/layout.html');
 
-    $pages = ["index", "security"];
+    $pages = ["index", "look", "security"];
 
     $page = isset($_GET['page']) ? $_GET['page'] : "index";
 
