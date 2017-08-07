@@ -3,11 +3,13 @@
 // Option to whether or not to put the highscore in a bootstrap panel
 $this->config->setDefault("panelEnable", TRUE);
 $this->config->setDefault("count", 10);
+$this->config->setDefault("playerStatus", TRUE);
 
 $panelEnable = $this->config->get("panelEnable");
-$count = $this->config->get("count");
+$this->count = $this->config->get("count");
+$this->status = $this->config->get("playerStatus");
 
-$render = function ($module, $plugin, $stat, $count) {
+$render = function ($module, $plugin, $stat) {
     $info = $plugin->database['stats'][$stat];
 
     $table = new Table();
@@ -22,7 +24,7 @@ $render = function ($module, $plugin, $stat, $count) {
         }
     }
 
-    $stats = $plugin->stats->statList($stat, $count);
+    $stats = $plugin->stats->statList($stat, $this->count);
 
     if (!isset($stats) || empty($stats))
         return FALSE;
@@ -46,12 +48,32 @@ $render = function ($module, $plugin, $stat, $count) {
         // Format according to datatype of value
         $row['aggregate'] = $module->bluestats->formatter->format($row['aggregate'], $plugin->database['stats'][$stat]["values"][$aggregateID]["dataType"]);
 
-        $table->addRecord(
-            $name,
-            $row['aggregate']
-        );
+        $values = [];
+        array_push($values, $name);
+
+        if ($this->status && isset($this->bluestats->plugins['query'])) {
+            if (in_array($name, $this->bluestats->plugins['query']->onlinePlayers())) {
+                array_push($values, '<span class="label label-success">Online</span>');
+            }
+            else {
+                array_push($values,'<span class="label label-danger">Offline</span>');
+            }
+        }
+
+        array_push($values, $row['aggregate']);
+
+
+        call_user_func_array([$table, 'addRecord'], $values);
     }
-    $table->makeHeader("Player", $info['name']);
+
+    // Dynamically create headers based on config options
+    $headers = [];
+    array_push($headers, 'Player');
+    if ($this->status && isset($this->bluestats->plugins['query']))
+        array_push($headers, 'Status');
+    array_push($headers, $info['name']);
+
+    call_user_func_array([$table, 'makeHeader'], $headers);
 
     return $table->tableToHTML(FALSE);
 
@@ -80,14 +102,14 @@ foreach ($this->bluestats->plugins as $plugin) {
                             <h4 class="panel-title"><?= $info['name'] ?></h4>
                         </div>
                         <div class="panel-body">
-                            <?= $render($this, $plugin, $stat, $count); ?>
+                            <?= $render($this, $plugin, $stat); ?>
                         </div>
                     </div>
                 </div>
             <?php else: ?>
                 <div class='col-md-6'>
                     <h4><?= $info['name'] ?></h4>
-                    <?= $render($this, $plugin, $stat, $count); ?>
+                    <?= $render($this, $plugin, $stat); ?>
                 </div>
             <?php endif;
         }
@@ -110,14 +132,14 @@ foreach ($this->bluestats->plugins as $plugin) {
                         <h4 class="panel-title"><?= $info['name'] ?></h4>
                     </div>
                     <div class="panel-body">
-                        <?= $render($this, $plugin, $stat, $count); ?>
+                        <?= $render($this, $plugin, $stat); ?>
                     </div>
                 </div>
             </div>
         <?php else: ?>
             <div class='col-md-6'>
                 <h4><?= $info['name'] ?></h4>
-                <?= $render($this, $plugin, $stat, $count); ?>
+                <?= $render($this, $plugin, $stat); ?>
             </div>
         <?php endif;
 
