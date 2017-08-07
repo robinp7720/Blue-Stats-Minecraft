@@ -33,6 +33,10 @@ class formatter {
         return secondsToTime($value);
     }
 
+    public function itemName($value) {
+        return ucwords(str_replace('_', ' ', strtolower($value)));
+    }
+
     public function format($value, $type) {
         switch ($type) {
             case "player_name":
@@ -47,6 +51,8 @@ class formatter {
             case "time":
                 return $this->time($value);
                 break;
+            case "item_name":
+                return $this->itemName($value);
             default:
                 return $value;
         }
