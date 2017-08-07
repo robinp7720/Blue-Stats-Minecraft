@@ -11,6 +11,7 @@ class BlueStats {
     public $mysqli;
     public $basePlugin;
     public $url;
+    public $formatter;
 
     public $request = [];
 
@@ -57,6 +58,10 @@ class BlueStats {
             echo "Base plugin does not exist: $baseplugin";
             echo "<br>Please install this plugin or change the base plugin";
         }
+
+        // Setup formatter
+        $this->formatter = new formatter($this);
+
     }
 
     public function loadPage () {

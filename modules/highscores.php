@@ -44,16 +44,7 @@ $render = function ($module, $plugin, $stat, $count) {
         }
 
         // Format according to datatype of value
-        switch ($plugin->database['stats'][$stat]["values"][$aggregateID]["dataType"]) {
-            case "date":
-                $row['aggregate'] = date('H:i m-d-y', $row['aggregate']);
-                break;
-            case "time":
-                $row['aggregate'] = secondsToTime($row['aggregate']);
-                break;
-            default:
-                break;
-        }
+        $row['aggregate'] = $module->bluestats->formatter->format($row['aggregate'], $plugin->database['stats'][$stat]["values"][$aggregateID]["dataType"]);
 
         $table->addRecord(
             $name,

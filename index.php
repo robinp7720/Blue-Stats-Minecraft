@@ -62,6 +62,7 @@ if ($cache->reCache($uri)) {
     require_once "$appPath/classes/chart.class.php";
     require_once "$appPath/classes/plugin/plugin.php";
     require_once "$appPath/classes/table.class.php";
+    require_once "$appPath/classes/formatter.php";
 
     /* Functions */
     require_once "$appPath/functions/utils.func.php";

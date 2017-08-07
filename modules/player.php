@@ -74,38 +74,8 @@ $render = function ($module, $plugin, $blocks_names) {
                         $name = getBlockNameFromID($itemID, $value, $blocks_names) ?: getBlockNameFromID($itemID, 0, $blocks_names) ?: $itemID . '-' . $value;
                         array_push($values, $name);
                         break;
-                    case "player_name":
-                        if ($module->bluestats->url->useUUID) {
-                            $uuid  = $module->bluestats->basePlugin->player->getUUIDfromName($value);
-                            $value = "<a href=\"" . $module->bluestats->url->player($uuid) . "\"><img src=\"https://minotar.net/helm/{$value}/32.png\" alt=\"\"> {$value}</a>";
-                        }
-                        else {
-                            $value = "<a href=\"" . $module->bluestats->url->player($value) . "\"><img src=\"https://minotar.net/helm/{$value}/32.png\" alt=\"\"> {$value}</a>";
-                        }
-                        array_push($values, $value);
-                        break;
-                    case "player_uuid":
-                        $uuid  = $value;
-                        $name = $module->bluestats->basePlugin->player->getNamefromUUID($value);
-                        if ($module->bluestats->url->useUUID) {
-                            $value = "<a href=\"" . $module->bluestats->url->player($uuid) . "\"><img src=\"https://minotar.net/helm/{$name}/32.png\" alt=\"\"> {$name}</a>";
-                        }
-                        else {
-                            $value = "<a href=\"" . $module->bluestats->url->player($value) . "\"><img src=\"https://minotar.net/helm/{$name}/32.png\" alt=\"\"> {$name}</a>";
-                        }
-                        array_push($values, $value);
-                        break;
-                    case "date":
-                        if (is_numeric($value))
-                            array_push($values, date('H:i m-d-y', $value/1000));
-                        else
-                            array_push($values, $value);
-                        break;
-                    case "time":
-                        array_push($values, secondsToTime($value));
-                        break;
                     default:
-                        array_push($values, $value);
+                        array_push($values, $module->bluestats->formatter->format($value,$plugin->database["stats"][$stat]["values"][$count]["dataType"]));
                 }
                 $count++;
             }
