@@ -40,15 +40,15 @@ class lolmewnStats extends plugin {
                 ],
             ],
             "beds_entered"     => [
-                "database"        => "arrows",
-                "name"            => "Arrows shot",
+                "database"        => "beds_entered",
+                "name"            => "Beds entered",
                 "user_identifier" => "uuid",
                 "values"          => [
                     [
                         "column"    => "value", // column in which the data is stored in the table
                         "dataType"  => "int", // The type of data stored in the column. This can be: time, date, mob, player, world, item_id, item_type, item_name, int
                         "aggregate" => TRUE, // If true this column is used as a stat summary
-                        "name"      => "Arrows shot"    // Human readable name of the stat
+                        "name"      => "Beds entered"    // Human readable name of the stat
                     ],
                     [
                         "column"    => "world",
