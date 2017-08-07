@@ -50,7 +50,15 @@ class view {
         $string = $template["content"];
         $player = $this->player;
 
-        $title  = $this->bluestats->config->get('page-names')[$this->page];
+        $pageNames = $this->bluestats->config->get('page-names');
+
+        // Set page title
+        $title = "Unnamed page";
+        if (isset($pageNames[$this->page]))
+            $title  = $pageNames[$this->page];
+        if (!file_exists($this->viewPath . "templates/{$this->page}.html"))
+            $title = "Page not found";
+
         $string = str_replace('{{ title }}', $title, $string);
 
         $title  = $this->bluestats->config->get('server-name');
