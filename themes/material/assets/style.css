@@ -1,3 +1,13 @@
+
+.quick-info .panel {
+    height: 175px;
+}
+
+.quick-info div h3, .quick-info div h1 {
+    text-align: center;
+}
+
+
 /* Bubble Stats */
 
 .circle-tile {

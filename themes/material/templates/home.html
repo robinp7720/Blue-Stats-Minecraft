@@ -1,8 +1,24 @@
-<div class="jumbotron">
-    <h1>Blue Stats Web</h1>
+<div class="row quick-info">
+    <div class="col-md-3">
+        <div class="well panel">
+            <h1><i class="fa fa-group fa-lg"></i></h1>
 
-    <p>Welcome to BlueStats Statistics! The most powerful Minecraft Web Statistics available!</p>
+            <h3>{{ module:onlineCount }} online</h3>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="well panel">
+            <h1><i class="fa fa-pencil fa-lg"></i></h1>
 
-    <p><a class="btn btn-primary btn-lg" href="https://github.com/robinp7720/Blue-Stats-Minecraft">Learn more</a></p>
+            <h3>{{ module:playerCount }} tracked</h3>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel">
+           <div class="panel-body">
+               {{ module:onlinePlayers }}
+           </div>
+        </div>
+    </div>
 </div>
 {{ module:topPlayers }}
