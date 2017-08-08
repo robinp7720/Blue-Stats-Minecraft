@@ -330,4 +330,26 @@ class pluginPlayer {
 
         return FALSE;
     }
+
+    public function count() {
+        $mysqli = $this->mysql;
+        $stmt   = $mysqli->stmt_init();
+
+        // Select the id from the player identification table using the uuid column for identification
+        $query = "SELECT count({$this->database["index"]["columns"]["id"]}) as count FROM {$this->database["prefix"]}{$this->database["index"]["table"]}";
+        if ($stmt->prepare($query)) {
+            $stmt->execute();
+            $stmt->bind_result($count);
+            $stmt->fetch();
+            // If there is an error log it
+            if ($stmt->error && DEBUG)
+                print($stmt->error);
+
+            $stmt->close();
+
+            return $count;
+        }
+
+        return FALSE;
+    }
 }
