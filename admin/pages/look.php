@@ -41,17 +41,22 @@
                 value:  $(this).data('value')
             }
         }).success(function (data) {
-            if (data["success"] == true) {
-                $('.messages').append('<div class="alert alert-success alert-dismissible">' +
-                    '    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
-                    '    <strong>Success!</strong> The new theme has been set successfully' +
-                    '  </div>')
-            } else {
-                $('.messages').append('<div class="alert alert-danger alert-dismissible">' +
-                    '    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
-                    '    <strong>Error!</strong> An error has occurred while setting the theme' +
-                    '  </div>')
-            }
+                $.ajax('advanced/actions/setupTheme.php', {
+                    method: 'post',
+                    dataType: 'json'
+                }).success(function (data) {
+                    if (data["success"] == true) {
+                        $('.messages').append('<div class="alert alert-success alert-dismissible">' +
+                            '    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
+                            '    <strong>Success!</strong> The new theme has been set successfully' +
+                            '  </div>')
+                    } else {
+                        $('.messages').append('<div class="alert alert-danger alert-dismissible">' +
+                            '    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
+                            '    <strong>Error!</strong> An error has occurred while setting the theme' +
+                            '  </div>')
+                    }
+            })
         });
     })
 </script>
