@@ -3,12 +3,16 @@
 class BlueStats {
     public $version    = "Beta 3.0";
     public $pluginName = "BlueStats";
-    public $appPath    = "";
-    public $theme      = "material";
-    public $page       = "home";
-    public $plugins    = [];
+
+    public $appPath  = "";
+    public $viewPath = "";
+
+    public $theme   = "material";
+    public $page    = "home";
+    public $plugins = [];
     public $config;
     public $mysqli;
+    /** @var \BlueStats\API\plugin $basePlugin */
     public $basePlugin;
     public $url;
     public $formatter;
@@ -24,12 +28,13 @@ class BlueStats {
         $this->config = new config($mysqli, $this->pluginName);
 
         // Set default language for BlueStats - This needs to be here to upgrade older version. Can be safely removed
-        $this->config->setDefault("language","en_US");
+        $this->config->setDefault("language", "en_US");
 
         $this->theme = $this->config->get("theme");
         $this->page  = isset($this->request["get"]["page"]) ? $this->request["get"]["page"] : $this->config->get("homepage");
 
         $this->appPath = $appPath;
+        $this->viewPath = $this->config->get("view_path");
 
         $this->url = new url($this->mysqli);
     }
@@ -65,7 +70,7 @@ class BlueStats {
     }
 
     public function loadPage () {
-        $view = new view($this, $this->config->get("view_path"), $this->appPath);
+        $view = new view($this, $this->viewPath, $this->appPath);
 
         return $view->render();
     }

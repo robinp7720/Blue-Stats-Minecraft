@@ -29,10 +29,15 @@ class module {
 
     public function render () {
         /* Replace key with module */
+
         ob_start();
+        // Load core module if exists. If module does not exist, load module from theme folder
         if (file_exists($this->bluestats->appPath . "/modules/" . $this->name . ".php")) {
             include($this->bluestats->appPath . "/modules/" . $this->name . ".php");
+        } else if (file_exists(str_replace("{THEME}", $this->bluestats->theme, $this->bluestats->viewPath) . "/modules/" . $this->name . ".php")) {
+            include(str_replace("{THEME}", $this->bluestats->theme, $this->bluestats->viewPath) . "/modules/" . $this->name . ".php");
         }
+
         $contents = ob_get_contents();
         ob_end_clean();
 
