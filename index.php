@@ -1,11 +1,11 @@
 <?php
 
-define('DEBUG', TRUE);
+define('DEBUG', FALSE);
 
 
 // If the config file does not exist assume the installer has not yet been executed and thus show a link to the install page.
 if (!file_exists("./config.json")) {
-    include 'NewInstall.html';
+    include 'errors/NewInstall.html';
     die();
 }
 
@@ -43,6 +43,11 @@ $mysqli = new mysqli(
     $config["mysql"]["password"],
     $config["mysql"]["dbname"]
 );
+
+if (!DEBUG && $mysqli->connect_error) {
+    include 'errors/MysqlError.html';
+    die();
+}
 
 $cache = new cache($mysqli, $appPath);
 
