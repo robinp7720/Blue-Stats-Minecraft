@@ -76,7 +76,7 @@ abstract class plugin {
             );
 
             if (DEBUG && $this->mysql->connect_error) {
-                echo "Pluin " + $this->name + " cannot connect to mysql server.";
+                echo "Plugin " + $this->name + " cannot connect to mysql server.";
             }
 
             // Set table prefix
