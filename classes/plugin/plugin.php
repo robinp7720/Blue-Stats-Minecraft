@@ -75,6 +75,10 @@ abstract class plugin {
                 $this->config->get("MYSQL_database")
             );
 
+            if (DEBUG && $this->mysql->connect_error) {
+                echo "Pluin " + $this->name + " cannot connect to mysql server.";
+            }
+
             // Set table prefix
             $this->database['prefix'] = $this->config->get("MYSQL_prefix");
 
