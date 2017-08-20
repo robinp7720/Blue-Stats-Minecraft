@@ -1,6 +1,10 @@
 <?php
 define('DEBUG', FALSE);
 
+// Hide errors. If errors get outputted the json will not be correctly formatted
+error_reporting(0);
+ini_set("display_errors", 0);
+
 $appPath = __DIR__ . "/..";
 
 /* Classes */
