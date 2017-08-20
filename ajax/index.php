@@ -1,4 +1,6 @@
 <?php
+define('DEBUG', FALSE);
+
 $appPath = __DIR__ . "/..";
 
 /* Classes */
