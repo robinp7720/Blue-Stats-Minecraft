@@ -41,9 +41,12 @@ class pluginStats {
         $mysqli = $this->mysql;
         $stmt   = $mysqli->stmt_init();
 
+
         // Set default method options
         if (!isset($options['summary'])) $options['summary'] = FALSE;
+        if (!isset($options['combineWorlds'])) $options['combineWorlds'] = FALSE;
 
+        $combineWorlds = $options['combineWorlds'];
         // If the player argument is of the player class, get the uuid, name or id depending on identification method
         // set in the database layout scheme
         if (get_class($player) == "player") {
@@ -59,17 +62,35 @@ class pluginStats {
 
         if ($options['summary']) {
             foreach ($this->database["stats"][$stat]["values"] as $info) {
-                $query .= "sum(`$info[column]`) as $info[column],";
+                if ($info['dataType'] != "world" || $combineWorlds === FALSE)
+                    $query .= "sum(`$info[column]`) as $info[column],";
             }
         } else {
             foreach ($this->database["stats"][$stat]["values"] as $info) {
-                $query .= "`$info[column]`,";
+                if ($info['dataType'] != "world" || $combineWorlds === FALSE) {
+                    if ($info['aggregate'] && $combineWorlds)
+                        $query .= "sum(`$info[column]`) as $info[column],";
+                    else
+                        $query .= "`$info[column]`,";
+                }
             }
         }
         // Remove last comma
         $query = substr($query, 0, -1);
 
         $query .= " FROM {$this->database["prefix"]}{$this->database["stats"][$stat]["database"]} WHERE {$this->database["stats"][$stat]["user_identifier"]} = ?";
+
+        if ($combineWorlds) {
+            $groupBy = "GROUP BY ";
+            foreach ($this->database["stats"][$stat]["values"] as $info) {
+                if ($info['dataType'] != "world" && $info['aggregate'] != TRUE)
+                    $groupBy .= "`$info[column]`,";
+            }
+            if ($groupBy != "GROUP BY ") {
+                $query .= " $groupBy";
+                $query = substr($query, 0, -1);
+            }
+        }
 
         if ($stmt->prepare($query)) {
             $stmt->bind_param("s", $player);

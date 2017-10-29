@@ -3,6 +3,9 @@
 $blocks_names = json_decode(file_get_contents($this->bluestats->appPath . "/items.json"), TRUE);
 
 $render = function ($module, $plugin, $blocks_names) {
+    $module->config->setDefault("combineWorlds", TRUE);
+    $combineWorlds = $module->config->get("combineWorlds");
+
     $output = "";
 
     if (!isset($plugin->database['groups'])) $plugin->database['groups'] = [];
@@ -17,8 +20,6 @@ $render = function ($module, $plugin, $blocks_names) {
 
         $output   .= "<h4>{$plugin->database["groups"][$groupId]["name"]}</h4>";
         $table    = New Table();
-
-        $maxLength = 1;
 
         foreach ($plugin->database["groups"][$groupId]['stats'] as $stat) {
             $values = [$plugin->database['stats'][$stat]['name']];
@@ -50,7 +51,9 @@ $render = function ($module, $plugin, $blocks_names) {
         $table    = New Table();
 
         // Get stats
-        $data = $plugin->stats->player($module->player, $stat);
+        $data = $plugin->stats->player($module->player, $stat, [
+            "combineWorlds" => $combineWorlds,
+        ]);
 
         // If retrieved stats are empty, don't bother displaying them
         if (!isset($data) || empty($data))
@@ -64,6 +67,8 @@ $render = function ($module, $plugin, $blocks_names) {
             $count  = 0;
             $itemID = 0;
             foreach ($entry as $statt => $value) {
+                if ($combineWorlds && $plugin->database["stats"][$stat]["values"][$count]["dataType"] == "world")
+                    $count++;
                 switch ($plugin->database["stats"][$stat]["values"][$count]["dataType"]) {
                     case "item_id":
                         // If the data collected was of type item_id, store it and wait until the data type is received.
@@ -91,6 +96,9 @@ $render = function ($module, $plugin, $blocks_names) {
                     break;
                 case "item_type":
                     array_push($values, "Block");
+                    break;
+                case "world":
+                    if (!$combineWorlds) array_push($values, $entry["name"]);
                     break;
                 default:
                     array_push($values, $entry["name"]);
