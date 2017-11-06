@@ -19,6 +19,19 @@ else {
 
     if (in_array($page, $pages)) {
 
+        require_once ROOT . "/classes/config.class.php";
+
+        $dbConf = json_decode(file_get_contents(ROOT . "/config.json"), TRUE);
+
+        $mysqli = new mysqli(
+            $dbConf["mysql"]["host"],
+            $dbConf["mysql"]["username"],
+            $dbConf["mysql"]["password"],
+            $dbConf["mysql"]["dbname"]
+        );
+
+        $config = new config($mysqli, "BlueStats");
+
         ob_start();
         include "pages/$page.php";
         $contents = ob_get_contents();
