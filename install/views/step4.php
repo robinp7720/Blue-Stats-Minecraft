@@ -133,6 +133,10 @@ else {
     echo '<i class="fa fa-times text-danger"></i>Unable to enable plugins<br>';
 }
 
+if ($config->setDefault("base_plugin", 'Statz')) {
+    echo '<i class="fa fa-check text-success"></i>Set base plugin to Statz<br>';
+}
+
 /* Set MySQL details
 -------------------------------------*/
 foreach ($plugins as $dir) {
