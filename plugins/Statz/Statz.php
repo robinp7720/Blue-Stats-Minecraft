@@ -247,7 +247,7 @@ class Statz extends plugin {
                         "column"    => "value", // column in which the data is stored in the table
                         "dataType"  => "int", // The type of data stored in the column. This can be: time, date, mob, player, world, item_id, item_type, item_name, int
                         "aggregate" => TRUE, // If true this column is used as a stat summary
-                        "name"      => "Count"    // Human readable name of the stat
+                        "name"      => "Distance"    // Human readable name of the stat
                     ],
                     [
                         "column"    => "world",
