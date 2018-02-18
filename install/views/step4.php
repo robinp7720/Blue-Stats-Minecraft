@@ -133,12 +133,10 @@ else {
     echo '<i class="fa fa-times text-danger"></i>Unable to enable plugins<br>';
 }
 
-if ($config->setDefault("base_plugin", 'Statz')) {
-    echo '<i class="fa fa-check text-success"></i>Set base plugin to Statz<br>';
-}
-
 /* Set MySQL details
 -------------------------------------*/
+$basePlugin = "";
+
 foreach ($plugins as $dir) {
     if (is_dir(ROOT . '/plugins/' . $dir)) {
         include ROOT . "/plugins/$dir/$dir.php";
@@ -151,9 +149,14 @@ foreach ($plugins as $dir) {
             $config->set("MYSQL_password", $_SESSION["$dir-password"], $dir);
             $config->set("MYSQL_database", $_SESSION["$dir-db"], $dir);
             $config->set("MYSQL_prefix", $_SESSION["$dir-prefix"], $dir);
-            $config->setDefault("base_plugin", $dir);
+
+            $basePlugin = $dir;
         }
     }
+}
+
+if ($config->setDefault("base_plugin", $basePlugin)) {
+    echo '<i class="fa fa-check text-success"></i>Set base plugin to ' . $basePlugin . '<br>';
 }
 
 /* Update theme assets
