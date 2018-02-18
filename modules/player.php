@@ -18,12 +18,12 @@ $render = function ($module, $plugin, $blocks_names) {
         // If group is set to not display, break now to stop rendering
         if (!$info['display']) break;
 
-        $output   .= "<h4>{$plugin->database["groups"][$groupId]["name"]}</h4>";
-        $table    = New Table();
+        $output .= "<h4>{$plugin->database["groups"][$groupId]["name"]}</h4>";
+        $table  = New Table();
 
         foreach ($plugin->database["groups"][$groupId]['stats'] as $stat) {
             $values = [$plugin->database['stats'][$stat]['name']];
-            $data = $plugin->stats->player($module->player, $stat);
+            $data   = $plugin->stats->player($module->player, $stat);
             foreach ($data[0] as $key => $entry) array_push($values, $entry);
             call_user_func_array([$table, 'addRecord'], $values);
         }
@@ -32,7 +32,7 @@ $render = function ($module, $plugin, $blocks_names) {
         $values = [];
 
         foreach ($plugin->database["groups"][$groupId]['headers'] as $entry) {
-                array_push($values, $entry);
+            array_push($values, $entry);
         }
         call_user_func_array([$table, 'makeHeader'], $values);
 
@@ -56,11 +56,15 @@ $render = function ($module, $plugin, $blocks_names) {
         ]);
 
         // If retrieved stats are empty, don't bother displaying them
-        if (!isset($data) || empty($data))
+        if (!isset($data) ||
+            empty($data) ||
+            count($data) === 0 ||
+            $data[0] === NULL ||
+            $data[0]['value'] === NULL)
             continue;
 
         // Add stat title
-        $output   .= "<h4>$statName</h4>";
+        $output .= "<h4>$statName</h4>";
 
         foreach ($data as $key => $entry) {
             $values = [];
@@ -80,7 +84,7 @@ $render = function ($module, $plugin, $blocks_names) {
                         array_push($values, $name);
                         break;
                     default:
-                        array_push($values, $module->bluestats->formatter->format($value,$plugin->database["stats"][$stat]["values"][$count]["dataType"]));
+                        array_push($values, $module->bluestats->formatter->format($value, $plugin->database["stats"][$stat]["values"][$count]["dataType"]));
                 }
                 $count++;
             }
