@@ -16,7 +16,8 @@ class lolmewnStats extends plugin {
                           "table"   => "players",
                           "columns" => [
                               "uuid" => "uuid",
-                              "name" => "name"
+                              "name" => "name",
+                              "id"   => "uuid"
                           ],
         ],
         "stats"      => [
