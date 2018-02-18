@@ -336,7 +336,7 @@ class pluginPlayer {
         $stmt   = $mysqli->stmt_init();
 
         // Select the id from the player identification table using the uuid column for identification
-        $query = "SELECT count({$this->database["index"]["columns"]["id"]}) as count FROM {$this->database["prefix"]}{$this->database["index"]["table"]}";
+        $query = "SELECT count(*) as count FROM {$this->database["prefix"]}{$this->database["index"]["table"]}";
         if ($stmt->prepare($query)) {
             $stmt->execute();
             $stmt->bind_result($count);
