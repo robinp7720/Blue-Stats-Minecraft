@@ -143,15 +143,15 @@ foreach ($plugins as $dir) {
         $pluginClass = "\\BlueStats\\Plugin\\$dir";
         if (!$pluginClass::$isMySQLplugin)
             break;
-        if (isset($_SESSION["$dir-enable"]) && $_SESSION["$dir-enable"] === "on") {
-            $config->set("MYSQL_host", $_SESSION["$dir-host"], $dir);
-            $config->set("MYSQL_username", $_SESSION["$dir-username"], $dir);
-            $config->set("MYSQL_password", $_SESSION["$dir-password"], $dir);
-            $config->set("MYSQL_database", $_SESSION["$dir-db"], $dir);
-            $config->set("MYSQL_prefix", $_SESSION["$dir-prefix"], $dir);
 
-            $basePlugin = $dir;
-        }
+        $config->set("MYSQL_host", $_SESSION["$dir-host"], $dir);
+        $config->set("MYSQL_username", $_SESSION["$dir-username"], $dir);
+        $config->set("MYSQL_password", $_SESSION["$dir-password"], $dir);
+        $config->set("MYSQL_database", $_SESSION["$dir-db"], $dir);
+        $config->set("MYSQL_prefix", $_SESSION["$dir-prefix"], $dir);
+
+        $basePlugin = $dir;
+
     }
 }
 
