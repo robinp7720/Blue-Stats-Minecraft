@@ -18,6 +18,11 @@
     <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 
     <title>{{ server-name }} | {{ title }}</title>
+
+    <script>
+        var loadAllPlayers = false;
+    </script>
+
 </head>
 <body>
 <nav class="navbar navbar-inverse" role="navigation">
@@ -56,47 +61,47 @@
 
 <script>
     $(function () {
-        /* AJAX player list */
-        var getPlayers = function (page) {
-            $.ajax('{{ ajax }}?call=allPlayers', {
-                data: {
-                    page: page,
-                    search: $('#search').val()
-                }
-            }).success(function (data) {
-                console.log(data);
-                var url = data.info.url;
-                $('.players').html('');
-                for (var i in data.data) {
-                    if (data.data.hasOwnProperty(i)) {
-                        console.log(data.data[i]);
-                        $('.players').append('<div class="col-md-3 col-sm-6"><div class="panel panel-default"><div class="panel-body"><a href="' + url.replace('{UUID}', data.data[i].uuid).replace('{NAME}', data.data[i].name) + '"><img src="//cravatar.eu/avatar/' + data.data[i].uuid + '"> ' + data.data[i].name + '</a></div></div></div>');
+        if (loadAllPlayers) {
+            /* AJAX player list */
+            var getPlayers = function (page) {
+                $.ajax('{{ ajax }}?call=allPlayers', {
+                    data: {
+                        page: page,
+                        search: $('#search').val()
                     }
-                }
+                }).success(function (data) {
+                    var url = data.info.url;
+                    $('.players').html('');
+                    for (var i in data.data) {
+                        if (data.data.hasOwnProperty(i)) {
+                            $('.players').append('<div class="col-md-3 col-sm-6"><div class="panel panel-default"><div class="panel-body"><a href="' + url.replace('{UUID}', data.data[i].uuid).replace('{NAME}', data.data[i].name) + '"><img src="//cravatar.eu/avatar/' + data.data[i].uuid + '"> ' + data.data[i].name + '</a></div></div></div>');
+                        }
+                    }
+                });
+            };
+
+            var currentPage = 0;
+
+            getPlayers(currentPage);
+            $('#search').on("change input", function () {
+                currentPage = 0;
+                getPlayers(currentPage);
             });
-        };
 
-        var currentPage = 0;
+            $('.next').click(function (event) {
+                event.preventDefault();
+                currentPage += 1;
+                getPlayers(currentPage);
+            });
 
-        getPlayers(currentPage);
-        $('#search').on("change input", function () {
-            currentPage = 0;
-            getPlayers(currentPage);
-        });
+            $('.previous').click(function (event) {
+                event.preventDefault();
+                currentPage -= 1;
+                getPlayers(currentPage);
+            });
 
-        $('.next').click(function (event) {
-            event.preventDefault();
-            currentPage += 1;
-            getPlayers(currentPage);
-        });
-
-        $('.previous').click(function (event) {
-            event.preventDefault();
-            currentPage -= 1;
-            getPlayers(currentPage);
-        });
-
-        $('.table-sorted').DataTable();
+            $('.table-sorted').DataTable();
+        }
     });
 </script>
 
