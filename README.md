@@ -1,3 +1,11 @@
+# BlueStats is no longer maintained
+If you wish to take over the project, I will gladly link your fork here. I would hate for this project to die. Simply drop me an email! I don't bite.
+**I will not be answering any questions or provide any help regarding the setup of this web application**
+
+I want the thank the minecraft community for providing a lot of support for the project. Especially to lolmewm for providing the original stats plugin which started the entire project and for his general support of the project.
+
+However, due to a combination of leaving the minecraft community and others demanding support for a project that I developed for myself and graciously provided to the greater community under an open license, BlueStats will **not** be recieving any updates from myself.
+
 [![Code Climate](https://codeclimate.com/github/robinp7720/Blue-Stats-Minecraft/badges/gpa.svg)](https://codeclimate.com/github/robinp7720/Blue-Stats-Minecraft)
 
 [![Join the chat at https://gitter.im/robinp7720/Blue-Stats-Minecraft](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/robinp7720/Blue-Stats-Minecraft?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
